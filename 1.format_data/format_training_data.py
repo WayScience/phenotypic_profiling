@@ -181,10 +181,5 @@ training_data = format_training_data(mitocheck_data_version_url, save_path, comp
 
 
 print(training_data.shape)
-
-
-# In[5]:
-
-
-print(training_data.head())
+training_data.head()
 
