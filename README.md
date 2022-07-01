@@ -1,2 +1,7 @@
-# phenotypic_profiling_model
-Training and validating ML model using data from [mitocheck_data](https://github.com/WayScience/mitocheck_data)
+# Phenotypic Profiling Model
+
+## Data
+
+Instructions for data download/processing can be found at: https://github.com/WayScience/mitocheck_data
+
+## Analysis
