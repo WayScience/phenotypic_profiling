@@ -2,6 +2,12 @@
 
 In this module, we train and validate a machine learning model for phenotypic classification of nuclei based on nuclei features.
 
+We use [Scikit-learn](https://scikit-learn.org/) for data manipulation, model training, and model evaluation. Scikit-learn was introduced in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python. Its ease of implementation in a pipeline make it ideal for our use case.
+
+### A. Data Preparation
+
+Training data is read from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz). We use [sklearn ]
+
 ## Step 1: Setup Download Environment
 
 ### Step 1a: Create Download Environment
@@ -22,5 +28,5 @@ conda activate 2.ML_phenotypic_classification
 
 ```bash
 # Run this script to preprocess training movies
-bash 1.format_trainind_data.sh
+bash 
 ```
