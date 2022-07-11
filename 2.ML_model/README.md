@@ -41,6 +41,20 @@ We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/mo
 Used to combine L1 and L2 regularization methods.
 - `C`: Inversely proportional to regularization strength.
 
+We use [sklearn.model_selection.cross_validate](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html) and [sklearn.model_selection.cross_val_predict](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html) to train and evaluate a logistic regression model with the best parameters found with GridSearchCV.
+We use these functions for cross validation scoring and estimation for each fold of data.
+
+### C. Model Interpretation
+
+We create a confusion matrix found in [DP_trained_model.ipynb](DP_trained_model.ipynb) using the predictions from `cross_val_predict()`.
+
+Because cross validation produces multiple unique models (estimators), it is necessary to average metrics across the estimators to interpret model performance.
+The coefficient matrices created during each fold of cross validation are averaged to create a single `average_coefs` matrix that we analyze.
+
+
+
+
+
 ## Step 1: Setup Download Environment
 
 ### Step 1a: Create Download Environment
