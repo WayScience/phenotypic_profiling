@@ -19,6 +19,7 @@ We use [seaborn](https://seaborn.pydata.org/) for data visualization. Seaborn is
 Training data is loaded from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz).
 
 We use [sklearn.utils.shuffle](https://scikit-learn.org/stable/modules/generated/sklearn.utils.shuffle.html) to shuffle the training data in a consistent way.
+This method is shuffling in the first dimension (samples).
 This is necessary because the data as labeled from MitoCheck tends to have phenotypic classes in groups, which can introduce bias into the model.
 
 We use [sklearn.model_selection.StratifiedKFold](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html) to create stratified training/test data sets for cross validation.
