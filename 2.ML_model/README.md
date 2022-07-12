@@ -12,7 +12,8 @@ We consistently use the following parameters with many sklearn functions:
 - `random_state=0`: Use seed 0 when shuffling data or generating random numbers.
 This allows "random" operations to have consist results.
 
-We use [seaborn](https://seaborn.pydata.org/) for data visualization. Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
+We use [seaborn](https://seaborn.pydata.org/) for data visualization. 
+Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
 
 ### A. Data Preparation
 
