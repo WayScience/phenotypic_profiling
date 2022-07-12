@@ -45,9 +45,13 @@ Used to combine L1 and L2 regularization methods.
 
 We use [sklearn.model_selection.cross_validate](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html) and [sklearn.model_selection.cross_val_predict](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html) to train and evaluate a logistic regression model with the best parameters found with GridSearchCV.
 
-### C. Model Interpretation
+### C. Model Evaluation
+
+We compute the average score across estimators after running cross validation.
 
 We  use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
+
+### C. Model Interpretation
 
 Because cross validation produces multiple unique models (estimators), it is necessary to average metrics across the estimators to interpret model performance.
 The coefficient matrices created during each fold of cross validation are averaged to create a single `average_coefs` matrix that we analyze.
@@ -55,11 +59,11 @@ The following graphics are created with the `average_coefs` matrix.
 
 We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the coefficient values for each phenotypic class/feature.
 
+We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
+
 We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 
 We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
-
-We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
 
 ## Step 1: Setup Download Environment
 
