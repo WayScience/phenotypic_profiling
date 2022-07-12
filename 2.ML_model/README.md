@@ -3,7 +3,7 @@
 In this module, we train and validate a machine learning model for phenotypic classification of nuclei based on nuclei features.
 
 We use [Scikit-learn (sklearn)](https://scikit-learn.org/) for data manipulation, model training, and model evaluation.
-Scikit-learn was introduced in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python.
+Scikit-learn is described in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python.
 Its ease of implementation in a pipeline make it ideal for our use case.
 
 We consistently use the following parameters with many sklearn functions:
@@ -11,6 +11,8 @@ We consistently use the following parameters with many sklearn functions:
 - `n_jobs=-1`: Use all CPU cores in parallel when completing a task.
 - `random_state=0`: Use seed 0 when shuffling data or generating random numbers.
 This allows "random" operations to have consist results.
+
+We use [seaborn](https://seaborn.pydata.org/) for data visualization. Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
 
 ### A. Data Preparation
 
@@ -42,18 +44,22 @@ Used to combine L1 and L2 regularization methods.
 - `C`: Inversely proportional to regularization strength.
 
 We use [sklearn.model_selection.cross_validate](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html) and [sklearn.model_selection.cross_val_predict](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html) to train and evaluate a logistic regression model with the best parameters found with GridSearchCV.
-We use these functions for cross validation scoring and estimation for each fold of data.
 
 ### C. Model Interpretation
 
-We create a confusion matrix found in [DP_trained_model.ipynb](DP_trained_model.ipynb) using the predictions from `cross_val_predict()`.
+We  use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
 
 Because cross validation produces multiple unique models (estimators), it is necessary to average metrics across the estimators to interpret model performance.
 The coefficient matrices created during each fold of cross validation are averaged to create a single `average_coefs` matrix that we analyze.
+The following graphics are created with the `average_coefs` matrix.
 
+We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the coefficient values for each phenotypic class/feature.
 
+We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 
+We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
 
+We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
 
 ## Step 1: Setup Download Environment
 
@@ -75,5 +81,5 @@ conda activate 2.ML_phenotypic_classification
 
 ```bash
 # Run this script to preprocess training movies
-bash 
+bash 2.DP_trained_model.sh
 ```
