@@ -1,6 +1,6 @@
 # 2. Machine Learning Model
 
-In this module, we train and validate a machine learning model for phenotypic classification of nuclei based on nuclei features.
+In this module, we train and validate a machine learning model for phenotypic classification (mitotic stage) of nuclei based on nuclei features.
 
 We use [Scikit-learn (sklearn)](https://scikit-learn.org/) for data manipulation, model training, and model evaluation.
 Scikit-learn is described in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python.
