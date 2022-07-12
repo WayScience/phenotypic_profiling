@@ -85,5 +85,5 @@ conda activate 2.ML_phenotypic_classification
 
 ```bash
 # Run this script to train, evaluate, and interpret DP model
-bash 2.DP_trained_model.sh
+bash 2.DP_model.sh
 ```
