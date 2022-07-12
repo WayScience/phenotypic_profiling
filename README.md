@@ -9,4 +9,4 @@ For more information see [0.download_data/README.md](0.download_data/README.md).
 
 ## Analysis
 
-We train, evaluate, and interpret a model to predict phenotypic class from nuclear staining data using [DeepProfiler](https://github.com/cytomining/DeepProfiler) features in [DP_trained_model.ipynb](2.ML_model/DP_trained_model.ipynb).
+We train, evaluate, and interpret a model to predict mitotic stage from nuclear staining data using [DeepProfiler](https://github.com/cytomining/DeepProfiler) features in [DP_trained_model.ipynb](2.ML_model/DP_trained_model.ipynb).
