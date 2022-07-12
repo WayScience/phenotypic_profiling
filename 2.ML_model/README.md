@@ -51,7 +51,7 @@ We compute the average score across estimators after running cross validation.
 
 We  use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
 
-### C. Model Interpretation
+### D. Model Interpretation
 
 Because cross validation produces multiple unique models (estimators), it is necessary to average metrics across the estimators to interpret model performance.
 The coefficient matrices created during each fold of cross validation are averaged to create a single `average_coefs` matrix that we analyze.
