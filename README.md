@@ -4,7 +4,8 @@
 
 Instructions for data download/processing can be found at: https://github.com/WayScience/mitocheck_data.
 
-This repository compiles training data from a specific version of [MitoCheck_data](https://github.com/WayScience/mitocheck_data). For more information see [0.download_data/README.md](0.download_data/README.md).
+This repository compiles training data from a specific version of [MitoCheck_data](https://github.com/WayScience/mitocheck_data).
+For more information see [0.download_data/README.md](0.download_data/README.md).
 
 ## Analysis
 
