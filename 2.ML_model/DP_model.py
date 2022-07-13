@@ -36,14 +36,14 @@ import seaborn as sns
 # In[2]:
 
 
-def get_X_y_data(load_path: pathlib.Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """generate X (features) and y (labels) dataframes from training data
+def get_training_data(load_path: pathlib.Path) -> pd.DataFrame:
+    """get DP training data from csv at load path
 
     Args:
         load_path (pathlib.Path): path to training data csv
 
     Returns:
-        Tuple[pd.DataFrame, pd.DataFrame]: X, y dataframes
+        pd.DataFrame: training dataframe
     """
     # read dataset into pandas dataframe
     training_data = pd.read_csv(load_path, index_col=0)
@@ -56,6 +56,20 @@ def get_X_y_data(load_path: pathlib.Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
     # replace shape1 and shape3 labels with their correct respective classes
     training_data = training_data.replace("Shape1", "Binuclear")
     training_data = training_data.replace("Shape3", "Polylobed")
+
+    return training_data
+
+
+def get_X_y_data(load_path: pathlib.Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """generate X (features) and y (labels) dataframes from training data
+
+    Args:
+        load_path (pathlib.Path): path to training data csv
+
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame]: X, y dataframes
+    """
+    training_data = get_training_data(load_path)
 
     # all features from DeepProfiler have "efficientnet" in their column name
     morphology_features = [
@@ -74,37 +88,6 @@ def get_X_y_data(load_path: pathlib.Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
     X, y = shuffle(X, y, random_state=0)
 
     return X, y
-
-
-def average_feature_weights(
-    estimator_list: List, return_pandas: bool = True
-) -> Union[np.ndarray, pd.DataFrame]:
-    """average coefs from list of estimators
-
-    Args:
-        estimator_list (List): list of estimators from cross_validate()
-        return_pandas (bool, optional): whether or not to return pandas dataframe. If false returns numpy array. If true returns labled pandas dataframe. Defaults to True.
-
-    Returns:
-        Union[np.ndarray,pd.DataFrame]: average coefs array or average coefs pandas dataframe
-    """
-
-    coefs = []
-    for estimator in estimator_list:
-        coefs.append(estimator.coef_)
-
-    average_coefs = np.mean(coefs, axis=0)
-    # get abs
-    average_coefs = np.abs(average_coefs)
-
-    if not return_pandas:
-        return average_coefs
-
-    average_coefs = pd.DataFrame(average_coefs).T
-    classes = estimator_list[0].classes_
-    average_coefs.columns = classes
-
-    return average_coefs
 
 
 # In[3]:
@@ -146,7 +129,8 @@ grid_search_cv = grid_search_cv.fit(X, y)
 # In[6]:
 
 
-print("Best parameters: ", grid_search_cv.best_params_)
+print(f"Best parameters: {grid_search_cv.best_params_}")
+print(f"Score of best estimator: {grid_search_cv.best_score_}")
 log_reg_model = LogisticRegression(
     C=grid_search_cv.best_params_["C"],
     l1_ratio=grid_search_cv.best_params_["l1_ratio"],
@@ -159,17 +143,6 @@ log_reg_model = LogisticRegression(
 
 
 # In[7]:
-
-
-# cross validation with logistic regression model across stratified data sets
-cv_results = cross_validate(
-    log_reg_model, X, y, cv=straified_k_folds, n_jobs=-1, return_estimator=True
-)
-avg_score = np.mean(cv_results["test_score"])
-print(f"Average score: {avg_score}")
-
-
-# In[8]:
 
 
 # create confusion matrix for logistic regression model after cross validation
@@ -187,13 +160,13 @@ plt.xticks(rotation=90)
 plt.show()
 
 
-# In[9]:
+# In[8]:
 
 
 # display precision vs phenotypic class bar chart
 precisions = precision_score(y, y_pred, average=None)
 precisions = pd.DataFrame(precisions).T
-precisions.columns = columns=cv_results["estimator"][0].classes_
+precisions.columns = columns=grid_search_cv.best_estimator_.classes_
 
 sns.set(rc={"figure.figsize": (20, 8)})
 plt.xlabel("Phenotypic Class")
@@ -203,34 +176,36 @@ plt.xticks(rotation=90)
 ax = sns.barplot(data=precisions)
 
 
+# In[9]:
+
+
+coefs = np.abs(grid_search_cv.best_estimator_.coef_)
+coefs = pd.DataFrame(coefs).T
+coefs.columns = grid_search_cv.best_estimator_.classes_
+
+print(coefs.shape)
+coefs.head()
+
+
 # In[10]:
 
 
-# get average coefs across all estimators in cross validation
-average_coefs = average_feature_weights(cv_results["estimator"])
-print(average_coefs.shape)
-average_coefs.head()
+# display heatmap of average coefs
+sns.set(rc={"figure.figsize": (20, 10)})
+ax = sns.heatmap(data=coefs.T)
 
 
 # In[11]:
 
 
-# display heatmap of average coefs
-sns.set(rc={"figure.figsize": (20, 10)})
-ax = sns.heatmap(data=average_coefs.T)
-
-
-# In[12]:
-
-
 # display clustered heatmap of coefficients
 ax = sns.clustermap(
-    data=average_coefs.T, figsize=(20, 10), row_cluster=True, col_cluster=True
+    data=coefs.T, figsize=(20, 10), row_cluster=True, col_cluster=True
 )
 ax.fig.suptitle("Clustered Heatmap of Coefficients Matrix")
 
 
-# In[13]:
+# In[12]:
 
 
 # display density plot for coefficient values of each class
@@ -239,15 +214,15 @@ plt.xlim(-0.02, 0.1)
 plt.xlabel("Coefficient Value")
 plt.ylabel("Density")
 plt.title("Density of Coefficient Values Per Phenotpyic Class")
-ax = sns.kdeplot(data=average_coefs)
+ax = sns.kdeplot(data=coefs)
 
 
-# In[14]:
+# In[13]:
 
 
 # display average coefficient value vs phenotypic class bar chart
-pheno_class_ordered = average_coefs.reindex(
-    average_coefs.mean().sort_values(ascending=False).index, axis=1
+pheno_class_ordered = coefs.reindex(
+    coefs.mean().sort_values(ascending=False).index, axis=1
 )
 sns.set(rc={"figure.figsize": (20, 8)})
 plt.xlabel("Phenotypic Class")
@@ -257,12 +232,12 @@ plt.xticks(rotation=90)
 ax = sns.barplot(data=pheno_class_ordered)
 
 
-# In[15]:
+# In[14]:
 
 
 # display average coefficient value vs feature bar chart
-feature_ordered = average_coefs.T.reindex(
-    average_coefs.T.mean().sort_values(ascending=False).index, axis=1
+feature_ordered = coefs.T.reindex(
+    coefs.T.mean().sort_values(ascending=False).index, axis=1
 )
 sns.set(rc={"figure.figsize": (500, 8)})
 plt.xlabel("Deep Learning Feature Number")

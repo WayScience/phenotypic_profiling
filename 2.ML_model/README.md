@@ -55,17 +55,13 @@ We  use the predictions from `cross_val_predict()` to create a confusion matrix 
 
 ### D. Model Interpretation
 
-Because cross validation produces multiple unique models (estimators), it is necessary to average metrics across the estimators to interpret model performance.
-The coefficient matrices created during each fold of cross validation are averaged to create a single `average_coefs` matrix that we analyze.
-The following graphics are created with the `average_coefs` matrix.
+After cross validation is complete, a final estimator is trained with the best parameters found during `GridSearchCV` and all of the training data.
+The coefficient matrix from this final estimator is interpreted with the following visualizations:
 
-We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the coefficient values for each phenotypic class/feature.
-
-We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
-
-We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
-
-We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
+- We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the coefficient values for each phenotypic class/feature.
+- We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
+- We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
+- We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
 
 ## Step 1: Setup Download Environment
 
