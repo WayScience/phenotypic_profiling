@@ -51,7 +51,7 @@ We use [sklearn.model_selection.cross_validate](https://scikit-learn.org/stable/
 
 We compute the average score across estimators after running cross validation.
 
-We  use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
+We use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
 
 ### D. Model Interpretation
 
@@ -62,6 +62,12 @@ The coefficient matrix from this final estimator is interpreted with the followi
 - We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
 - We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 - We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
+
+### E. Baseline Comparison
+
+After training, evaluating, and interpreting a most-accurate estimator, we perform a baseline comparison on shuffled data.
+We create a baseline dataset by loading the training data in the same way as above, but then shuffling the `y `(labels) dataframe.
+The train, evaluate, interpret pipeline is then rerun on this shuffled baseline dataset to derive a randomly shuffled baseline for comparison with our final estimator.
 
 ## Step 1: Setup Download Environment
 
