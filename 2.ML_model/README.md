@@ -20,7 +20,8 @@ Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021
 Training data is loaded from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz).
 
 We use [sklearn.utils.shuffle](https://scikit-learn.org/stable/modules/generated/sklearn.utils.shuffle.html) to shuffle the training data in a consistent way.
-This method is shuffling in the first dimension (samples).
+This function shuffles the order of the training data samples while keeping the phenotypic class labels aligned with their respective features.
+In other words, this function shuffles entire rows of training data to remove any ordering scheme.
 This is necessary because the data as labeled from MitoCheck tends to have phenotypic classes in groups, which can introduce bias into the model.
 
 We use [sklearn.model_selection.StratifiedKFold](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html) to create stratified training/test data sets for cross validation.
