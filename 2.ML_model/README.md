@@ -64,10 +64,10 @@ The coefficient matrix from this final estimator is interpreted with the followi
 - We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 - We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
 
-### E. Baseline Comparison
+### E. Shuffled Baseline Comparison
 
-After training, evaluating, and interpreting a most-accurate estimator, we perform a baseline comparison on shuffled data.
-We create a baseline dataset by loading the training data in the same way as above, but then shuffling the `y `(labels) dataframe.
+After training, evaluating, and interpreting a most-accurate estimator, we perform a shuffled baseline comparison on shuffled data.
+We create a shuffled baseline dataset by loading the training data in the same way as above, but then shuffling the `y `(labels) dataframe.
 The train, evaluate, interpret pipeline is then rerun on this shuffled baseline dataset to derive a randomly shuffled baseline for comparison with our final estimator.
 
 ## Step 1: Setup Download Environment
