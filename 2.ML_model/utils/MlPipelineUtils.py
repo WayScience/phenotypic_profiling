@@ -134,6 +134,8 @@ def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
     ax = plt.ylabel("True Label")
     ax = plt.title("Phenotypic Class Predicitions")
     
+    return y, y_pred
+    
 def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
     
     # get features and labels dataframes
@@ -143,9 +145,9 @@ def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFram
     y_pred = log_reg_model.predict(X)
     
     # display precision vs phenotypic class bar chart
-    precisions = f1_score(y, y_pred, average=None)
+    precisions = f1_score(y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0)
     precisions = pd.DataFrame(precisions).T
-    precisions.columns = np.unique(y_pred) #cant use log_reg_model.classes_ because classes may be missing due to lack of data
+    precisions.columns = log_reg_model.classes_
 
     sns.set(rc={"figure.figsize": (20, 8)})
     plt.xlabel("Phenotypic Class")
