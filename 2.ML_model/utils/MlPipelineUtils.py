@@ -107,12 +107,15 @@ def get_X_y_data(training_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFram
     return X, y
 
 
-def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
+def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     """display confusion matrix for logistic regression model on dataset
 
     Args:
         log_reg_model (LogisticRegression): logisitc regression model to evaluate
         dataset (pd.DataFrame): dataset to evaluate model on
+
+    Returns:
+        Tuple[np.ndarray, np.ndarray]: true, predicted labels
     """
     
     # get features and labels dataframes
@@ -137,6 +140,12 @@ def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
     return y, y_pred
     
 def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
+    """display bar graph for model with scoring metric on each class
+
+    Args:
+        log_reg_model (LogisticRegression): logisitc regression model to evaluate
+        dataset (pd.DataFrame): dataset to evaluate model on
+    """
     
     # get features and labels dataframes
     X, y = get_X_y_data(dataset)
@@ -145,14 +154,14 @@ def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFram
     y_pred = log_reg_model.predict(X)
     
     # display precision vs phenotypic class bar chart
-    precisions = f1_score(y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0)
-    precisions = pd.DataFrame(precisions).T
-    precisions.columns = log_reg_model.classes_
+    scores = f1_score(y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0)
+    scores = pd.DataFrame(scores).T
+    scores.columns = log_reg_model.classes_
 
     sns.set(rc={"figure.figsize": (20, 8)})
     plt.xlabel("Phenotypic Class")
-    plt.ylabel("Precision")
-    plt.title("Precision vs Phenotpyic Class")
+    plt.ylabel("F1 Score")
+    plt.title("F1 Score vs Phenotpyic Class")
     plt.xticks(rotation=90)
-    ax = sns.barplot(data=precisions)
+    ax = sns.barplot(data=scores)
     
