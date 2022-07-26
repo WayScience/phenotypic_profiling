@@ -22,7 +22,7 @@ This shuffled baseline model provides a suitable baseline comparison for the fin
 
 First, we split the data into training, test, and holdout subsets in [0.split_data.ipynb](0.split_data.ipynb).
 The `get_representative_images()` function used to create the holdout dataset determines which images to holdout such that all phenotypic classes can be represented in these holdout images.
-The test dataset is determined by taking a random number of samples from the dataset after the holdout images are removed.
+The test dataset is determined by taking a random number of samples (stratified by phenotypic class) from the dataset after the holdout images are removed.
 The training dataset is the subset remaining after holdout/test samples are removed.
 Sample indexes associated with training, test, and holdout subsets are stored in [0.data_split_indexes.tsv](results/0.data_split_indexes.tsv).
 Sample indexes are used to load subsets from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz).
@@ -51,7 +51,7 @@ The mixing of these two methods is determined by the `l1_ratio` parameter which 
 - `solver='saga'`: We use the saga solver as this is the only solver that supports Elastic-Net regularization.
 - `max_iter=100`: Set the maximum number of iterations for solver to converge. 100 iterations allows the solver to maximize performance without completing unnecessary iterations.
 
-We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the parameters below. This searches for parameters that maximize the weighted F1 score of the model. We optimize weighted F1 score because this metric accounts for model precision and recall and accounts for label imbalance (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
+We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the parameters below. This searches for parameters that maximize the weighted F1 score of the model. We optimize weighted F1 score because this metric measures model precision and recall aand accounts for label imbalance (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
 
 - `l1_ratio`: Elastic-Net mixing parameter.
 Used to combine L1 and L2 regularization methods.
@@ -65,12 +65,18 @@ The model derived from shuffled training data is saved in [1.shuffled_baseline_l
 
 ### C. Model Evaluation
 
-We evalulate the 
+We use the final model and shuffled baseline model to predict the labels of the training, testing, and holdout datasets.
+These predictions are saved in [results/2.model_predictions.tsv](results/2.model_predictions.tsv) and [2.shuffled_baseline_model_predictions.tsv](results/2.shuffled_baseline_model_predictions.tsv) respectively.
+
+We evaluate these 6 sets of predictions with a confusion matrix to see the true/false postives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
+
+We also evaluate these 6 sets of predictions with [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) to determine the final/shuffled baseline model's predictive performance on each subset.
+F1 score measures the models precision and recall performance for each phenotypic class.
 
 ### D. Model Interpretation
 
-After cross validation is complete, a final estimator is trained with the best parameters found during `GridSearchCV` and all of the training data.
-The coefficient matrix from this final estimator is interpreted with the following visualizations:
+The final model and shuffled baseline model coefficients are loaded from [1.log_reg_model.joblib](results/1.log_reg_model.joblib) and [1.shuffled_baseline_log_reg_model.joblib](results/1.shuffled_baseline_log_reg_model.joblib) respectively.
+These coefficients are interpreted with the following diagrams:
 
 - We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the coefficient values for each phenotypic class/feature.
 - We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
@@ -97,5 +103,5 @@ conda activate 2.ML_phenotypic_classification
 
 ```bash
 # Run this script to train, evaluate, and interpret DP model
-bash 2.DP_model.sh
+bash 2.ML_model.sh
 ```
