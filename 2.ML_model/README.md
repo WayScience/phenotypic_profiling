@@ -15,9 +15,17 @@ This allows "random" operations to have consist results.
 We use [seaborn](https://seaborn.pydata.org/) for data visualization. 
 Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
 
+All parts of the following pipeline are completed for a "final" model (from training data) and a "shuffled baseline" model (from shuffled training data).
+This shuffled baseline model provides a suitable baseline comparison for the final model during evaluation.
+
 ### A. Data Preparation
 
-Training data is loaded from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz).
+First, we split the data into training, test, and holdout subsets in [0.split_data.ipynb](0.split_data.ipynb).
+The `get_representative_images()` function used to create the holdout dataset determines which images to holdout such that all phenotypic classes can be represented in these holdout images.
+The test dataset is determined by taking a random number of samples from the dataset after the holdout images are removed.
+The training dataset is the subset remaining after holdout/test samples are removed.
+Sample indexes associated with training, test, and holdout subsets are stored in [0.data_split_indexes.tsv](results/0.data_split_indexes.tsv).
+Sample indexes are used to load subsets from [training_data.csv.gz](../1.format_data/data/training_data.csv.gz).
 
 We use [sklearn.utils.shuffle](https://scikit-learn.org/stable/modules/generated/sklearn.utils.shuffle.html) to shuffle the training data in a consistent way.
 This function shuffles the order of the training data samples while keeping the phenotypic class labels aligned with their respective features.
@@ -28,6 +36,9 @@ We use [sklearn.model_selection.StratifiedKFold](https://scikit-learn.org/stable
 The training and test data sets that are created have the same distribution of classes.
 This ensures that each class is proportionally represented across all data sets.
 We use `n_splits=10` to create 10 folds for cross-validation.
+
+To create the shuffled baseline training dataset, we first load the training data as described above. 
+We then shuffle each column of the training data independently, which removes any correlation between features and phenotypic class label.
 
 ### B. Model Training
 
@@ -40,19 +51,21 @@ The mixing of these two methods is determined by the `l1_ratio` parameter which 
 - `solver='saga'`: We use the saga solver as this is the only solver that supports Elastic-Net regularization.
 - `max_iter=100`: Set the maximum number of iterations for solver to converge. 100 iterations allows the solver to maximize performance without completing unnecessary iterations.
 
-We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the following parameters:
+We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the parameters below. This searches for parameters that maximize the weighted F1 score of the model. We optimize weighted F1 score because this metric accounts for model precision and recall and accounts for label imbalance (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
 
 - `l1_ratio`: Elastic-Net mixing parameter.
 Used to combine L1 and L2 regularization methods.
+We search over the following parameters: `[0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1. ]`
 - `C`: Inversely proportional to regularization strength.
+We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02, 1.e+03]`
 
-We use [sklearn.model_selection.cross_validate](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html) and [sklearn.model_selection.cross_val_predict](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_predict.html) to train and evaluate a logistic regression model with the best parameters found with GridSearchCV.
+The best parameters are used to train a final model on all of the training data.
+This final model is saved in [1.log_reg_model.joblib](results/1.log_reg_model.joblib).
+The model derived from shuffled training data is saved in [1.shuffled_baseline_log_reg_model.joblib](results/1.shuffled_baseline_log_reg_model.joblib).
 
 ### C. Model Evaluation
 
-We compute the average score across estimators after running cross validation.
-
-We use the predictions from `cross_val_predict()` to create a confusion matrix and precision vs class bar plot for the cross-validated model.
+We evalulate the 
 
 ### D. Model Interpretation
 
@@ -63,12 +76,6 @@ The coefficient matrix from this final estimator is interpreted with the followi
 - We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display a hierarchically-clustered heatmap of coefficient values for each phenotypic class/feature
 - We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 - We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
-
-### E. Shuffled Baseline Comparison
-
-After training, evaluating, and interpreting a most-accurate estimator, we perform a shuffled baseline comparison on shuffled data.
-We create a shuffled baseline dataset by loading the training data in the same way as above, but then shuffling the `y `(labels) dataframe.
-The train, evaluate, interpret pipeline is then rerun on this shuffled baseline dataset to derive a randomly shuffled baseline for comparison with our final estimator.
 
 ## Step 1: Setup Download Environment
 
