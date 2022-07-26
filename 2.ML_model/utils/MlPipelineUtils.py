@@ -34,16 +34,18 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
 
     return features_data
 
+
 def get_image_indexes(training_data: pd.DataFrame, images: List) -> List:
-    
+
     image_indexes_list = []
     for image in images:
         image_indexes = training_data.index[
             training_data["Metadata_Plate_Map_Name"] == image
         ].tolist()
         image_indexes_list.extend(image_indexes)
-        
+
     return image_indexes_list
+
 
 def get_random_images_indexes(training_data: pd.DataFrame, num_images: int) -> List:
     """get ramdom images from training dataset
@@ -57,9 +59,9 @@ def get_random_images_indexes(training_data: pd.DataFrame, num_images: int) -> L
     """
     unique_images = pd.unique(training_data["Metadata_Plate_Map_Name"])
     images = np.random.choice(unique_images, size=num_images, replace=False)
-    
+
     return images
-    
+
 
 def get_intelligent_images(training_data: pd.DataFrame, num_images: int) -> List:
     """get images from training dataset and try to balance labels present in these images
@@ -75,31 +77,43 @@ def get_intelligent_images(training_data: pd.DataFrame, num_images: int) -> List
     """
     remaining_images = pd.unique(training_data["Metadata_Plate_Map_Name"])
     remaining_classes = pd.unique(training_data["Mitocheck_Phenotypic_Class"]).tolist()
-    
+
     images = []
-    
+
     for image_number in range(num_images):
         image_contributes = False
         image = ""
         while not image_contributes:
             image = np.random.choice(remaining_images, size=1, replace=False)[0]
-            image_data = training_data.loc[(training_data['Metadata_Plate_Map_Name'] == image)]
-            
+            image_data = training_data.loc[
+                (training_data["Metadata_Plate_Map_Name"] == image)
+            ]
+
             if len(remaining_classes) == 0:
                 image_contributes = True
-            
+
             image_classes = pd.unique(image_data["Mitocheck_Phenotypic_Class"])
             # check if any phenotypic class from the current image is in the remaining classes
-            if any(phenotypic_class in image_classes for phenotypic_class in remaining_classes):
+            if any(
+                phenotypic_class in image_classes
+                for phenotypic_class in remaining_classes
+            ):
                 image_contributes = True
-                remaining_classes = [x for x in remaining_classes if x not in image_classes]
-        
+                remaining_classes = [
+                    x for x in remaining_classes if x not in image_classes
+                ]
+
         images.append(image)
-        remaining_images = np.delete(remaining_images, np.where(remaining_images == image))
-        
+        remaining_images = np.delete(
+            remaining_images, np.where(remaining_images == image)
+        )
+
     return images
 
-def get_representative_images(training_data: pd.DataFrame, num_images: int, attempts: int=100) -> List:
+
+def get_representative_images(
+    training_data: pd.DataFrame, num_images: int, attempts: int = 100
+) -> List:
     """get images from training dataset and such that every phenotypic class is represented
     returns None if no combintation of images are found that represent every phenotypic class within number of trials
 
@@ -112,22 +126,26 @@ def get_representative_images(training_data: pd.DataFrame, num_images: int, atte
         List: list of images with every phenotypic class represented or None if this list cannot be curated
     """
     unique_classes = pd.unique(training_data["Mitocheck_Phenotypic_Class"]).tolist()
-    
+
     trial = 0
     while trial < attempts:
         images = get_intelligent_images(training_data, num_images)
-        
+
         images_data = pd.DataFrame()
         for image in images:
-            image_data = training_data.loc[(training_data['Metadata_Plate_Map_Name'] == image)]
+            image_data = training_data.loc[
+                (training_data["Metadata_Plate_Map_Name"] == image)
+            ]
             images_data = pd.concat([images_data, image_data])
-        
-        unique_image_classes = pd.unique(images_data["Mitocheck_Phenotypic_Class"]).tolist()
+
+        unique_image_classes = pd.unique(
+            images_data["Mitocheck_Phenotypic_Class"]
+        ).tolist()
         if set(unique_image_classes) == set(unique_classes):
             return images
-        
+
         trial += 1
-    
+
     print("No combination of images found that represents all classes!")
     return None
 
@@ -181,7 +199,9 @@ def get_X_y_data(training_data: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFram
     return X, y
 
 
-def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+def evaluate_model_cm(
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+) -> Tuple[np.ndarray, np.ndarray]:
     """display confusion matrix for logistic regression model on dataset
 
     Args:
@@ -191,13 +211,13 @@ def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) 
     Returns:
         Tuple[np.ndarray, np.ndarray]: true, predicted labels
     """
-    
+
     # get features and labels dataframes
     X, y = get_X_y_data(dataset)
-    
+
     # get predictions from model
     y_pred = log_reg_model.predict(X)
-    
+
     # create confusion matrix
     conf_mat = confusion_matrix(y, y_pred, labels=log_reg_model.classes_)
     conf_mat = pd.DataFrame(conf_mat)
@@ -210,9 +230,10 @@ def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) 
     ax = plt.xlabel("Predicted Label")
     ax = plt.ylabel("True Label")
     ax = plt.title("Phenotypic Class Predicitions")
-    
+
     return y, y_pred
-    
+
+
 def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
     """display bar graph for model with scoring metric on each class
 
@@ -220,15 +241,17 @@ def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFram
         log_reg_model (LogisticRegression): logisitc regression model to evaluate
         dataset (pd.DataFrame): dataset to evaluate model on
     """
-    
+
     # get features and labels dataframes
     X, y = get_X_y_data(dataset)
-    
+
     # get predictions from model
     y_pred = log_reg_model.predict(X)
-    
+
     # display precision vs phenotypic class bar chart
-    scores = f1_score(y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0)
+    scores = f1_score(
+        y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0
+    )
     scores = pd.DataFrame(scores).T
     scores.columns = log_reg_model.classes_
 
@@ -238,4 +261,3 @@ def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFram
     plt.title("F1 Score vs Phenotpyic Class")
     plt.xticks(rotation=90)
     ax = sns.barplot(data=scores)
-    
