@@ -83,25 +83,28 @@ These coefficients are interpreted with the following diagrams:
 - We use [seaborn.kedeplot](https://seaborn.pydata.org/generated/seaborn.kdeplot.html) to display a density plot of coeffiecient values for each phenotypic class.
 - We use [seaborn.barplot](https://seaborn.pydata.org/generated/seaborn.barplot.html) to display a bar plot of average coeffiecient values per phenotypic class and feature.
 
-## Step 1: Setup Download Environment
+## Step 1: Setup Machine Learning Environment
 
-### Step 1a: Create Download Environment
+### Step 1a: Create Machine Learning Environment
 
 ```sh
 # Run this command to create the conda environment for machine learning
 conda env create -f 2.machine_learning_env.yml
 ```
 
-### Step 1b: Activate Download Environment
+### Step 1b: Activate Machine Learning Environment
 
 ```sh
 # Run this command to activate the conda environment for machine learning
 conda activate 2.ML_phenotypic_classification
 ```
 
-## Step 2: Execute Training Data Preprocessing
+## Step 2: Execute Machine Learning Pipeline
 
 ```bash
 # Run this script to train, evaluate, and interpret DP model
 bash 2.ML_model.sh
 ```
+
+**Note:** Running pipeline will produce all intermediate files (located in [results](results/)).
+All evaluation/interpretation diagrams can be found in their respective notebooks.
