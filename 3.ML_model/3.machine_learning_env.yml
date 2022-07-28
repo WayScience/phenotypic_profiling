@@ -1,4 +1,4 @@
-name: 2.ML_phenotypic_classification
+name: 3.ML_phenotypic_classification
 channels:
   - conda-forge
 dependencies:

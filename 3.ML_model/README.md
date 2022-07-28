@@ -1,4 +1,4 @@
-# 2. Machine Learning Model
+# 3. Machine Learning Model
 
 In this module, we train and validate a machine learning model for phenotypic classification (mitotic stage) of nuclei based on nuclei features.
 
@@ -93,21 +93,21 @@ These coefficients are interpreted with the following diagrams:
 
 ```sh
 # Run this command to create the conda environment for machine learning
-conda env create -f 2.machine_learning_env.yml
+conda env create -f 3.machine_learning_env.yml
 ```
 
 ### Step 1b: Activate Machine Learning Environment
 
 ```sh
 # Run this command to activate the conda environment for machine learning
-conda activate 2.ML_phenotypic_classification
+conda activate 3.ML_phenotypic_classification
 ```
 
 ## Step 2: Execute Machine Learning Pipeline
 
 ```bash
 # Run this script to train, evaluate, and interpret DP model
-bash 2.ML_model.sh
+bash 3.ML_model.sh
 ```
 
 **Note:** Running pipeline will produce all intermediate files (located in [results](results/)).
