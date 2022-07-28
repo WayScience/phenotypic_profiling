@@ -21,8 +21,11 @@ import seaborn as sns
 # In[2]:
 
 
+# set numpy seed to make random operations reproduceable
+np.random.seed(0)
+
 # results dir for loading/saving
-results_dir = pathlib.Path("results/")
+results_dir = pathlib.Path("../results/")
 
 log_reg_model_path = pathlib.Path(f"{results_dir}/1.log_reg_model.joblib")
 log_reg_model = load(log_reg_model_path)
@@ -105,9 +108,6 @@ ax = sns.barplot(data=feature_ordered)
 
 # In[9]:
 
-
-# results dir for loading/saving
-results_dir = pathlib.Path("results/")
 
 shuffled_baseline_log_reg_model_path = pathlib.Path(f"{results_dir}/1.shuffled_baseline_log_reg_model.joblib")
 shuffled_baseline_log_reg_model = load(shuffled_baseline_log_reg_model_path)

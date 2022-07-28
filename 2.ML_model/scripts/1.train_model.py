@@ -18,7 +18,10 @@ from sklearn.model_selection import (
 from sklearn.utils import shuffle
 from joblib import dump
 
-from utils.MlPipelineUtils import get_features_data, get_dataset, get_X_y_data
+import sys
+# adding utils to system path
+sys.path.insert(0, '../utils')
+from MlPipelineUtils import get_features_data, get_dataset, get_X_y_data
 
 
 # ### Load training data and create stratified folds for cross validation
@@ -26,9 +29,14 @@ from utils.MlPipelineUtils import get_features_data, get_dataset, get_X_y_data
 # In[2]:
 
 
+# set numpy seed to make random operations reproduceable
+np.random.seed(0)
+
+results_dir = pathlib.Path("../results/")
+
 # load training data from indexes and features dataframe
-data_split_path = pathlib.Path("results/0.data_split_indexes.tsv")
-features_dataframe_path = pathlib.Path("../1.format_data/data/training_data.csv.gz")
+data_split_path = pathlib.Path(f"{results_dir}/0.data_split_indexes.tsv")
+features_dataframe_path = pathlib.Path("../../1.format_data/data/training_data.csv.gz")
 
 features_dataframe = get_features_data(features_dataframe_path)
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
@@ -88,10 +96,6 @@ print(f"Score of best estimator: {grid_search_cv.best_score_}")
 # In[7]:
 
 
-# make results dir for saving
-results_dir = pathlib.Path("results/")
-results_dir.mkdir(parents=True, exist_ok=True)
-
 # save final estimator
 dump(grid_search_cv.best_estimator_, f"{results_dir}/1.log_reg_model.joblib")
 
@@ -145,10 +149,6 @@ print(f"Score of best estimator: {grid_search_cv.best_score_}")
 
 # In[12]:
 
-
-# make results dir for saving
-results_dir = pathlib.Path("results/")
-results_dir.mkdir(parents=True, exist_ok=True)
 
 # save final estimator
 dump(grid_search_cv.best_estimator_, f"{results_dir}/1.shuffled_baseline_log_reg_model.joblib")

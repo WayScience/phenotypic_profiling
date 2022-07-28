@@ -12,7 +12,10 @@ import pathlib
 
 from joblib import load
 
-from utils.MlPipelineUtils import (
+import sys
+# adding utils to system path
+sys.path.insert(0, '../utils')
+from MlPipelineUtils import (
     get_features_data,
     get_dataset,
     get_X_y_data,
@@ -28,16 +31,18 @@ from sklearn.metrics import f1_score
 # In[2]:
 
 
-# results dir for loading/saving
-results_dir = pathlib.Path("results/")
+# set numpy seed to make random operations reproduceable
+np.random.seed(0)
+
+results_dir = pathlib.Path("../results/")
 
 log_reg_model_path = pathlib.Path(f"{results_dir}/1.log_reg_model.joblib")
 log_reg_model = load(log_reg_model_path)
 
 # load features data from indexes and features dataframe
-data_split_path = pathlib.Path("results/0.data_split_indexes.tsv")
+data_split_path = pathlib.Path(f"{results_dir}/0.data_split_indexes.tsv")
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../1.format_data/data/training_data.csv.gz")
+features_dataframe_path = pathlib.Path("../../1.format_data/data/training_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
 

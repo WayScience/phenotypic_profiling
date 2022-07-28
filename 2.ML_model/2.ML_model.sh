@@ -1,9 +1,12 @@
 #!/bin/bash
-jupyter nbconvert --to python 0.split_data.ipynb
-python 0.split_data.py
-jupyter nbconvert --to python 1.train_model.ipynb
-python 1.train_model.py
-jupyter nbconvert --to python 2.evaluate_model.ipynb
-python 2.evaluate_model.py
-jupyter nbconvert --to python 3.interpret_model.ipynb
-python 3.interpret_model.py
+# Step 0: Convert all notebooks to scripts
+jupyter nbconvert --to=script \
+        --FilesWriter.build_directory=scripts \
+        notebooks/*.ipynb
+
+# Step 1: Execute all jupyter notebooks
+jupyter nbconvert --to=html \
+        --FilesWriter.build_directory=html \
+        --ExecutePreprocessor.kernel_name=python3 \
+        --ExecutePreprocessor.timeout=10000000 \
+        --execute notebooks/*.ipynb

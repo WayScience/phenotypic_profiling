@@ -15,7 +15,10 @@ from typing import Tuple, Any, List, Union
 
 from sklearn.utils import shuffle
 
-from utils.MlPipelineUtils import get_features_data, get_random_images_indexes, get_representative_images, get_image_indexes
+import sys
+# adding utils to system path
+sys.path.insert(0, '../utils')
+from MlPipelineUtils import get_features_data, get_random_images_indexes, get_representative_images, get_image_indexes
 
 
 # ### Load data and set holdout/test parameters
@@ -23,8 +26,11 @@ from utils.MlPipelineUtils import get_features_data, get_random_images_indexes, 
 # In[2]:
 
 
+# set numpy seed to make random operations reproduceable
+np.random.seed(0)
+
 # load x (features) and y (labels) dataframes
-load_path = pathlib.Path("../1.format_data/data/training_data.csv.gz")
+load_path = pathlib.Path("../../1.format_data/data/training_data.csv.gz")
 training_data = get_features_data(load_path)
 print(training_data.shape)
 
@@ -78,7 +84,7 @@ index_data
 
 
 # make results dir for saving
-results_dir = pathlib.Path("results/")
+results_dir = pathlib.Path("../results/")
 results_dir.mkdir(parents=True, exist_ok=True)
 # save indexes as tsv file
 index_data.to_csv(f"{results_dir}/0.data_split_indexes.tsv", sep="\t")
