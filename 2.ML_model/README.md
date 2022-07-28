@@ -10,7 +10,8 @@ We consistently use the following parameters with many sklearn functions:
 
 - `n_jobs=-1`: Use all CPU cores in parallel when completing a task.
 - `random_state=0`: Use seed 0 when shuffling data or generating random numbers.
-This allows "random" operations to have consist results.
+This allows "random" sklearn operations to have consist results.
+We also use `np.random.seed(0)` to make "random" numpy operations have consistent results.
 
 We use [seaborn](https://seaborn.pydata.org/) for data visualization. 
 Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
@@ -20,7 +21,7 @@ This shuffled baseline model provides a suitable baseline comparison for the fin
 
 ### A. Data Preparation
 
-First, we split the data into training, test, and holdout subsets in [0.split_data.ipynb](0.split_data.ipynb).
+First, we split the data into training, test, and holdout subsets in [0.split_data.ipynb](notebooks/0.split_data.ipynb).
 The `get_representative_images()` function used to create the holdout dataset determines which images to holdout such that all phenotypic classes can be represented in these holdout images.
 The test dataset is determined by taking a random number of samples (stratified by phenotypic class) from the dataset after the holdout images are removed.
 The training dataset is the subset remaining after holdout/test samples are removed.
@@ -42,6 +43,7 @@ We then shuffle each column of the training data independently, which removes an
 
 ### B. Model Training
 
+We train the model in [1.train_model.ipynb](notebooks/1.train_model.ipynb).
 We use [sklearn.linear_model.LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for our machine learning model.
 We use the following parameters for our Logisic Regression model:
 
@@ -65,6 +67,7 @@ The model derived from shuffled training data is saved in [1.shuffled_baseline_l
 
 ### C. Model Evaluation
 
+We train the model in [2.evaluate_model.ipynb](notebooks/2.evaluate_model.ipynb).
 We use the final model and shuffled baseline model to predict the labels of the training, testing, and holdout datasets.
 These predictions are saved in [results/2.model_predictions.tsv](results/2.model_predictions.tsv) and [2.shuffled_baseline_model_predictions.tsv](results/2.shuffled_baseline_model_predictions.tsv) respectively.
 
@@ -75,6 +78,7 @@ F1 score measures the models precision and recall performance for each phenotypi
 
 ### D. Model Interpretation
 
+We train the model in [3.interpret_model.ipynb](notebooks/3.interpret_model.ipynb).
 The final model and shuffled baseline model coefficients are loaded from [1.log_reg_model.joblib](results/1.log_reg_model.joblib) and [1.shuffled_baseline_log_reg_model.joblib](results/1.shuffled_baseline_log_reg_model.joblib) respectively.
 These coefficients are interpreted with the following diagrams:
 
@@ -107,4 +111,4 @@ bash 2.ML_model.sh
 ```
 
 **Note:** Running pipeline will produce all intermediate files (located in [results](results/)).
-All evaluation/interpretation diagrams can be found in their respective notebooks.
+Jupyter notebooks (located in [notebooks](notebooks/)) will not be updated but the executed notebooks (located in [html](html/)) will be updated.
