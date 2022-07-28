@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+# set numpy seed to make random operations reproduceable
+np.random.seed(0)
+
 def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     """get features data from csv at load path
 
