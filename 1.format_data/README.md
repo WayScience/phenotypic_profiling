@@ -27,5 +27,5 @@ conda activate 1.format_training_data
 
 ```bash
 # Run this script to preprocess training movies
-bash 1.format_trainind_data.sh
+bash 1.format_training_data.sh
 ```
