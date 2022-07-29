@@ -36,7 +36,7 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     return features_data
 
 
-def show_1D_umap(features_dataframe: pd.DataFrame):
+def show_1D_umap(features_dataframe: pd.DataFrame, save_path=None):
     """display 1D UMAP given features dataframe
 
     Args:
@@ -46,7 +46,7 @@ def show_1D_umap(features_dataframe: pd.DataFrame):
     reducer = umap.UMAP(random_state=0, n_components=1)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.iloc[:, 1:].values
+    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
 
     # Fit UMAP and extract latent var 1
     embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1"])
@@ -54,6 +54,11 @@ def show_1D_umap(features_dataframe: pd.DataFrame):
     # create random y distribution to space out points
     y_distribution = np.random.rand(feature_data.shape[0])
     embedding["y_distribution"] = y_distribution.tolist()
+
+    # add phenotypic class to embeddings
+    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
+        "Mitocheck_Phenotypic_Class"
+    ].tolist()
 
     plt.figure(figsize=(15, 12))
 
@@ -74,8 +79,12 @@ def show_1D_umap(features_dataframe: pd.DataFrame):
     sns_plot.set_ylabel("Random Distribution")
     sns_plot.set_title("1 Dimensional UMAP")
 
+    # save embedding
+    if not save_path == None:
+        embedding.to_csv(save_path, sep="\t", index=False)
 
-def show_2D_umap(features_dataframe: pd.DataFrame):
+
+def show_2D_umap(features_dataframe: pd.DataFrame, save_path=None):
     """display 2D UMAP given features dataframe
 
     Args:
@@ -85,12 +94,17 @@ def show_2D_umap(features_dataframe: pd.DataFrame):
     reducer = umap.UMAP(random_state=0, n_components=2)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.iloc[:, 1:].values
+    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
 
     # Fit UMAP and extract latent vars 1-2
     embedding = pd.DataFrame(
         reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2"]
     )
+
+    # add phenotypic class to embeddings
+    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
+        "Mitocheck_Phenotypic_Class"
+    ].tolist()
 
     plt.figure(figsize=(15, 12))
 
@@ -111,8 +125,12 @@ def show_2D_umap(features_dataframe: pd.DataFrame):
     sns_plot.set_ylabel("UMAP 2")
     sns_plot.set_title("2 Dimensional UMAP")
 
+    # save embedding
+    if not save_path == None:
+        embedding.to_csv(save_path, sep="\t", index=False)
 
-def show_3D_umap(features_dataframe: pd.DataFrame):
+
+def show_3D_umap(features_dataframe: pd.DataFrame, save_path=None):
     """display 2D UMAP given features dataframe
 
     Args:
@@ -122,7 +140,7 @@ def show_3D_umap(features_dataframe: pd.DataFrame):
     reducer = umap.UMAP(random_state=0, n_components=3)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.iloc[:, 1:].values
+    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
 
     # Fit UMAP and extract latent vars 1-3
     embedding = pd.DataFrame(
@@ -172,3 +190,7 @@ def show_3D_umap(features_dataframe: pd.DataFrame):
     ax.set_title("3 Dimensional UMAP")
 
     plt.show()
+
+    # save embedding
+    if not save_path == None:
+        embedding.to_csv(save_path, sep="\t", index=False)
