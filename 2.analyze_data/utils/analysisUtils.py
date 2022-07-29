@@ -13,6 +13,7 @@ import umap
 
 np.random.seed(0)
 
+
 def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     """get features data from csv at load path
     Args:
@@ -34,6 +35,7 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
 
     return features_data
 
+
 def show_1D_umap(features_dataframe: pd.DataFrame):
     """display 1D UMAP given features dataframe
 
@@ -47,10 +49,8 @@ def show_1D_umap(features_dataframe: pd.DataFrame):
     feature_data = features_dataframe.iloc[:, 1:].values
 
     # Fit UMAP and extract latent var 1
-    embedding = pd.DataFrame(
-        reducer.fit_transform(feature_data), columns=["UMAP1"]
-    )
-    
+    embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1"])
+
     # create random y distribution to space out points
     y_distribution = np.random.rand(feature_data.shape[0])
     embedding["y_distribution"] = y_distribution.tolist()
@@ -59,19 +59,21 @@ def show_1D_umap(features_dataframe: pd.DataFrame):
 
     # Produce scatterplot with umap data, using phenotypic classses to color
     sns_plot = sns.scatterplot(
+        palette="rainbow",
         x="UMAP1",
         y="y_distribution",
         data=embedding,
         hue=features_dataframe["Mitocheck_Phenotypic_Class"].tolist(),
-        alpha=1,
+        alpha=0.5,
         linewidth=0,
     )
     # Adjust legend
     sns_plot.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     # Label axes, title
-    sns_plot.set_xlabel('UMAP 1')
-    sns_plot.set_ylabel('Random Distribution')
-    sns_plot.set_title('1 Dimensional UMAP')
+    sns_plot.set_xlabel("UMAP 1")
+    sns_plot.set_ylabel("Random Distribution")
+    sns_plot.set_title("1 Dimensional UMAP")
+
 
 def show_2D_umap(features_dataframe: pd.DataFrame):
     """display 2D UMAP given features dataframe
@@ -94,20 +96,22 @@ def show_2D_umap(features_dataframe: pd.DataFrame):
 
     # Produce scatterplot with umap data, using phenotypic classses to color
     sns_plot = sns.scatterplot(
+        palette="rainbow",
         x="UMAP1",
         y="UMAP2",
         data=embedding,
         hue=features_dataframe["Mitocheck_Phenotypic_Class"].tolist(),
-        alpha=1,
+        alpha=0.5,
         linewidth=0,
     )
     # Adjust legend
     sns_plot.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     # Label axes, title
-    sns_plot.set_xlabel('UMAP 1')
-    sns_plot.set_ylabel('UMAP 2')
-    sns_plot.set_title('2 Dimensional UMAP')
-    
+    sns_plot.set_xlabel("UMAP 1")
+    sns_plot.set_ylabel("UMAP 2")
+    sns_plot.set_title("2 Dimensional UMAP")
+
+
 def show_3D_umap(features_dataframe: pd.DataFrame):
     """display 2D UMAP given features dataframe
 
@@ -124,13 +128,17 @@ def show_3D_umap(features_dataframe: pd.DataFrame):
     embedding = pd.DataFrame(
         reducer.fit_transform(feature_data), columns=["UMAP1", "UMAP2", "UMAP3"]
     )
-    
+
     # add phenotypic class to embeddings
-    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe["Mitocheck_Phenotypic_Class"].tolist()
+    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
+        "Mitocheck_Phenotypic_Class"
+    ].tolist()
 
     fig = plt.figure(figsize=(17, 17))
     ax = fig.gca(projection="3d")
-    cmap = sns.color_palette("husl", embedding["Mitocheck_Phenotypic_Class"].nunique())
+    cmap = sns.color_palette(
+        "rainbow", embedding["Mitocheck_Phenotypic_Class"].nunique()
+    )
     legend_elements = []
 
     # add each phenotypic class to 3d graph and legend
@@ -143,15 +151,24 @@ def show_3D_umap(features_dataframe: pd.DataFrame):
         x = class_embedding["UMAP1"]
         y = class_embedding["UMAP2"]
         z = class_embedding["UMAP3"]
-        ax.scatter(x, y, z, c=rgb2hex(cmap[index]), marker="o", alpha=0.7)
-        legend_elements.append(Line2D([0], [0], marker='o', color='w', label=phenotypic_class, markerfacecolor=rgb2hex(cmap[index]), markersize=10))
-
+        ax.scatter(x, y, z, c=rgb2hex(cmap[index]), marker="o", alpha=0.5)
+        legend_elements.append(
+            Line2D(
+                [0],
+                [0],
+                marker="o",
+                color="w",
+                label=phenotypic_class,
+                markerfacecolor=rgb2hex(cmap[index]),
+                markersize=10,
+            )
+        )
 
     plt.legend(handles=legend_elements, loc="center left", bbox_to_anchor=(1, 0.5))
     # Label axes, title
-    ax.set_xlabel('UMAP 1')
-    ax.set_ylabel('UMAP 2')
-    ax.set_zlabel('UMAP 3')
-    ax.set_title('3 Dimensional UMAP')
+    ax.set_xlabel("UMAP 1")
+    ax.set_ylabel("UMAP 2")
+    ax.set_zlabel("UMAP 3")
+    ax.set_title("3 Dimensional UMAP")
 
     plt.show()
