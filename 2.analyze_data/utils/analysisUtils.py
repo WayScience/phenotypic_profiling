@@ -36,17 +36,19 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     return features_data
 
 
-def show_1D_umap(features_dataframe: pd.DataFrame, save_path=None):
-    """display 1D UMAP given features dataframe
+def show_1D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, save_path: str = None):
+    """show 1D umap with features, colored by metadata categories
 
     Args:
-        features_dataframe (pd.DataFrame): dataframe with single-cell data of phenotypic class and features
+        features_dataframe (pd.DataFrame): features to compress with umap
+        metadata_series (pd.Series): metadata to color umap
+        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=1)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
+    feature_data = features_dataframe.values
 
     # Fit UMAP and extract latent var 1
     embedding = pd.DataFrame(reducer.fit_transform(feature_data), columns=["UMAP1"])
@@ -56,9 +58,7 @@ def show_1D_umap(features_dataframe: pd.DataFrame, save_path=None):
     embedding["y_distribution"] = y_distribution.tolist()
 
     # add phenotypic class to embeddings
-    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
-        "Mitocheck_Phenotypic_Class"
-    ].tolist()
+    embedding[metadata_series.name] = metadata_series.tolist()
 
     plt.figure(figsize=(15, 12))
 
@@ -68,7 +68,7 @@ def show_1D_umap(features_dataframe: pd.DataFrame, save_path=None):
         x="UMAP1",
         y="y_distribution",
         data=embedding,
-        hue=features_dataframe["Mitocheck_Phenotypic_Class"].tolist(),
+        hue=embedding[metadata_series.name].tolist(),
         alpha=0.5,
         linewidth=0,
     )
@@ -84,17 +84,19 @@ def show_1D_umap(features_dataframe: pd.DataFrame, save_path=None):
         embedding.to_csv(save_path, sep="\t", index=False)
 
 
-def show_2D_umap(features_dataframe: pd.DataFrame, save_path=None):
-    """display 2D UMAP given features dataframe
+def show_2D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, save_path=None):
+    """show 2D umap with features, colored by metadata categories
 
     Args:
-        features_dataframe (pd.DataFrame): dataframe with single-cell data of phenotypic class and features
+        features_dataframe (pd.DataFrame): features to compress with umap
+        metadata_series (pd.Series): metadata to color umap
+        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=2)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
+    feature_data = features_dataframe.values
 
     # Fit UMAP and extract latent vars 1-2
     embedding = pd.DataFrame(
@@ -102,9 +104,7 @@ def show_2D_umap(features_dataframe: pd.DataFrame, save_path=None):
     )
 
     # add phenotypic class to embeddings
-    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
-        "Mitocheck_Phenotypic_Class"
-    ].tolist()
+    embedding[metadata_series.name] = metadata_series.tolist()
 
     plt.figure(figsize=(15, 12))
 
@@ -114,7 +114,7 @@ def show_2D_umap(features_dataframe: pd.DataFrame, save_path=None):
         x="UMAP1",
         y="UMAP2",
         data=embedding,
-        hue=features_dataframe["Mitocheck_Phenotypic_Class"].tolist(),
+        hue=embedding[metadata_series.name].tolist(),
         alpha=0.5,
         linewidth=0,
     )
@@ -130,17 +130,19 @@ def show_2D_umap(features_dataframe: pd.DataFrame, save_path=None):
         embedding.to_csv(save_path, sep="\t", index=False)
 
 
-def show_3D_umap(features_dataframe: pd.DataFrame, save_path=None):
-    """display 2D UMAP given features dataframe
+def show_3D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, save_path=None):
+    """show 3D umap with features, colored by metadata categories
 
     Args:
-        features_dataframe (pd.DataFrame): dataframe with single-cell data of phenotypic class and features
+        features_dataframe (pd.DataFrame): features to compress with umap
+        metadata_series (pd.Series): metadata to color umap
+        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=3)
 
     # get feature values as numpy array
-    feature_data = features_dataframe.drop("Mitocheck_Phenotypic_Class", axis=1).values
+    feature_data = features_dataframe.values
 
     # Fit UMAP and extract latent vars 1-3
     embedding = pd.DataFrame(
@@ -148,23 +150,21 @@ def show_3D_umap(features_dataframe: pd.DataFrame, save_path=None):
     )
 
     # add phenotypic class to embeddings
-    embedding["Mitocheck_Phenotypic_Class"] = features_dataframe[
-        "Mitocheck_Phenotypic_Class"
-    ].tolist()
+    embedding[metadata_series.name] = metadata_series.tolist()
 
     fig = plt.figure(figsize=(17, 17))
     ax = fig.gca(projection="3d")
     cmap = sns.color_palette(
-        "rainbow", embedding["Mitocheck_Phenotypic_Class"].nunique()
+        "rainbow", embedding[metadata_series.name].nunique()
     )
     legend_elements = []
 
     # add each phenotypic class to 3d graph and legend
-    for index, phenotypic_class in enumerate(
-        embedding["Mitocheck_Phenotypic_Class"].unique().tolist()
+    for index, metadata_class in enumerate(
+        embedding[metadata_series.name].unique().tolist()
     ):
         class_embedding = embedding.loc[
-            embedding["Mitocheck_Phenotypic_Class"] == phenotypic_class
+            embedding[metadata_series.name] == metadata_class
         ]
         x = class_embedding["UMAP1"]
         y = class_embedding["UMAP2"]
@@ -176,7 +176,7 @@ def show_3D_umap(features_dataframe: pd.DataFrame, save_path=None):
                 [0],
                 marker="o",
                 color="w",
-                label=phenotypic_class,
+                label=metadata_class,
                 markerfacecolor=rgb2hex(cmap[index]),
                 markersize=10,
             )
