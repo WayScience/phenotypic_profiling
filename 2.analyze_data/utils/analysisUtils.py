@@ -42,7 +42,7 @@ def show_1D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     Args:
         features_dataframe (pd.DataFrame): features to compress with umap
         metadata_series (pd.Series): metadata to color umap
-        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
+        save_path (str, optional): save path for umap embeddings/images. If none nothing will be saved. Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=1)
@@ -79,9 +79,10 @@ def show_1D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     sns_plot.set_ylabel("Random Distribution")
     sns_plot.set_title("1 Dimensional UMAP")
 
-    # save embedding
+    # save umap
     if not save_path == None:
-        embedding.to_csv(save_path, sep="\t", index=False)
+        embedding.to_csv(f"{save_path}/1D_umap.tsv", sep="\t", index=False)
+        plt.savefig(f"{save_path}/1D_umap.png", bbox_inches="tight")
 
 
 def show_2D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, save_path=None):
@@ -90,7 +91,7 @@ def show_2D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     Args:
         features_dataframe (pd.DataFrame): features to compress with umap
         metadata_series (pd.Series): metadata to color umap
-        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
+        save_path (str, optional): save path for umap embeddings/images. If none nothing will be saved. Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=2)
@@ -125,9 +126,10 @@ def show_2D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     sns_plot.set_ylabel("UMAP 2")
     sns_plot.set_title("2 Dimensional UMAP")
 
-    # save embedding
+    # save umap
     if not save_path == None:
-        embedding.to_csv(save_path, sep="\t", index=False)
+        embedding.to_csv(f"{save_path}/2D_umap.tsv", sep="\t", index=False)
+        plt.savefig(f"{save_path}/2D_umap.png", bbox_inches="tight")
 
 
 def show_3D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, save_path=None):
@@ -136,7 +138,7 @@ def show_3D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     Args:
         features_dataframe (pd.DataFrame): features to compress with umap
         metadata_series (pd.Series): metadata to color umap
-        save_path (str, optional): save path for umap embeddings, should end in .tsv. If none embeddings will not be saved Defaults to None.
+        save_path (str, optional): save path for umap embeddings/images. If none nothing will be saved. Defaults to None.
     """
     # create umap object for dimension reduction
     reducer = umap.UMAP(random_state=0, n_components=3)
@@ -188,9 +190,10 @@ def show_3D_umap(features_dataframe: pd.DataFrame, metadata_series: pd.Series, s
     ax.set_ylabel("UMAP 2")
     ax.set_zlabel("UMAP 3")
     ax.set_title("3 Dimensional UMAP")
-
-    plt.show()
-
-    # save embedding
+    
+    # save umap
     if not save_path == None:
-        embedding.to_csv(save_path, sep="\t", index=False)
+        embedding.to_csv(f"{save_path}/3D_umap.tsv", sep="\t", index=False)
+        plt.savefig(f"{save_path}/3D_umap.png", bbox_inches="tight")
+    
+    plt.show()

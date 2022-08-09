@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>2.analyze_training_data</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title><p>analyze_training_data</p></title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14634,7 +14634,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># create results dir for saving results</span>
-<span class="n">results_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;results/&quot;</span><span class="p">)</span>
+<span class="n">results_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">"results/"</span><span class="p">)</span>
 <span class="n">results_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
@@ -14663,12 +14663,12 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load features dataframe</span>
-<span class="n">features_dataframe_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../1.format_data/data/training_data.csv.gz&quot;</span><span class="p">)</span>
+<span class="n">features_dataframe_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">"../1.format_data/data/training_data.csv.gz"</span><span class="p">)</span>
 <span class="n">features_dataframe</span> <span class="o">=</span> <span class="n">get_features_data</span><span class="p">(</span><span class="n">features_dataframe_path</span><span class="p">)</span>
 
-<span class="c1"># drop metadata columns from features dataframe</span>
-<span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">]</span>
-<span class="n">features_dataframe</span> <span class="o">=</span> <span class="n">features_dataframe</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">features_dataframe</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">metadata_cols</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># split metadata from features</span>
+<span class="n">metadata_dataframe</span> <span class="o">=</span> <span class="n">features_dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">13</span><span class="p">]</span>
+<span class="n">features_dataframe</span> <span class="o">=</span> <span class="n">features_dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">13</span><span class="p">:]</span>
 
 <span class="n">features_dataframe</span>
 </pre></div>
@@ -14711,7 +14711,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Mitocheck_Phenotypic_Class</th>
       <th>efficientnet_0</th>
       <th>efficientnet_1</th>
       <th>efficientnet_2</th>
@@ -14721,6 +14720,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <th>efficientnet_6</th>
       <th>efficientnet_7</th>
       <th>efficientnet_8</th>
+      <th>efficientnet_9</th>
       <th>...</th>
       <th>efficientnet_1270</th>
       <th>efficientnet_1271</th>
@@ -14737,7 +14737,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
   <tbody>
     <tr>
       <th>4</th>
-      <td>Polylobed</td>
       <td>0.006205</td>
       <td>0.119546</td>
       <td>0.905428</td>
@@ -14747,6 +14746,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>0.124336</td>
       <td>0.593695</td>
       <td>0.274280</td>
+      <td>-1.274982</td>
       <td>...</td>
       <td>1.764085</td>
       <td>-0.364659</td>
@@ -14761,7 +14761,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>5</th>
-      <td>MetaphaseAlignment</td>
       <td>2.378942</td>
       <td>-0.955787</td>
       <td>-0.691866</td>
@@ -14771,6 +14770,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>-0.670943</td>
       <td>-0.592767</td>
       <td>-0.990411</td>
+      <td>-0.380712</td>
       <td>...</td>
       <td>-0.030402</td>
       <td>-0.306105</td>
@@ -14785,7 +14785,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>6</th>
-      <td>Interphase</td>
       <td>-0.976226</td>
       <td>2.157527</td>
       <td>-0.278376</td>
@@ -14795,6 +14794,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>-0.296961</td>
       <td>-0.709488</td>
       <td>0.249411</td>
+      <td>1.771207</td>
       <td>...</td>
       <td>-2.070584</td>
       <td>-0.419038</td>
@@ -14809,7 +14809,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>7</th>
-      <td>Interphase</td>
       <td>-1.378884</td>
       <td>1.122315</td>
       <td>-0.569486</td>
@@ -14819,6 +14818,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>0.692530</td>
       <td>-0.391879</td>
       <td>-0.471718</td>
+      <td>0.897925</td>
       <td>...</td>
       <td>-1.264048</td>
       <td>-0.678396</td>
@@ -14833,7 +14833,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>8</th>
-      <td>Artefact</td>
       <td>-1.909268</td>
       <td>-0.839781</td>
       <td>-0.552060</td>
@@ -14843,6 +14842,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>-0.459263</td>
       <td>-0.892607</td>
       <td>0.132191</td>
+      <td>1.081521</td>
       <td>...</td>
       <td>-0.834010</td>
       <td>-0.404291</td>
@@ -14881,7 +14881,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>4303</th>
-      <td>SmallIrregular</td>
       <td>-0.116541</td>
       <td>-0.629463</td>
       <td>1.401698</td>
@@ -14891,6 +14890,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>0.988942</td>
       <td>-0.719675</td>
       <td>-0.754563</td>
+      <td>-1.002060</td>
       <td>...</td>
       <td>-0.010054</td>
       <td>2.490791</td>
@@ -14905,7 +14905,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>4304</th>
-      <td>SmallIrregular</td>
       <td>1.059086</td>
       <td>-0.224794</td>
       <td>-0.530644</td>
@@ -14915,6 +14914,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>0.143485</td>
       <td>1.416218</td>
       <td>-0.976807</td>
+      <td>0.024085</td>
       <td>...</td>
       <td>0.828838</td>
       <td>2.328690</td>
@@ -14929,7 +14929,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>4305</th>
-      <td>SmallIrregular</td>
       <td>1.071799</td>
       <td>-0.186700</td>
       <td>0.053190</td>
@@ -14939,6 +14938,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>-0.615709</td>
       <td>-0.928396</td>
       <td>-0.879711</td>
+      <td>-0.864035</td>
       <td>...</td>
       <td>0.342158</td>
       <td>1.118108</td>
@@ -14953,7 +14953,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>4306</th>
-      <td>SmallIrregular</td>
       <td>0.689590</td>
       <td>0.097733</td>
       <td>-0.615206</td>
@@ -14963,6 +14962,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>0.436329</td>
       <td>1.444259</td>
       <td>-0.527824</td>
+      <td>0.413573</td>
       <td>...</td>
       <td>-0.890952</td>
       <td>0.301522</td>
@@ -14977,7 +14977,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
     <tr>
       <th>4307</th>
-      <td>SmallIrregular</td>
       <td>0.807782</td>
       <td>-0.023426</td>
       <td>-0.958250</td>
@@ -14987,6 +14986,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
       <td>-0.179938</td>
       <td>-0.469140</td>
       <td>-0.636907</td>
+      <td>-0.601189</td>
       <td>...</td>
       <td>0.116183</td>
       <td>0.073442</td>
@@ -15001,7 +15001,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </tr>
   </tbody>
 </table>
-<p>4123 rows × 1281 columns</p>
+<p>4123 rows × 1280 columns</p>
 </div>
 </div>
 
@@ -15030,7 +15030,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">features_dataframe</span><span class="p">[</span><span class="s2">&quot;Mitocheck_Phenotypic_Class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -15098,24 +15098,29 @@ Name: Mitocheck_Phenotypic_Class, dtype: int64</pre>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">classes_to_keep</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Polylobed&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MetaphaseAlignment&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Interphase&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Artefact&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Binuclear&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Prometaphase&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Metaphase&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Large&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Apoptosis&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Elongated&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;UndefinedCondensed&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;SmallIrregular&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Hole&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Folded&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Grape&quot;</span><span class="p">,</span>
+    <span class="s2">"Polylobed"</span><span class="p">,</span>
+    <span class="s2">"Binuclear"</span><span class="p">,</span>
+    <span class="s2">"Grape"</span><span class="p">,</span>
+    <span class="s2">"Prometaphase"</span><span class="p">,</span>
+    <span class="s2">"Interphase"</span><span class="p">,</span>
+    <span class="s2">"Artefact"</span><span class="p">,</span>
+    <span class="s2">"Apoptosis"</span><span class="p">,</span>
+    <span class="s2">"SmallIrregular"</span><span class="p">,</span>
+    <span class="s2">"MetaphaseAlignment"</span><span class="p">,</span>
+    <span class="s2">"Hole"</span><span class="p">,</span>
+    <span class="s2">"Metaphase"</span><span class="p">,</span>
+    <span class="s2">"Large"</span><span class="p">,</span>
+    <span class="s2">"Folded"</span><span class="p">,</span>
+    <span class="s2">"Elongated"</span><span class="p">,</span>
+    <span class="s2">"UndefinedCondensed"</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">features_dataframe</span> <span class="o">=</span> <span class="n">features_dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">features_dataframe</span><span class="p">[</span><span class="s2">&quot;Mitocheck_Phenotypic_Class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">classes_to_keep</span><span class="p">)]</span>
+<span class="n">features_dataframe</span> <span class="o">=</span> <span class="n">features_dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">classes_to_keep</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">metadata_dataframe</span> <span class="o">=</span> <span class="n">metadata_dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">classes_to_keep</span><span class="p">)</span>
+<span class="p">]</span>
 <span class="n">features_dataframe</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 
@@ -15140,7 +15145,7 @@ Name: Mitocheck_Phenotypic_Class, dtype: int64</pre>
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>(4123, 1281)</pre>
+<pre>(4123, 1280)</pre>
 </div>
 
 </div>
@@ -15168,8 +15173,8 @@ Name: Mitocheck_Phenotypic_Class, dtype: int64</pre>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results_dir</span><span class="si">}</span><span class="s2">/1D_umap.tsv&quot;</span><span class="p">)</span>
-<span class="n">show_1D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phenotypic_classes</span> <span class="o">=</span> <span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span>
+<span class="n">show_1D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">phenotypic_classes</span><span class="p">,</span> <span class="n">results_dir</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15226,8 +15231,8 @@ jp-needs-light-background
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results_dir</span><span class="si">}</span><span class="s2">/2D_umap.tsv&quot;</span><span class="p">)</span>
-<span class="n">show_2D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phenotypic_classes</span> <span class="o">=</span> <span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span>
+<span class="n">show_2D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">phenotypic_classes</span><span class="p">,</span> <span class="n">results_dir</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15284,8 +15289,8 @@ jp-needs-light-background
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">save_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results_dir</span><span class="si">}</span><span class="s2">/3D_umap.tsv&quot;</span><span class="p">)</span>
-<span class="n">show_3D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phenotypic_classes</span> <span class="o">=</span> <span class="n">metadata_dataframe</span><span class="p">[</span><span class="s2">"Mitocheck_Phenotypic_Class"</span><span class="p">]</span>
+<span class="n">show_3D_umap</span><span class="p">(</span><span class="n">features_dataframe</span><span class="p">,</span> <span class="n">phenotypic_classes</span><span class="p">,</span> <span class="n">results_dir</span><span class="p">)</span>
 </pre></div>
 
      </div>

@@ -45,9 +45,9 @@ results_dir.mkdir(parents=True, exist_ok=True)
 features_dataframe_path = pathlib.Path("../1.format_data/data/training_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
-# drop metadata columns from features dataframe
-metadata_cols = [1,2,3,4,5,6,7,8,9,10,11]
-features_dataframe = features_dataframe.drop(features_dataframe.columns[metadata_cols],axis=1)
+# split metadata from features
+metadata_dataframe = features_dataframe.iloc[:,:13]
+features_dataframe = features_dataframe.iloc[:,13:]
 
 features_dataframe
 
@@ -57,7 +57,7 @@ features_dataframe
 # In[4]:
 
 
-features_dataframe["Mitocheck_Phenotypic_Class"].value_counts()
+metadata_dataframe["Mitocheck_Phenotypic_Class"].value_counts()
 
 
 # ### Only keep certain phenoytpic classes for analysis
@@ -67,23 +67,28 @@ features_dataframe["Mitocheck_Phenotypic_Class"].value_counts()
 
 classes_to_keep = [
     "Polylobed",
-    "MetaphaseAlignment",
+    "Binuclear",
+    "Grape",
+    "Prometaphase",
     "Interphase",
     "Artefact",
-    "Binuclear",
-    "Prometaphase",
+    "Apoptosis",
+    "SmallIrregular",
+    "MetaphaseAlignment",
+    "Hole",
     "Metaphase",
     "Large",
-    "Apoptosis",
+    "Folded",
     "Elongated",
     "UndefinedCondensed",
-    "SmallIrregular",
-    "Hole",
-    "Folded",
-    "Grape",
 ]
 
-features_dataframe = features_dataframe.loc[features_dataframe["Mitocheck_Phenotypic_Class"].isin(classes_to_keep)]
+features_dataframe = features_dataframe.loc[
+    metadata_dataframe["Mitocheck_Phenotypic_Class"].isin(classes_to_keep)
+]
+metadata_dataframe = metadata_dataframe.loc[
+    metadata_dataframe["Mitocheck_Phenotypic_Class"].isin(classes_to_keep)
+]
 features_dataframe.shape
 
 
@@ -92,8 +97,8 @@ features_dataframe.shape
 # In[6]:
 
 
-save_path = pathlib.Path(f"{results_dir}/1D_umap.tsv")
-show_1D_umap(features_dataframe, save_path)
+phenotypic_classes = metadata_dataframe["Mitocheck_Phenotypic_Class"]
+show_1D_umap(features_dataframe, phenotypic_classes, results_dir)
 
 
 # ### 2D UMAP
@@ -101,8 +106,8 @@ show_1D_umap(features_dataframe, save_path)
 # In[7]:
 
 
-save_path = pathlib.Path(f"{results_dir}/2D_umap.tsv")
-show_2D_umap(features_dataframe, save_path)
+phenotypic_classes = metadata_dataframe["Mitocheck_Phenotypic_Class"]
+show_2D_umap(features_dataframe, phenotypic_classes, results_dir)
 
 
 # ### 3D UMAP
@@ -110,6 +115,6 @@ show_2D_umap(features_dataframe, save_path)
 # In[8]:
 
 
-save_path = pathlib.Path(f"{results_dir}/3D_umap.tsv")
-show_3D_umap(features_dataframe, save_path)
+phenotypic_classes = metadata_dataframe["Mitocheck_Phenotypic_Class"]
+show_3D_umap(features_dataframe, phenotypic_classes, results_dir)
 
