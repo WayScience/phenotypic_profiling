@@ -2,17 +2,27 @@
 
 ## Data
 
-Instructions for data download/processing can be found at: https://github.com/WayScience/mitocheck_data.
+Instructions for data download/preprocessing can be found at: https://github.com/WayScience/mitocheck_data.
 
-This repository compiles training data from a specific version of [MitoCheck_data](https://github.com/WayScience/mitocheck_data).
-For more information see [0.download_data/README.md](0.download_data/README.md).
+This repository downloads training data from a specific version of [MitoCheck_data](https://github.com/WayScience/mitocheck_data).
+For more information see [0.download_data/](0.download_data/).
 
-Formatted data (feature data + metadata) is saved in [training_data.csv.gz](1.format_data/data/training_data.csv.gz).
+## Setup
 
-## Analysis
+Perform the following steps to set up the `phenotypic_profiling` environment necessary for processing data in this repository.
 
-We anaylze the feature data with UMAP in [2.analyze_data](2.analyze_data).
+### Step 1: Create Phenotypic Profiling Environment
 
-## ML Model
+```sh
+# Run this command to create the conda environment for phenotypic profiling
 
-We train, evaluate, and interpret a model to predict mitotic stage from nuclear staining data using [DeepProfiler](https://github.com/cytomining/DeepProfiler) features in [2.ML_model](2.ML_model).
+conda env create -f phenotypic_profiling_env.yml
+```
+
+### Step 2: Activate Phenotypic Profiling Environment
+
+```sh
+# Run this command to activate the conda environment for phenotypic profiling
+
+conda activate phenotypic_profiling
+```
