@@ -12,7 +12,9 @@ The mixing of these two methods is determined by the `l1_ratio` parameter which 
 - `solver='saga'`: We use the saga solver as this is the only solver that supports Elastic-Net regularization.
 - `max_iter=100`: Set the maximum number of iterations for solver to converge. 100 iterations allows the solver to maximize performance without completing unnecessary iterations.
 
-We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the parameters below. This searches for parameters that maximize the weighted F1 score of the model. We optimize weighted F1 score because this metric measures model precision and recall aand accounts for label imbalance (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
+We use [sklearn.model_selection.GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) to perform an exhaustive search for the parameters below.
+This searches for parameters that maximize the weighted F1 score of the model.
+We optimize weighted F1 score because this metric measures model precision and recall aand accounts for label imbalance (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
 
 - `l1_ratio`: Elastic-Net mixing parameter.
 Used to combine L1 and L2 regularization methods.
