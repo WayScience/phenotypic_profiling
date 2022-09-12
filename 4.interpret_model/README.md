@@ -24,3 +24,7 @@ conda activate phenotypic_profiling
 # Interpret model
 bash interpret_model.sh
 ```
+
+## Results
+
+Each model's interpretations can be found in [interpret_model.ipynb](interpret_model.ipynb).

@@ -24,3 +24,7 @@ conda activate phenotypic_profiling
 # Evaluate model
 bash evaluate_model.sh
 ```
+
+## Results
+
+Each model's evaluations can be found in [evaluate_model.ipynb](evaluate_model.ipynb).
