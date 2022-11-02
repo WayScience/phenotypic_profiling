@@ -15,7 +15,7 @@ import pathlib
 # In[2]:
 
 
-hash = "19bfa5b0959d6b7536f83e7bb85745ba3edf7ff9"
+hash = "3ebd0ca7c288f608e9b23987a8ddbabd5476bd8f"
 file_url = f"https://raw.github.com/WayScience/mitocheck_data/{hash}/3.normalize_data/normalized_data/training_data.csv.gz"
 print(file_url)
 
