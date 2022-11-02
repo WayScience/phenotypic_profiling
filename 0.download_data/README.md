@@ -11,7 +11,7 @@ Complete instructions for data download and preprocessing can be found at: https
 In this repository, all training data is downloaded from a version controlled [mitocheck_data](https://github.com/WayScience/mitocheck_data).
 
 The version of mitocheck_data used is specified by the hash corresponding to a current commit.
-The current hash being used is `19bfa5b0959d6b7536f83e7bb85745ba3edf7ff9` which corresponds to [mitocheck_data/19bfa5b](https://github.com/WayScience/mitocheck_data/tree/19bfa5b0959d6b7536f83e7bb85745ba3edf7ff9).
+The current hash being used is `3ebd0ca7c288f608e9b23987a8ddbabd5476bd8f` which corresponds to [mitocheck_data/3ebd0ca](https://github.com/WayScience/mitocheck_data/tree/3ebd0ca7c288f608e9b23987a8ddbabd5476bd8f).
 The `hash` variable can be set in [download_data.ipynb](download_data.ipynb) to change which version of mitocheck_data is being accessed.
 
 ## Step 1: Download Data
