@@ -1,6 +1,6 @@
 # 1. Split Data
 
-In this module, we split the training data into training, testing, and holdout datasets.
+In this module, we split the training data into training and testing datasets.
 
 First, we split the data into training, test, and holdout subsets in [split_data.ipynb](split_data.ipynb).
 The `get_representative_images()` function used to create the holdout dataset determines which images to holdout such that all phenotypic classes can be represented in these holdout images.
