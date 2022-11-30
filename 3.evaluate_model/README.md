@@ -2,7 +2,7 @@
 
 In this module, we evaluate the final and shuffled baseline ML models.
 
-After training the final and baseline models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training, testing, and holdout datasets.
+After training the final and baseline models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training and testing datasets.
 These predictions are saved in [model_predictions.tsv](evaluations/model_predictions.tsv) and [shuffled_baseline_model_predictions.tsv](evaluations/shuffled_baseline_model_predictions.tsv) respectively.
 
 We evaluate these 6 sets of predictions with a confusion matrix to see the true/false postives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
