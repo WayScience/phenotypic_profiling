@@ -16,7 +16,7 @@ from sklearn.utils import shuffle
 
 import sys
 sys.path.append("../utils")
-from split_utils import get_features_data, get_random_images_indexes, get_representative_images, get_image_indexes
+from split_utils import get_features_data
 
 
 # ### Load data and set holdout/test parameters

@@ -88,31 +88,9 @@ y_test, y_test_pred = evaluate_model_cm(log_reg_model, testing_data)
 evaluate_model_score(log_reg_model, testing_data)
 
 
-# ### Evaluate with holdout data
-
-# In[10]:
-
-
-holdout_data = get_dataset(features_dataframe, data_split_indexes, "holdout")
-X_holdout, y_holdout = get_X_y_data(holdout_data)
-holdout_data
-
-
-# In[11]:
-
-
-y_holdout, y_holdout_pred = evaluate_model_cm(log_reg_model, holdout_data)
-
-
-# In[12]:
-
-
-evaluate_model_score(log_reg_model, holdout_data)
-
-
 # ### Save trained model predicitions
 
-# In[13]:
+# In[10]:
 
 
 predictions = []
@@ -123,17 +101,14 @@ predictions.append(y_train_pred)
 predictions.append(y_test)
 predictions.append(y_test_pred)
 
-predictions.append(y_holdout)
-predictions.append(y_holdout_pred)
-
 predictions = pd.DataFrame(predictions)
-predictions.index = ["y_train", "y_train_pred", "y_test", "y_test_pred", "y_holdout", "y_holdout_pred"]
+predictions.index = ["y_train", "y_train_pred", "y_test", "y_test_pred"]
 predictions.to_csv(f"{results_dir}/model_predictions.tsv", sep="\t")
 
 
 # ### Evaluate shuffled baseline model
 
-# In[14]:
+# In[11]:
 
 
 shuffled_baseline_log_reg_model_path = pathlib.Path(f"{model_dir}/shuffled_baseline_log_reg_model.joblib")
@@ -142,13 +117,13 @@ shuffled_baseline_log_reg_model = load(shuffled_baseline_log_reg_model_path)
 
 # ### Evaluate with training data
 
-# In[15]:
+# In[12]:
 
 
 y_train, y_train_pred = evaluate_model_cm(shuffled_baseline_log_reg_model, training_data)
 
 
-# In[16]:
+# In[13]:
 
 
 evaluate_model_score(shuffled_baseline_log_reg_model, training_data)
@@ -156,35 +131,21 @@ evaluate_model_score(shuffled_baseline_log_reg_model, training_data)
 
 # ### Evaluate with testing data
 
-# In[17]:
+# In[14]:
 
 
 y_test, y_test_pred = evaluate_model_cm(shuffled_baseline_log_reg_model, testing_data)
 
 
-# In[18]:
+# In[15]:
 
 
 evaluate_model_score(shuffled_baseline_log_reg_model, testing_data)
 
 
-# ### Evaluate with holdout data
-
-# In[19]:
-
-
-y_holdout, y_holdout_pred = evaluate_model_cm(shuffled_baseline_log_reg_model, holdout_data)
-
-
-# In[20]:
-
-
-evaluate_model_score(shuffled_baseline_log_reg_model, holdout_data)
-
-
 # ### Save trained model predicitions
 
-# In[21]:
+# In[16]:
 
 
 predictions = []
@@ -195,10 +156,7 @@ predictions.append(y_train_pred)
 predictions.append(y_test)
 predictions.append(y_test_pred)
 
-predictions.append(y_holdout)
-predictions.append(y_holdout_pred)
-
 predictions = pd.DataFrame(predictions)
-predictions.index = ["y_train", "y_train_pred", "y_test", "y_test_pred", "y_holdout", "y_holdout_pred"]
+predictions.index = ["y_train", "y_train_pred", "y_test", "y_test_pred"]
 predictions.to_csv(f"{results_dir}/shuffled_baseline_model_predictions.tsv", sep="\t")
 

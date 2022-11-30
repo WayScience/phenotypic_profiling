@@ -57,16 +57,25 @@ def combine_datasets(
                 and row_2015["Metadata_Well"] == row_2006["Metadata_Well"]
                 and row_2015["Metadata_Frame"] == row_2006["Metadata_Frame"]
             ):
-                outline_data_2015 = parse_outline_data(row_2015["Object_Outline"])
-                cell_polygon_2015 = Polygon(outline_data_2015)
-                point_2006 = Point(
-                    int(row_2006["Location_Center_X"]),
-                    int(row_2006["Location_Center_X"]),
-                )
-                if cell_polygon_2015.contains(point_2006):
+                # outline_data_2015 = parse_outline_data(row_2015["Object_Outline"])
+                # cell_polygon_2015 = Polygon(outline_data_2015)
+                # point_2006 = Point(
+                #     int(row_2006["Location_Center_X"]),
+                #     int(row_2006["Location_Center_X"]),
+                # )
+                # if cell_polygon_2015.contains(point_2006):
+                #     print(
+                #         f"Cell found in both datasets! Index {index_2015} in 2015 data."
+                #     )
+                #     in_both = True
+                cell_location_2006 = [int(row_2006["Location_Center_X"]), int(row_2006["Location_Center_Y"])]
+                cell_location_2015 = [int(row_2015["Location_Center_X"]), int(row_2015["Location_Center_Y"])]
+                if abs(cell_location_2006[0]-cell_location_2015[0])<5 and abs(cell_location_2006[1]-cell_location_2015[1])<5:
                     print(
                         f"Cell found in both datasets! Index {index_2015} in 2015 data."
                     )
+                    # print(row_2015.drop(labels=["Object_Outline"]).tolist()[:6])
+                    # print(row_2006.tolist()[:6])
                     in_both = True
 
         if not in_both:
