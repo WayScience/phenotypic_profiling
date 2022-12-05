@@ -15,10 +15,10 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     # read dataset into pandas dataframe
     features_data = pd.read_csv(load_path, index_col=0)
 
-    # remove training data with ADCCM class as this class only pertains to one mitocheck perturbation (we may still want to use)
-    # features_data = features_data[
-    #     features_data["Mitocheck_Phenotypic_Class"] != "ADCCM"
-    # ]
+    # remove fold class that has low representation
+    features_data = features_data[
+        features_data["Mitocheck_Phenotypic_Class"] != "Folded"
+    ]
 
     return features_data
 
