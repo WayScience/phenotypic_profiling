@@ -11,7 +11,7 @@ import pathlib
 
 import sys
 sys.path.append("../utils")
-from download_utils import parse_outline_data, combine_datasets
+from download_utils import combine_datasets
 
 
 # ### Specify version of mitocheck_data to download from
@@ -32,17 +32,27 @@ file_url_2015 = f"https://raw.github.com/WayScience/mitocheck_data/{hash_2015}/3
 
 
 training_data_2006 = pd.read_csv(file_url_2006, compression="gzip", index_col=0)
+# remove unnecessary mitocheck object ID as this ID is not present for data repeated in 2015 dataset
 training_data_2006 = training_data_2006.drop(columns=["Mitocheck_Object_ID"])
 
 training_data_2015 = pd.read_csv(file_url_2015, compression="gzip", index_col=0)
-#training_data_2015 = training_data_2015.drop(columns=["Object_Outline"])
+
+
+# In[4]:
+
+
+training_data_2006
+
+
+# In[5]:
+
 
 training_data = combine_datasets(training_data_2006, training_data_2015)
 
 
 # ### Preview dataset
 
-# In[4]:
+# In[6]:
 
 
 # remove undefinedCondensed class with very low representation
@@ -53,7 +63,7 @@ training_data
 
 # ### Save training data
 
-# In[5]:
+# In[7]:
 
 
 training_data_save_dir = pathlib.Path("data/")

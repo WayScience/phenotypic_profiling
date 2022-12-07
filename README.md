@@ -7,10 +7,10 @@ This repository is structured as follows:
 | Order | Module | Description |
 | :---- | :----- | :---------- |
 | [0.download_data](0.download_data/) | Download training data | Download labeled single-cell dataset from [mitocheck_data](https://github.com/WayScience/mitocheck_data) |
-| [1.split_data](1.split_data/) | Create data subsets | Create training, testing, and holdout data subsets |
-| [2.train_model](2.train_model/) | Train model | Train ML model on training data subset |
-| [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML model on all data subsets |
-| [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML model |
+| [1.split_data](1.split_data/) | Create data subsets | Create training and testing data subsets |
+| [2.train_model](2.train_model/) | Train model | Train ML models on training data subset and shuffled baseline training dataset |
+| [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML models on all data subsets |
+| [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML models |
 
 ## Data
 
@@ -25,7 +25,7 @@ We use [Scikit-learn (sklearn)](https://scikit-learn.org/) for data manipulation
 Scikit-learn is described in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python.
 Its ease of implementation in a pipeline make it ideal for our use case.
 
-We consistently use the following parameters with many sklearn functions:
+We consistently use the following parameters with many `sklearn` functions:
 
 - `n_jobs=-1`: Use all CPU cores in parallel when completing a task.
 - `random_state=0`: Use seed 0 when shuffling data or generating random numbers.

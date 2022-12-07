@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
 
 
 def parse_outline_data(raw_outline_data: str) -> np.array:
