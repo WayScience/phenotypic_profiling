@@ -1,3 +1,7 @@
+"""
+utilities for evaluating logistic regression models on training and testing datasets
+"""
+
 import pandas as pd
 import numpy as np
 

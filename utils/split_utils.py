@@ -1,3 +1,7 @@
+"""
+utilities for splitting MitoCheck single-cell dataset into training and testing subsets
+"""
+
 import pandas as pd
 import numpy as np
 import pathlib

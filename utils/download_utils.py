@@ -1,29 +1,9 @@
+"""
+utilities for combining MitoCheck datasets from 2006 and 2015
+"""
+
 import pandas as pd
 import numpy as np
-
-
-def parse_outline_data(raw_outline_data: str) -> np.array:
-    """
-    parse outline data extracted with IDR stream into numpy array format
-    Parameters
-    ----------
-    raw_outline_data : str
-        string of outline data
-    Returns
-    -------
-    np.array
-        parsed outline data
-    """
-    outline_data = []
-
-    raw_outline_data = raw_outline_data[1:-1]
-    raw_outline_data = raw_outline_data.split("\n ")
-    for coord_string in raw_outline_data:
-        x = int(coord_string[1:-1].split()[0])
-        y = int(coord_string[1:-1].split()[1])
-        outline_data.append([x, y])
-
-    return np.array(outline_data)
 
 
 def combine_datasets(
