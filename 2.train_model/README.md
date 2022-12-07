@@ -40,8 +40,9 @@ conda activate phenotypic_profiling
 # Train model
 bash train_model.sh
 ```
+
 ## Results
 
 The weighted F1 score of the best estimators for the grid searches are as follows (can be found in [train_model.ipynb](train_model.ipynb)):
-- Final model: 0.79848
-- Shuffled baseline model: 0.19864
+- Final model: 0.80416
+- Shuffled baseline model: 0.15943

@@ -1,3 +1,7 @@
+"""
+utilities for training logistic regression models on MitoCheck single-cell dataset
+"""
+
 import pandas as pd
 import numpy as np
 from sklearn.utils import shuffle

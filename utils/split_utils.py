@@ -1,3 +1,7 @@
+"""
+utilities for splitting MitoCheck single-cell dataset into training and testing subsets
+"""
+
 import pandas as pd
 import numpy as np
 import pathlib
@@ -15,9 +19,9 @@ def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     # read dataset into pandas dataframe
     features_data = pd.read_csv(load_path, index_col=0)
 
-    # remove training data with ADCCM class as this class was not used for classification in original paper
+    # remove fold class that has low representation
     features_data = features_data[
-        features_data["Mitocheck_Phenotypic_Class"] != "ADCCM"
+        features_data["Mitocheck_Phenotypic_Class"] != "Folded"
     ]
 
     return features_data
