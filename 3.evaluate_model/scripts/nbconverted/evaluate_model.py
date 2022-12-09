@@ -16,7 +16,7 @@ from joblib import load
 import sys
 sys.path.append("../utils")
 from split_utils import get_features_data
-from train_utils import get_dataset, get_X_y_data
+from train_utils import get_dataset
 from evaluate_utils import evaluate_model_cm, evaluate_model_score
 
 
