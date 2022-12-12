@@ -7,8 +7,11 @@ These predictions are saved in [model_predictions.tsv](evaluations/model_predict
 
 We evaluate these 4 sets of predictions with a confusion matrix to see the true/false positives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
 
-We also evaluate these 6 sets of predictions with [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) to determine the final/shuffled baseline model's predictive performance on each subset.
+We also evaluate these 4 sets of predictions with [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) to determine the final/shuffled baseline model's predictive performance on each subset.
 F1 score measures the models precision and recall performance for each phenotypic class.
+
+In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for final and shuffled baseline models on the training and testing data subsets.
+The precision recall curves and their data are saved to [class_precision_recall_curves](class_precision_recall_curves/).
 
 ## Step 1: Evaluate Model
 
