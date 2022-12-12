@@ -6,21 +6,23 @@ import pandas as pd
 import numpy as np
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, f1_score
+from sklearn.metrics import confusion_matrix, f1_score, precision_recall_curve
+from sklearn.preprocessing import label_binarize
 
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 import seaborn as sns
 
 from train_utils import get_X_y_data
 
-from sklearn.metrics import precision_recall_curve
-from sklearn.preprocessing import label_binarize
 
 # set numpy seed to make random operations reproduceable
 np.random.seed(0)
 
 
-def class_PR_curves(single_cell_data: pd.DataFrame, log_reg_model):
+def class_PR_curves(
+    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression
+) -> tuple[Figure, pd.DataFrame]:
     """
     save precision recall curves for each class to the save directory
     also, return the precision/recall data for each class in tidy long format
@@ -34,11 +36,11 @@ def class_PR_curves(single_cell_data: pd.DataFrame, log_reg_model):
 
     Returns
     -------
-    pd.DataFrame
-        dataframe with precision/recall data for each class in tidy long format
-
     matplotlib.figure.Figure
         figure with compilation of all class PR curves
+
+    pd.DataFrame
+        dataframe with precision/recall data for each class in tidy long format
     """
 
     phenotypic_classes = log_reg_model.classes_
@@ -62,15 +64,16 @@ def class_PR_curves(single_cell_data: pd.DataFrame, log_reg_model):
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
         precision, recall, _ = precision_recall_curve(y_binarized[:, i], y_score[:, i])
-        class_tidy_data = pd.DataFrame(
-            {
-                "Phenotypic_Class": phenotypic_classes[i],
-                "PR_Threshold": PR_threshold,
-                "Precision": precision,
-                "Recall": recall,
-            }
+        PR_data.append(
+            pd.DataFrame(
+                {
+                    "Phenotypic_Class": phenotypic_classes[i],
+                    "PR_Threshold": PR_threshold,
+                    "Precision": precision,
+                    "Recall": recall,
+                }
+            )
         )
-        PR_data.append(class_tidy_data)
 
         axs[ax_x, ax_y].plot(recall, precision, lw=2, label=phenotypic_classes[i])
         axs[ax_x, ax_y].set_title(phenotypic_classes[i])
@@ -89,13 +92,25 @@ def class_PR_curves(single_cell_data: pd.DataFrame, log_reg_model):
     return fig, PR_data
 
 
-def evaluate_model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
-    """display confusion matrix for logistic regression model on dataset
-    Args:
-        log_reg_model (LogisticRegression): logisitc regression model to evaluate
-        dataset (pd.DataFrame): dataset to evaluate model on
-    Returns:
-        np.ndarray, np.ndarray: true, predicted labels
+def evaluate_model_cm(
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+) -> tuple(np.ndarray, np.ndarray):
+    """
+    display confusion matrix for logistic regression model on dataset
+
+    Parameters
+    ----------
+    log_reg_model : LogisticRegression
+        logistic regression model to evaluate
+    dataset : pd.DataFrame
+        dataset to evaluate model on
+
+    Returns
+    -------
+    np.ndarray
+        true labels
+    np.ndarray
+        predicted labels
     """
 
     # get features and labels dataframes
