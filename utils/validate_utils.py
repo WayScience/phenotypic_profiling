@@ -13,7 +13,6 @@ def create_classification_profiles(
         cell_line_plate_names = cell_line_plates[cell_line]
         cell_line_plate_classifications = []
         for cell_line_plate_name in cell_line_plate_names:
-            print(f"Loading plate {cell_line_plate_name}")
             plate_classifications_link = f"{plate_classifications_dir_link}/{cell_line_plate_name}_cell_classifications.csv.gz"
             plate_classifications = pd.read_csv(
                 plate_classifications_link, compression="gzip", index_col=0

@@ -17,13 +17,12 @@ As part of [Predicting cell health phenotypes using image-based morphology profi
 These indicators consist of 70 specific cell health phenotypes including proliferation, apoptosis, reactive oxygen species, DNA damage, and cell cycle stage.
 These indicators are averaged across across CRISPR guide/cell line to create 357 [*Cell Health label profiles*](https://github.com/broadinstitute/cell-health/blob/master/1.generate-profiles/data/consensus/cell_health_median.tsv.gz).
 
-We use [pandas.DataFrame.corr](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html) to find the [spearman's rank correlation coefficient](https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient) between the *classifiction profiles* and the *Cell Health label profiles*. 
+We use [pandas.DataFrame.corr](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html) to find the pearson correlation coefficient between the *classifiction profiles* and the *Cell Health label profiles*. 
 
 These correlations are interpreted with the following diagrams:
 
 - We use [seaborn.heatmap](https://seaborn.pydata.org/generated/seaborn.heatmap.html) to display the correlation values between the classification profiles and Cell Health label profiles.
 - We use [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display the hierarchically-clustered correlations.
-
 
 ## Step 1: Validate Model
 
