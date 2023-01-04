@@ -64,7 +64,7 @@ def create_classification_profiles(
             columns_to_keep
         ]
 
-        # average across pertubation
+        # average across perturbation
         cell_line_classification_profile = cell_line_plate_classifications.groupby(
             ["Metadata_pert_name", "Metadata_cell_line"]
         ).mean()
