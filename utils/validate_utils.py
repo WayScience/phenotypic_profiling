@@ -1,3 +1,7 @@
+"""
+utilities for validating logistic regression models on MitoCheck single-cell dataset
+"""
+
 import pandas as pd
 import pathlib
 
@@ -5,10 +9,26 @@ import pathlib
 def create_classification_profiles(
     plate_classifications_dir_link: str, cell_line_plates: dict
 ) -> pd.DataFrame:
+    """
+    create classsification profiles for correlation to cell health label profiles
+    a classification profile consists of classification probabilities averaged across perturbation and cell line
+
+    Parameters
+    ----------
+    plate_classifications_dir_link : str
+        link to plate classifications hosted on GitHub
+    cell_line_plates : dict
+        cell line names, each with a list of plate names that are correlated to their respective cell line
+
+    Returns
+    -------
+    pd.DataFrame
+        classification profiles dataframe
+    """
+
     cell_line_classification_profiles = []
 
     for cell_line in cell_line_plates:
-        print(f"Creating classification profiles for cell line {cell_line}")
         # create one large dataframe for all 3 plates in the particular cell line
         cell_line_plate_names = cell_line_plates[cell_line]
         cell_line_plate_classifications = []
@@ -23,7 +43,6 @@ def create_classification_profiles(
         ).reset_index(drop=True)
 
         # create dataframe with cell classifications averaged across pertubation, include cell line metadata
-        print("Averaging classification across perturbation metadata...")
         # add cell line metadata, rename pertubation column
         cell_line_plate_classifications["Metadata_cell_line"] = cell_line
         cell_line_plate_classifications = cell_line_plate_classifications.rename(

@@ -35,8 +35,6 @@ cell_health_labels
 
 cell_health_data_hash = "4ee08b16f4b5c5266309a295b0a1697f0b9540b8"
 plate_classifications_dir_link = f"https://github.com/WayScience/cell-health-data/raw/{cell_health_data_hash}/4.classify-features/plate_classifications"
-plate_names = ["SQ00014610", "SQ00014611", "SQ00014612", "SQ00014613", "SQ00014614", "SQ00014615", "SQ00014616", "SQ00014617", "SQ00014618"]
-
 cell_line_plates = {
     "A549": ["SQ00014610", "SQ00014611", "SQ00014612"],
     "ES2": ["SQ00014613", "SQ00014614", "SQ00014615"],
@@ -68,6 +66,7 @@ final_profile_dataframe = pd.merge(cell_health_labels, classification_profiles, 
 corr = final_profile_dataframe.corr(method=correlation_method)
 # convert correlation to diagram-friendly format
 corr_graph = corr.iloc[70:, :70]
+corr_graph
 
 
 # ### Show Correlation with Clustermap
@@ -94,5 +93,7 @@ corr_data_save_path.parents[0].mkdir(parents=True, exist_ok=True)
 tidy_data = corr_graph.stack()
 tidy_data = pd.DataFrame(tidy_data).reset_index(level=[0,1])
 tidy_data.columns = ["Phenotypic_Class", "Cell_Health_Label", "Correlation"]
+
 tidy_data.to_csv(corr_data_save_path, sep="\t")
+tidy_data
 
