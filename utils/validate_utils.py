@@ -15,7 +15,7 @@ def create_classification_profiles(
     Parameters
     ----------
     plate_classifications_dir_link : str
-        link to plate classifications hosted on GitHub
+        raw GitHub link to plate classifications directory
     cell_line_plates : dict
         cell line names, each with a list of plate names that are correlated to their respective cell line
 
