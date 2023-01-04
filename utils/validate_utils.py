@@ -42,8 +42,9 @@ def create_classification_profiles(
         ).reset_index(drop=True)
 
         # create dataframe with cell classifications averaged across perturbation, include cell line metadata
-        # add cell line metadata, rename perturbation column
+        # add cell line metadata
         cell_line_plate_classifications["Metadata_cell_line"] = cell_line
+        # rename perturbation column to match the format of cell health label profiles, in this case "perturbation" corresponds to "reagent" because DeepProfiler (used much earlier in pipeline) makes no distinction
         cell_line_plate_classifications = cell_line_plate_classifications.rename(
             columns={"Metadata_Reagent": "Metadata_pert_name"}
         )
