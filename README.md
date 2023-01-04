@@ -11,6 +11,7 @@ This repository is structured as follows:
 | [2.train_model](2.train_model/) | Train model | Train ML models on training data subset and shuffled baseline training dataset |
 | [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML models on all data subsets |
 | [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML models |
+| [5.validate_model](5.validate_model/) | Validate model | Validate ML models |
 
 ## Data
 
