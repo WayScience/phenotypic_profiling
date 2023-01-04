@@ -42,7 +42,7 @@ def create_classification_profiles(
         ).reset_index(drop=True)
 
         # create dataframe with cell classifications averaged across perturbation, include cell line metadata
-        # add cell line metadata, rename pertubation column
+        # add cell line metadata, rename perturbation column
         cell_line_plate_classifications["Metadata_cell_line"] = cell_line
         cell_line_plate_classifications = cell_line_plate_classifications.rename(
             columns={"Metadata_Reagent": "Metadata_pert_name"}
