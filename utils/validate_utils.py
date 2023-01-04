@@ -3,7 +3,6 @@ utilities for validating logistic regression models on MitoCheck single-cell dat
 """
 
 import pandas as pd
-import pathlib
 
 
 def create_classification_profiles(
