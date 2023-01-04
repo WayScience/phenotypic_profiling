@@ -1,4 +1,4 @@
-# 5. Validate Module
+# 5. Validate Model
 
 In this module, we validate the final ML model.
 
