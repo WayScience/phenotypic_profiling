@@ -2,6 +2,7 @@
 utilities for evaluating logistic regression models on training and testing datasets
 """
 
+from typing import Tuple
 import pandas as pd
 import numpy as np
 
@@ -22,7 +23,7 @@ np.random.seed(0)
 
 def class_PR_curves(
     single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression
-) -> tuple[Figure, pd.DataFrame]:
+) -> Tuple[Figure, pd.DataFrame]:
     """
     save precision recall curves for each class to the save directory
     also, return the precision/recall data for each class in tidy long format
@@ -94,7 +95,7 @@ def class_PR_curves(
 
 def evaluate_model_cm(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame
-) -> tuple(np.ndarray, np.ndarray):
+) -> Tuple(np.ndarray, np.ndarray):
     """
     display confusion matrix for logistic regression model on dataset
 
