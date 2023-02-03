@@ -9,9 +9,10 @@ We evaluate these 4 sets of predictions with [sklearn.metrics.f1_score](https://
 F1 score measures the models precision and recall performance for each phenotypic class.
 
 In [confusion_matrices.ipynb](confusion_matrices.ipynb), we evaluate these 4 sets of predictions with a confusion matrix to see the true/false positives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
+The confusion matrix data are saved to [confusion_matrices](evaluations/confusion_matrices)
 
 In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for final and shuffled baseline models on the training and testing data subsets.
-The precision recall curves and their data are saved to [class_precision_recall_curves](class_precision_recall_curves/).
+The precision recall curves and their data are saved to [class_precision_recall_curves](evaluations/class_precision_recall_curves/).
 
 ## Step 1: Evaluate Model
 
