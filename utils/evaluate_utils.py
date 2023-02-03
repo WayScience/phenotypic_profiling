@@ -134,36 +134,6 @@ def model_cm(
 
     return conf_mat
 
-def model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
-
-    # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
-
-    # get predictions from model
-    y_pred = log_reg_model.predict(X)
-
-    # display precision vs phenotypic class bar chart
-    scores = f1_score(
-        y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0
-    )
-    weighted_score = f1_score(
-        y, y_pred, average="weighted", labels=log_reg_model.classes_, zero_division=0
-    )
-    scores = pd.DataFrame(scores).T
-    scores.columns = log_reg_model.classes_
-    scores["Weighted"] = weighted_score
-
-    plt.figure(figsize=(20, 8))
-    plt.xlabel("Phenotypic Class")
-    plt.ylabel("F1 Score")
-    plt.title("F1 Score vs Phenotpyic Class")
-    plt.xticks(rotation=90)
-    ax = sns.barplot(data=scores)
-    
-    plt.show()
-    
-    return scores
-
 def evaluate_model_cm(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame
 ) -> Tuple[np.ndarray, np.ndarray]:
