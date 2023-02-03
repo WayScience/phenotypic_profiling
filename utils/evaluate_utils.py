@@ -95,7 +95,7 @@ def class_PR_curves(
 
 def evaluate_model_cm(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame
-) -> Tuple(np.ndarray, np.ndarray):
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     display confusion matrix for logistic regression model on dataset
 
