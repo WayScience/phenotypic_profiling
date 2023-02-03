@@ -60,7 +60,7 @@ for model_path in models_dir.iterdir():
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
         # path to save confusion matrix tidy data to
-        cm_save_path = pathlib.Path(f"{cm_dir}/{model_name}_{label}_cm.tsv")
+        cm_save_path = pathlib.Path(f"{cm_dir}/{model_name}__{label}__cm.tsv")
         
         cm = model_cm(model, data)
         
