@@ -37,7 +37,7 @@ features_dataframe = get_features_data(features_dataframe_path)
 train_data = get_dataset(features_dataframe, data_split_indexes, "train")
 test_data = get_dataset(features_dataframe, data_split_indexes, "test")
 
-save_dir = pathlib.Path("class_precision_recall_curves/")
+save_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
 save_dir.mkdir(parents=True, exist_ok=True)
 
 
