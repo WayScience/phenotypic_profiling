@@ -93,9 +93,7 @@ def class_PR_curves(
     return fig, PR_data
 
 
-def model_cm(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
-) -> pd.DataFrame:
+def model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
 
@@ -120,7 +118,9 @@ def model_cm(
 
     # create confusion matrix
     conf_mat = confusion_matrix(y, y_pred, labels=log_reg_model.classes_)
-    conf_mat = pd.DataFrame(conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_)
+    conf_mat = pd.DataFrame(
+        conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_
+    )
 
     # display confusion matrix
     plt.figure(figsize=(15, 15))
@@ -132,7 +132,10 @@ def model_cm(
 
     return conf_mat
 
-def model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.DataFrame:
+
+def model_score(
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+) -> pd.DataFrame:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
 
@@ -172,10 +175,11 @@ def model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.
     plt.title("F1 Score vs Phenotpyic Class")
     plt.xticks(rotation=90)
     ax = sns.barplot(data=scores)
-    
+
     plt.show()
-    
+
     return scores
+
 
 def evaluate_model_cm(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame
