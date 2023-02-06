@@ -48,12 +48,13 @@ cm_dir.mkdir(parents=True, exist_ok=True)
 # directory to load the models from
 models_dir = pathlib.Path("../2.train_model/models/")
 
-# iterate through each model
+# iterate through each model (final model, shuffled baseline model, etc)
 for model_path in models_dir.iterdir():
     model = load(model_path)
     model_name = model_path.name.replace("log_reg_","").replace(".joblib","")
     
-    # iterate through label datasets
+    # iterate through label datasets (labels correspond to train, test, etc)
+    # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(f"Evaluating {model_name} on dataset {label}")
         
@@ -64,7 +65,10 @@ for model_path in models_dir.iterdir():
         
         cm = model_cm(model, data)
         
+        # use stack to restructure dataframe into tidy long format
         cm_tidy_data = cm.stack()
+        # reset index must be used to make indexes at level 0 and 1 into individual columns
+        # these columns correspond to true label and predicted label, and are set as indexes after using stack()
         cm_tidy_data = pd.DataFrame(cm_tidy_data).reset_index(level=[0,1])
         cm_tidy_data.columns = ["True_Label", "Predicted_Label", "Count"]
         cm_tidy_data.to_csv(cm_save_path, sep="\t")

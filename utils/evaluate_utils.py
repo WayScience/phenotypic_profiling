@@ -120,9 +120,7 @@ def model_cm(
 
     # create confusion matrix
     conf_mat = confusion_matrix(y, y_pred, labels=log_reg_model.classes_)
-    conf_mat = pd.DataFrame(conf_mat)
-    conf_mat.columns = log_reg_model.classes_
-    conf_mat.index = log_reg_model.classes_
+    conf_mat = pd.DataFrame(conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_)
 
     # display confusion matrix
     plt.figure(figsize=(15, 15))
