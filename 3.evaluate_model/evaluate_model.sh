@@ -11,3 +11,7 @@ jupyter nbconvert --to python \
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
         --execute confusion_matrices.ipynb
+
+jupyter nbconvert --to python \
+        --FilesWriter.build_directory=scripts/nbconverted \
+        --execute F1_scores.ipynb

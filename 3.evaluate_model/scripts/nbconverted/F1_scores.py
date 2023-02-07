@@ -14,10 +14,10 @@ import sys
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
-from evaluate_utils import model_confusion_matrix
+from evaluate_utils import model_F1_score
 
 
-# ### Load Datasets
+# ### Load Necessary Data
 
 # In[2]:
 
@@ -29,29 +29,16 @@ features_dataframe_path = pathlib.Path("../0.download_data/data/training_data.cs
 features_dataframe = get_features_data(features_dataframe_path)
 
 
-# ### Specify Results Directory
+# ### Evaluate Each Model on Each Dataset
 
 # In[3]:
-
-
-# specify results directory
-results_dir = pathlib.Path("evaluations/")
-cm_dir = pathlib.Path(f"{results_dir}/confusion_matrices/")
-cm_dir.mkdir(parents=True, exist_ok=True)
-
-
-# ### Evaluate Each Model on Each Dataset
-# 
-# #### Note: `cm` stands for confusion matrix in variable names
-
-# In[4]:
 
 
 # directory to load the models from
 models_dir = pathlib.Path("../2.train_model/models/")
 
 # use a list to keep track of scores in tidy long format for each model and dataset combination
-compiled_cm_data = []
+compiled_scores = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
 for model_path in models_dir.iterdir():
@@ -65,42 +52,40 @@ for model_path in models_dir.iterdir():
         
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
-        # find confusion matrix for chosen model evaluated on chosen dataset      
-        cm_data = model_confusion_matrix(model, data)
+        # find model F1 scores on dataset
+        score = model_F1_score(model, data)
         
-        # add confusion matrix data to compiled dataframe in tidy format
-        # use stack to restructure dataframe into tidy long format
-        cm_data = cm_data.stack()
-        # reset index must be used to make indexes at level 0 and 1 into individual columns
-        # these columns correspond to true label and predicted label, and are set as indexes after using stack()
-        cm_data = pd.DataFrame(cm_data).reset_index(level=[0,1])
-        cm_data.columns = ["True_Label", "Predicted_Label", "Count"]
+        # add score data to compiled dataframe in tidy format
+        # transpose data and reset index to make dataframe resemble tidy long format
+        score = score.T.reset_index()
+        # change columns to their respective names
+        score.columns = ["Phenotypic_Class", "F1_Score"]
         # add data split column to indicate which dataset scores are from (train, test, etc)
-        cm_data["data_split"] = label
+        score["data_split"] = label
         # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
-        cm_data["shuffled"] = "shuffled" in model_name
+        score["shuffled"] = "shuffled" in model_name
         # add this score data to the tidy scores compiling list
-        compiled_cm_data.append(cm_data)
+        compiled_scores.append(score)
 
 
 # ### Save scores from each evaluation
 
-# In[5]:
+# In[4]:
 
 
 # compile list of tidy data into one dataframe
-compiled_cm_data = pd.concat(compiled_cm_data).reset_index(drop=True)
+compiled_scores = pd.concat(compiled_scores).reset_index(drop=True)
 
 # specify results directory
-cm_data_dir = pathlib.Path("evaluations/confusion_matrices/")
-cm_data_dir.mkdir(parents=True, exist_ok=True)
+f1_scores_dir = pathlib.Path("evaluations/F1_scores/")
+f1_scores_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
-compiled_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_cm_data.tsv")
+compiled_scores_save_path = pathlib.Path(f"{f1_scores_dir}/compiled_F1_scores.tsv")
 
 # save data as tsv
-compiled_cm_data.to_csv(compiled_cm_data_save_path, sep="\t")
+compiled_scores.to_csv(compiled_scores_save_path, sep="\t")
 
 # preview tidy data
-compiled_cm_data
+compiled_scores
 
