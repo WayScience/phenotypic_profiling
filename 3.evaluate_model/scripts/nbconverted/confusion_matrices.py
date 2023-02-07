@@ -51,7 +51,7 @@ cm_dir.mkdir(parents=True, exist_ok=True)
 models_dir = pathlib.Path("../2.train_model/models/")
 
 # use a list to keep track of scores in tidy long format for each model and dataset combination
-tidy_cm_data = []
+compiled_cm_data = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
 for model_path in models_dir.iterdir():
@@ -78,9 +78,9 @@ for model_path in models_dir.iterdir():
         # add data split column to indicate which dataset scores are from (train, test, etc)
         cm_data["data_split"] = label
         # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
-        cm_data["shuffled"] = True if "shuffled" in model_name else False
+        cm_data["shuffled"] = "shuffled" in model_name
         # add this score data to the tidy scores compiling list
-        tidy_cm_data.append(cm_data)
+        compiled_cm_data.append(cm_data)
 
 
 # ### Save scores from each evaluation
@@ -89,18 +89,18 @@ for model_path in models_dir.iterdir():
 
 
 # compile list of tidy data into one dataframe
-tidy_cm_data = pd.concat(tidy_cm_data).reset_index(drop=True)
+compiled_cm_data = pd.concat(compiled_cm_data).reset_index(drop=True)
 
 # specify results directory
 cm_data_dir = pathlib.Path("evaluations/confusion_matrices/")
 cm_data_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
-tidy_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_cm_data.tsv")
+compiled_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_cm_data.tsv")
 
 # save data as tsv
-tidy_cm_data.to_csv(tidy_cm_data_save_path, sep="\t")
+compiled_cm_data.to_csv(compiled_cm_data_save_path, sep="\t")
 
 # preview tidy data
-tidy_cm_data
+compiled_cm_data
 

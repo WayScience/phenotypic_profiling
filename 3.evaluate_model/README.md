@@ -15,6 +15,8 @@ The f1 score data are saved to [F1_scores](evaluations/F1_scores).
 In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for final and shuffled baseline models on the training and testing data subsets.
 The precision recall curves and their data are saved to [class_precision_recall_curves](evaluations/class_precision_recall_curves/).
 
+**Note:** Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+
 ## Step 1: Evaluate Model
 
 Use the commands below to evaluate the ML models:
