@@ -93,7 +93,7 @@ def class_PR_curves(
     return fig, PR_data
 
 
-def model_cm(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.DataFrame:
+def model_confusion_matrix(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
 

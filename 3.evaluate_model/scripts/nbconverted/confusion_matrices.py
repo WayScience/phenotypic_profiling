@@ -14,7 +14,7 @@ import sys
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
-from evaluate_utils import model_cm
+from evaluate_utils import model_confusion_matrix
 
 
 # ### Load Datasets
@@ -63,7 +63,7 @@ for model_path in models_dir.iterdir():
         # path to save confusion matrix tidy data to
         cm_save_path = pathlib.Path(f"{cm_dir}/{model_name}__{label}__cm.tsv")
         
-        cm = model_cm(model, data)
+        cm = model_confusion_matrix(model, data)
         
         # use stack to restructure dataframe into tidy long format
         cm_tidy_data = cm.stack()
