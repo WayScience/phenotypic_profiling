@@ -123,7 +123,7 @@ def model_confusion_matrix(log_reg_model: LogisticRegression, dataset: pd.DataFr
     )
 
     # display confusion matrix
-    plt.figure(figsize=(15, 15))
+    plt.figure(figsize=(10, 10))
     ax = sns.heatmap(data=conf_mat, annot=True, fmt=".0f", cmap="viridis", square=True)
     ax = plt.xlabel("Predicted Label")
     ax = plt.ylabel("True Label")
@@ -133,7 +133,7 @@ def model_confusion_matrix(log_reg_model: LogisticRegression, dataset: pd.DataFr
     return conf_mat
 
 
-def model_score(
+def model_F1_score(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame
 ) -> pd.DataFrame:
     """
@@ -169,7 +169,7 @@ def model_score(
     scores.columns = log_reg_model.classes_
     scores["Weighted"] = weighted_score
 
-    plt.figure(figsize=(20, 8))
+    plt.figure(figsize=(15, 6))
     plt.xlabel("Phenotypic Class")
     plt.ylabel("F1 Score")
     plt.title("F1 Score vs Phenotpyic Class")

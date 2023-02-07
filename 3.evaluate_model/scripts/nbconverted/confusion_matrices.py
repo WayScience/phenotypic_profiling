@@ -41,12 +41,17 @@ cm_dir.mkdir(parents=True, exist_ok=True)
 
 
 # ### Evaluate Each Model on Each Dataset
+# 
+# #### Note: `cm` stands for confusion matrix in variable names
 
 # In[4]:
 
 
 # directory to load the models from
 models_dir = pathlib.Path("../2.train_model/models/")
+
+# use a list to keep track of scores in tidy long format for each model and dataset combination
+tidy_cm_data = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
 for model_path in models_dir.iterdir():
@@ -60,16 +65,42 @@ for model_path in models_dir.iterdir():
         
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
-        # path to save confusion matrix tidy data to
-        cm_save_path = pathlib.Path(f"{cm_dir}/{model_name}__{label}__cm.tsv")
+        # find confusion matrix for chosen model evaluated on chosen dataset      
+        cm_data = model_confusion_matrix(model, data)
         
-        cm = model_confusion_matrix(model, data)
-        
+        # add confusion matrix data to compiled dataframe in tidy format
         # use stack to restructure dataframe into tidy long format
-        cm_tidy_data = cm.stack()
+        cm_data = cm_data.stack()
         # reset index must be used to make indexes at level 0 and 1 into individual columns
         # these columns correspond to true label and predicted label, and are set as indexes after using stack()
-        cm_tidy_data = pd.DataFrame(cm_tidy_data).reset_index(level=[0,1])
-        cm_tidy_data.columns = ["True_Label", "Predicted_Label", "Count"]
-        cm_tidy_data.to_csv(cm_save_path, sep="\t")
+        cm_data = pd.DataFrame(cm_data).reset_index(level=[0,1])
+        cm_data.columns = ["True_Label", "Predicted_Label", "Count"]
+        # add data split column to indicate which dataset scores are from (train, test, etc)
+        cm_data["data_split"] = label
+        # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
+        cm_data["shuffled"] = True if "shuffled" in model_name else False
+        # add this score data to the tidy scores compiling list
+        tidy_cm_data.append(cm_data)
+
+
+# ### Save scores from each evaluation
+
+# In[5]:
+
+
+# compile list of tidy data into one dataframe
+tidy_cm_data = pd.concat(tidy_cm_data).reset_index(drop=True)
+
+# specify results directory
+cm_data_dir = pathlib.Path("evaluations/confusion_matrices/")
+cm_data_dir.mkdir(parents=True, exist_ok=True)
+
+# define save path
+tidy_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_cm_data.tsv")
+
+# save data as tsv
+tidy_cm_data.to_csv(tidy_cm_data_save_path, sep="\t")
+
+# preview tidy data
+tidy_cm_data
 

@@ -14,18 +14,13 @@ import sys
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
-from evaluate_utils import model_score
+from evaluate_utils import model_F1_score
 
 
 # ### Load Necessary Data
 
 # In[2]:
 
-
-# specify results directory
-results_dir = pathlib.Path("evaluations/")
-f1_scores_dir = pathlib.Path(f"{results_dir}/F1_scores/")
-f1_scores_dir.mkdir(parents=True, exist_ok=True)
 
 # load features data from indexes and features dataframe
 data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
@@ -42,6 +37,9 @@ features_dataframe = get_features_data(features_dataframe_path)
 # directory to load the models from
 models_dir = pathlib.Path("../2.train_model/models/")
 
+# use a list to keep track of scores in tidy long format for each model and dataset combination
+tidy_scores = []
+
 # iterate through each model (final model, shuffled baseline model, etc)
 for model_path in models_dir.iterdir():
     model = load(model_path)
@@ -51,17 +49,43 @@ for model_path in models_dir.iterdir():
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(f"Evaluating {model_name} on dataset {label}")
+        
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
-        # path to save scores to
-        score_save_path = pathlib.Path(f"{f1_scores_dir}/{model_name}_{label}.tsv")
-        # find model scores on dataset
-        score = model_score(model, data)
+        # find model F1 scores on dataset
+        score = model_F1_score(model, data)
         
-        # save scores
+        # add score data to compiled dataframe in tidy format
         # transpose data and reset index to make dataframe resemble tidy long format
         score = score.T.reset_index()
         # change columns to their respective names
         score.columns = ["Phenotypic_Class", "F1_Score"]
-        score.to_csv(score_save_path, sep="\t")
+        # add data split column to indicate which dataset scores are from (train, test, etc)
+        score["data_split"] = label
+        # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
+        score["shuffled"] = True if "shuffled" in model_name else False
+        # add this score data to the tidy scores compiling list
+        tidy_scores.append(score)
+
+
+# ### Save scores from each evaluation
+
+# In[4]:
+
+
+# compile list of tidy data into one dataframe
+tidy_scores = pd.concat(tidy_scores).reset_index(drop=True)
+
+# specify results directory
+f1_scores_dir = pathlib.Path("evaluations/F1_scores/")
+f1_scores_dir.mkdir(parents=True, exist_ok=True)
+
+# define save path
+tidy_scores_save_path = pathlib.Path(f"{f1_scores_dir}/compiled_F1_scores.tsv")
+
+# save data as tsv
+tidy_scores.to_csv(tidy_scores_save_path, sep="\t")
+
+# preview tidy data
+tidy_scores
 
