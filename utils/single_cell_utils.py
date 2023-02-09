@@ -1,3 +1,6 @@
+"""Utils for the single cell image module (finding sample images, displaying images, etc)"""
+
+
 import pathlib
 import pandas as pd
 
