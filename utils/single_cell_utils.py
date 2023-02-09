@@ -59,7 +59,7 @@ def get_sample_image_path(
     Returns
     -------
     pathlib.Path
-        _description_
+        path to sample image or None if sample image cannot be found
     """
     # iterate through the first structure in sample images directory (folder of each phenotypic_class)
     for phenotypic_class_dir_path in single_cell_images_dir_path.iterdir():
@@ -104,6 +104,30 @@ def get_class_sample_images(
     num_images: int = 3,
     correct: bool = True,
 ) -> list:
+    """
+    get a list of sample image paths for a phenotypic class corresponding to whether or not the model correctly predicted the image
+
+    Parameters
+    ----------
+    phenotypic_class : str
+        true class of cell to find
+    dataset : pd.DataFrame
+        cell dataset with metadata and features
+    log_reg_model : LogisticRegression
+        model used to classify cells
+    single_cell_images_dir_path : pathlib.Path
+        path to single cell sample images
+    num_images : int, optional
+        number of image paths to return, by default 3
+    correct : bool, optional
+        whether or not the model has correctly predicted the image, by default True
+
+    Returns
+    -------
+    list
+        list of image paths
+    """
+
     # list of image paths to be returned
     sample_image_paths = []
 
@@ -150,6 +174,25 @@ def get_15_correct_sample_images(
     log_reg_model: LogisticRegression,
     single_cell_images_dir_path: pathlib.Path,
 ) -> pd.DataFrame:
+    """
+    get 15 correct sample images, 3 for each 5 phenotypic classes given as inputs
+
+    Parameters
+    ----------
+    phenotypic_classes : list
+        list of phenotypic classes to get 3 correct sample images for
+    dataset : pd.DataFrame
+        cell dataset with metadata and features
+    log_reg_model : LogisticRegression
+        model used to classify cells
+    single_cell_images_dir_path : pathlib.Path
+        path to single cell sample images
+
+    Returns
+    -------
+    pd.DataFrame
+        dataframe with phenotypic classes and paths to 3 sample images that the model correctly predicted
+    """
     compiled_sample_images = []
 
     for phenotypic_class in phenotypic_classes:
@@ -175,7 +218,15 @@ def get_15_correct_sample_images(
     return compiled_sample_images.reset_index(drop=True)
 
 
-def plot_15_correct_sample_images(sample_images_df):
+def plot_15_correct_sample_images(sample_images_df: pd.DataFrame):
+    """
+    show the 15 correct sample images collected with get_15_correct_sample_images()
+
+    Parameters
+    ----------
+    sample_images_df : pd.DataFrame
+        dataframe with phenotypic classes and paths to 3 sample images that the model correctly predicted
+    """
     path_columns = [column for column in sample_images_df.columns if "Path_" in column]
 
     # create 3x5 plot for plotting images
