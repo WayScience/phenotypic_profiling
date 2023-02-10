@@ -213,7 +213,7 @@ def get_15_correct_sample_images(
 
     # convert compiled sample images to dataframe and add prefix to column names
     compiled_sample_images = pd.concat(compiled_sample_images).add_prefix("Path_")
-    # add phenotypic classes to compiled sampel images dataframe
+    # add phenotypic classes to compiled sample images dataframe
     compiled_sample_images.insert(
         loc=0, column="Phenotypic_Class", value=phenotypic_classes
     )
