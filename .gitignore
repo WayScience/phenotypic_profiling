@@ -6,5 +6,3 @@ __pycache__/
 .vscode
 # autosklearn
 3.ML_model/autosklearn.ipynb
-# single cell sample images
-6.single_cell_images/mitocheck_single_cell_sample_images
