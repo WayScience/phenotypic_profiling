@@ -1,4 +1,4 @@
-"""Utils for the single cell image module (finding sample images, displaying images, etc)"""
+"""Utils for the single-cell image module (finding sample images, displaying images, etc)"""
 
 
 import pathlib
@@ -119,7 +119,7 @@ def get_class_sample_images(
     log_reg_model : LogisticRegression
         model used to classify cells
     single_cell_images_dir_path : pathlib.Path
-        path to single cell sample images
+        path to single-cell sample images
     num_images : int, optional
         number of image paths to return, by default 3
     correct : bool, optional
@@ -159,7 +159,7 @@ def get_class_sample_images(
         )
 
         # if a sample image path was able to be found for this cell
-        if sample_image_path != None:
+        if sample_image_path is not None:
             # only append the image path if the cell prediction matched the desired prediction result (correct/incorrect)
             if (cell_class_prediction == phenotypic_class) == correct:
                 sample_image_paths.append(sample_image_path)
@@ -178,7 +178,7 @@ def get_15_correct_sample_images(
     single_cell_images_dir_path: pathlib.Path,
 ) -> pd.DataFrame:
     """
-    get 15 correct sample images, 3 for each 5 phenotypic classes given as inputs
+    get 15 accurately predicted sample images, 3 for each 5 phenotypic classes given as inputs
 
     Parameters
     ----------
@@ -189,7 +189,7 @@ def get_15_correct_sample_images(
     log_reg_model : LogisticRegression
         model used to classify cells
     single_cell_images_dir_path : pathlib.Path
-        path to single cell sample images
+        path to single-cell sample images
 
     Returns
     -------
@@ -228,7 +228,7 @@ def plot_15_correct_sample_images(sample_images_df: pd.DataFrame):
     Parameters
     ----------
     sample_images_df : pd.DataFrame
-        dataframe with phenotypic classes and paths to 3 sample images that the model correctly predicted
+        dataframe with phenotypic classes and paths to 3 sample images that the model accurately predicted
     """
     path_columns = [column for column in sample_images_df.columns if "Path_" in column]
 
@@ -251,6 +251,8 @@ def plot_15_correct_sample_images(sample_images_df: pd.DataFrame):
             if ax_x == 0:
                 axs[ax_x, ax_y].set_title(sample_images_data["Phenotypic_Class"])
 
+            # adjust the "coordinates" of the figure subplot we are editing
+            # if we reach the end of the subplot row (each row has 3 subplots), move down to next row (reset x coord, add 1 to y coord)
             ax_x += 1
             if ax_x == 3:
                 ax_x = 0
