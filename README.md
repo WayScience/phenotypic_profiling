@@ -40,7 +40,7 @@ All parts of the following pipeline are completed for a "final" model (from trai
 This shuffled baseline model provides a suitable baseline comparison for the final model during evaluation.
 
 **Note:** Throughout this repository, intermediate `.tsv` data are stored in tidy long format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
-This data structure make later analysis easier.
+This data structure makes later analysis easier.
 
 ## Setup
 
