@@ -39,6 +39,9 @@ Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021
 All parts of the following pipeline are completed for a "final" model (from training data) and a "shuffled baseline" model (from shuffled training data).
 This shuffled baseline model provides a suitable baseline comparison for the final model during evaluation.
 
+**Note:** Throughout this repository, intermediate `.tsv` data are stored in tidy long format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+This data structure make later analysis easier.
+
 ## Setup
 
 Perform the following steps to set up the `phenotypic_profiling` environment necessary for processing data in this repository.

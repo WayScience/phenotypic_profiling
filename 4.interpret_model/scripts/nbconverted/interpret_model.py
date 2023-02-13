@@ -40,9 +40,26 @@ print(coefs.shape)
 coefs.head()
 
 
-# ### Diagrams for interpreting coefficients
+# ### Save Coefficients Matrix in Tidy Long Format
 
 # In[4]:
+
+
+coefs_save_path = pathlib.Path(f"interpretations/final_model_coefs.tsv")
+coefs_save_path.parents[0].mkdir(parents=True, exist_ok=True)
+
+# restructure/rename dataframe to tidy long format (see preview below)
+tidy_data = coefs.stack()
+tidy_data = pd.DataFrame(tidy_data).reset_index(level=[0,1])
+tidy_data.columns = ["Coef_Num", "Phenotypic_Class", "Value"]
+
+tidy_data.to_csv(coefs_save_path, sep="\t")
+tidy_data
+
+
+# ### Diagrams for interpreting coefficients
+
+# In[5]:
 
 
 # display heatmap of average coefs
@@ -51,7 +68,7 @@ plt.title("Heatmap of Coefficients Matrix")
 ax = sns.heatmap(data=coefs.T)
 
 
-# In[5]:
+# In[6]:
 
 
 # display clustered heatmap of coefficients
@@ -59,7 +76,7 @@ ax = sns.clustermap(data=coefs.T, figsize=(20, 10), row_cluster=True, col_cluste
 ax = ax.fig.suptitle("Clustered Heatmap of Coefficients Matrix")
 
 
-# In[6]:
+# In[7]:
 
 
 # display density plot for coefficient values of each class
@@ -71,7 +88,7 @@ plt.title("Density of Coefficient Values Per Phenotpyic Class")
 ax = sns.kdeplot(data=coefs)
 
 
-# In[7]:
+# In[8]:
 
 
 # display average coefficient value vs phenotypic class bar chart
@@ -86,7 +103,7 @@ plt.xticks(rotation=90)
 ax = sns.barplot(data=pheno_class_ordered)
 
 
-# In[8]:
+# In[9]:
 
 
 # display average coefficient value vs feature bar chart
@@ -103,16 +120,33 @@ ax = sns.barplot(data=feature_ordered)
 
 # ### Interpret shuffled baseline model
 
-# In[9]:
+# In[10]:
 
 
 shuffled_baseline_log_reg_model_path = pathlib.Path(f"{model_dir}/shuffled_baseline_log_reg_model.joblib")
 shuffled_baseline_log_reg_model = load(shuffled_baseline_log_reg_model_path)
 
 
+# ### Save Coefficients Matrix in Tidy Long Format
+
+# In[11]:
+
+
+coefs_save_path = pathlib.Path(f"interpretations/shuffled_baseline_model_coefs.tsv")
+coefs_save_path.parents[0].mkdir(parents=True, exist_ok=True)
+
+# restructure/rename dataframe to tidy long format (see preview below)
+tidy_data = coefs.stack()
+tidy_data = pd.DataFrame(tidy_data).reset_index(level=[0,1])
+tidy_data.columns = ["Coef_Num", "Phenotypic_Class", "Value"]
+
+tidy_data.to_csv(coefs_save_path, sep="\t")
+tidy_data
+
+
 # ### Compile Coefficients Matrix
 
-# In[10]:
+# In[12]:
 
 
 coefs = np.abs(shuffled_baseline_log_reg_model.coef_)
@@ -125,7 +159,7 @@ coefs.head()
 
 # ### Diagrams for interpreting coefficients
 
-# In[11]:
+# In[13]:
 
 
 # display heatmap of average coefs
@@ -134,7 +168,7 @@ plt.title("Heatmap of Coefficients Matrix")
 ax = sns.heatmap(data=coefs.T)
 
 
-# In[12]:
+# In[14]:
 
 
 # display clustered heatmap of coefficients
@@ -142,7 +176,7 @@ ax = sns.clustermap(data=coefs.T, figsize=(20, 10), row_cluster=True, col_cluste
 ax = ax.fig.suptitle("Clustered Heatmap of Coefficients Matrix")
 
 
-# In[13]:
+# In[15]:
 
 
 # display density plot for coefficient values of each class
@@ -154,7 +188,7 @@ plt.title("Density of Coefficient Values Per Phenotpyic Class")
 ax = sns.kdeplot(data=coefs)
 
 
-# In[14]:
+# In[16]:
 
 
 # display average coefficient value vs phenotypic class bar chart
@@ -169,7 +203,7 @@ plt.xticks(rotation=90)
 ax = sns.barplot(data=pheno_class_ordered)
 
 
-# In[15]:
+# In[17]:
 
 
 # display average coefficient value vs feature bar chart
