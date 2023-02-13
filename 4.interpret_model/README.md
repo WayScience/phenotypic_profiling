@@ -28,3 +28,5 @@ bash interpret_model.sh
 ## Results
 
 Each model's interpretations can be found in [interpret_model.ipynb](interpret_model.ipynb).
+
+**Note:** Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).

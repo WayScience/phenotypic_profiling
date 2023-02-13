@@ -2,4 +2,4 @@
 # Convert notebook to python file and execute
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
-        --execute interpret_model.ipynb
+        --execute interpret_model_coefficients.ipynb
