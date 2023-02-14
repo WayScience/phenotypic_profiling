@@ -2,7 +2,7 @@
 # Convert notebooks to python file and execute
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
-        --execute evaluate_model.ipynb
+        --execute get_model_predictions.ipynb
 
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \

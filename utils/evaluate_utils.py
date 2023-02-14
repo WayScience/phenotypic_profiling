@@ -93,7 +93,9 @@ def class_PR_curves(
     return fig, PR_data
 
 
-def model_confusion_matrix(log_reg_model: LogisticRegression, dataset: pd.DataFrame) -> pd.DataFrame:
+def model_confusion_matrix(
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
 
@@ -179,74 +181,3 @@ def model_F1_score(
     plt.show()
 
     return scores
-
-
-def evaluate_model_cm(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
-) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    display confusion matrix for logistic regression model on dataset
-
-    Parameters
-    ----------
-    log_reg_model : LogisticRegression
-        logistic regression model to evaluate
-    dataset : pd.DataFrame
-        dataset to evaluate model on
-
-    Returns
-    -------
-    np.ndarray
-        true labels
-    np.ndarray
-        predicted labels
-    """
-
-    # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
-
-    # get predictions from model
-    y_pred = log_reg_model.predict(X)
-
-    # create confusion matrix
-    conf_mat = confusion_matrix(y, y_pred, labels=log_reg_model.classes_)
-    conf_mat = pd.DataFrame(
-        conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_
-    )
-
-    # display confusion matrix
-    plt.figure(figsize=(15, 15))
-    ax = sns.heatmap(data=conf_mat, annot=True, fmt=".0f", cmap="viridis", square=True)
-    ax = plt.xlabel("Predicted Label")
-    ax = plt.ylabel("True Label")
-    ax = plt.title("Phenotypic Class Predicitions")
-
-    return y, y_pred
-
-
-def evaluate_model_score(log_reg_model: LogisticRegression, dataset: pd.DataFrame):
-    """display bar graph for model with scoring metric on each class
-    Args:
-        log_reg_model (LogisticRegression): logisitc regression model to evaluate
-        dataset (pd.DataFrame): dataset to evaluate model on
-    """
-
-    # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
-
-    # get predictions from model
-    y_pred = log_reg_model.predict(X)
-
-    # display precision vs phenotypic class bar chart
-    scores = f1_score(
-        y, y_pred, average=None, labels=log_reg_model.classes_, zero_division=0
-    )
-    scores = pd.DataFrame(scores).T
-    scores.columns = log_reg_model.classes_
-
-    sns.set(rc={"figure.figsize": (20, 8)})
-    plt.xlabel("Phenotypic Class")
-    plt.ylabel("F1 Score")
-    plt.title("F1 Score vs Phenotpyic Class")
-    plt.xticks(rotation=90)
-    ax = sns.barplot(data=scores)

@@ -2,8 +2,10 @@
 
 In this module, we evaluate the final and shuffled baseline ML models.
 
-After training the final and baseline models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training and testing datasets.
-These predictions are saved in [model_predictions.tsv](evaluations/model_predictions.tsv) and [shuffled_baseline_model_predictions.tsv](evaluations/shuffled_baseline_model_predictions.tsv) respectively.
+After training the final and baseline models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training and testing datasets and evaluate their predictive performance.
+
+In [get_model_predictions.ipynb](get_model_predictions.ipynb), we derive the predicted and true phenotypic class for each model and dataset combination.
+These predictions are saved in [compiled_predictions.tsv](predictions/compiled_predictions.tsv).
 
 In [confusion_matrices.ipynb](confusion_matrices.ipynb), we evaluate these 4 sets of predictions with a confusion matrix to see the true/false positives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
 The confusion matrix data are saved to [confusion_matrices](evaluations/confusion_matrices).
