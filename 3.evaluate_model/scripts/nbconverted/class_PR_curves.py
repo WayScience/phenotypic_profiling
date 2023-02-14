@@ -46,35 +46,47 @@ save_dir.mkdir(parents=True, exist_ok=True)
 # In[3]:
 
 
-fig, PR_data  = class_PR_curves(train_data, log_reg_model)
+fig, PR_data = class_PR_curves(train_data, log_reg_model)
 fig.suptitle("Precision Recall Curves for Final Model on Training Data")
 fig.savefig(f"{save_dir}/final_model_train_data.png")
+
 PR_data.to_csv(f"{save_dir}/final_model_train_data.tsv", sep="\t")
+print(PR_data.shape)
+PR_data.head()
 
 
 # In[4]:
 
 
-fig, PR_data  = class_PR_curves(train_data, shuffled_baseline_log_reg_model)
+fig, PR_data = class_PR_curves(train_data, shuffled_baseline_log_reg_model)
 fig.suptitle("Precision Recall Curves for Shuffled Baseline Model on Training Data")
 fig.savefig(f"{save_dir}/shuffled_baseline_model_train_data.png")
+
 PR_data.to_csv(f"{save_dir}/shuffled_baseline_model_train_data.tsv", sep="\t")
+print(PR_data.shape)
+PR_data.head()
 
 
 # In[5]:
 
 
-fig, PR_data  = class_PR_curves(test_data, log_reg_model)
+fig, PR_data = class_PR_curves(test_data, log_reg_model)
 fig.suptitle("Precision Recall Curves for Final Model on Testing Data")
 fig.savefig(f"{save_dir}/final_model_test_data.png")
+
 PR_data.to_csv(f"{save_dir}/final_model_test_data.tsv", sep="\t")
+print(PR_data.shape)
+PR_data.head()
 
 
 # In[6]:
 
 
-fig, PR_data  = class_PR_curves(test_data, shuffled_baseline_log_reg_model)
+fig, PR_data = class_PR_curves(test_data, shuffled_baseline_log_reg_model)
 fig.suptitle("Precision Recall Curves for Shuffled Baseline Model on Testing Data")
 fig.savefig(f"{save_dir}/shuffled_baseline_model_test_data.png")
+
 PR_data.to_csv(f"{save_dir}/shuffled_baseline_model_test_data.tsv", sep="\t")
+print(PR_data.shape)
+PR_data.head()
 
