@@ -9,6 +9,7 @@
 import pandas as pd
 import pathlib
 from joblib import load
+from matplotlib import pyplot as plt
 
 import sys
 sys.path.append("../utils")
@@ -41,52 +42,62 @@ save_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
 save_dir.mkdir(parents=True, exist_ok=True)
 
 
-# ### PR Curves for combinations of models and data subsets
+# ### Evaluate Each Model on Each Dataset
 
 # In[3]:
 
 
-fig, PR_data = class_PR_curves(train_data, log_reg_model)
-fig.suptitle("Precision Recall Curves for Final Model on Training Data")
-fig.savefig(f"{save_dir}/final_model_train_data.png")
+# directory to load the models from
+models_dir = pathlib.Path("../2.train_model/models/")
 
-PR_data.to_csv(f"{save_dir}/final_model_train_data.tsv", sep="\t")
-print(PR_data.shape)
-PR_data.head()
+# use a list to keep track of scores in tidy long format for each model and dataset combination
+compiled_class_PR_curves = []
 
+# iterate through each model (final model, shuffled baseline model, etc)
+for model_path in models_dir.iterdir():
+    model = load(model_path)
+    model_name = model_path.name.replace("log_reg_","").replace(".joblib","")
+    
+    # iterate through label datasets (labels correspond to train, test, etc)
+    # with nested for loops, we test each model on each dataset(corresponding to a label)
+    for label in data_split_indexes["label"].unique():
+        print(f"Evaluating {model_name} on dataset {label}")
+        
+        # load dataset (train, test, etc)
+        data = get_dataset(features_dataframe, data_split_indexes, label)
+        
+        fig, PR_data = class_PR_curves(data, model)
+        fig.suptitle(f"Precision Recall Curves for {model_name} on Dataset {label}")
+        plt.show()
+        
+        # add score data to compiled dataframe in tidy format
+        
+        # add data split column to indicate which dataset scores are from (train, test, etc)
+        PR_data["data_split"] = label
+        # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
+        PR_data["shuffled"] = "shuffled" in model_name
+        # add this score data to the tidy scores compiling list
+        compiled_class_PR_curves.append(PR_data)
+
+
+# ### Save PR curves from each evaluation
 
 # In[4]:
 
 
-fig, PR_data = class_PR_curves(train_data, shuffled_baseline_log_reg_model)
-fig.suptitle("Precision Recall Curves for Shuffled Baseline Model on Training Data")
-fig.savefig(f"{save_dir}/shuffled_baseline_model_train_data.png")
+# compile list of tidy data into one dataframe
+compiled_class_PR_curves = pd.concat(compiled_class_PR_curves).reset_index(drop=True)
 
-PR_data.to_csv(f"{save_dir}/shuffled_baseline_model_train_data.tsv", sep="\t")
-print(PR_data.shape)
-PR_data.head()
+# specify results directory
+class_PR_curves_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
+class_PR_curves_dir.mkdir(parents=True, exist_ok=True)
 
+# define save path
+compiled_scores_save_path = pathlib.Path(f"{class_PR_curves_dir}/compiled_class_PR_curves.tsv")
 
-# In[5]:
+# save data as tsv
+compiled_class_PR_curves.to_csv(compiled_scores_save_path, sep="\t")
 
-
-fig, PR_data = class_PR_curves(test_data, log_reg_model)
-fig.suptitle("Precision Recall Curves for Final Model on Testing Data")
-fig.savefig(f"{save_dir}/final_model_test_data.png")
-
-PR_data.to_csv(f"{save_dir}/final_model_test_data.tsv", sep="\t")
-print(PR_data.shape)
-PR_data.head()
-
-
-# In[6]:
-
-
-fig, PR_data = class_PR_curves(test_data, shuffled_baseline_log_reg_model)
-fig.suptitle("Precision Recall Curves for Shuffled Baseline Model on Testing Data")
-fig.savefig(f"{save_dir}/shuffled_baseline_model_test_data.png")
-
-PR_data.to_csv(f"{save_dir}/shuffled_baseline_model_test_data.tsv", sep="\t")
-print(PR_data.shape)
-PR_data.head()
+# preview tidy data
+compiled_class_PR_curves
 
