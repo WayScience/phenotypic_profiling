@@ -66,11 +66,10 @@ for model_path in models_dir.iterdir():
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
         
+        # get class PR curve data and show curve
         fig, PR_data = class_PR_curves(data, model)
         fig.suptitle(f"Precision Recall Curves for {model_name} on Dataset {label}")
         plt.show()
-        
-        # add score data to compiled dataframe in tidy format
         
         # add data split column to indicate which dataset scores are from (train, test, etc)
         PR_data["data_split"] = label
