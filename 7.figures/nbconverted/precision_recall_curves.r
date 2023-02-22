@@ -6,7 +6,7 @@ source("figure_themes.R")
 
 # Set output files
 output_file <- file.path(
-    "figures", "pr_curves_multiclass_deepprofiler.png"
+    "figures", "pr_curves_multiclass_DP.png"
 )
 
 # Load data
