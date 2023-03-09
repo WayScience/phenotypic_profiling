@@ -6,8 +6,8 @@
 # In[1]:
 
 
-import pandas as pd
 import pathlib
+import pandas as pd
 
 
 # ### Specify version of mitocheck_data to download from
