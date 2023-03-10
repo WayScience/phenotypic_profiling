@@ -9,6 +9,7 @@ from sklearn.utils import shuffle
 # set numpy seed to make random operations reproduceable
 np.random.seed(0)
 
+
 def get_dataset(
     features_dataframe: pd.DataFrame, data_split_indexes: pd.DataFrame, label: str
 ) -> pd.DataFrame:
@@ -30,7 +31,7 @@ def get_dataset(
 def get_X_y_data(training_data: pd.DataFrame, dataset: str = "CP_and_DP"):
     """generate X (features) and y (labels) dataframes from training data
     Args:
-        training_data (pd.DataFrame): 
+        training_data (pd.DataFrame):
             training dataframe
         dataset : str, optional
             which dataset columns to get feature data for
