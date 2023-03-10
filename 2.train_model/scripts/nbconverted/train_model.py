@@ -58,8 +58,30 @@ training_data
 # In[3]:
 
 
+# specify model types and feature types
 model_types = ["final", "shuffled_baseline"]
 feature_types = ["CP", "DP", "CP_and_DP"]
+
+# create stratified data sets for k-fold cross validation
+straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
+
+# create logistic regression model with following parameters
+log_reg_model = LogisticRegression(
+    penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
+)
+
+# specify parameters to tune for
+parameters = {"C": np.logspace(-3, 3, 7), "l1_ratio": np.linspace(0, 1, 11)}
+print(f"Parameters being tested during grid search: {parameters}\n")
+
+# create grid search with cross validation with hypertuning params
+grid_search_cv = GridSearchCV(
+    log_reg_model,
+    parameters,
+    cv=straified_k_folds,
+    n_jobs=-1,
+    scoring="f1_weighted",
+)
 
 # train model on each combination of model type and feature type
 for model_type in model_types:
@@ -74,25 +96,7 @@ for model_type in model_types:
             for column in X.T:
                 np.random.shuffle(column)
 
-        # create stratified data sets for k-fold cross validation
-        straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-
-        # create logistic regression model with following parameters
-        log_reg_model = LogisticRegression(
-            penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
-        )
-
-        # hypertune parameters with GridSearchCV
-        parameters = {"C": np.logspace(-3, 3, 7), "l1_ratio": np.linspace(0, 1, 11)}
-        print(f"Parameters being tested: {parameters}")
-        grid_search_cv = GridSearchCV(
-            log_reg_model,
-            parameters,
-            cv=straified_k_folds,
-            n_jobs=-1,
-            scoring="f1_weighted",
-        )
-
+        # fit grid search cv to X and y data
         # capture convergence warning from sklearn
         # this warning does not affect the model but takes up lots of space in the output
         with parallel_backend("multiprocessing"):
