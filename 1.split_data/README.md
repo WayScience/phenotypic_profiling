@@ -6,7 +6,7 @@ Data is split into subsets in [split_data.ipynb](split_data.ipynb).
 The testing dataset is determined by randomly sampling 15% (stratified by phenotypic class) of the single-cell dataset.
 The training dataset is the subset remaining after the testing samples are removed.
 Sample indexes associated with training and testing subsets are stored in [data_split_indexes.tsv](indexes/data_split_indexes.tsv).
-Sample indexes are later used to load subsets from [training_data.csv.gz](../0.download_data/data/training_data.csv.gz).
+Sample indexes are later used to load subsets from [labeled_data.csv.gz](../0.download_data/data/labeled_data.csv.gz).
 
 ## Step 1: Split Data
 
