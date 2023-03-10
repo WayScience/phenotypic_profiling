@@ -4,7 +4,6 @@ In this module, we train ML models to predict phenotypic class from cell feature
 
 We train the models in [train_model.ipynb](1.train_model.ipynb).
 We use [sklearn.linear_model.LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for our machine learning models.
-A final model 
 We use the following parameters for our each Logisic Regression model:
 
 - `penalty='elasticnet'`: Use elasticnet as the penalty for our model.
