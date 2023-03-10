@@ -35,7 +35,12 @@ print(labeled_data.shape)
 test_ratio = 0.15
 
 # get indexes of training and testing data
-training_data, testing_data = train_test_split(labeled_data, test_size=test_ratio, random_state=0)
+training_data, testing_data = train_test_split(
+    labeled_data,
+    test_size=test_ratio,
+    stratify=labeled_data[["Mitocheck_Phenotypic_Class"]],
+    random_state=1,
+)
 train_indexes = training_data.index.to_numpy()
 test_indexes = testing_data.index.to_numpy()
 
@@ -46,7 +51,7 @@ print(f"Testing data has shape: {testing_data.shape}")
 # In[4]:
 
 
-# create pandas dataframe with all indexes and their respective labels
+# create pandas dataframe with all indexes and their respective labels, stratified by phenotypic class
 index_data = []
 for index in train_indexes:
     index_data.append({"labeled_data_index": index, "label": "train"})
