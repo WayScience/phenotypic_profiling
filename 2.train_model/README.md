@@ -1,10 +1,10 @@
 # 2. Train Model
 
-In this module, we train a ML model to predict phenotypic class from DeepProfiler-extracted features.
+In this module, we train ML models to predict phenotypic class from cell features.
 
-We train the model in [train_model.ipynb](1.train_model.ipynb).
-We use [sklearn.linear_model.LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for our machine learning model.
-We use the following parameters for our Logisic Regression model:
+We train the models in [train_model.ipynb](1.train_model.ipynb).
+We use [sklearn.linear_model.LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for our machine learning models.
+We use the following parameters for our each Logisic Regression model:
 
 - `penalty='elasticnet'`: Use elasticnet as the penalty for our model.
 Elastic-Net regularization is a combination of L1 and L2 regularization methods.
@@ -22,9 +22,9 @@ We search over the following parameters: `[0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.
 - `C`: Inversely proportional to regularization strength.
 We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02, 1.e+03]`
 
-The best parameters are used to train a final model on all of the training data.
-This final model is saved in [log_reg_model.joblib](models/log_reg_model.joblib).
-The model derived from shuffled training data is saved in [shuffled_baseline_log_reg_model.joblib](models/shuffled_baseline_log_reg_model.joblib).
+We train three final multiclass models with CP features, DP features, and merged (CP and DP) features.
+We also train shuffled baseline models for each of these feature types as well, with each column of the feature data being shuffled independently to create a shuffled baseline for comparison.
+The notebooks save each model in [models/](models/).
 
 ## Step 1: Train Model
 
@@ -43,6 +43,4 @@ bash train_model.sh
 
 ## Results
 
-The weighted F1 score of the best estimators for the grid searches are as follows (can be found in [train_model.ipynb](train_model.ipynb)):
-- Final model: 0.80416
-- Shuffled baseline model: 0.15943
+The weighted F1 score of the best estimators for the grid searches can be found in [train_model.ipynb](train_model.ipynb).

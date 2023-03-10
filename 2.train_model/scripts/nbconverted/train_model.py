@@ -6,25 +6,29 @@
 # In[1]:
 
 
+import pathlib
+import warnings
+
 import pandas as pd
 import numpy as np
-import pathlib
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import (
     StratifiedKFold,
     GridSearchCV,
 )
-from sklearn.utils import shuffle
+from sklearn.utils import shuffle, parallel_backend
+from sklearn.exceptions import ConvergenceWarning
 from joblib import dump
 
 import sys
+
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset, get_X_y_data
 
 
-# ### Load training data and create stratified folds for cross validation
+# ### Specify results directory, load training data
 
 # In[2]:
 
@@ -32,125 +36,83 @@ from train_utils import get_dataset, get_X_y_data
 # set numpy seed to make random operations reproduceable
 np.random.seed(0)
 
+# create results directory
 results_dir = pathlib.Path("models/")
 results_dir.mkdir(parents=True, exist_ok=True)
 
 # load training data from indexes and features dataframe
 data_split_path = pathlib.Path(f"../1.split_data/indexes/data_split_indexes.tsv")
-features_dataframe_path = pathlib.Path("../0.download_data/data/training_data.csv.gz")
+features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 
+# dataframe with only the labeled data we want (exclude certain phenotypic classes)
 features_dataframe = get_features_data(features_dataframe_path)
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
 
+# get training data from labeled data
 training_data = get_dataset(features_dataframe, data_split_indexes, "train")
 training_data
 
 
+# ### Train model on each combination of model type and feature type
+
 # In[3]:
 
 
-X, y = get_X_y_data(training_data)
-
-print(X.shape)
-print(y.shape)
+# specify model types and feature types
+model_types = ["final", "shuffled_baseline"]
+feature_types = ["CP", "DP", "CP_and_DP"]
 
 # create stratified data sets for k-fold cross validation
 straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-
-
-# ### Define model without C/l1_ratio parameters
-# 
-
-# In[4]:
-
 
 # create logistic regression model with following parameters
 log_reg_model = LogisticRegression(
     penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
 )
 
-
-# ### Perform grid search for best C and l1_ratio parameters
-
-# In[5]:
-
-
-# hypertune parameters with GridSearchCV
+# specify parameters to tune for
 parameters = {"C": np.logspace(-3, 3, 7), "l1_ratio": np.linspace(0, 1, 11)}
-#parameters = {"C": [0.1], "l1_ratio": [0.0]}
-print(f"Parameters being tested: {parameters}")
+print(f"Parameters being tested during grid search: {parameters}\n")
+
+# create grid search with cross validation with hypertuning params
 grid_search_cv = GridSearchCV(
-    log_reg_model, parameters, cv=straified_k_folds, n_jobs=-1, scoring="f1_weighted",
-)
-grid_search_cv = grid_search_cv.fit(X, y)
-
-
-# In[6]:
-
-
-print(f"Best parameters: {grid_search_cv.best_params_}")
-print(f"Score of best estimator: {grid_search_cv.best_score_}")
-
-
-# ### Save best model
-
-# In[7]:
-
-
-# save final estimator
-dump(grid_search_cv.best_estimator_, f"{results_dir}/log_reg_model.joblib")
-
-
-# ## Repeat process with shuffling to create shuffled baseline model
-
-# In[8]:
-
-
-X, y = get_X_y_data(training_data)
-
-print(X.shape)
-print(y.shape)
-
-# shuffle columns of X (features) dataframe independently to create shuffled baseline
-for column in X.T:
-    np.random.shuffle(column)
-
-# create stratified data sets for k-fold cross validation
-straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-
-
-# In[9]:
-
-
-# create logistic regression model with following parameters
-log_reg_model = LogisticRegression(
-    penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
+    log_reg_model,
+    parameters,
+    cv=straified_k_folds,
+    n_jobs=-1,
+    scoring="f1_weighted",
 )
 
+# train model on each combination of model type and feature type
+for model_type in model_types:
+    for feature_type in feature_types:
+        print(f"Training {model_type} model on {feature_type} features...")
 
-# In[10]:
+        X, y = get_X_y_data(training_data, feature_type)
+        print(f"X has shape {X.shape}, y has shape {y.shape}")
 
+        # shuffle columns of X (features) dataframe independently to create shuffled baseline
+        if model_type == "shuffled_baseline":
+            for column in X.T:
+                np.random.shuffle(column)
 
-# hypertune parameters with GridSearchCV
-parameters = {"C": np.logspace(-3, 3, 7), "l1_ratio": np.linspace(0, 1, 11)}
-#parameters = {"C": [1.0], "l1_ratio": [0.8]}
-print(f"Parameters being tested: {parameters}")
-grid_search_cv = GridSearchCV(
-    log_reg_model, parameters, cv=straified_k_folds, n_jobs=-1, scoring="f1_weighted",
-)
-grid_search_cv = grid_search_cv.fit(X, y)
+        # fit grid search cv to X and y data
+        # capture convergence warning from sklearn
+        # this warning does not affect the model but takes up lots of space in the output
+        with parallel_backend("multiprocessing"):
+            with warnings.catch_warnings():
+                warnings.filterwarnings(
+                    "ignore", category=ConvergenceWarning, module="sklearn"
+                )
+                grid_search_cv = grid_search_cv.fit(X, y)
 
+        # print info for best estimator
+        print(f"Best parameters: {grid_search_cv.best_params_}")
+        print(f"Score of best estimator: {grid_search_cv.best_score_}\n")
 
-# In[11]:
-
-
-print(f"Best parameters: {grid_search_cv.best_params_}")
-print(f"Score of best estimator: {grid_search_cv.best_score_}")
-
-
-# In[12]:
-
-
-# save final estimator
-dump(grid_search_cv.best_estimator_, f"{results_dir}/shuffled_baseline_log_reg_model.joblib")
+        # save final estimator
+        dump(
+            grid_search_cv.best_estimator_,
+            f"{results_dir}/{model_type}__{feature_type}.joblib",
+        )
 

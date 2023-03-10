@@ -9,6 +9,7 @@ from sklearn.utils import shuffle
 # set numpy seed to make random operations reproduceable
 np.random.seed(0)
 
+
 def get_dataset(
     features_dataframe: pd.DataFrame, data_split_indexes: pd.DataFrame, label: str
 ) -> pd.DataFrame:
@@ -21,27 +22,35 @@ def get_dataset(
         pd.DataFrame: _description_
     """
     indexes = data_split_indexes.loc[data_split_indexes["label"] == label]
-    indexes = indexes["index"]
+    indexes = indexes["labeled_data_index"]
     data = features_dataframe.loc[indexes]
 
     return data
 
 
-def get_X_y_data(training_data: pd.DataFrame):
+def get_X_y_data(training_data: pd.DataFrame, dataset: str = "CP_and_DP"):
     """generate X (features) and y (labels) dataframes from training data
     Args:
-        training_data (pd.DataFrame): training dataframe
+        training_data (pd.DataFrame):
+            training dataframe
+        dataset : str, optional
+            which dataset columns to get feature data for
+            can be "CP" or "DP" or by default "CP_and_DP"
     Returns:
         pd.DataFrame, pd.DataFrame: X, y dataframes
     """
+    all_cols = training_data.columns.tolist()
 
-    # all features from DeepProfiler have "efficientnet" in their column name
-    morphology_features = [
-        col for col in training_data.columns.tolist() if "efficientnet" in col
-    ]
+    # get DP,CP, or both features from all columns depending on desired dataset
+    if dataset == "CP":
+        feature_cols = [col for col in all_cols if "CP__" in col]
+    elif dataset == "DP":
+        feature_cols = [col for col in all_cols if "DP__" in col]
+    elif dataset == "CP_and_DP":
+        feature_cols = [col for col in all_cols if "P__" in col]
 
     # extract features
-    X = training_data.loc[:, morphology_features].values
+    X = training_data.loc[:, feature_cols].values
 
     # extract phenotypic class label
     y = training_data.loc[:, ["Mitocheck_Phenotypic_Class"]].values
