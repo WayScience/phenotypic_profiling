@@ -24,7 +24,7 @@ We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+0
 
 We train three final multiclass models with CP features, DP features, and merged (CP and DP) features.
 We also train shuffled baseline models for each of these feature types as well, with each column of the feature data being shuffled independently to create a shuffled baseline for comparison.
-Each model is saved in [models/](models/).
+The notebooks save each model in [models/](models/).
 
 ## Step 1: Train Model
 
