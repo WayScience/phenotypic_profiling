@@ -140,7 +140,7 @@ def model_confusion_matrix(
 
 
 def model_F1_score(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
 ) -> pd.DataFrame:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
@@ -151,6 +151,8 @@ def model_F1_score(
         model to evaluate
     dataset : pd.DataFrame
         dataset with features and true phenotypic class labels to evaluate model with
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -159,7 +161,7 @@ def model_F1_score(
     """
 
     # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)
