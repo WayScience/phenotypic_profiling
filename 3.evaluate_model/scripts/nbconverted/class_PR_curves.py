@@ -23,16 +23,10 @@ from evaluate_utils import class_PR_curves
 # In[2]:
 
 
-model_dir = pathlib.Path("../2.train_model/models/")
-log_reg_model_path = pathlib.Path(f"{model_dir}/log_reg_model.joblib")
-log_reg_model = load(log_reg_model_path)
-shuffled_baseline_log_reg_model_path = pathlib.Path(f"{model_dir}/shuffled_baseline_log_reg_model.joblib")
-shuffled_baseline_log_reg_model = load(shuffled_baseline_log_reg_model_path)
-
 # load features data from indexes and features dataframe
 data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/training_data.csv.gz")
+features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
 train_data = get_dataset(features_dataframe, data_split_indexes, "train")
@@ -54,27 +48,35 @@ models_dir = pathlib.Path("../2.train_model/models/")
 compiled_class_PR_curves = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
-for model_path in models_dir.iterdir():
+for model_path in sorted(models_dir.iterdir()):
+    # load model
     model = load(model_path)
-    model_name = model_path.name.replace("log_reg_","").replace(".joblib","")
-    
+    # determine model/feature type from model file name
+    model_type = model_path.name.split("__")[0]
+    feature_type = model_path.name.split("__")[1].replace(".joblib","")
+
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
-        print(f"Evaluating {model_name} on dataset {label}")
-        
+        print(
+            f"Evaluating model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+        )
+
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
-        
+
         # get class PR curve data and show curve
-        fig, PR_data = class_PR_curves(data, model)
-        fig.suptitle(f"Precision Recall Curves for {model_name} on Dataset {label}")
+        fig, PR_data = class_PR_curves(data, model, feature_type)
+        fig.suptitle(f"PR curves for {model_type} model using {feature_type} features on {label} dataset")
         plt.show()
-        
+
         # add data split column to indicate which dataset scores are from (train, test, etc)
         PR_data["data_split"] = label
         # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
-        PR_data["shuffled"] = "shuffled" in model_name
+        PR_data["shuffled"] = "shuffled" in model_type
+        # add feature type column to indicate which features model has been trained on/is using
+        PR_data["feature_type"] = feature_type
+        
         # add this score data to the tidy scores compiling list
         compiled_class_PR_curves.append(PR_data)
 

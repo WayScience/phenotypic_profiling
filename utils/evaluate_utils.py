@@ -22,7 +22,7 @@ np.random.seed(0)
 
 
 def class_PR_curves(
-    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression
+    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression, dataset: str = "CP_and_DP"
 ) -> Tuple[Figure, pd.DataFrame]:
     """
     save precision recall curves for each class to the save directory
@@ -45,7 +45,7 @@ def class_PR_curves(
     """
 
     phenotypic_classes = log_reg_model.classes_
-    X, y = get_X_y_data(single_cell_data)
+    X, y = get_X_y_data(single_cell_data, dataset)
 
     # binarize labels for precision recall curve function
     y_binarized = label_binarize(y, classes=phenotypic_classes)
@@ -59,8 +59,8 @@ def class_PR_curves(
     # last values in precision/recall curve don't correspond to cell dataset
     PR_threshold = np.append(PR_threshold, None)
 
-    fig, axs = plt.subplots(4, 4)
-    fig.set_size_inches(15, 15)
+    fig, axs = plt.subplots(3, 5)
+    fig.set_size_inches(15, 9)
     ax_x = 0
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
@@ -81,7 +81,7 @@ def class_PR_curves(
         axs[ax_x, ax_y].set(xlabel="Recall", ylabel="Precision")
 
         ax_x += 1
-        if ax_x == 4:
+        if ax_x == 3:
             ax_x = 0
             ax_y += 1
 
