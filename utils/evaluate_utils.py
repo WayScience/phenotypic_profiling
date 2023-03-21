@@ -22,7 +22,7 @@ np.random.seed(0)
 
 
 def class_PR_curves(
-    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression, dataset: str = "CP_and_DP"
+    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression, feature_type: str
 ) -> Tuple[Figure, pd.DataFrame]:
     """
     save precision recall curves for each class to the save directory
@@ -34,6 +34,8 @@ def class_PR_curves(
         single cell dataframe with correct cell metadata and feature data
     log_reg_model : sklearn classifier
         clasifier to get precision recall curves for
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -45,7 +47,7 @@ def class_PR_curves(
     """
 
     phenotypic_classes = log_reg_model.classes_
-    X, y = get_X_y_data(single_cell_data, dataset)
+    X, y = get_X_y_data(single_cell_data, feature_type)
 
     # binarize labels for precision recall curve function
     y_binarized = label_binarize(y, classes=phenotypic_classes)
@@ -94,7 +96,7 @@ def class_PR_curves(
 
 
 def model_confusion_matrix(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
 ) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
@@ -105,6 +107,8 @@ def model_confusion_matrix(
         logistic regression model to evaluate
     dataset : pd.DataFrame
         dataset to evaluate model on
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -113,7 +117,7 @@ def model_confusion_matrix(
     """
 
     # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)

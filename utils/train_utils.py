@@ -28,10 +28,10 @@ def get_dataset(
     return data
 
 
-def get_X_y_data(training_data: pd.DataFrame, dataset: str = "CP_and_DP"):
+def get_X_y_data(labeled_data: pd.DataFrame, dataset: str = "CP_and_DP"):
     """generate X (features) and y (labels) dataframes from training data
     Args:
-        training_data (pd.DataFrame):
+        labeled_data (pd.DataFrame):
             training dataframe
         dataset : str, optional
             which dataset columns to get feature data for
@@ -39,7 +39,7 @@ def get_X_y_data(training_data: pd.DataFrame, dataset: str = "CP_and_DP"):
     Returns:
         pd.DataFrame, pd.DataFrame: X, y dataframes
     """
-    all_cols = training_data.columns.tolist()
+    all_cols = labeled_data.columns.tolist()
 
     # get DP,CP, or both features from all columns depending on desired dataset
     if dataset == "CP":
@@ -50,10 +50,10 @@ def get_X_y_data(training_data: pd.DataFrame, dataset: str = "CP_and_DP"):
         feature_cols = [col for col in all_cols if "P__" in col]
 
     # extract features
-    X = training_data.loc[:, feature_cols].values
+    X = labeled_data.loc[:, feature_cols].values
 
     # extract phenotypic class label
-    y = training_data.loc[:, ["Mitocheck_Phenotypic_Class"]].values
+    y = labeled_data.loc[:, ["Mitocheck_Phenotypic_Class"]].values
     # make Y data
     y = np.ravel(y)
 
