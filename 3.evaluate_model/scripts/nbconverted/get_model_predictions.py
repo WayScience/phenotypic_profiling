@@ -2,6 +2,7 @@
 # coding: utf-8
 
 # ### Import Libraries
+# 
 
 # In[1]:
 
@@ -14,12 +15,14 @@ from sklearn.metrics import f1_score
 from joblib import load
 
 import sys
+
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset, get_X_y_data
 
 
 # ### Load necessary data
+# 
 
 # In[2]:
 
@@ -32,6 +35,7 @@ features_dataframe = get_features_data(features_dataframe_path)
 
 
 # ### Get Each Model Predictions on Each Dataset
+# 
 
 # In[3]:
 
@@ -43,11 +47,12 @@ models_dir = pathlib.Path("../2.train_model/models/")
 compiled_predictions = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
+# sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
     # determine model/feature type from model file name
     model_type = model_path.name.split("__")[0]
-    feature_type = model_path.name.split("__")[1].replace(".joblib","")
+    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
@@ -70,9 +75,9 @@ for model_path in sorted(models_dir.iterdir()):
         # get predictions from model
         y_pred = model.predict(X)
 
-        # create dataframe with dataset index of cell being predicted, 
-        # predicted phenotypic class, 
-        # true phenotypic class, 
+        # create dataframe with dataset index of cell being predicted,
+        # predicted phenotypic class,
+        # true phenotypic class,
         # and which dataset/models are involved in prediction
         predictions_df = pd.DataFrame(
             {
@@ -81,7 +86,7 @@ for model_path in sorted(models_dir.iterdir()):
                 "Phenotypic_Class_True": y_pred,
                 "data_split": label,
                 "shuffled": "shuffled" in model_type,
-                "feature_type": feature_type
+                "feature_type": feature_type,
             }
         )
 
@@ -89,6 +94,7 @@ for model_path in sorted(models_dir.iterdir()):
 
 
 # ### Compile and Save Predictions
+# 
 
 # In[4]:
 

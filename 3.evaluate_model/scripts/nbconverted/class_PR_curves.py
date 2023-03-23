@@ -2,6 +2,7 @@
 # coding: utf-8
 
 # ### Import Libraries
+# 
 
 # In[1]:
 
@@ -12,6 +13,7 @@ from joblib import load
 from matplotlib import pyplot as plt
 
 import sys
+
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
@@ -19,6 +21,7 @@ from evaluate_utils import class_PR_curves
 
 
 # ### Load models and datasets
+# 
 
 # In[2]:
 
@@ -37,6 +40,7 @@ save_dir.mkdir(parents=True, exist_ok=True)
 
 
 # ### Evaluate Each Model on Each Dataset
+# 
 
 # In[3]:
 
@@ -48,12 +52,13 @@ models_dir = pathlib.Path("../2.train_model/models/")
 compiled_class_PR_curves = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
+# sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
     # load model
     model = load(model_path)
     # determine model/feature type from model file name
     model_type = model_path.name.split("__")[0]
-    feature_type = model_path.name.split("__")[1].replace(".joblib","")
+    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
@@ -67,7 +72,9 @@ for model_path in sorted(models_dir.iterdir()):
 
         # get class PR curve data and show curve
         fig, PR_data = class_PR_curves(data, model, feature_type)
-        fig.suptitle(f"PR curves for {model_type} model using {feature_type} features on {label} dataset")
+        fig.suptitle(
+            f"PR curves for {model_type} model using {feature_type} features on {label} dataset"
+        )
         plt.show()
 
         # add data split column to indicate which dataset scores are from (train, test, etc)
@@ -76,12 +83,13 @@ for model_path in sorted(models_dir.iterdir()):
         PR_data["shuffled"] = "shuffled" in model_type
         # add feature type column to indicate which features model has been trained on/is using
         PR_data["feature_type"] = feature_type
-        
+
         # add this score data to the tidy scores compiling list
         compiled_class_PR_curves.append(PR_data)
 
 
 # ### Save PR curves from each evaluation
+# 
 
 # In[4]:
 
@@ -94,7 +102,9 @@ class_PR_curves_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
 class_PR_curves_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
-compiled_scores_save_path = pathlib.Path(f"{class_PR_curves_dir}/compiled_class_PR_curves.tsv")
+compiled_scores_save_path = pathlib.Path(
+    f"{class_PR_curves_dir}/compiled_class_PR_curves.tsv"
+)
 
 # save data as tsv
 compiled_class_PR_curves.to_csv(compiled_scores_save_path, sep="\t")
