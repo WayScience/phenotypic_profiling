@@ -82,9 +82,13 @@ def class_PR_curves(
         axs[ax_x, ax_y].set_title(phenotypic_classes[i])
         axs[ax_x, ax_y].set(xlabel="Recall", ylabel="Precision")
 
+        # increase row coordinate counter (this marks which subplot to plot on in vertical direction)
         ax_x += 1
+        # if row coordinate counter is at maximum (3 rows of subplots)
         if ax_x == 3:
+            # set row coordinate counter to 0
             ax_x = 0
+            # increase column coordinate counter (this marks which subplot to plot on in horizontal direction)
             ax_y += 1
 
     # only label outer plots
