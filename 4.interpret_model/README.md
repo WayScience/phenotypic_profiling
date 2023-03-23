@@ -1,6 +1,6 @@
 # 4. Interpret Model
 
-In this module, we interpret the final and shuffled baseline ML models.
+In this module, we interpret the ML models.
 
 After training the final and baseline models in [2.train_model](../2.train_model/), we load the coefficents of these models from [models/](../2.train_model/models).
 These coefficients are interpreted with the following diagrams:
