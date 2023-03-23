@@ -62,7 +62,7 @@ for model_path in sorted(models_dir.iterdir()):
     print(f"Interpreting model: {model_type} \nTrained with features: {feature_type}")
 
     # get model coefficients and reshape them into a more useable format
-    coefs = np.abs(model.coef_)
+    coefs = model.coef_
     coefs = pd.DataFrame(coefs).T
     coefs.columns = model.classes_
     print(f"Shape of model coefficients{coefs.shape}")
@@ -70,9 +70,9 @@ for model_path in sorted(models_dir.iterdir()):
     # restructure/rename dataframe to tidy long format (see preview below)
     tidy_data = coefs.stack()
     tidy_data = pd.DataFrame(tidy_data).reset_index(level=[0, 1])
-    tidy_data.columns = ["Feature_Name", "Phenotypic_Class", "Value"]
+    tidy_data.columns = ["Feature_Name", "Phenotypic_Class", "ML_coefficient"]
 
-    # add feature names to coefficientss dataframe
+    # add feature names to coefficients dataframe
     # feature names depends on feature type
     all_cols = labeled_data.columns.tolist()
     # get DP,CP, or both features from all columns depending on desired dataset
