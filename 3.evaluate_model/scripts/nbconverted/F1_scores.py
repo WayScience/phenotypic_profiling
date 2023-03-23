@@ -2,6 +2,7 @@
 # coding: utf-8
 
 # ### Import Libraries
+# 
 
 # In[1]:
 
@@ -11,6 +12,7 @@ import pathlib
 from joblib import load
 
 import sys
+
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
@@ -18,6 +20,7 @@ from evaluate_utils import model_F1_score
 
 
 # ### Load Necessary Data
+# 
 
 # In[2]:
 
@@ -25,11 +28,12 @@ from evaluate_utils import model_F1_score
 # load features data from indexes and features dataframe
 data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/training_data.csv.gz")
+features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
 
 # ### Evaluate Each Model on Each Dataset
+# 
 
 # In[3]:
 
@@ -41,20 +45,25 @@ models_dir = pathlib.Path("../2.train_model/models/")
 compiled_scores = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
-for model_path in models_dir.iterdir():
+# sorted so final models are shown before shuffled_baseline
+for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
-    model_name = model_path.name.replace("log_reg_","").replace(".joblib","")
-    
+    # determine model/feature type from model file name
+    model_type = model_path.name.split("__")[0]
+    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
+
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
-        print(f"Evaluating {model_name} on dataset {label}")
-        
+        print(
+            f"Evaluating model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+        )
+
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
         # find model F1 scores on dataset
-        score = model_F1_score(model, data)
-        
+        score = model_F1_score(model, data, feature_type)
+
         # add score data to compiled dataframe in tidy format
         # transpose data and reset index to make dataframe resemble tidy long format
         score = score.T.reset_index()
@@ -63,12 +72,16 @@ for model_path in models_dir.iterdir():
         # add data split column to indicate which dataset scores are from (train, test, etc)
         score["data_split"] = label
         # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
-        score["shuffled"] = "shuffled" in model_name
+        score["shuffled"] = "shuffled" in model_type
+        # add feature type column to indicate which features model has been trained on/is using
+        score["feature_type"] = feature_type
+
         # add this score data to the tidy scores compiling list
         compiled_scores.append(score)
 
 
 # ### Save scores from each evaluation
+# 
 
 # In[4]:
 

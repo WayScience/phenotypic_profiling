@@ -2,6 +2,7 @@
 # coding: utf-8
 
 # ### Import Libraries
+# 
 
 # In[1]:
 
@@ -14,12 +15,14 @@ from sklearn.metrics import f1_score
 from joblib import load
 
 import sys
+
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset, get_X_y_data
 
 
 # ### Load necessary data
+# 
 
 # In[2]:
 
@@ -27,11 +30,12 @@ from train_utils import get_dataset, get_X_y_data
 # load features data from indexes and features dataframe
 data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
 data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/training_data.csv.gz")
+features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
 
 # ### Get Each Model Predictions on Each Dataset
+# 
 
 # In[3]:
 
@@ -43,32 +47,37 @@ models_dir = pathlib.Path("../2.train_model/models/")
 compiled_predictions = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
-for model_path in models_dir.iterdir():
+# sorted so final models are shown before shuffled_baseline
+for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
-    model_name = model_path.name.replace("log_reg_", "").replace(".joblib", "")
+    # determine model/feature type from model file name
+    model_type = model_path.name.split("__")[0]
+    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
-        print(f"Getting predictions for {model_name} on dataset {label}")
+        print(
+            f"Getting predictions for model: {model_type}, trained with features: {feature_type}, on dataset: {label}"
+        )
 
         # get indexes of each cell being predicted for the dataset the cell is from
         dataset_indexes = data_split_indexes.loc[data_split_indexes["label"] == label][
-            "index"
+            "labeled_data_index"
         ]
 
         # load dataset (train, test, etc)
         data = get_dataset(features_dataframe, data_split_indexes, label)
 
         # get features and labels dataframes
-        X, y = get_X_y_data(data)
+        X, y = get_X_y_data(data, feature_type)
 
         # get predictions from model
         y_pred = model.predict(X)
 
-        # create dataframe with dataset index of cell being predicted, 
-        # predicted phenotypic class, 
-        # true phenotypic class, 
+        # create dataframe with dataset index of cell being predicted,
+        # predicted phenotypic class,
+        # true phenotypic class,
         # and which dataset/models are involved in prediction
         predictions_df = pd.DataFrame(
             {
@@ -76,7 +85,8 @@ for model_path in models_dir.iterdir():
                 "Phenotypic_Class_Predicted": y,
                 "Phenotypic_Class_True": y_pred,
                 "data_split": label,
-                "shuffled": "shuffled" in model_name,
+                "shuffled": "shuffled" in model_type,
+                "feature_type": feature_type,
             }
         )
 
@@ -84,6 +94,7 @@ for model_path in models_dir.iterdir():
 
 
 # ### Compile and Save Predictions
+# 
 
 # In[4]:
 

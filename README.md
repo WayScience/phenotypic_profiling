@@ -36,7 +36,14 @@ We also use `np.random.seed(0)` to make "random" numpy operations have consisten
 We use [seaborn](https://seaborn.pydata.org/) for data visualization. 
 Seaborn is described in [Waskom, M.L., 2021](https://doi.org/10.21105/joss.03021) as a library for making statisical graphics in python.
 
-All parts of the following pipeline are completed for a "final" model (from training data) and a "shuffled baseline" model (from shuffled training data).
+All parts of the machine learning pipeline are completed with the following feature types:
+- `CP`: Use only CellProfiler features from `MitoCheck` labeled cells
+- `DP`: Use only DeepProfiler features from `MitoCheck` labeled cells
+- `CP_and_DP`: Use CellProfiler and DeepProfiler features from `MitoCheck` labeled cells
+
+See [MitoCheck_data](https://github.com/WayScience/mitocheck_data) for more information on feature types and how they are extracted from `MitoCheck` labeled cells.
+
+All parts of the machine learning pipeline are also completed for a "final" model (from training data) and a "shuffled baseline" model (from shuffled training data).
 This shuffled baseline model provides a suitable baseline comparison for the final model during evaluation.
 
 **Note:** Throughout this repository, intermediate `.tsv` data are stored in tidy long format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).

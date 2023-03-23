@@ -22,7 +22,7 @@ np.random.seed(0)
 
 
 def class_PR_curves(
-    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression
+    single_cell_data: pd.DataFrame, log_reg_model: LogisticRegression, feature_type: str
 ) -> Tuple[Figure, pd.DataFrame]:
     """
     save precision recall curves for each class to the save directory
@@ -34,6 +34,8 @@ def class_PR_curves(
         single cell dataframe with correct cell metadata and feature data
     log_reg_model : sklearn classifier
         clasifier to get precision recall curves for
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -45,7 +47,7 @@ def class_PR_curves(
     """
 
     phenotypic_classes = log_reg_model.classes_
-    X, y = get_X_y_data(single_cell_data)
+    X, y = get_X_y_data(single_cell_data, feature_type)
 
     # binarize labels for precision recall curve function
     y_binarized = label_binarize(y, classes=phenotypic_classes)
@@ -59,8 +61,8 @@ def class_PR_curves(
     # last values in precision/recall curve don't correspond to cell dataset
     PR_threshold = np.append(PR_threshold, None)
 
-    fig, axs = plt.subplots(4, 4)
-    fig.set_size_inches(15, 15)
+    fig, axs = plt.subplots(3, 5)
+    fig.set_size_inches(15, 9)
     ax_x = 0
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
@@ -80,9 +82,13 @@ def class_PR_curves(
         axs[ax_x, ax_y].set_title(phenotypic_classes[i])
         axs[ax_x, ax_y].set(xlabel="Recall", ylabel="Precision")
 
+        # increase row coordinate counter (this marks which subplot to plot on in vertical direction)
         ax_x += 1
-        if ax_x == 4:
+        # if row coordinate counter is at maximum (3 rows of subplots)
+        if ax_x == 3:
+            # set row coordinate counter to 0
             ax_x = 0
+            # increase column coordinate counter (this marks which subplot to plot on in horizontal direction)
             ax_y += 1
 
     # only label outer plots
@@ -94,7 +100,7 @@ def class_PR_curves(
 
 
 def model_confusion_matrix(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
 ) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
@@ -105,6 +111,8 @@ def model_confusion_matrix(
         logistic regression model to evaluate
     dataset : pd.DataFrame
         dataset to evaluate model on
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -113,7 +121,7 @@ def model_confusion_matrix(
     """
 
     # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)
@@ -136,7 +144,7 @@ def model_confusion_matrix(
 
 
 def model_F1_score(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
 ) -> pd.DataFrame:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
@@ -147,6 +155,8 @@ def model_F1_score(
         model to evaluate
     dataset : pd.DataFrame
         dataset with features and true phenotypic class labels to evaluate model with
+    feature_type : str
+        which feature type is being evaluated (CP, DP, CP_and_DP)
 
     Returns
     -------
@@ -155,7 +165,7 @@ def model_F1_score(
     """
 
     # get features and labels dataframes
-    X, y = get_X_y_data(dataset)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)
