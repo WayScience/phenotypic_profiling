@@ -18,10 +18,13 @@ In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.preci
 The precision recall curves and their data are saved to [class_precision_recall_curves](evaluations/class_precision_recall_curves/).
 
 In [get_LOIO_probabilities.ipynb](get_LOIO_probabilities.ipynb), we use the optimal hyperparameters from each final logistic regression model (DP, CP, CP_and_DP) to fit and evaluate new models in a Leave One Image Out (LOIO) fashion.
+These optimal hyper parameters are found with Grid Search Cross Validation in [train_model.ipynb](../2.train_model/train_model.ipynb) and are saved with model data in [models/](../2.train_model/models/).
+LOIO evaluation gives an idea of how well the model will perform on cells that are in an image the model has never seen before.
+If the model performs well in LOIO evaluation, we can be confident it will generalize well to images it has never seen before.
 The LOIO evaluation procedure is as follows:
-- Load in entire MitoCheck labeled cell dataset (from [labeled_data.csv.gz](../data/labeled_data.csv.gz))
-- For each image in MitoCheck labeled cell dataset (as specified by the `Metadata_DNA` field):
-    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`, saved with model data in [models/](../2.train_model/models/)) on every cell that is **not** in the specific image.
+1) Load in entire MitoCheck labeled cell dataset (from [labeled_data.csv.gz](../data/labeled_data.csv.gz))
+2) For each image in MitoCheck labeled cell dataset (as specified by the `Metadata_DNA` field):
+    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) on every cell that is **not** in the specific image.
     - Predict probabilities on every cell that **is** in the specific image.
 
 The probabilities are saved to [LOIO_probas](evaluations/LOIO_probas).
