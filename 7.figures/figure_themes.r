@@ -18,6 +18,24 @@ shuffled_labels <- c(
     "True" = "True"
 )
 
+feature_type_with_data_split_colors <- c(
+    "CP_and_DPtest" = "#C214CB",
+    "CP_and_DPtrain" = "#E88EED",
+    "CPtest" = "#EB4B4B",
+    "CPtrain" = "#F8B5B5",
+    "DPtest" = "#5158bb",
+    "DPtrain" = "#B5B9EA"
+)
+
+feature_type_with_data_split_labels <- c(
+    "CP_and_DPtest" = "CP + DP (Test)",
+    "CP_and_DPtrain" = "CP + DP (Train)",
+    "CPtest" = "CP (Test)",
+    "CPtrain" = "CP (Train)",
+    "DPtest" = "DP (Test)",
+    "DPtrain" = "DP (Train)"
+)
+
 figure_theme <- (
     theme_bw()
     + theme(
