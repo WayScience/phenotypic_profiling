@@ -6,3 +6,5 @@ __pycache__/
 .vscode
 # autosklearn
 3.ML_model/autosklearn.ipynb
+# Mac files
+.DS_Store
