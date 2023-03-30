@@ -41,7 +41,9 @@ top_scores_df <- f1_score_df %>%
     dplyr::group_by(Phenotypic_Class) %>%
     dplyr::slice(1)
 
-table(top_scores_df$feature_type_with_data_split)
+print(table(top_scores_df$feature_type_with_data_split))
+
+top_scores_df
 
 f1_score_gg <- (
     ggplot(f1_score_df, aes(x = Phenotypic_Class, y = F1_Score))
