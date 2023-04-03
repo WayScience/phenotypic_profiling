@@ -2,7 +2,10 @@
 
 In this module, we train ML models to predict phenotypic class from cell features.
 
-We train the models in [train_model.ipynb](1.train_model.ipynb).
+In [train_multi_class_models.ipynb](train_multi_class_models.ipynb), we train models to predict which phenotypic class the cell features are from out of 15 possible classes (anaphase, metaphase, apoptosis, etc).
+In [train_single_class_models.ipynb](train_single_class_models.ipynb), we train models to predict whether or not the cell features are from a particular phenotypic class or not.
+This means a set of models are made to predict a "yes" or "no" for each of the 15 phenotypic classes used in the multi-class models. 
+
 We use [sklearn.linear_model.LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for our machine learning models.
 We use the following parameters for our each Logisic Regression model:
 
