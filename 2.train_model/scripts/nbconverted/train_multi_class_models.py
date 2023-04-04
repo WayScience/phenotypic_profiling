@@ -37,7 +37,7 @@ from train_utils import get_dataset, get_X_y_data
 np.random.seed(0)
 
 # create results directory
-results_dir = pathlib.Path("models/")
+results_dir = pathlib.Path("models/multi_class_models/")
 results_dir.mkdir(parents=True, exist_ok=True)
 
 # load training data from indexes and features dataframe
