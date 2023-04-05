@@ -15,7 +15,9 @@ F1 score measures the models precision and recall performance for each phenotypi
 The f1 score data are saved to [F1_scores](evaluations/F1_scores).
 
 In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for each model, feature type, and dataset combination.
-The precision recall curves and their data are saved to [class_precision_recall_curves](evaluations/class_precision_recall_curves/).
+These PR curves are created for each label type of the logistic regression model.
+E.g. each multi-class model has 15 labels (1 for each phentoypic class) and 15 PR curves while each single-class model has 2 labels (positive and negative label for its repective phenotype) and 2 PR curves.
+The precision recall curves and their data are saved to [precision_recall_curves](evaluations/precision_recall_curves/).
 
 In [get_LOIO_probabilities.ipynb](get_LOIO_probabilities.ipynb), we use the optimal hyperparameters from each final logistic regression model (DP, CP, CP_and_DP) to fit and evaluate new models in a Leave One Image Out (LOIO) fashion.
 These optimal hyper parameters are found with Grid Search Cross Validation in [train_model.ipynb](../2.train_model/train_model.ipynb) and are saved with model data in [models/](../2.train_model/models/).
@@ -30,7 +32,9 @@ The LOIO evaluation procedure is as follows:
 
 The probabilities are saved to [LOIO_probas](evaluations/LOIO_probas).
 
-**Note:** Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+**Notes:** 
+1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+2) SCM stands for "single cell model(s)" and is used as an abbrevation for the binary, sinlge-class models throughout this module.
 
 ## Step 1: Evaluate Model
 
