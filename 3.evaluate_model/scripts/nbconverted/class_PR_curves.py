@@ -114,7 +114,7 @@ compiled_class_PR_curves
 # ### Evaluate each model on each dataset (multiclass)
 # 
 
-# In[ ]:
+# In[5]:
 
 
 # directory to load the models from
@@ -193,7 +193,7 @@ for model_type in model_types:
 # ### Save PR curves from each evaluation (multiclass)
 # 
 
-# In[ ]:
+# In[6]:
 
 
 # compile tidy PR data
