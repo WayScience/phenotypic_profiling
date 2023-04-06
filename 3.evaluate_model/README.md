@@ -16,7 +16,7 @@ The f1 score data are saved to [F1_scores](evaluations/F1_scores).
 
 In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for each model, feature type, and dataset combination.
 These PR curves are created for each label type of the logistic regression model.
-E.g. each multi-class model has 15 labels (1 for each phentoypic class) and 15 PR curves while each single-class model has 2 labels (positive and negative label for its repective phenotype) and 2 PR curves.
+E.g. each multi-class model has 15 labels (1 for each phenotypic class) and 15 PR curves while each single-class model has 2 labels (positive and negative label for its respective phenotype) and 2 PR curves.
 The precision recall curves and their data are saved to [precision_recall_curves](evaluations/precision_recall_curves/).
 
 In [get_LOIO_probabilities.ipynb](get_LOIO_probabilities.ipynb), we use the optimal hyperparameters from each final logistic regression model (DP, CP, CP_and_DP) to fit and evaluate new models in a Leave One Image Out (LOIO) fashion.
