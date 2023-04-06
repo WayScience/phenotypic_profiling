@@ -167,37 +167,8 @@ def class_PR_curves_SCM(
     # keep track of PR data for later analysis
     PR_data = []
     
-    # rename false labels to "Not {positive label}"
-    single_cell_data.loc[
-        single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
-        "Mitocheck_Phenotypic_Class",
-    ] = f"Not {phenotypic_class}"
-
-    # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
-    # it is necessary to get the subset of training data that was used to actually train this specific model
-    if evaluation_type == "train":
-        # first, get indexes of all positive labels (labels that are the desired phenotypic class)
-        positive_label_indexes = (
-            single_cell_data.loc[
-                single_cell_data["Mitocheck_Phenotypic_Class"] == phenotypic_class
-            ]
-        ).index
-        # next, get the same number of negative labels (labels that are not the desired phenotypic class)
-        negative_label_indexes = (
-            (
-                single_cell_data.loc[
-                    single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class
-                ]
-            )
-            .sample(positive_label_indexes.shape[0], random_state=0)
-            .index
-        )
-        # the new class training data are the two subsets found above
-        # this new class training data will have equal numbers of positive and negative labels
-        # this removes the drastic class imbalances
-        single_cell_data = single_cell_data.loc[
-            positive_label_indexes.union(negative_label_indexes)
-        ]
+    # rename negative labels and downsample negative lables if we are evaluating on training data
+    single_cell_data = get_SCM_model_data(single_cell_data, phenotypic_class, evaluation_type)
 
     model_classes = single_class_model.classes_
     X, y = get_X_y_data(single_cell_data, feature_type)
@@ -294,15 +265,12 @@ def model_confusion_matrix(
         conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_
     )
 
-    # display confusion matrix
-    plt.figure(figsize=(10, 10))
+    # create confusion matrix figure
     ax = sns.heatmap(data=conf_mat, annot=True, fmt=".0f", cmap="viridis", square=True)
-    ax = plt.xlabel("Predicted Label")
-    ax = plt.ylabel("True Label")
-    ax = plt.title("Phenotypic Class Predicitions")
-    plt.show()
+    ax.set_xlabel("Predicted Label")
+    ax.set_ylabel("True Label")
 
-    return conf_mat
+    return conf_mat, ax
 
 
 def model_F1_score(
