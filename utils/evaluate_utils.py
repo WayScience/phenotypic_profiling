@@ -96,6 +96,60 @@ def class_PR_curves(
     PR_data = pd.concat(PR_data, axis=0).reset_index(drop=True)
     return fig, PR_data
 
+def get_SCM_model_data(single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str) -> pd.DataFrame:
+    """
+    convert single cell data with metadata and features to usable single class model data 
+    rename phenotypic classes that are not the desired class to "Not {phenotypic_class}"
+    if evaluation type is training, downsample negative samples to get 50/50 positive/negative split
+
+    Parameters
+    ----------
+    single_cell_data : pd.DataFrame
+        single cell data with metadata and features that has all phenotypic classes
+    phenotypic_class : str
+        desired phenotypic class
+    evaluation_type : str
+        type of dataset to evaluate with (train or test)
+
+    Returns
+    -------
+    pd.DataFrame
+        single cell data usable for single class models/evaluation
+    """
+    
+    # rename false labels to "Not {positive label}"
+    single_cell_data.loc[
+        single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
+        "Mitocheck_Phenotypic_Class",
+    ] = f"Not {phenotypic_class}"
+
+    # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
+    # it is necessary to get the subset of training data that was used to actually train this specific model
+    if evaluation_type == "train":
+        # first, get indexes of all positive labels (labels that are the desired phenotypic class)
+        positive_label_indexes = (
+            single_cell_data.loc[
+                single_cell_data["Mitocheck_Phenotypic_Class"] == phenotypic_class
+            ]
+        ).index
+        # next, get the same number of negative labels (labels that are not the desired phenotypic class)
+        negative_label_indexes = (
+            (
+                single_cell_data.loc[
+                    single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class
+                ]
+            )
+            .sample(positive_label_indexes.shape[0], random_state=0)
+            .index
+        )
+        # the new class training data are the two subsets found above
+        # this new class training data will have equal numbers of positive and negative labels
+        # this removes the drastic class imbalances
+        single_cell_data = single_cell_data.loc[
+            positive_label_indexes.union(negative_label_indexes)
+        ]
+        
+    return single_cell_data
 
 def class_PR_curves_SCM(
     single_cell_data: pd.DataFrame,
