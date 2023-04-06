@@ -2,7 +2,7 @@
 utilities for evaluating logistic regression models on training and testing datasets
 """
 
-from typing import Tuple
+from typing import Tuple, Literal
 import pandas as pd
 import numpy as np
 
@@ -159,16 +159,47 @@ def get_SCM_model_data(
 
 def class_PR_curves_SCM(
     single_cell_data: pd.DataFrame,
-    single_class_model,
-    fig,
-    axs,
-    phenotypic_class_index,
-    data_split_colors,
-    model_type: str,
-    feature_type: str,
-    evaluation_type: str,
+    single_class_model: LogisticRegression,
+    fig: Figure,
+    axs: np.ndarray,
+    phenotypic_class_index: int,
+    data_split_colors: dict,
+    model_type: Literal["final", "shuffled_baseline"],
+    feature_type: Literal["CP", "DP", "CP_and_DP"],
+    evaluation_type: Literal["train", "test"],
     phenotypic_class: str,
 ) -> pd.DataFrame:
+    """
+    add PR curves to fig, axs for the single class model using feature_type (CP, DP, CP_and_DP), evaluation_type (test or train), and phenotypic_class
+    also, return PR curve data
+    
+    Parameters
+    ----------
+    single_cell_data : pd.DataFrame
+        single cell data with multi-class labels (all phenotypic classes), metadata, and feature data
+    single_class_model : LogisticRegression
+        single class model to create PR data for
+    fig : Figure
+        matplotlib figure to add PR curve plot to
+    axs : np.ndarray
+        axes for matplotlib figure
+    phenotypic_class_index : int
+        index of phenotypic class in all phenotypic classes (used to determine location of PR curve in figure)
+    data_split_colors : dict
+        dictionary with information of which colors to use for which model, feature, evaluation type when plotting
+    model_type : str
+        type of model (final or shuffled baseline)
+    feature_type : str
+        feature type model uses (CP, DP, or CP_and_DP)
+    evaluation_type : str
+        type of data being used for evaluation (test or train)
+    phenotypic_class : str
+        phenotypic class of single cell model being evaluated
+    Returns
+    -------
+    pd.DataFrame
+        data for PR curves for single cell model
+    """
 
     # keep track of PR data for later analysis
     PR_data = []

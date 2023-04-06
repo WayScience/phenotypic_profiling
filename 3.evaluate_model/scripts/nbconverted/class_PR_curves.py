@@ -90,7 +90,7 @@ for model_path in sorted(models_dir.iterdir()):
 
 
 # compile list of tidy data into one dataframe
-# some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
+# some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
 compiled_class_PR_curves = (
     pd.concat(compiled_class_PR_curves).dropna().reset_index(drop=True)
 )
@@ -145,7 +145,6 @@ compiled_SCM_PR_data = []
 # iterate over each model type
 # this is not included in itertools product because the PR curves figure needs to be generated for each model type with plt.show()
 for model_type in model_types:
-
     # create a figure that has 6x5 subplots
     fig, axs = plt.subplots(6, 5)
     fig.set_size_inches(15, 18)
@@ -154,7 +153,6 @@ for model_type in model_types:
     for feature_type, evaluation_type, phenotypic_class in itertools.product(
         feature_types, evaluation_types, phenotypic_classes
     ):
-
         # load single class model for this combination of model type, feature type, and phenotypic class
         single_class_model_path = pathlib.Path(
             f"{single_class_models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
@@ -197,7 +195,7 @@ for model_type in model_types:
 
 
 # compile tidy PR data
-# some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
+# some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
 compiled_SCM_PR_data = (
     pd.concat(compiled_SCM_PR_data, axis=0).dropna().reset_index(drop=True)
 )
@@ -214,4 +212,3 @@ compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
 compiled_SCM_PR_data
-
