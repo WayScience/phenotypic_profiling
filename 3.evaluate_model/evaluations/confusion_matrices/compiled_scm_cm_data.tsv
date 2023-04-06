@@ -1,0 +1,49 @@
+	True_Label	Predicted_Label	Count	data_split	shuffled	feature_type
+0	Not OutOfFocus	Not OutOfFocus	256	train	False	CP
+1	Not OutOfFocus	OutOfFocus	2	train	False	CP
+2	OutOfFocus	Not OutOfFocus	3	train	False	CP
+3	OutOfFocus	OutOfFocus	255	train	False	CP
+4	Not OutOfFocus	Not OutOfFocus	361	test	False	CP
+5	Not OutOfFocus	OutOfFocus	23	test	False	CP
+6	OutOfFocus	Not OutOfFocus	0	test	False	CP
+7	OutOfFocus	OutOfFocus	46	test	False	CP
+8	Not OutOfFocus	Not OutOfFocus	253	train	False	DP
+9	Not OutOfFocus	OutOfFocus	5	train	False	DP
+10	OutOfFocus	Not OutOfFocus	1	train	False	DP
+11	OutOfFocus	OutOfFocus	257	train	False	DP
+12	Not OutOfFocus	Not OutOfFocus	379	test	False	DP
+13	Not OutOfFocus	OutOfFocus	5	test	False	DP
+14	OutOfFocus	Not OutOfFocus	0	test	False	DP
+15	OutOfFocus	OutOfFocus	46	test	False	DP
+16	Not OutOfFocus	Not OutOfFocus	255	train	False	CP_and_DP
+17	Not OutOfFocus	OutOfFocus	3	train	False	CP_and_DP
+18	OutOfFocus	Not OutOfFocus	1	train	False	CP_and_DP
+19	OutOfFocus	OutOfFocus	257	train	False	CP_and_DP
+20	Not OutOfFocus	Not OutOfFocus	375	test	False	CP_and_DP
+21	Not OutOfFocus	OutOfFocus	9	test	False	CP_and_DP
+22	OutOfFocus	Not OutOfFocus	0	test	False	CP_and_DP
+23	OutOfFocus	OutOfFocus	46	test	False	CP_and_DP
+24	Not OutOfFocus	Not OutOfFocus	178	train	True	CP
+25	Not OutOfFocus	OutOfFocus	80	train	True	CP
+26	OutOfFocus	Not OutOfFocus	119	train	True	CP
+27	OutOfFocus	OutOfFocus	139	train	True	CP
+28	Not OutOfFocus	Not OutOfFocus	248	test	True	CP
+29	Not OutOfFocus	OutOfFocus	136	test	True	CP
+30	OutOfFocus	Not OutOfFocus	25	test	True	CP
+31	OutOfFocus	OutOfFocus	21	test	True	CP
+32	Not OutOfFocus	Not OutOfFocus	125	train	True	DP
+33	Not OutOfFocus	OutOfFocus	133	train	True	DP
+34	OutOfFocus	Not OutOfFocus	141	train	True	DP
+35	OutOfFocus	OutOfFocus	117	train	True	DP
+36	Not OutOfFocus	Not OutOfFocus	181	test	True	DP
+37	Not OutOfFocus	OutOfFocus	203	test	True	DP
+38	OutOfFocus	Not OutOfFocus	19	test	True	DP
+39	OutOfFocus	OutOfFocus	27	test	True	DP
+40	Not OutOfFocus	Not OutOfFocus	118	train	True	CP_and_DP
+41	Not OutOfFocus	OutOfFocus	140	train	True	CP_and_DP
+42	OutOfFocus	Not OutOfFocus	152	train	True	CP_and_DP
+43	OutOfFocus	OutOfFocus	106	train	True	CP_and_DP
+44	Not OutOfFocus	Not OutOfFocus	182	test	True	CP_and_DP
+45	Not OutOfFocus	OutOfFocus	202	test	True	CP_and_DP
+46	OutOfFocus	Not OutOfFocus	23	test	True	CP_and_DP
+47	OutOfFocus	OutOfFocus	23	test	True	CP_and_DP

@@ -62,7 +62,9 @@ def class_PR_curves(
     ax_x = 0
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
-        precision, recall, threshold = precision_recall_curve(y_binarized[:, i], y_score[:, i])
+        precision, recall, threshold = precision_recall_curve(
+            y_binarized[:, i], y_score[:, i]
+        )
         # last values in precision/recall curve don't correspond to cell dataset
         threshold = np.append(threshold, None)
         PR_data.append(
@@ -96,9 +98,12 @@ def class_PR_curves(
     PR_data = pd.concat(PR_data, axis=0).reset_index(drop=True)
     return fig, PR_data
 
-def get_SCM_model_data(single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str) -> pd.DataFrame:
+
+def get_SCM_model_data(
+    single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str
+) -> pd.DataFrame:
     """
-    convert single cell data with metadata and features to usable single class model data 
+    convert single cell data with metadata and features to usable single class model data
     rename phenotypic classes that are not the desired class to "Not {phenotypic_class}"
     if evaluation type is training, downsample negative samples to get 50/50 positive/negative split
 
@@ -116,7 +121,7 @@ def get_SCM_model_data(single_cell_data: pd.DataFrame, phenotypic_class: str, ev
     pd.DataFrame
         single cell data usable for single class models/evaluation
     """
-    
+
     # rename false labels to "Not {positive label}"
     single_cell_data.loc[
         single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
@@ -148,8 +153,9 @@ def get_SCM_model_data(single_cell_data: pd.DataFrame, phenotypic_class: str, ev
         single_cell_data = single_cell_data.loc[
             positive_label_indexes.union(negative_label_indexes)
         ]
-        
+
     return single_cell_data
+
 
 def class_PR_curves_SCM(
     single_cell_data: pd.DataFrame,
@@ -161,14 +167,16 @@ def class_PR_curves_SCM(
     model_type: str,
     feature_type: str,
     evaluation_type: str,
-    phenotypic_class: str
+    phenotypic_class: str,
 ) -> pd.DataFrame:
-    
+
     # keep track of PR data for later analysis
     PR_data = []
-    
+
     # rename negative labels and downsample negative lables if we are evaluating on training data
-    single_cell_data = get_SCM_model_data(single_cell_data, phenotypic_class, evaluation_type)
+    single_cell_data = get_SCM_model_data(
+        single_cell_data, phenotypic_class, evaluation_type
+    )
 
     model_classes = single_class_model.classes_
     X, y = get_X_y_data(single_cell_data, feature_type)
@@ -225,15 +233,16 @@ def class_PR_curves_SCM(
     # add legend to figure with all subplots
     handles, labels = ax.get_legend_handles_labels()
     fig.legend(handles, labels, loc="upper right")
-    
+
     # compile PR data
     # some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
     PR_data = pd.concat(PR_data, axis=0)
-    
+
     return PR_data
 
+
 def model_confusion_matrix(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str, ax=None
 ) -> pd.DataFrame:
     """
     display confusion matrix for logistic regression model on dataset
@@ -265,10 +274,26 @@ def model_confusion_matrix(
         conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_
     )
 
-    # create confusion matrix figure
-    ax = sns.heatmap(data=conf_mat, annot=True, fmt=".0f", cmap="viridis", square=True)
-    ax.set_xlabel("Predicted Label")
-    ax.set_ylabel("True Label")
+    # create confusion matrix figure on ax that is given or make new ax
+    if ax is None:
+        ax = sns.heatmap(
+            data=conf_mat,
+            annot=True,
+            fmt=".0f",
+            cmap="viridis",
+            square=True,
+            cbar=False,
+        )
+    else:
+        sns.heatmap(
+            data=conf_mat,
+            annot=True,
+            fmt=".0f",
+            cmap="viridis",
+            square=True,
+            cbar=False,
+            ax=ax,
+        )
 
     return conf_mat, ax
 
