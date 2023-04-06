@@ -2,7 +2,7 @@
 utilities for evaluating logistic regression models on training and testing datasets
 """
 
-from typing import Tuple
+from typing import Tuple, Literal
 import pandas as pd
 import numpy as np
 
@@ -106,9 +106,9 @@ def class_PR_curves_SCM(
     axs: np.ndarray,
     phenotypic_class_index: int,
     data_split_colors: dict,
-    model_type: str,
-    feature_type: str,
-    evaluation_type: str,
+    model_type: Literal["final", "shuffled_baseline"],
+    feature_type: Literal["CP", "DP", "CP_and_DP"],
+    evaluation_type: Literal["train", "test"],
     phenotypic_class: str,
 ) -> pd.DataFrame:
     """
@@ -141,7 +141,7 @@ def class_PR_curves_SCM(
     Returns
     -------
     pd.DataFrame
-        _description_
+        data for PR curves for single cell model
     """
 
     # keep track of PR data for later analysis
@@ -236,7 +236,6 @@ def class_PR_curves_SCM(
     fig.legend(handles, labels, loc="upper right")
 
     # compile PR data
-    # some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
     PR_data = pd.concat(PR_data, axis=0)
 
     return PR_data
