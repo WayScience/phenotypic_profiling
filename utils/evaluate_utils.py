@@ -62,7 +62,9 @@ def class_PR_curves(
     ax_x = 0
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
-        precision, recall, threshold = precision_recall_curve(y_binarized[:, i], y_score[:, i])
+        precision, recall, threshold = precision_recall_curve(
+            y_binarized[:, i], y_score[:, i]
+        )
         # last values in precision/recall curve don't correspond to cell dataset
         threshold = np.append(threshold, None)
         PR_data.append(
@@ -99,20 +101,52 @@ def class_PR_curves(
 
 def class_PR_curves_SCM(
     single_cell_data: pd.DataFrame,
-    single_class_model,
-    fig,
-    axs,
-    phenotypic_class_index,
-    data_split_colors,
+    single_class_model: LogisticRegression,
+    fig: Figure,
+    axs: np.ndarray,
+    phenotypic_class_index: int,
+    data_split_colors: dict,
     model_type: str,
     feature_type: str,
     evaluation_type: str,
-    phenotypic_class: str
+    phenotypic_class: str,
 ) -> pd.DataFrame:
-    
+    """
+    add PR curves to fig, axs for the single class model using feature_type (CP, DP, CP_and_DP), evaluation_type (test or train), and phenotypic_class
+    also, return PR curve data
+
+    Parameters
+    ----------
+    single_cell_data : pd.DataFrame
+        single cell data with multi-class labels (all phenotypic classes), metadata, and feature data
+    single_class_model : LogisticRegression
+        single class model to create PR data for
+    fig : Figure
+        matplotlib figure to add PR curve plot to
+    axs : np.ndarray
+        axes for matplotlib figure
+    phenotypic_class_index : int
+        index of phenotypic class in all phenotypic classes (used to determine location of PR curve in figure)
+    data_split_colors : dict
+        dictionary with information of which colors to use for which model, feature, evaluation type when plotting
+    model_type : str
+        type of model (final or shuffled baseline)
+    feature_type : str
+        feature type model uses (CP, DP, or CP_and_DP)
+    evaluation_type : str
+        type of data being used for evaluation (test or train)
+    phenotypic_class : str
+        phenotypic class of single cell model being evaluated
+
+    Returns
+    -------
+    pd.DataFrame
+        _description_
+    """
+
     # keep track of PR data for later analysis
     PR_data = []
-    
+
     # rename false labels to "Not {positive label}"
     single_cell_data.loc[
         single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
@@ -200,12 +234,13 @@ def class_PR_curves_SCM(
     # add legend to figure with all subplots
     handles, labels = ax.get_legend_handles_labels()
     fig.legend(handles, labels, loc="upper right")
-    
+
     # compile PR data
     # some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
     PR_data = pd.concat(PR_data, axis=0)
-    
+
     return PR_data
+
 
 def model_confusion_matrix(
     log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
