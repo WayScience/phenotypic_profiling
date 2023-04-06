@@ -2,7 +2,7 @@
 utilities for evaluating logistic regression models on training and testing datasets
 """
 
-from typing import Tuple
+from typing import Tuple, Literal
 import pandas as pd
 import numpy as np
 
@@ -56,22 +56,22 @@ def class_PR_curves(
 
     # data from PR curves will be stored in tidy data format (eventually pandas dataframe)
     PR_data = []
-    # which thresholds the precision/recalls correspond to
-    PR_threshold = np.arange(single_cell_data.shape[0])
-    # last values in precision/recall curve don't correspond to cell dataset
-    PR_threshold = np.append(PR_threshold, None)
 
     fig, axs = plt.subplots(3, 5)
     fig.set_size_inches(15, 9)
     ax_x = 0
     ax_y = 0
     for i in range(phenotypic_classes.shape[0]):
-        precision, recall, _ = precision_recall_curve(y_binarized[:, i], y_score[:, i])
+        precision, recall, threshold = precision_recall_curve(
+            y_binarized[:, i], y_score[:, i]
+        )
+        # last values in precision/recall curve don't correspond to cell dataset
+        threshold = np.append(threshold, None)
         PR_data.append(
             pd.DataFrame(
                 {
                     "Phenotypic_Class": phenotypic_classes[i],
-                    "PR_Threshold": PR_threshold,
+                    "PR_Threshold": threshold,
                     "Precision": precision,
                     "Recall": recall,
                 }
@@ -97,6 +97,148 @@ def class_PR_curves(
 
     PR_data = pd.concat(PR_data, axis=0).reset_index(drop=True)
     return fig, PR_data
+
+
+def class_PR_curves_SCM(
+    single_cell_data: pd.DataFrame,
+    single_class_model: LogisticRegression,
+    fig: Figure,
+    axs: np.ndarray,
+    phenotypic_class_index: int,
+    data_split_colors: dict,
+    model_type: Literal["final", "shuffled_baseline"],
+    feature_type: Literal["CP", "DP", "CP_and_DP"],
+    evaluation_type: Literal["train", "test"],
+    phenotypic_class: str,
+) -> pd.DataFrame:
+    """
+    add PR curves to fig, axs for the single class model using feature_type (CP, DP, CP_and_DP), evaluation_type (test or train), and phenotypic_class
+    also, return PR curve data
+
+    Parameters
+    ----------
+    single_cell_data : pd.DataFrame
+        single cell data with multi-class labels (all phenotypic classes), metadata, and feature data
+    single_class_model : LogisticRegression
+        single class model to create PR data for
+    fig : Figure
+        matplotlib figure to add PR curve plot to
+    axs : np.ndarray
+        axes for matplotlib figure
+    phenotypic_class_index : int
+        index of phenotypic class in all phenotypic classes (used to determine location of PR curve in figure)
+    data_split_colors : dict
+        dictionary with information of which colors to use for which model, feature, evaluation type when plotting
+    model_type : str
+        type of model (final or shuffled baseline)
+    feature_type : str
+        feature type model uses (CP, DP, or CP_and_DP)
+    evaluation_type : str
+        type of data being used for evaluation (test or train)
+    phenotypic_class : str
+        phenotypic class of single cell model being evaluated
+
+    Returns
+    -------
+    pd.DataFrame
+        data for PR curves for single cell model
+    """
+
+    # keep track of PR data for later analysis
+    PR_data = []
+
+    # rename false labels to "Not {positive label}"
+    single_cell_data.loc[
+        single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
+        "Mitocheck_Phenotypic_Class",
+    ] = f"Not {phenotypic_class}"
+
+    # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
+    # it is necessary to get the subset of training data that was used to actually train this specific model
+    if evaluation_type == "train":
+        # first, get indexes of all positive labels (labels that are the desired phenotypic class)
+        positive_label_indexes = (
+            single_cell_data.loc[
+                single_cell_data["Mitocheck_Phenotypic_Class"] == phenotypic_class
+            ]
+        ).index
+        # next, get the same number of negative labels (labels that are not the desired phenotypic class)
+        negative_label_indexes = (
+            (
+                single_cell_data.loc[
+                    single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class
+                ]
+            )
+            .sample(positive_label_indexes.shape[0], random_state=0)
+            .index
+        )
+        # the new class training data are the two subsets found above
+        # this new class training data will have equal numbers of positive and negative labels
+        # this removes the drastic class imbalances
+        single_cell_data = single_cell_data.loc[
+            positive_label_indexes.union(negative_label_indexes)
+        ]
+
+    model_classes = single_class_model.classes_
+    X, y = get_X_y_data(single_cell_data, feature_type)
+
+    # predict class probabilities for feature data
+    y_probas = single_class_model.predict_proba(X)
+
+    # figure out where to plot PR curves
+    # ax_x is x axis coordinate for positive label PR curve, ax_y is y axis coordinate for positive label PR curve
+    # negative label PR curves go below positive label (so ax_x+1)
+    ax_x = (
+        int(phenotypic_class_index / 5) * 2
+    )  # multiply by 2 because every positive label has a negative label below it
+    ax_y = phenotypic_class_index % 5  # modulus gives us y coordinate
+
+    color_key = f"{feature_type} ({evaluation_type})"
+    plot_color = data_split_colors[color_key]
+
+    for index, model_class in enumerate(model_classes):
+        # get precision, recall, threshold values for the model class (positive or negative label)
+        precision, recall, thresholds = precision_recall_curve(
+            y, y_probas[:, index], pos_label=model_class
+        )
+        # last values in precision/recall curve don't correspond to cell dataset
+        thresholds = np.append(thresholds, None)
+
+        # plot PR data
+        axs[ax_x + index, ax_y].plot(
+            recall, precision, label=color_key, color=plot_color
+        )
+        # set title and axis labels for subplot
+        axs[ax_x + index, ax_y].set_title(model_class)
+        axs[ax_x + index, ax_y].set(xlabel="Recall", ylabel="Precision")
+
+        # add pr data to compiled dataframe
+        PR_data.append(
+            pd.DataFrame(
+                {
+                    "Model_Class": model_class,
+                    "PR_Threshold": thresholds,
+                    "Precision": precision,
+                    "Recall": recall,
+                    "data_split": evaluation_type,
+                    "shuffled": "shuffled" in model_type,
+                    "feature_type": feature_type,
+                }
+            )
+        )
+
+    # only label outer plots
+    for ax in axs.flat:
+        ax.label_outer()
+
+    # add legend to figure with all subplots
+    handles, labels = ax.get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper right")
+
+    # compile PR data
+    PR_data = pd.concat(PR_data, axis=0)
+
+    return PR_data
 
 
 def model_confusion_matrix(
