@@ -167,6 +167,23 @@ for model_type, feature_type, evaluation_type in itertools.product(
             single_class_model, single_cell_data, feature_type, ax=axs[ax_x, ax_y]
         )
 
+        # add confusion matrix data to compiled dataframe in tidy format
+        # use stack to restructure dataframe into tidy long format
+        cm_data = cm_data.stack()
+        # reset index must be used to make indexes at level 0 and 1 into individual columns
+        # these columns correspond to true label and predicted label, and are set as indexes after using stack()
+        cm_data = pd.DataFrame(cm_data).reset_index(level=[0, 1])
+        cm_data.columns = ["True_Label", "Predicted_Label", "Count"]
+        # add data split column to indicate which dataset scores are from (train, test, etc)
+        cm_data["data_split"] = evaluation_type
+        # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
+        cm_data["shuffled"] = "shuffled" in model_type
+        # add feature type column to indicate which features model has been trained on/is using
+        cm_data["feature_type"] = feature_type
+
+        # add this score data to the tidy scores compiling list
+        compiled_cm_data.append(cm_data)
+
         # increase row coordinate counter (this marks which subplot to plot on in vertical direction)
         ax_x += 1
         # if row coordinate counter is at maximum (3 rows of subplots)
@@ -183,23 +200,6 @@ for model_type, feature_type, evaluation_type in itertools.product(
     fig.supxlabel("Predicted Label")
     fig.supylabel("True Label")
     plt.plot()
-
-    # add confusion matrix data to compiled dataframe in tidy format
-    # use stack to restructure dataframe into tidy long format
-    cm_data = cm_data.stack()
-    # reset index must be used to make indexes at level 0 and 1 into individual columns
-    # these columns correspond to true label and predicted label, and are set as indexes after using stack()
-    cm_data = pd.DataFrame(cm_data).reset_index(level=[0, 1])
-    cm_data.columns = ["True_Label", "Predicted_Label", "Count"]
-    # add data split column to indicate which dataset scores are from (train, test, etc)
-    cm_data["data_split"] = evaluation_type
-    # add shuffled column to indicate if the model has been trained with shuffled data (random baseline) or not
-    cm_data["shuffled"] = "shuffled" in model_type
-    # add feature type column to indicate which features model has been trained on/is using
-    cm_data["feature_type"] = feature_type
-
-    # add this score data to the tidy scores compiling list
-    compiled_cm_data.append(cm_data)
 
 
 # ### Save scores from each evaluation (single class models)
