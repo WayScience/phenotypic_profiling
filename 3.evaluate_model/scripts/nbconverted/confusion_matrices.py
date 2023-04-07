@@ -4,7 +4,7 @@
 # ### Import Libraries
 # 
 
-# In[1]:
+# In[ ]:
 
 
 import pathlib
@@ -13,7 +13,6 @@ from joblib import load
 
 import pandas as pd
 from matplotlib import pyplot as plt
-
 
 import sys
 
@@ -26,7 +25,7 @@ from evaluate_utils import model_confusion_matrix, get_SCM_model_data
 # ### Load Datasets
 # 
 
-# In[2]:
+# In[ ]:
 
 
 # load features data from indexes and features dataframe
@@ -41,7 +40,7 @@ features_dataframe = get_features_data(features_dataframe_path)
 # #### Note: `cm` stands for confusion matrix in variable names
 # 
 
-# In[3]:
+# In[ ]:
 
 
 # directory to load the models from
@@ -72,6 +71,8 @@ for model_path in sorted(models_dir.iterdir()):
         # plot confusion matrix for chosen model evaluated on chosen dataset
         cm_data, ax = model_confusion_matrix(model, data, feature_type)
         ax.set_title("Phenotypic Class Predicitions")
+        ax.set_xlabel("Predicted Label")
+        ax.set_ylabel("True Label")
         plt.show()
 
         # add confusion matrix data to compiled dataframe in tidy format
@@ -92,10 +93,10 @@ for model_path in sorted(models_dir.iterdir()):
         compiled_cm_data.append(cm_data)
 
 
-# ### Save scores from each evaluation (multi class models)
+# ### Save PR curve data from each evaluation (multi class models)
 # 
 
-# In[4]:
+# In[ ]:
 
 
 # compile list of tidy data into one dataframe
@@ -118,7 +119,7 @@ compiled_cm_data
 # ### Evaluate Each Model on Each Dataset (single class models)
 # 
 
-# In[5]:
+# In[ ]:
 
 
 # directory to load the models from
@@ -202,10 +203,10 @@ for model_type, feature_type, evaluation_type in itertools.product(
     plt.plot()
 
 
-# ### Save scores from each evaluation (single class models)
+# ### Save PR curve data from each evaluation (single class models)
 # 
 
-# In[6]:
+# In[ ]:
 
 
 # compile list of tidy data into one dataframe
@@ -216,7 +217,7 @@ cm_data_dir = pathlib.Path("evaluations/confusion_matrices/")
 cm_data_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
-compiled_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_scm_cm_data.tsv")
+compiled_cm_data_save_path = pathlib.Path(f"{cm_data_dir}/compiled_SCM_cm_data.tsv")
 
 # save data as tsv
 compiled_cm_data.to_csv(compiled_cm_data_save_path, sep="\t")

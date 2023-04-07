@@ -330,7 +330,7 @@ def model_confusion_matrix(
 
 
 def model_F1_score(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
+    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str, ax=None
 ) -> pd.DataFrame:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
@@ -367,13 +367,11 @@ def model_F1_score(
     scores.columns = log_reg_model.classes_
     scores["Weighted"] = weighted_score
 
-    plt.figure(figsize=(15, 6))
-    plt.xlabel("Phenotypic Class")
-    plt.ylabel("F1 Score")
-    plt.title("F1 Score vs Phenotpyic Class")
+    if ax is None:
+        ax = sns.barplot(data=scores)
+    else:
+        sns.barplot(data=scores, ax=ax)
+    
     plt.xticks(rotation=90)
-    ax = sns.barplot(data=scores)
 
-    plt.show()
-
-    return scores
+    return scores, ax
