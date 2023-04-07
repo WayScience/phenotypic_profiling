@@ -12,6 +12,7 @@ from sklearn.preprocessing import label_binarize
 
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 import seaborn as sns
 
 from train_utils import get_X_y_data
@@ -172,7 +173,7 @@ def class_PR_curves_SCM(
     """
     add PR curves to fig, axs for the single class model using feature_type (CP, DP, CP_and_DP), evaluation_type (test or train), and phenotypic_class
     also, return PR curve data
-    
+
     Parameters
     ----------
     single_cell_data : pd.DataFrame
@@ -273,8 +274,11 @@ def class_PR_curves_SCM(
 
 
 def model_confusion_matrix(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str, ax=None
-) -> pd.DataFrame:
+    log_reg_model: LogisticRegression,
+    dataset: pd.DataFrame,
+    feature_type: str,
+    ax: Axes = None,
+) -> Tuple[pd.DataFrame, Axes]:
     """
     display confusion matrix for logistic regression model on dataset
 
@@ -286,11 +290,15 @@ def model_confusion_matrix(
         dataset to evaluate model on
     feature_type : str
         which feature type is being evaluated (CP, DP, CP_and_DP)
+    ax : Axes, optional
+        Axes object to plot confusion matrix on, by default None
 
     Returns
     -------
     pd.DataFrame
         confusion matrix of model evaluated on dataset
+    matplotlib.axes.Axes
+        Axes object with confusion matrix display
     """
 
     # get features and labels dataframes
@@ -330,10 +338,14 @@ def model_confusion_matrix(
 
 
 def model_F1_score(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str, ax=None
-) -> pd.DataFrame:
+    log_reg_model: LogisticRegression,
+    dataset: pd.DataFrame,
+    feature_type: str,
+    ax: Axes = None,
+) -> Tuple[pd.DataFrame, Axes]:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
+    also return axes with bar graph of F1 scores
 
     Parameters
     ----------
@@ -343,11 +355,15 @@ def model_F1_score(
         dataset with features and true phenotypic class labels to evaluate model with
     feature_type : str
         which feature type is being evaluated (CP, DP, CP_and_DP)
+    ax : Axes, optional
+        Axes object to plot F1 scores bar graph on, by default None
 
     Returns
     -------
     pd.DataFrame
         dataframe with phenotpic class and weighted F1 scores
+    matplotlib.axes.Axes
+        Axes object with F1 scores bar graph
     """
 
     # get features and labels dataframes
@@ -367,11 +383,13 @@ def model_F1_score(
     scores.columns = log_reg_model.classes_
     scores["Weighted"] = weighted_score
 
+    # create bar graph figure on ax that is given or make new ax
     if ax is None:
         ax = sns.barplot(data=scores)
     else:
         sns.barplot(data=scores, ax=ax)
-    
+
+    # try to rotate x axis labels for better fitting
     plt.xticks(rotation=90)
 
     return scores, ax
