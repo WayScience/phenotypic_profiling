@@ -267,7 +267,7 @@ def class_PR_curves_SCM(
     fig.legend(handles, labels, loc="upper right")
 
     # compile PR data
-    # some thresholds are None because last PR value doesnt correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
+    # some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
     PR_data = pd.concat(PR_data, axis=0)
 
     return PR_data
