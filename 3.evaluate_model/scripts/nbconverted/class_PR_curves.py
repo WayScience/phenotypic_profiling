@@ -212,4 +212,3 @@ compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
 compiled_SCM_PR_data
-

@@ -12,6 +12,7 @@ from sklearn.preprocessing import label_binarize
 
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 import seaborn as sns
 
 from train_utils import get_X_y_data
@@ -99,6 +100,64 @@ def class_PR_curves(
     return fig, PR_data
 
 
+def get_SCM_model_data(
+    single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str
+) -> pd.DataFrame:
+    """
+    convert single cell data with metadata and features to usable single class model data
+    rename phenotypic classes that are not the desired class to "Not {phenotypic_class}"
+    if evaluation type is training, downsample negative samples to get 50/50 positive/negative split
+
+    Parameters
+    ----------
+    single_cell_data : pd.DataFrame
+        single cell data with metadata and features that has all phenotypic classes
+    phenotypic_class : str
+        desired phenotypic class
+    evaluation_type : str
+        type of dataset to evaluate with (train or test)
+
+    Returns
+    -------
+    pd.DataFrame
+        single cell data usable for single class models/evaluation
+    """
+
+    # rename false labels to "Not {positive label}"
+    single_cell_data.loc[
+        single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
+        "Mitocheck_Phenotypic_Class",
+    ] = f"Not {phenotypic_class}"
+
+    # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
+    # it is necessary to get the subset of training data that was used to actually train this specific model
+    if evaluation_type == "train":
+        # first, get indexes of all positive labels (labels that are the desired phenotypic class)
+        positive_label_indexes = (
+            single_cell_data.loc[
+                single_cell_data["Mitocheck_Phenotypic_Class"] == phenotypic_class
+            ]
+        ).index
+        # next, get the same number of negative labels (labels that are not the desired phenotypic class)
+        negative_label_indexes = (
+            (
+                single_cell_data.loc[
+                    single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class
+                ]
+            )
+            .sample(positive_label_indexes.shape[0], random_state=0)
+            .index
+        )
+        # the new class training data are the two subsets found above
+        # this new class training data will have equal numbers of positive and negative labels
+        # this removes the drastic class imbalances
+        single_cell_data = single_cell_data.loc[
+            positive_label_indexes.union(negative_label_indexes)
+        ]
+
+    return single_cell_data
+
+
 def class_PR_curves_SCM(
     single_cell_data: pd.DataFrame,
     single_class_model: LogisticRegression,
@@ -137,7 +196,6 @@ def class_PR_curves_SCM(
         type of data being used for evaluation (test or train)
     phenotypic_class : str
         phenotypic class of single cell model being evaluated
-
     Returns
     -------
     pd.DataFrame
@@ -147,37 +205,10 @@ def class_PR_curves_SCM(
     # keep track of PR data for later analysis
     PR_data = []
 
-    # rename false labels to "Not {positive label}"
-    single_cell_data.loc[
-        single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
-        "Mitocheck_Phenotypic_Class",
-    ] = f"Not {phenotypic_class}"
-
-    # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
-    # it is necessary to get the subset of training data that was used to actually train this specific model
-    if evaluation_type == "train":
-        # first, get indexes of all positive labels (labels that are the desired phenotypic class)
-        positive_label_indexes = (
-            single_cell_data.loc[
-                single_cell_data["Mitocheck_Phenotypic_Class"] == phenotypic_class
-            ]
-        ).index
-        # next, get the same number of negative labels (labels that are not the desired phenotypic class)
-        negative_label_indexes = (
-            (
-                single_cell_data.loc[
-                    single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class
-                ]
-            )
-            .sample(positive_label_indexes.shape[0], random_state=0)
-            .index
-        )
-        # the new class training data are the two subsets found above
-        # this new class training data will have equal numbers of positive and negative labels
-        # this removes the drastic class imbalances
-        single_cell_data = single_cell_data.loc[
-            positive_label_indexes.union(negative_label_indexes)
-        ]
+    # rename negative labels and downsample negative labels if we are evaluating on training data
+    single_cell_data = get_SCM_model_data(
+        single_cell_data, phenotypic_class, evaluation_type
+    )
 
     model_classes = single_class_model.classes_
     X, y = get_X_y_data(single_cell_data, feature_type)
@@ -236,14 +267,18 @@ def class_PR_curves_SCM(
     fig.legend(handles, labels, loc="upper right")
 
     # compile PR data
+    # some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
     PR_data = pd.concat(PR_data, axis=0)
 
     return PR_data
 
 
 def model_confusion_matrix(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
-) -> pd.DataFrame:
+    log_reg_model: LogisticRegression,
+    dataset: pd.DataFrame,
+    feature_type: str,
+    ax: Axes = None,
+) -> Tuple[pd.DataFrame, Axes]:
     """
     display confusion matrix for logistic regression model on dataset
 
@@ -255,11 +290,15 @@ def model_confusion_matrix(
         dataset to evaluate model on
     feature_type : str
         which feature type is being evaluated (CP, DP, CP_and_DP)
+    ax : Axes, optional
+        Axes object to plot confusion matrix on, by default None
 
     Returns
     -------
     pd.DataFrame
         confusion matrix of model evaluated on dataset
+    matplotlib.axes.Axes
+        Axes object with confusion matrix display
     """
 
     # get features and labels dataframes
@@ -274,22 +313,39 @@ def model_confusion_matrix(
         conf_mat, columns=log_reg_model.classes_, index=log_reg_model.classes_
     )
 
-    # display confusion matrix
-    plt.figure(figsize=(10, 10))
-    ax = sns.heatmap(data=conf_mat, annot=True, fmt=".0f", cmap="viridis", square=True)
-    ax = plt.xlabel("Predicted Label")
-    ax = plt.ylabel("True Label")
-    ax = plt.title("Phenotypic Class Predicitions")
-    plt.show()
+    # create confusion matrix figure on ax that is given or make new ax
+    if ax is None:
+        ax = sns.heatmap(
+            data=conf_mat,
+            annot=True,
+            fmt=".0f",
+            cmap="viridis",
+            square=True,
+            cbar=False,
+        )
+    else:
+        sns.heatmap(
+            data=conf_mat,
+            annot=True,
+            fmt=".0f",
+            cmap="viridis",
+            square=True,
+            cbar=False,
+            ax=ax,
+        )
 
-    return conf_mat
+    return conf_mat, ax
 
 
 def model_F1_score(
-    log_reg_model: LogisticRegression, dataset: pd.DataFrame, feature_type: str
-) -> pd.DataFrame:
+    log_reg_model: LogisticRegression,
+    dataset: pd.DataFrame,
+    feature_type: str,
+    ax: Axes = None,
+) -> Tuple[pd.DataFrame, Axes]:
     """
     get model F1 score for given dataset and create bar graph with class/weighted F1 scores
+    also return axes with bar graph of F1 scores
 
     Parameters
     ----------
@@ -299,11 +355,15 @@ def model_F1_score(
         dataset with features and true phenotypic class labels to evaluate model with
     feature_type : str
         which feature type is being evaluated (CP, DP, CP_and_DP)
+    ax : Axes, optional
+        Axes object to plot F1 scores bar graph on, by default None
 
     Returns
     -------
     pd.DataFrame
         dataframe with phenotpic class and weighted F1 scores
+    matplotlib.axes.Axes
+        Axes object with F1 scores bar graph
     """
 
     # get features and labels dataframes
@@ -323,13 +383,13 @@ def model_F1_score(
     scores.columns = log_reg_model.classes_
     scores["Weighted"] = weighted_score
 
-    plt.figure(figsize=(15, 6))
-    plt.xlabel("Phenotypic Class")
-    plt.ylabel("F1 Score")
-    plt.title("F1 Score vs Phenotpyic Class")
+    # create bar graph figure on ax that is given or make new ax
+    if ax is None:
+        ax = sns.barplot(data=scores)
+    else:
+        sns.barplot(data=scores, ax=ax)
+
+    # try to rotate x axis labels for better fitting
     plt.xticks(rotation=90)
-    ax = sns.barplot(data=scores)
 
-    plt.show()
-
-    return scores
+    return scores, ax
