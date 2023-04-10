@@ -150,7 +150,7 @@ for model_type, feature_type, evaluation_type in itertools.product(
         single_cell_data = get_dataset(
             features_dataframe, data_split_indexes, evaluation_type
         )
-        # rename negative labels and downsample negative lables if we are evaluating on training data
+        # rename negative labels and downsample negative labels if we are evaluating on training data
         single_cell_data = get_SCM_model_data(
             single_cell_data, phenotypic_class, evaluation_type
         )
