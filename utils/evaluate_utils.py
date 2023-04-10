@@ -205,7 +205,7 @@ def class_PR_curves_SCM(
     # keep track of PR data for later analysis
     PR_data = []
 
-    # rename negative labels and downsample negative lables if we are evaluating on training data
+    # rename negative labels and downsample negative labels if we are evaluating on training data
     single_cell_data = get_SCM_model_data(
         single_cell_data, phenotypic_class, evaluation_type
     )
