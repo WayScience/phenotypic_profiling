@@ -4,7 +4,7 @@
 # ### Import Libraries
 # 
 
-# In[ ]:
+# In[1]:
 
 
 import pathlib
@@ -25,7 +25,7 @@ from evaluate_utils import model_confusion_matrix, get_SCM_model_data
 # ### Load Datasets
 # 
 
-# In[ ]:
+# In[2]:
 
 
 # load features data from indexes and features dataframe
@@ -40,7 +40,7 @@ features_dataframe = get_features_data(features_dataframe_path)
 # #### Note: `cm` stands for confusion matrix in variable names
 # 
 
-# In[ ]:
+# In[3]:
 
 
 # directory to load the models from
@@ -96,7 +96,7 @@ for model_path in sorted(models_dir.iterdir()):
 # ### Save PR curve data from each evaluation (multi class models)
 # 
 
-# In[ ]:
+# In[4]:
 
 
 # compile list of tidy data into one dataframe
@@ -119,7 +119,7 @@ compiled_cm_data
 # ### Evaluate Each Model on Each Dataset (single class models)
 # 
 
-# In[ ]:
+# In[5]:
 
 
 # directory to load the models from
@@ -206,7 +206,7 @@ for model_type, feature_type, evaluation_type in itertools.product(
 # ### Save PR curve data from each evaluation (single class models)
 # 
 
-# In[ ]:
+# In[6]:
 
 
 # compile list of tidy data into one dataframe
