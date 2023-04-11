@@ -101,7 +101,7 @@ def class_PR_curves(
 
 
 def get_SCM_model_data(
-    single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str
+    given_single_cell_data: pd.DataFrame, phenotypic_class: str, evaluation_type: str
 ) -> pd.DataFrame:
     """
     convert single cell data with metadata and features to usable single class model data
@@ -110,7 +110,7 @@ def get_SCM_model_data(
 
     Parameters
     ----------
-    single_cell_data : pd.DataFrame
+    given_single_cell_data : pd.DataFrame
         single cell data with metadata and features that has all phenotypic classes
     phenotypic_class : str
         desired phenotypic class
@@ -122,6 +122,9 @@ def get_SCM_model_data(
     pd.DataFrame
         single cell data usable for single class models/evaluation
     """
+
+    # create deep copy so original dataframe is not affected
+    single_cell_data = given_single_cell_data.copy(deep=True)
 
     # rename false labels to "Not {positive label}"
     single_cell_data.loc[
