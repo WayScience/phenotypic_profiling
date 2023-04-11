@@ -133,8 +133,8 @@ for model_path in sorted(models_dir.iterdir()):
         # add tidy long data to compiled data
         compiled_LOIO_wide_data.append(test_cells_wide_data)
     
-        #break
-    break
+        break
+    #break
 
 
 
