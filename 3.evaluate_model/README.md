@@ -6,14 +6,14 @@ After training the models in [2.train_model](../2.train_model/), we use these mo
 Evaluations are done on each model for each combination of model type (final, shuffled baseline), feature type (CP, DP, CP_and_DP), and dataset (train, test).
 
 In [get_model_predictions.ipynb](get_model_predictions.ipynb), we derive the predicted and true phenotypic class for each model, feature type, and dataset combination.
-These predictions are saved in [compiled_predictions.tsv](predictions/compiled_predictions.tsv).
+These predictions are saved in [predictions](predictions/).
 
 In [confusion_matrices.ipynb](confusion_matrices.ipynb), we evaluate these sets of predictions with a confusion matrix to see the true/false positives and negatives (see [sklearn.metrics.confusion_matrix](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html) for more details).
-The confusion matrix data are saved to [confusion_matrices](evaluations/confusion_matrices).
+The confusion matrix data are saved to [confusion_matrices](evaluations/confusion_matrices/).
 
 In [F1_scores.ipynb](F1_scores.ipynb), we evaluate each model (final, shuffled baseline) trained with each feature type (CP, DP, CP_and_DP) on each dataset (train, test, etc) to determine phenotypic and weighted f1 scores.
 F1 score measures the models precision and recall performance for each phenotypic class (see [sklearn.metrics.f1_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html) for more details).
-The f1 score data are saved to [F1_scores](evaluations/F1_scores).
+The f1 score data are saved to [F1_scores](evaluations/F1_scores/).
 
 In [class_PR_curves.ipynb](class_PR_curves.ipynb), we use [sklearn.metrics.precision_recall_curve](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_curve.html) to derive the precision-recall curves for each model, feature type, and dataset combination.
 These PR curves are created for each label type of the logistic regression model.
@@ -31,7 +31,7 @@ The LOIO evaluation procedure is as follows:
     - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) on every cell that is **not** in the specific image.
     - Predict probabilities on every cell that **is** in the specific image.
 
-The probabilities are saved to [LOIO_probas](evaluations/LOIO_probas).
+The probabilities are saved to [LOIO_probas](evaluations/LOIO_probas/).
 
 **Notes:** 
 1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
