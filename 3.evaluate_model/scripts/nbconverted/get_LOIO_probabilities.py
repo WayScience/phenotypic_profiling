@@ -126,7 +126,7 @@ for model_path in sorted(models_dir.iterdir()):
         # predict probabilities for test cells and make these probabilities into a dataframe
         probas = LOIO_model.predict_proba(X_test)
         probas_dataframe = pd.DataFrame(probas, columns=model.classes_)
-        
+
         # combine metadata and probabilities dataframes for test cells to create wide data
         test_cells_wide_data = pd.concat([metadata_dataframe, probas_dataframe], axis=1)
 
@@ -137,7 +137,7 @@ for model_path in sorted(models_dir.iterdir()):
 # ### Format and save LOIO probabilities
 # 
 
-# In[ ]:
+# In[5]:
 
 
 # compile list of wide data into one dataframe
@@ -175,7 +175,7 @@ compiled_LOIO_tidy_long_data
 # ### Get LOIO probabilities (single class models)
 # 
 
-# In[ ]:
+# In[6]:
 
 
 # directory to load the models from
@@ -185,7 +185,9 @@ models_dir = pathlib.Path("../2.train_model/models/single_class_models")
 compiled_LOIO_wide_data = []
 
 # define combinations to test over
-model_types = ["final"] # only perform LOIO with hyper params from final models so skip shuffled_baseline models
+model_types = [
+    "final"
+]  # only perform LOIO with hyper params from final models so skip shuffled_baseline models
 feature_types = ["CP", "DP", "CP_and_DP"]
 phenotypic_classes = labeled_data["Mitocheck_Phenotypic_Class"].unique()
 
@@ -194,8 +196,8 @@ for model_type, feature_type, phenotypic_class in itertools.product(
     model_types, feature_types, phenotypic_classes
 ):
     single_class_model_path = pathlib.Path(
-            f"{models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
-        )
+        f"{models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
+    )
 
     # load the model
     model = load(single_class_model_path)
@@ -210,7 +212,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
         # every cell from the image path is for testing, the rest are for training
         train_cells = labeled_data.loc[labeled_data["Metadata_DNA"] != image_path]
         test_cells = labeled_data.loc[labeled_data["Metadata_DNA"] == image_path]
-        
+
         # rename negative label and downsample over represented classes
         train_cells = get_SCM_model_data(train_cells, phenotypic_class, "train")
         test_cells = get_SCM_model_data(test_cells, phenotypic_class, "test")
@@ -218,7 +220,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
         # get X, y from training and testing cells
         X_train, y_train = get_X_y_data(train_cells, feature_type)
         X_test, y_test = get_X_y_data(test_cells, feature_type)
-        
+
         # capture convergence warning from sklearn
         # this warning does not affect the model but takes up lots of space in the output
         # this warning must be caught with parallel_backend because the logistic regression model uses parallel_backend
@@ -259,7 +261,12 @@ for model_type, feature_type, phenotypic_class in itertools.product(
         probas_dataframe = pd.DataFrame(probas, columns=model.classes_)
         # make column names consistent for all single cell models (SCMs)
         # positive label corresponds to that SCM's phenotypic class, negative is all other labels
-        probas_dataframe = probas_dataframe.rename(columns={phenotypic_class: 'Positive_Label', f'Not {phenotypic_class}': 'Negative_Label'})
+        probas_dataframe = probas_dataframe.rename(
+            columns={
+                phenotypic_class: "Positive_Label",
+                f"Not {phenotypic_class}": "Negative_Label",
+            }
+        )
 
         # combine metadata and probabilities dataframes for test cells to create wide data
         test_cells_wide_data = pd.concat([metadata_dataframe, probas_dataframe], axis=1)
@@ -269,8 +276,9 @@ for model_type, feature_type, phenotypic_class in itertools.product(
 
 
 # ### Format and save LOIO probabilities
+# 
 
-# In[ ]:
+# In[7]:
 
 
 # compile list of wide data into one dataframe
