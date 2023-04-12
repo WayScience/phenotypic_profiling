@@ -132,16 +132,12 @@ for model_path in sorted(models_dir.iterdir()):
 
         # add tidy long data to compiled data
         compiled_LOIO_wide_data.append(test_cells_wide_data)
-    
-        break
-    #break
-
 
 
 # ### Format and save LOIO probabilities
 # 
 
-# In[5]:
+# In[ ]:
 
 
 # compile list of wide data into one dataframe
@@ -179,7 +175,7 @@ compiled_LOIO_tidy_long_data
 # ### Get LOIO probabilities (single class models)
 # 
 
-# In[6]:
+# In[ ]:
 
 
 # directory to load the models from
@@ -200,7 +196,6 @@ for model_type, feature_type, phenotypic_class in itertools.product(
     single_class_model_path = pathlib.Path(
             f"{models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
         )
-    print(single_class_model_path)
 
     # load the model
     model = load(single_class_model_path)
@@ -271,14 +266,11 @@ for model_type, feature_type, phenotypic_class in itertools.product(
 
         # add tidy long data to compiled data
         compiled_LOIO_wide_data.append(test_cells_wide_data)
-        
-        break
-    #break
 
 
 # ### Format and save LOIO probabilities
 
-# In[7]:
+# In[ ]:
 
 
 # compile list of wide data into one dataframe
