@@ -7,15 +7,14 @@
 # In[1]:
 
 
-import pandas as pd
-import numpy as np
+import sys
 import pathlib
 import itertools
 
+import pandas as pd
+import numpy as np
 from sklearn.metrics import f1_score
 from joblib import load
-
-import sys
 
 sys.path.append("../utils")
 from split_utils import get_features_data
