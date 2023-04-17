@@ -77,12 +77,17 @@ for model_type, feature_type in itertools.product(model_types, feature_types):
         single_class_model = load(single_class_model_path)
 
         # get model coefficients
-        single_class_specific_coefs = pd.DataFrame(single_class_model.coef_).T
-        single_class_specific_coefs.columns = [phenotypic_class]
+        single_class_specific_coefs = single_class_model.coef_
+        # if the first class in the model is the negative label (e.g. Not Large), then we want to find the coefficients for the other (positive) label
+        # we can do this by multiplying by -1
+        if "Not" in single_class_model.classes_[0]:
+            single_class_specific_coefs *= -1
 
+        # find corresponding coefficient values
+        scatter_x = multi_class_coeffs[phenotypic_class].to_numpy()
+        scatter_y = single_class_specific_coefs[0]
+        
         # plot scatter subplot for this phenotypic class
-        scatter_x = multi_class_coeffs[phenotypic_class]
-        scatter_y = single_class_specific_coefs[phenotypic_class]
         axs[ax_x, ax_y].scatter(scatter_x, scatter_y, s=5)
         # turn off ticks for axes
         axs[ax_x, ax_y].set_xticks([])
