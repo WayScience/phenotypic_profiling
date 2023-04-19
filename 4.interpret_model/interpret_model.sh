@@ -10,4 +10,4 @@ jupyter nbconvert --to python \
 
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
-        --execute compare_model_coefficients.ipynb
+        --execute model_coefficient_correlations.ipynb
