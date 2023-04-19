@@ -33,7 +33,7 @@ labeled_data = get_features_data(labeled_data_path)
 # labeled_data
 
 
-# ### Creat esingle class model interpretations
+# ### Find model coefficient correlations
 # 
 
 # In[3]:
@@ -44,7 +44,7 @@ multi_class_models_dir = pathlib.Path("../2.train_model/models/multi_class_model
 single_class_models_dir = pathlib.Path("../2.train_model/models/single_class_models/")
 
 # use a list to keep track of scores in tidy long format for each model and dataset combination
-compiled_coefficients = []
+compiled_correlations = []
 
 # define combinations to test over
 model_types = ["final", "shuffled_baseline"]
@@ -78,15 +78,11 @@ for model_type, feature_type in itertools.product(model_types, feature_types):
 
         # get model coefficients
         single_class_specific_coefs = single_class_model.coef_
-        # if the first class in the model is the negative label (e.g. Not Large), then we want to find the coefficients for the other (positive) label
-        # we can do this by multiplying by -1
-        if "Not" in single_class_model.classes_[0]:
-            single_class_specific_coefs *= -1
 
         # find corresponding coefficient values
         scatter_x = multi_class_coeffs[phenotypic_class].to_numpy()
         scatter_y = single_class_specific_coefs[0]
-        
+
         # plot scatter subplot for this phenotypic class
         axs[ax_x, ax_y].scatter(scatter_x, scatter_y, s=5)
         # turn off ticks for axes
@@ -94,10 +90,30 @@ for model_type, feature_type in itertools.product(model_types, feature_types):
         axs[ax_x, ax_y].set_yticks([])
 
         # get clustermap correlation coefficient (ccc)
-        correlation = ccc(scatter_x, scatter_y)
-        correlation_string = "{:.4f}".format(correlation)
-        # label graph with phenotypic class and ccc
-        axs[ax_x, ax_y].set_title(f"{phenotypic_class}, ccc: {correlation_string}")
+        ccc_corr = ccc(scatter_x, scatter_y)
+        ccc_corr_string = "{:.3f}".format(ccc_corr)
+
+        # get pearson correlation with numpy
+        pearson_corr = np.corrcoef(scatter_x, scatter_y)[0][
+            1
+        ]  # numpy output is 2x2 correlation matrix, we only need top right value (same as bottom left)
+        pearson_corr_string = "{:.3f}".format(pearson_corr)
+
+        # label graph with phenotypic class and correlations
+        axs[ax_x, ax_y].set_title(
+            f"{phenotypic_class} \nccc:{ccc_corr_string}, pearson:{pearson_corr_string}"
+        )
+
+        # add coefficient correlations to compiled dataframe
+        compiled_correlations.append(
+            {
+                "Phenotypic_Class": phenotypic_class,
+                "shuffled": "shuffled" in model_type,
+                "feature_type": feature_type,
+                "CCC": ccc_corr,
+                "Pearson": pearson_corr,
+            }
+        )
 
         # increase row coordinate counter (this marks which subplot to plot on in vertical direction)
         ax_x += 1
@@ -113,4 +129,35 @@ for model_type, feature_type in itertools.product(model_types, feature_types):
     fig.supxlabel("Multi-class Corresponding Coefficient Values")
     fig.supylabel("Single-class Corresponding Coefficient Values")
     plt.plot()
+
+
+# In[4]:
+
+
+# compile list of data into one dataframe
+compiled_correlations = pd.DataFrame(compiled_correlations).reset_index(drop=True)
+
+# make data tidy (CCC and Pearson get their own rows with their values instead of sharing a row)
+compiled_correlations = pd.melt(
+    compiled_correlations,
+    id_vars=["Phenotypic_Class", "shuffled", "feature_type"],
+    value_vars=["CCC", "Pearson"],
+    var_name="Correlation_Type",
+    value_name="Correlation_Value",
+)
+
+# specify results directory
+correlations_dir = pathlib.Path("correlations/")
+correlations_dir.mkdir(parents=True, exist_ok=True)
+
+# define save path
+compiled_correlations_save_path = pathlib.Path(
+    f"{correlations_dir}/compiled_coefficient_correlations.tsv"
+)
+
+# save data as tsv
+compiled_correlations.to_csv(compiled_correlations_save_path, sep="\t")
+
+# preview tidy data
+compiled_correlations
 
