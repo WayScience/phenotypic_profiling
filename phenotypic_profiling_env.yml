@@ -11,4 +11,3 @@ dependencies:
   - conda-forge::pip=22.1.2
   - pip:
       - ccc-coef==0.1.6
-  
