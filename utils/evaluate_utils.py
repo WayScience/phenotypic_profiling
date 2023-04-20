@@ -126,11 +126,11 @@ def get_SCM_model_data(
     # create deep copy so original dataframe is not affected
     single_cell_data = given_single_cell_data.copy(deep=True)
 
-    # rename false labels to "Not {positive label}"
+    # rename false labels to "{positive label} Negative"
     single_cell_data.loc[
         single_cell_data["Mitocheck_Phenotypic_Class"] != phenotypic_class,
         "Mitocheck_Phenotypic_Class",
-    ] = f"Not {phenotypic_class}"
+    ] = f"{phenotypic_class} Negative"
 
     # because we downsampled negative labels (to offset large label imbalance) in 2.train_model,
     # it is necessary to get the subset of training data that was used to actually train this specific model

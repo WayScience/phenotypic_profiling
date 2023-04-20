@@ -3,3 +3,11 @@
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
         --execute interpret_model_coefficients.ipynb
+
+jupyter nbconvert --to python \
+        --FilesWriter.build_directory=scripts/nbconverted \
+        --execute interpret_SCM_model_coefficients.ipynb
+
+jupyter nbconvert --to python \
+        --FilesWriter.build_directory=scripts/nbconverted \
+        --execute model_coefficient_correlations.ipynb

@@ -7,16 +7,14 @@
 # In[1]:
 
 
-import pandas as pd
-import numpy as np
 import pathlib
+import sys
 
 from joblib import load
-
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-import sys
+import pandas as pd
+import numpy as np
 
 sys.path.append("../utils")
 from split_utils import get_features_data
@@ -31,10 +29,10 @@ from split_utils import get_features_data
 # load labeled data
 labeled_data_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 labeled_data = get_features_data(labeled_data_path)
-labeled_data
+# labeled_data
 
 
-# ### Save Coefficients and Create Interpretation Figures
+# ### Create multi class model interpretation figures
 # 
 
 # In[3]:
@@ -45,10 +43,10 @@ coefs_save_directory = pathlib.Path(f"coefficients/")
 coefs_save_directory.mkdir(parents=True, exist_ok=True)
 
 # directory to load the models from
-models_dir = pathlib.Path("../2.train_model/models/")
+models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
 
 # use a list to keep track of scores in tidy long format for each model and dataset combination
-compiled_class_PR_curves = []
+compiled_coefficients = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
 # sorted so final models are shown before shuffled_baseline
@@ -70,7 +68,9 @@ for model_path in sorted(models_dir.iterdir()):
     # restructure/rename dataframe to tidy long format (see preview below)
     tidy_data = coefs.stack()
     tidy_data = pd.DataFrame(tidy_data).reset_index(level=[0, 1])
-    tidy_data.columns = ["Feature_Name", "Phenotypic_Class", "ML_coefficient"]
+    tidy_data.columns = ["Feature_Name", "Phenotypic_Class", "Coefficent_Value"]
+    tidy_data["shuffled"] = "shuffled" in model_type
+    tidy_data["feature_type"] = feature_type
 
     # add feature names to coefficients dataframe
     # feature names depends on feature type
@@ -86,11 +86,8 @@ for model_path in sorted(models_dir.iterdir()):
     feature_names = [col for col in feature_cols for i in range(len(model.classes_))]
     tidy_data["Feature_Name"] = feature_names
 
-    # save tidy coefficients dataframe
-    coefs_save_path = pathlib.Path(
-        f"{coefs_save_directory}/{model_type}__{feature_type}__coefficients.tsv"
-    )
-    tidy_data.to_csv(coefs_save_path, sep="\t")
+    # add tidy data to the compilation list
+    compiled_coefficients.append(tidy_data)
 
     # display heatmap of average coefs
     plt.figure(figsize=(20, 10))
@@ -125,4 +122,29 @@ for model_path in sorted(models_dir.iterdir()):
     plt.xticks(rotation=90)
     ax = sns.barplot(data=pheno_class_ordered)
     plt.show()
+
+
+# ### Save multi class model coefficients
+# 
+
+# In[4]:
+
+
+# compile list of tidy data into one dataframe
+compiled_coefficients = pd.concat(compiled_coefficients).reset_index(drop=True)
+
+# specify results directory
+coefficients_dir = pathlib.Path("coefficients/")
+coefficients_dir.mkdir(parents=True, exist_ok=True)
+
+# define save path
+compiled_coefficients_save_path = pathlib.Path(
+    f"{coefficients_dir}/compiled_coefficients.tsv"
+)
+
+# save data as tsv
+compiled_coefficients.to_csv(compiled_coefficients_save_path, sep="\t")
+
+# preview tidy data
+compiled_coefficients
 
