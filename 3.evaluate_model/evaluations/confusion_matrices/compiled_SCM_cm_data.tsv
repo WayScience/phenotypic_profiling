@@ -25,8 +25,8 @@
 23	ADCCM Negative	ADCCM Negative	57	train	False	CP
 24	SmallIrregular	SmallIrregular	136	train	False	CP
 25	SmallIrregular	SmallIrregular Negative	3	train	False	CP
-26	SmallIrregular Negative	SmallIrregular	16	train	False	CP
-27	SmallIrregular Negative	SmallIrregular Negative	123	train	False	CP
+26	SmallIrregular Negative	SmallIrregular	13	train	False	CP
+27	SmallIrregular Negative	SmallIrregular Negative	126	train	False	CP
 28	Polylobed	Polylobed	296	train	False	CP
 29	Polylobed	Polylobed Negative	16	train	False	CP
 30	Polylobed Negative	Polylobed	38	train	False	CP
@@ -45,80 +45,80 @@
 43	Hole Negative	Hole Negative	89	train	False	CP
 44	Anaphase	Anaphase	71	train	False	CP
 45	Anaphase	Anaphase Negative	0	train	False	CP
-46	Anaphase Negative	Anaphase	7	train	False	CP
-47	Anaphase Negative	Anaphase Negative	64	train	False	CP
+46	Anaphase Negative	Anaphase	5	train	False	CP
+47	Anaphase Negative	Anaphase Negative	66	train	False	CP
 48	MetaphaseAlignment	MetaphaseAlignment	145	train	False	CP
 49	MetaphaseAlignment	MetaphaseAlignment Negative	4	train	False	CP
-50	MetaphaseAlignment Negative	MetaphaseAlignment	25	train	False	CP
-51	MetaphaseAlignment Negative	MetaphaseAlignment Negative	124	train	False	CP
+50	MetaphaseAlignment Negative	MetaphaseAlignment	27	train	False	CP
+51	MetaphaseAlignment Negative	MetaphaseAlignment Negative	122	train	False	CP
 52	Elongated	Elongated	93	train	False	CP
 53	Elongated	Elongated Negative	1	train	False	CP
 54	Elongated Negative	Elongated	4	train	False	CP
 55	Elongated Negative	Elongated Negative	90	train	False	CP
-56	OutOfFocus	OutOfFocus	255	train	False	CP
-57	OutOfFocus	OutOfFocus Negative	3	train	False	CP
-58	OutOfFocus Negative	OutOfFocus	2	train	False	CP
-59	OutOfFocus Negative	OutOfFocus Negative	256	train	False	CP
+56	OutOfFocus	OutOfFocus	254	train	False	CP
+57	OutOfFocus	OutOfFocus Negative	4	train	False	CP
+58	OutOfFocus Negative	OutOfFocus	6	train	False	CP
+59	OutOfFocus Negative	OutOfFocus Negative	252	train	False	CP
 60	Large	Large	11	test	False	CP
 61	Large	Large Negative	1	test	False	CP
 62	Large Negative	Large	41	test	False	CP
 63	Large Negative	Large Negative	377	test	False	CP
 64	Prometaphase	Prometaphase	51	test	False	CP
 65	Prometaphase	Prometaphase Negative	1	test	False	CP
-66	Prometaphase Negative	Prometaphase	67	test	False	CP
-67	Prometaphase Negative	Prometaphase Negative	311	test	False	CP
+66	Prometaphase Negative	Prometaphase	65	test	False	CP
+67	Prometaphase Negative	Prometaphase Negative	313	test	False	CP
 68	Grape	Grape	10	test	False	CP
 69	Grape	Grape Negative	1	test	False	CP
-70	Grape Negative	Grape	87	test	False	CP
-71	Grape Negative	Grape Negative	332	test	False	CP
-72	Interphase	Interphase	61	test	False	CP
-73	Interphase	Interphase Negative	2	test	False	CP
-74	Interphase Negative	Interphase	43	test	False	CP
-75	Interphase Negative	Interphase Negative	324	test	False	CP
+70	Grape Negative	Grape	86	test	False	CP
+71	Grape Negative	Grape Negative	333	test	False	CP
+72	Interphase	Interphase	60	test	False	CP
+73	Interphase	Interphase Negative	3	test	False	CP
+74	Interphase Negative	Interphase	42	test	False	CP
+75	Interphase Negative	Interphase Negative	325	test	False	CP
 76	Apoptosis	Apoptosis	40	test	False	CP
 77	Apoptosis	Apoptosis Negative	1	test	False	CP
-78	Apoptosis Negative	Apoptosis	61	test	False	CP
-79	Apoptosis Negative	Apoptosis Negative	328	test	False	CP
+78	Apoptosis Negative	Apoptosis	62	test	False	CP
+79	Apoptosis Negative	Apoptosis Negative	327	test	False	CP
 80	ADCCM	ADCCM	13	test	False	CP
 81	ADCCM	ADCCM Negative	1	test	False	CP
-82	ADCCM Negative	ADCCM	140	test	False	CP
-83	ADCCM Negative	ADCCM Negative	276	test	False	CP
+82	ADCCM Negative	ADCCM	138	test	False	CP
+83	ADCCM Negative	ADCCM Negative	278	test	False	CP
 84	SmallIrregular	SmallIrregular	25	test	False	CP
 85	SmallIrregular	SmallIrregular Negative	0	test	False	CP
-86	SmallIrregular Negative	SmallIrregular	54	test	False	CP
-87	SmallIrregular Negative	SmallIrregular Negative	351	test	False	CP
+86	SmallIrregular Negative	SmallIrregular	52	test	False	CP
+87	SmallIrregular Negative	SmallIrregular Negative	353	test	False	CP
 88	Polylobed	Polylobed	44	test	False	CP
 89	Polylobed	Polylobed Negative	11	test	False	CP
-90	Polylobed Negative	Polylobed	61	test	False	CP
-91	Polylobed Negative	Polylobed Negative	314	test	False	CP
+90	Polylobed Negative	Polylobed	60	test	False	CP
+91	Polylobed Negative	Polylobed Negative	315	test	False	CP
 92	Metaphase	Metaphase	11	test	False	CP
 93	Metaphase	Metaphase Negative	0	test	False	CP
 94	Metaphase Negative	Metaphase	62	test	False	CP
 95	Metaphase Negative	Metaphase Negative	357	test	False	CP
 96	Binuclear	Binuclear	27	test	False	CP
 97	Binuclear	Binuclear Negative	1	test	False	CP
-98	Binuclear Negative	Binuclear	80	test	False	CP
-99	Binuclear Negative	Binuclear Negative	322	test	False	CP
+98	Binuclear Negative	Binuclear	79	test	False	CP
+99	Binuclear Negative	Binuclear Negative	323	test	False	CP
 100	Hole	Hole	15	test	False	CP
 101	Hole	Hole Negative	2	test	False	CP
 102	Hole Negative	Hole	43	test	False	CP
 103	Hole Negative	Hole Negative	370	test	False	CP
 104	Anaphase	Anaphase	13	test	False	CP
 105	Anaphase	Anaphase Negative	0	test	False	CP
-106	Anaphase Negative	Anaphase	68	test	False	CP
-107	Anaphase Negative	Anaphase Negative	349	test	False	CP
+106	Anaphase Negative	Anaphase	67	test	False	CP
+107	Anaphase Negative	Anaphase Negative	350	test	False	CP
 108	MetaphaseAlignment	MetaphaseAlignment	25	test	False	CP
 109	MetaphaseAlignment	MetaphaseAlignment Negative	1	test	False	CP
-110	MetaphaseAlignment Negative	MetaphaseAlignment	86	test	False	CP
-111	MetaphaseAlignment Negative	MetaphaseAlignment Negative	318	test	False	CP
+110	MetaphaseAlignment Negative	MetaphaseAlignment	85	test	False	CP
+111	MetaphaseAlignment Negative	MetaphaseAlignment Negative	319	test	False	CP
 112	Elongated	Elongated	16	test	False	CP
 113	Elongated	Elongated Negative	0	test	False	CP
 114	Elongated Negative	Elongated	17	test	False	CP
 115	Elongated Negative	Elongated Negative	397	test	False	CP
 116	OutOfFocus	OutOfFocus	46	test	False	CP
 117	OutOfFocus	OutOfFocus Negative	0	test	False	CP
-118	OutOfFocus Negative	OutOfFocus	23	test	False	CP
-119	OutOfFocus Negative	OutOfFocus Negative	361	test	False	CP
+118	OutOfFocus Negative	OutOfFocus	17	test	False	CP
+119	OutOfFocus Negative	OutOfFocus Negative	367	test	False	CP
 120	Large	Large	66	train	False	DP
 121	Large	Large Negative	1	train	False	DP
 122	Large Negative	Large	10	train	False	DP
@@ -265,8 +265,8 @@
 263	ADCCM Negative	ADCCM Negative	81	train	False	CP_and_DP
 264	SmallIrregular	SmallIrregular	139	train	False	CP_and_DP
 265	SmallIrregular	SmallIrregular Negative	0	train	False	CP_and_DP
-266	SmallIrregular Negative	SmallIrregular	3	train	False	CP_and_DP
-267	SmallIrregular Negative	SmallIrregular Negative	136	train	False	CP_and_DP
+266	SmallIrregular Negative	SmallIrregular	1	train	False	CP_and_DP
+267	SmallIrregular Negative	SmallIrregular Negative	138	train	False	CP_and_DP
 268	Polylobed	Polylobed	294	train	False	CP_and_DP
 269	Polylobed	Polylobed Negative	18	train	False	CP_and_DP
 270	Polylobed Negative	Polylobed	38	train	False	CP_and_DP
@@ -301,8 +301,8 @@
 299	OutOfFocus Negative	OutOfFocus Negative	255	train	False	CP_and_DP
 300	Large	Large	12	test	False	CP_and_DP
 301	Large	Large Negative	0	test	False	CP_and_DP
-302	Large Negative	Large	56	test	False	CP_and_DP
-303	Large Negative	Large Negative	362	test	False	CP_and_DP
+302	Large Negative	Large	53	test	False	CP_and_DP
+303	Large Negative	Large Negative	365	test	False	CP_and_DP
 304	Prometaphase	Prometaphase	50	test	False	CP_and_DP
 305	Prometaphase	Prometaphase Negative	2	test	False	CP_and_DP
 306	Prometaphase Negative	Prometaphase	49	test	False	CP_and_DP
@@ -321,12 +321,12 @@
 319	Apoptosis Negative	Apoptosis Negative	339	test	False	CP_and_DP
 320	ADCCM	ADCCM	14	test	False	CP_and_DP
 321	ADCCM	ADCCM Negative	0	test	False	CP_and_DP
-322	ADCCM Negative	ADCCM	89	test	False	CP_and_DP
-323	ADCCM Negative	ADCCM Negative	327	test	False	CP_and_DP
+322	ADCCM Negative	ADCCM	90	test	False	CP_and_DP
+323	ADCCM Negative	ADCCM Negative	326	test	False	CP_and_DP
 324	SmallIrregular	SmallIrregular	25	test	False	CP_and_DP
 325	SmallIrregular	SmallIrregular Negative	0	test	False	CP_and_DP
-326	SmallIrregular Negative	SmallIrregular	74	test	False	CP_and_DP
-327	SmallIrregular Negative	SmallIrregular Negative	331	test	False	CP_and_DP
+326	SmallIrregular Negative	SmallIrregular	67	test	False	CP_and_DP
+327	SmallIrregular Negative	SmallIrregular Negative	338	test	False	CP_and_DP
 328	Polylobed	Polylobed	48	test	False	CP_and_DP
 329	Polylobed	Polylobed Negative	7	test	False	CP_and_DP
 330	Polylobed Negative	Polylobed	48	test	False	CP_and_DP
@@ -337,8 +337,8 @@
 335	Metaphase Negative	Metaphase Negative	358	test	False	CP_and_DP
 336	Binuclear	Binuclear	28	test	False	CP_and_DP
 337	Binuclear	Binuclear Negative	0	test	False	CP_and_DP
-338	Binuclear Negative	Binuclear	62	test	False	CP_and_DP
-339	Binuclear Negative	Binuclear Negative	340	test	False	CP_and_DP
+338	Binuclear Negative	Binuclear	61	test	False	CP_and_DP
+339	Binuclear Negative	Binuclear Negative	341	test	False	CP_and_DP
 340	Hole	Hole	17	test	False	CP_and_DP
 341	Hole	Hole Negative	0	test	False	CP_and_DP
 342	Hole Negative	Hole	55	test	False	CP_and_DP
@@ -359,363 +359,363 @@
 357	OutOfFocus	OutOfFocus Negative	0	test	False	CP_and_DP
 358	OutOfFocus Negative	OutOfFocus	9	test	False	CP_and_DP
 359	OutOfFocus Negative	OutOfFocus Negative	375	test	False	CP_and_DP
-360	Large	Large	11	train	True	CP
-361	Large	Large Negative	56	train	True	CP
+360	Large	Large	10	train	True	CP
+361	Large	Large Negative	57	train	True	CP
 362	Large Negative	Large	44	train	True	CP
 363	Large Negative	Large Negative	23	train	True	CP
-364	Prometaphase	Prometaphase	159	train	True	CP
-365	Prometaphase	Prometaphase Negative	134	train	True	CP
-366	Prometaphase Negative	Prometaphase	133	train	True	CP
-367	Prometaphase Negative	Prometaphase Negative	160	train	True	CP
-368	Grape	Grape	30	train	True	CP
-369	Grape	Grape Negative	33	train	True	CP
-370	Grape Negative	Grape	40	train	True	CP
-371	Grape Negative	Grape Negative	23	train	True	CP
-372	Interphase	Interphase	179	train	True	CP
-373	Interphase	Interphase Negative	178	train	True	CP
-374	Interphase Negative	Interphase	170	train	True	CP
-375	Interphase Negative	Interphase Negative	187	train	True	CP
-376	Apoptosis	Apoptosis	75	train	True	CP
-377	Apoptosis	Apoptosis Negative	157	train	True	CP
-378	Apoptosis Negative	Apoptosis	204	train	True	CP
-379	Apoptosis Negative	Apoptosis Negative	28	train	True	CP
-380	ADCCM	ADCCM	47	train	True	CP
-381	ADCCM	ADCCM Negative	34	train	True	CP
-382	ADCCM Negative	ADCCM	34	train	True	CP
-383	ADCCM Negative	ADCCM Negative	47	train	True	CP
-384	SmallIrregular	SmallIrregular	88	train	True	CP
-385	SmallIrregular	SmallIrregular Negative	51	train	True	CP
-386	SmallIrregular Negative	SmallIrregular	61	train	True	CP
-387	SmallIrregular Negative	SmallIrregular Negative	78	train	True	CP
-388	Polylobed	Polylobed	245	train	True	CP
-389	Polylobed	Polylobed Negative	67	train	True	CP
-390	Polylobed Negative	Polylobed	92	train	True	CP
-391	Polylobed Negative	Polylobed Negative	220	train	True	CP
-392	Metaphase	Metaphase	34	train	True	CP
-393	Metaphase	Metaphase Negative	29	train	True	CP
-394	Metaphase Negative	Metaphase	38	train	True	CP
-395	Metaphase Negative	Metaphase Negative	25	train	True	CP
-396	Binuclear	Binuclear	71	train	True	CP
-397	Binuclear	Binuclear Negative	85	train	True	CP
-398	Binuclear Negative	Binuclear	68	train	True	CP
-399	Binuclear Negative	Binuclear Negative	88	train	True	CP
-400	Hole	Hole	85	train	True	CP
-401	Hole	Hole Negative	12	train	True	CP
-402	Hole Negative	Hole	63	train	True	CP
-403	Hole Negative	Hole Negative	34	train	True	CP
-404	Anaphase	Anaphase	49	train	True	CP
-405	Anaphase	Anaphase Negative	22	train	True	CP
-406	Anaphase Negative	Anaphase	10	train	True	CP
-407	Anaphase Negative	Anaphase Negative	61	train	True	CP
-408	MetaphaseAlignment	MetaphaseAlignment	71	train	True	CP
-409	MetaphaseAlignment	MetaphaseAlignment Negative	78	train	True	CP
-410	MetaphaseAlignment Negative	MetaphaseAlignment	77	train	True	CP
-411	MetaphaseAlignment Negative	MetaphaseAlignment Negative	72	train	True	CP
-412	Elongated	Elongated	43	train	True	CP
-413	Elongated	Elongated Negative	51	train	True	CP
-414	Elongated Negative	Elongated	55	train	True	CP
-415	Elongated Negative	Elongated Negative	39	train	True	CP
-416	OutOfFocus	OutOfFocus	139	train	True	CP
-417	OutOfFocus	OutOfFocus Negative	119	train	True	CP
-418	OutOfFocus Negative	OutOfFocus	80	train	True	CP
-419	OutOfFocus Negative	OutOfFocus Negative	178	train	True	CP
+364	Prometaphase	Prometaphase	150	train	True	CP
+365	Prometaphase	Prometaphase Negative	143	train	True	CP
+366	Prometaphase Negative	Prometaphase	144	train	True	CP
+367	Prometaphase Negative	Prometaphase Negative	149	train	True	CP
+368	Grape	Grape	28	train	True	CP
+369	Grape	Grape Negative	35	train	True	CP
+370	Grape Negative	Grape	32	train	True	CP
+371	Grape Negative	Grape Negative	31	train	True	CP
+372	Interphase	Interphase	175	train	True	CP
+373	Interphase	Interphase Negative	182	train	True	CP
+374	Interphase Negative	Interphase	186	train	True	CP
+375	Interphase Negative	Interphase Negative	171	train	True	CP
+376	Apoptosis	Apoptosis	117	train	True	CP
+377	Apoptosis	Apoptosis Negative	115	train	True	CP
+378	Apoptosis Negative	Apoptosis	114	train	True	CP
+379	Apoptosis Negative	Apoptosis Negative	118	train	True	CP
+380	ADCCM	ADCCM	31	train	True	CP
+381	ADCCM	ADCCM Negative	50	train	True	CP
+382	ADCCM Negative	ADCCM	45	train	True	CP
+383	ADCCM Negative	ADCCM Negative	36	train	True	CP
+384	SmallIrregular	SmallIrregular	58	train	True	CP
+385	SmallIrregular	SmallIrregular Negative	81	train	True	CP
+386	SmallIrregular Negative	SmallIrregular	62	train	True	CP
+387	SmallIrregular Negative	SmallIrregular Negative	77	train	True	CP
+388	Polylobed	Polylobed	72	train	True	CP
+389	Polylobed	Polylobed Negative	240	train	True	CP
+390	Polylobed Negative	Polylobed	159	train	True	CP
+391	Polylobed Negative	Polylobed Negative	153	train	True	CP
+392	Metaphase	Metaphase	36	train	True	CP
+393	Metaphase	Metaphase Negative	27	train	True	CP
+394	Metaphase Negative	Metaphase	25	train	True	CP
+395	Metaphase Negative	Metaphase Negative	38	train	True	CP
+396	Binuclear	Binuclear	120	train	True	CP
+397	Binuclear	Binuclear Negative	36	train	True	CP
+398	Binuclear Negative	Binuclear	55	train	True	CP
+399	Binuclear Negative	Binuclear Negative	101	train	True	CP
+400	Hole	Hole	37	train	True	CP
+401	Hole	Hole Negative	60	train	True	CP
+402	Hole Negative	Hole	51	train	True	CP
+403	Hole Negative	Hole Negative	46	train	True	CP
+404	Anaphase	Anaphase	23	train	True	CP
+405	Anaphase	Anaphase Negative	48	train	True	CP
+406	Anaphase Negative	Anaphase	61	train	True	CP
+407	Anaphase Negative	Anaphase Negative	10	train	True	CP
+408	MetaphaseAlignment	MetaphaseAlignment	56	train	True	CP
+409	MetaphaseAlignment	MetaphaseAlignment Negative	93	train	True	CP
+410	MetaphaseAlignment Negative	MetaphaseAlignment	116	train	True	CP
+411	MetaphaseAlignment Negative	MetaphaseAlignment Negative	33	train	True	CP
+412	Elongated	Elongated	83	train	True	CP
+413	Elongated	Elongated Negative	11	train	True	CP
+414	Elongated Negative	Elongated	56	train	True	CP
+415	Elongated Negative	Elongated Negative	38	train	True	CP
+416	OutOfFocus	OutOfFocus	186	train	True	CP
+417	OutOfFocus	OutOfFocus Negative	72	train	True	CP
+418	OutOfFocus Negative	OutOfFocus	71	train	True	CP
+419	OutOfFocus Negative	OutOfFocus Negative	187	train	True	CP
 420	Large	Large	3	test	True	CP
 421	Large	Large Negative	9	test	True	CP
 422	Large Negative	Large	291	test	True	CP
 423	Large Negative	Large Negative	127	test	True	CP
-424	Prometaphase	Prometaphase	32	test	True	CP
-425	Prometaphase	Prometaphase Negative	20	test	True	CP
-426	Prometaphase Negative	Prometaphase	174	test	True	CP
-427	Prometaphase Negative	Prometaphase Negative	204	test	True	CP
-428	Grape	Grape	9	test	True	CP
-429	Grape	Grape Negative	2	test	True	CP
-430	Grape Negative	Grape	254	test	True	CP
-431	Grape Negative	Grape Negative	165	test	True	CP
-432	Interphase	Interphase	31	test	True	CP
-433	Interphase	Interphase Negative	32	test	True	CP
-434	Interphase Negative	Interphase	175	test	True	CP
-435	Interphase Negative	Interphase Negative	192	test	True	CP
-436	Apoptosis	Apoptosis	13	test	True	CP
-437	Apoptosis	Apoptosis Negative	28	test	True	CP
-438	Apoptosis Negative	Apoptosis	341	test	True	CP
-439	Apoptosis Negative	Apoptosis Negative	48	test	True	CP
-440	ADCCM	ADCCM	8	test	True	CP
-441	ADCCM	ADCCM Negative	6	test	True	CP
-442	ADCCM Negative	ADCCM	170	test	True	CP
-443	ADCCM Negative	ADCCM Negative	246	test	True	CP
-444	SmallIrregular	SmallIrregular	21	test	True	CP
-445	SmallIrregular	SmallIrregular Negative	4	test	True	CP
-446	SmallIrregular Negative	SmallIrregular	163	test	True	CP
-447	SmallIrregular Negative	SmallIrregular Negative	242	test	True	CP
-448	Polylobed	Polylobed	38	test	True	CP
-449	Polylobed	Polylobed Negative	17	test	True	CP
-450	Polylobed Negative	Polylobed	104	test	True	CP
-451	Polylobed Negative	Polylobed Negative	271	test	True	CP
-452	Metaphase	Metaphase	5	test	True	CP
-453	Metaphase	Metaphase Negative	6	test	True	CP
-454	Metaphase Negative	Metaphase	199	test	True	CP
-455	Metaphase Negative	Metaphase Negative	220	test	True	CP
-456	Binuclear	Binuclear	14	test	True	CP
-457	Binuclear	Binuclear Negative	14	test	True	CP
-458	Binuclear Negative	Binuclear	163	test	True	CP
-459	Binuclear Negative	Binuclear Negative	239	test	True	CP
-460	Hole	Hole	13	test	True	CP
-461	Hole	Hole Negative	4	test	True	CP
-462	Hole Negative	Hole	279	test	True	CP
-463	Hole Negative	Hole Negative	134	test	True	CP
-464	Anaphase	Anaphase	9	test	True	CP
-465	Anaphase	Anaphase Negative	4	test	True	CP
-466	Anaphase Negative	Anaphase	62	test	True	CP
-467	Anaphase Negative	Anaphase Negative	355	test	True	CP
-468	MetaphaseAlignment	MetaphaseAlignment	8	test	True	CP
-469	MetaphaseAlignment	MetaphaseAlignment Negative	18	test	True	CP
-470	MetaphaseAlignment Negative	MetaphaseAlignment	223	test	True	CP
-471	MetaphaseAlignment Negative	MetaphaseAlignment Negative	181	test	True	CP
-472	Elongated	Elongated	5	test	True	CP
-473	Elongated	Elongated Negative	11	test	True	CP
-474	Elongated Negative	Elongated	249	test	True	CP
-475	Elongated Negative	Elongated Negative	165	test	True	CP
-476	OutOfFocus	OutOfFocus	21	test	True	CP
-477	OutOfFocus	OutOfFocus Negative	25	test	True	CP
-478	OutOfFocus Negative	OutOfFocus	136	test	True	CP
-479	OutOfFocus Negative	OutOfFocus Negative	248	test	True	CP
-480	Large	Large	42	train	True	DP
-481	Large	Large Negative	25	train	True	DP
-482	Large Negative	Large	30	train	True	DP
-483	Large Negative	Large Negative	37	train	True	DP
-484	Prometaphase	Prometaphase	86	train	True	DP
-485	Prometaphase	Prometaphase Negative	207	train	True	DP
-486	Prometaphase Negative	Prometaphase	173	train	True	DP
-487	Prometaphase Negative	Prometaphase Negative	120	train	True	DP
-488	Grape	Grape	39	train	True	DP
-489	Grape	Grape Negative	24	train	True	DP
-490	Grape Negative	Grape	26	train	True	DP
-491	Grape Negative	Grape Negative	37	train	True	DP
-492	Interphase	Interphase	164	train	True	DP
-493	Interphase	Interphase Negative	193	train	True	DP
-494	Interphase Negative	Interphase	175	train	True	DP
-495	Interphase Negative	Interphase Negative	182	train	True	DP
-496	Apoptosis	Apoptosis	140	train	True	DP
-497	Apoptosis	Apoptosis Negative	92	train	True	DP
-498	Apoptosis Negative	Apoptosis	91	train	True	DP
-499	Apoptosis Negative	Apoptosis Negative	141	train	True	DP
-500	ADCCM	ADCCM	35	train	True	DP
-501	ADCCM	ADCCM Negative	46	train	True	DP
-502	ADCCM Negative	ADCCM	49	train	True	DP
-503	ADCCM Negative	ADCCM Negative	32	train	True	DP
-504	SmallIrregular	SmallIrregular	69	train	True	DP
-505	SmallIrregular	SmallIrregular Negative	70	train	True	DP
-506	SmallIrregular Negative	SmallIrregular	74	train	True	DP
-507	SmallIrregular Negative	SmallIrregular Negative	65	train	True	DP
-508	Polylobed	Polylobed	165	train	True	DP
-509	Polylobed	Polylobed Negative	147	train	True	DP
-510	Polylobed Negative	Polylobed	135	train	True	DP
-511	Polylobed Negative	Polylobed Negative	177	train	True	DP
-512	Metaphase	Metaphase	30	train	True	DP
-513	Metaphase	Metaphase Negative	33	train	True	DP
-514	Metaphase Negative	Metaphase	33	train	True	DP
-515	Metaphase Negative	Metaphase Negative	30	train	True	DP
-516	Binuclear	Binuclear	84	train	True	DP
-517	Binuclear	Binuclear Negative	72	train	True	DP
-518	Binuclear Negative	Binuclear	86	train	True	DP
-519	Binuclear Negative	Binuclear Negative	70	train	True	DP
-520	Hole	Hole	46	train	True	DP
-521	Hole	Hole Negative	51	train	True	DP
-522	Hole Negative	Hole	14	train	True	DP
-523	Hole Negative	Hole Negative	83	train	True	DP
-524	Anaphase	Anaphase	28	train	True	DP
-525	Anaphase	Anaphase Negative	43	train	True	DP
-526	Anaphase Negative	Anaphase	53	train	True	DP
-527	Anaphase Negative	Anaphase Negative	18	train	True	DP
-528	MetaphaseAlignment	MetaphaseAlignment	103	train	True	DP
-529	MetaphaseAlignment	MetaphaseAlignment Negative	46	train	True	DP
-530	MetaphaseAlignment Negative	MetaphaseAlignment	29	train	True	DP
-531	MetaphaseAlignment Negative	MetaphaseAlignment Negative	120	train	True	DP
-532	Elongated	Elongated	33	train	True	DP
-533	Elongated	Elongated Negative	61	train	True	DP
+424	Prometaphase	Prometaphase	25	test	True	CP
+425	Prometaphase	Prometaphase Negative	27	test	True	CP
+426	Prometaphase Negative	Prometaphase	231	test	True	CP
+427	Prometaphase Negative	Prometaphase Negative	147	test	True	CP
+428	Grape	Grape	8	test	True	CP
+429	Grape	Grape Negative	3	test	True	CP
+430	Grape Negative	Grape	219	test	True	CP
+431	Grape Negative	Grape Negative	200	test	True	CP
+432	Interphase	Interphase	25	test	True	CP
+433	Interphase	Interphase Negative	38	test	True	CP
+434	Interphase Negative	Interphase	182	test	True	CP
+435	Interphase Negative	Interphase Negative	185	test	True	CP
+436	Apoptosis	Apoptosis	20	test	True	CP
+437	Apoptosis	Apoptosis Negative	21	test	True	CP
+438	Apoptosis Negative	Apoptosis	186	test	True	CP
+439	Apoptosis Negative	Apoptosis Negative	203	test	True	CP
+440	ADCCM	ADCCM	7	test	True	CP
+441	ADCCM	ADCCM Negative	7	test	True	CP
+442	ADCCM Negative	ADCCM	225	test	True	CP
+443	ADCCM Negative	ADCCM Negative	191	test	True	CP
+444	SmallIrregular	SmallIrregular	14	test	True	CP
+445	SmallIrregular	SmallIrregular Negative	11	test	True	CP
+446	SmallIrregular Negative	SmallIrregular	214	test	True	CP
+447	SmallIrregular Negative	SmallIrregular Negative	191	test	True	CP
+448	Polylobed	Polylobed	20	test	True	CP
+449	Polylobed	Polylobed Negative	35	test	True	CP
+450	Polylobed Negative	Polylobed	199	test	True	CP
+451	Polylobed Negative	Polylobed Negative	176	test	True	CP
+452	Metaphase	Metaphase	7	test	True	CP
+453	Metaphase	Metaphase Negative	4	test	True	CP
+454	Metaphase Negative	Metaphase	165	test	True	CP
+455	Metaphase Negative	Metaphase Negative	254	test	True	CP
+456	Binuclear	Binuclear	22	test	True	CP
+457	Binuclear	Binuclear Negative	6	test	True	CP
+458	Binuclear Negative	Binuclear	187	test	True	CP
+459	Binuclear Negative	Binuclear Negative	215	test	True	CP
+460	Hole	Hole	10	test	True	CP
+461	Hole	Hole Negative	7	test	True	CP
+462	Hole Negative	Hole	205	test	True	CP
+463	Hole Negative	Hole Negative	208	test	True	CP
+464	Anaphase	Anaphase	4	test	True	CP
+465	Anaphase	Anaphase Negative	9	test	True	CP
+466	Anaphase Negative	Anaphase	358	test	True	CP
+467	Anaphase Negative	Anaphase Negative	59	test	True	CP
+468	MetaphaseAlignment	MetaphaseAlignment	10	test	True	CP
+469	MetaphaseAlignment	MetaphaseAlignment Negative	16	test	True	CP
+470	MetaphaseAlignment Negative	MetaphaseAlignment	317	test	True	CP
+471	MetaphaseAlignment Negative	MetaphaseAlignment Negative	87	test	True	CP
+472	Elongated	Elongated	12	test	True	CP
+473	Elongated	Elongated Negative	4	test	True	CP
+474	Elongated Negative	Elongated	266	test	True	CP
+475	Elongated Negative	Elongated Negative	148	test	True	CP
+476	OutOfFocus	OutOfFocus	36	test	True	CP
+477	OutOfFocus	OutOfFocus Negative	10	test	True	CP
+478	OutOfFocus Negative	OutOfFocus	107	test	True	CP
+479	OutOfFocus Negative	OutOfFocus Negative	277	test	True	CP
+480	Large	Large	33	train	True	DP
+481	Large	Large Negative	34	train	True	DP
+482	Large Negative	Large	34	train	True	DP
+483	Large Negative	Large Negative	33	train	True	DP
+484	Prometaphase	Prometaphase	172	train	True	DP
+485	Prometaphase	Prometaphase Negative	121	train	True	DP
+486	Prometaphase Negative	Prometaphase	71	train	True	DP
+487	Prometaphase Negative	Prometaphase Negative	222	train	True	DP
+488	Grape	Grape	26	train	True	DP
+489	Grape	Grape Negative	37	train	True	DP
+490	Grape Negative	Grape	34	train	True	DP
+491	Grape Negative	Grape Negative	29	train	True	DP
+492	Interphase	Interphase	182	train	True	DP
+493	Interphase	Interphase Negative	175	train	True	DP
+494	Interphase Negative	Interphase	164	train	True	DP
+495	Interphase Negative	Interphase Negative	193	train	True	DP
+496	Apoptosis	Apoptosis	98	train	True	DP
+497	Apoptosis	Apoptosis Negative	134	train	True	DP
+498	Apoptosis Negative	Apoptosis	153	train	True	DP
+499	Apoptosis Negative	Apoptosis Negative	79	train	True	DP
+500	ADCCM	ADCCM	33	train	True	DP
+501	ADCCM	ADCCM Negative	48	train	True	DP
+502	ADCCM Negative	ADCCM	43	train	True	DP
+503	ADCCM Negative	ADCCM Negative	38	train	True	DP
+504	SmallIrregular	SmallIrregular	56	train	True	DP
+505	SmallIrregular	SmallIrregular Negative	83	train	True	DP
+506	SmallIrregular Negative	SmallIrregular	94	train	True	DP
+507	SmallIrregular Negative	SmallIrregular Negative	45	train	True	DP
+508	Polylobed	Polylobed	123	train	True	DP
+509	Polylobed	Polylobed Negative	189	train	True	DP
+510	Polylobed Negative	Polylobed	191	train	True	DP
+511	Polylobed Negative	Polylobed Negative	121	train	True	DP
+512	Metaphase	Metaphase	33	train	True	DP
+513	Metaphase	Metaphase Negative	30	train	True	DP
+514	Metaphase Negative	Metaphase	25	train	True	DP
+515	Metaphase Negative	Metaphase Negative	38	train	True	DP
+516	Binuclear	Binuclear	78	train	True	DP
+517	Binuclear	Binuclear Negative	78	train	True	DP
+518	Binuclear Negative	Binuclear	83	train	True	DP
+519	Binuclear Negative	Binuclear Negative	73	train	True	DP
+520	Hole	Hole	60	train	True	DP
+521	Hole	Hole Negative	37	train	True	DP
+522	Hole Negative	Hole	65	train	True	DP
+523	Hole Negative	Hole Negative	32	train	True	DP
+524	Anaphase	Anaphase	38	train	True	DP
+525	Anaphase	Anaphase Negative	33	train	True	DP
+526	Anaphase Negative	Anaphase	38	train	True	DP
+527	Anaphase Negative	Anaphase Negative	33	train	True	DP
+528	MetaphaseAlignment	MetaphaseAlignment	79	train	True	DP
+529	MetaphaseAlignment	MetaphaseAlignment Negative	70	train	True	DP
+530	MetaphaseAlignment Negative	MetaphaseAlignment	114	train	True	DP
+531	MetaphaseAlignment Negative	MetaphaseAlignment Negative	35	train	True	DP
+532	Elongated	Elongated	47	train	True	DP
+533	Elongated	Elongated Negative	47	train	True	DP
 534	Elongated Negative	Elongated	55	train	True	DP
 535	Elongated Negative	Elongated Negative	39	train	True	DP
-536	OutOfFocus	OutOfFocus	117	train	True	DP
-537	OutOfFocus	OutOfFocus Negative	141	train	True	DP
-538	OutOfFocus Negative	OutOfFocus	133	train	True	DP
-539	OutOfFocus Negative	OutOfFocus Negative	125	train	True	DP
-540	Large	Large	5	test	True	DP
-541	Large	Large Negative	7	test	True	DP
-542	Large Negative	Large	150	test	True	DP
-543	Large Negative	Large Negative	268	test	True	DP
-544	Prometaphase	Prometaphase	13	test	True	DP
-545	Prometaphase	Prometaphase Negative	39	test	True	DP
-546	Prometaphase Negative	Prometaphase	205	test	True	DP
-547	Prometaphase Negative	Prometaphase Negative	173	test	True	DP
-548	Grape	Grape	6	test	True	DP
-549	Grape	Grape Negative	5	test	True	DP
-550	Grape Negative	Grape	173	test	True	DP
-551	Grape Negative	Grape Negative	246	test	True	DP
-552	Interphase	Interphase	30	test	True	DP
-553	Interphase	Interphase Negative	33	test	True	DP
-554	Interphase Negative	Interphase	173	test	True	DP
-555	Interphase Negative	Interphase Negative	194	test	True	DP
-556	Apoptosis	Apoptosis	27	test	True	DP
-557	Apoptosis	Apoptosis Negative	14	test	True	DP
-558	Apoptosis Negative	Apoptosis	133	test	True	DP
-559	Apoptosis Negative	Apoptosis Negative	256	test	True	DP
-560	ADCCM	ADCCM	7	test	True	DP
-561	ADCCM	ADCCM Negative	7	test	True	DP
-562	ADCCM Negative	ADCCM	251	test	True	DP
-563	ADCCM Negative	ADCCM Negative	165	test	True	DP
-564	SmallIrregular	SmallIrregular	11	test	True	DP
-565	SmallIrregular	SmallIrregular Negative	14	test	True	DP
-566	SmallIrregular Negative	SmallIrregular	184	test	True	DP
-567	SmallIrregular Negative	SmallIrregular Negative	221	test	True	DP
-568	Polylobed	Polylobed	29	test	True	DP
-569	Polylobed	Polylobed Negative	26	test	True	DP
-570	Polylobed Negative	Polylobed	164	test	True	DP
-571	Polylobed Negative	Polylobed Negative	211	test	True	DP
-572	Metaphase	Metaphase	5	test	True	DP
-573	Metaphase	Metaphase Negative	6	test	True	DP
-574	Metaphase Negative	Metaphase	206	test	True	DP
-575	Metaphase Negative	Metaphase Negative	213	test	True	DP
-576	Binuclear	Binuclear	15	test	True	DP
-577	Binuclear	Binuclear Negative	13	test	True	DP
-578	Binuclear Negative	Binuclear	168	test	True	DP
-579	Binuclear Negative	Binuclear Negative	234	test	True	DP
+536	OutOfFocus	OutOfFocus	196	train	True	DP
+537	OutOfFocus	OutOfFocus Negative	62	train	True	DP
+538	OutOfFocus Negative	OutOfFocus	96	train	True	DP
+539	OutOfFocus Negative	OutOfFocus Negative	162	train	True	DP
+540	Large	Large	7	test	True	DP
+541	Large	Large Negative	5	test	True	DP
+542	Large Negative	Large	219	test	True	DP
+543	Large Negative	Large Negative	199	test	True	DP
+544	Prometaphase	Prometaphase	32	test	True	DP
+545	Prometaphase	Prometaphase Negative	20	test	True	DP
+546	Prometaphase Negative	Prometaphase	91	test	True	DP
+547	Prometaphase Negative	Prometaphase Negative	287	test	True	DP
+548	Grape	Grape	4	test	True	DP
+549	Grape	Grape Negative	7	test	True	DP
+550	Grape Negative	Grape	230	test	True	DP
+551	Grape Negative	Grape Negative	189	test	True	DP
+552	Interphase	Interphase	34	test	True	DP
+553	Interphase	Interphase Negative	29	test	True	DP
+554	Interphase Negative	Interphase	170	test	True	DP
+555	Interphase Negative	Interphase Negative	197	test	True	DP
+556	Apoptosis	Apoptosis	16	test	True	DP
+557	Apoptosis	Apoptosis Negative	25	test	True	DP
+558	Apoptosis Negative	Apoptosis	275	test	True	DP
+559	Apoptosis Negative	Apoptosis Negative	114	test	True	DP
+560	ADCCM	ADCCM	4	test	True	DP
+561	ADCCM	ADCCM Negative	10	test	True	DP
+562	ADCCM Negative	ADCCM	204	test	True	DP
+563	ADCCM Negative	ADCCM Negative	212	test	True	DP
+564	SmallIrregular	SmallIrregular	14	test	True	DP
+565	SmallIrregular	SmallIrregular Negative	11	test	True	DP
+566	SmallIrregular Negative	SmallIrregular	263	test	True	DP
+567	SmallIrregular Negative	SmallIrregular Negative	142	test	True	DP
+568	Polylobed	Polylobed	22	test	True	DP
+569	Polylobed	Polylobed Negative	33	test	True	DP
+570	Polylobed Negative	Polylobed	240	test	True	DP
+571	Polylobed Negative	Polylobed Negative	135	test	True	DP
+572	Metaphase	Metaphase	3	test	True	DP
+573	Metaphase	Metaphase Negative	8	test	True	DP
+574	Metaphase Negative	Metaphase	218	test	True	DP
+575	Metaphase Negative	Metaphase Negative	201	test	True	DP
+576	Binuclear	Binuclear	9	test	True	DP
+577	Binuclear	Binuclear Negative	19	test	True	DP
+578	Binuclear Negative	Binuclear	194	test	True	DP
+579	Binuclear Negative	Binuclear Negative	208	test	True	DP
 580	Hole	Hole	9	test	True	DP
 581	Hole	Hole Negative	8	test	True	DP
-582	Hole Negative	Hole	59	test	True	DP
-583	Hole Negative	Hole Negative	354	test	True	DP
-584	Anaphase	Anaphase	6	test	True	DP
-585	Anaphase	Anaphase Negative	7	test	True	DP
-586	Anaphase Negative	Anaphase	303	test	True	DP
-587	Anaphase Negative	Anaphase Negative	114	test	True	DP
-588	MetaphaseAlignment	MetaphaseAlignment	19	test	True	DP
-589	MetaphaseAlignment	MetaphaseAlignment Negative	7	test	True	DP
-590	MetaphaseAlignment Negative	MetaphaseAlignment	135	test	True	DP
-591	MetaphaseAlignment Negative	MetaphaseAlignment Negative	269	test	True	DP
-592	Elongated	Elongated	7	test	True	DP
-593	Elongated	Elongated Negative	9	test	True	DP
-594	Elongated Negative	Elongated	267	test	True	DP
-595	Elongated Negative	Elongated Negative	147	test	True	DP
-596	OutOfFocus	OutOfFocus	27	test	True	DP
-597	OutOfFocus	OutOfFocus Negative	19	test	True	DP
-598	OutOfFocus Negative	OutOfFocus	203	test	True	DP
-599	OutOfFocus Negative	OutOfFocus Negative	181	test	True	DP
-600	Large	Large	32	train	True	CP_and_DP
-601	Large	Large Negative	35	train	True	CP_and_DP
-602	Large Negative	Large	36	train	True	CP_and_DP
-603	Large Negative	Large Negative	31	train	True	CP_and_DP
-604	Prometaphase	Prometaphase	173	train	True	CP_and_DP
-605	Prometaphase	Prometaphase Negative	120	train	True	CP_and_DP
-606	Prometaphase Negative	Prometaphase	127	train	True	CP_and_DP
-607	Prometaphase Negative	Prometaphase Negative	166	train	True	CP_and_DP
-608	Grape	Grape	26	train	True	CP_and_DP
-609	Grape	Grape Negative	37	train	True	CP_and_DP
-610	Grape Negative	Grape	36	train	True	CP_and_DP
-611	Grape Negative	Grape Negative	27	train	True	CP_and_DP
-612	Interphase	Interphase	182	train	True	CP_and_DP
-613	Interphase	Interphase Negative	175	train	True	CP_and_DP
-614	Interphase Negative	Interphase	196	train	True	CP_and_DP
-615	Interphase Negative	Interphase Negative	161	train	True	CP_and_DP
-616	Apoptosis	Apoptosis	89	train	True	CP_and_DP
-617	Apoptosis	Apoptosis Negative	143	train	True	CP_and_DP
-618	Apoptosis Negative	Apoptosis	148	train	True	CP_and_DP
-619	Apoptosis Negative	Apoptosis Negative	84	train	True	CP_and_DP
-620	ADCCM	ADCCM	42	train	True	CP_and_DP
-621	ADCCM	ADCCM Negative	39	train	True	CP_and_DP
-622	ADCCM Negative	ADCCM	28	train	True	CP_and_DP
-623	ADCCM Negative	ADCCM Negative	53	train	True	CP_and_DP
-624	SmallIrregular	SmallIrregular	65	train	True	CP_and_DP
-625	SmallIrregular	SmallIrregular Negative	74	train	True	CP_and_DP
-626	SmallIrregular Negative	SmallIrregular	73	train	True	CP_and_DP
-627	SmallIrregular Negative	SmallIrregular Negative	66	train	True	CP_and_DP
-628	Polylobed	Polylobed	52	train	True	CP_and_DP
-629	Polylobed	Polylobed Negative	260	train	True	CP_and_DP
-630	Polylobed Negative	Polylobed	210	train	True	CP_and_DP
-631	Polylobed Negative	Polylobed Negative	102	train	True	CP_and_DP
-632	Metaphase	Metaphase	24	train	True	CP_and_DP
-633	Metaphase	Metaphase Negative	39	train	True	CP_and_DP
-634	Metaphase Negative	Metaphase	34	train	True	CP_and_DP
-635	Metaphase Negative	Metaphase Negative	29	train	True	CP_and_DP
-636	Binuclear	Binuclear	84	train	True	CP_and_DP
-637	Binuclear	Binuclear Negative	72	train	True	CP_and_DP
-638	Binuclear Negative	Binuclear	82	train	True	CP_and_DP
-639	Binuclear Negative	Binuclear Negative	74	train	True	CP_and_DP
-640	Hole	Hole	57	train	True	CP_and_DP
-641	Hole	Hole Negative	40	train	True	CP_and_DP
-642	Hole Negative	Hole	48	train	True	CP_and_DP
-643	Hole Negative	Hole Negative	49	train	True	CP_and_DP
-644	Anaphase	Anaphase	29	train	True	CP_and_DP
-645	Anaphase	Anaphase Negative	42	train	True	CP_and_DP
-646	Anaphase Negative	Anaphase	37	train	True	CP_and_DP
-647	Anaphase Negative	Anaphase Negative	34	train	True	CP_and_DP
-648	MetaphaseAlignment	MetaphaseAlignment	68	train	True	CP_and_DP
-649	MetaphaseAlignment	MetaphaseAlignment Negative	81	train	True	CP_and_DP
-650	MetaphaseAlignment Negative	MetaphaseAlignment	61	train	True	CP_and_DP
-651	MetaphaseAlignment Negative	MetaphaseAlignment Negative	88	train	True	CP_and_DP
-652	Elongated	Elongated	38	train	True	CP_and_DP
-653	Elongated	Elongated Negative	56	train	True	CP_and_DP
-654	Elongated Negative	Elongated	59	train	True	CP_and_DP
-655	Elongated Negative	Elongated Negative	35	train	True	CP_and_DP
-656	OutOfFocus	OutOfFocus	106	train	True	CP_and_DP
-657	OutOfFocus	OutOfFocus Negative	152	train	True	CP_and_DP
-658	OutOfFocus Negative	OutOfFocus	140	train	True	CP_and_DP
-659	OutOfFocus Negative	OutOfFocus Negative	118	train	True	CP_and_DP
-660	Large	Large	9	test	True	CP_and_DP
-661	Large	Large Negative	3	test	True	CP_and_DP
-662	Large Negative	Large	195	test	True	CP_and_DP
-663	Large Negative	Large Negative	223	test	True	CP_and_DP
-664	Prometaphase	Prometaphase	25	test	True	CP_and_DP
-665	Prometaphase	Prometaphase Negative	27	test	True	CP_and_DP
-666	Prometaphase Negative	Prometaphase	135	test	True	CP_and_DP
-667	Prometaphase Negative	Prometaphase Negative	243	test	True	CP_and_DP
-668	Grape	Grape	4	test	True	CP_and_DP
-669	Grape	Grape Negative	7	test	True	CP_and_DP
-670	Grape Negative	Grape	237	test	True	CP_and_DP
-671	Grape Negative	Grape Negative	182	test	True	CP_and_DP
-672	Interphase	Interphase	34	test	True	CP_and_DP
-673	Interphase	Interphase Negative	29	test	True	CP_and_DP
-674	Interphase Negative	Interphase	197	test	True	CP_and_DP
-675	Interphase Negative	Interphase Negative	170	test	True	CP_and_DP
-676	Apoptosis	Apoptosis	17	test	True	CP_and_DP
-677	Apoptosis	Apoptosis Negative	24	test	True	CP_and_DP
-678	Apoptosis Negative	Apoptosis	255	test	True	CP_and_DP
-679	Apoptosis Negative	Apoptosis Negative	134	test	True	CP_and_DP
-680	ADCCM	ADCCM	8	test	True	CP_and_DP
-681	ADCCM	ADCCM Negative	6	test	True	CP_and_DP
-682	ADCCM Negative	ADCCM	152	test	True	CP_and_DP
-683	ADCCM Negative	ADCCM Negative	264	test	True	CP_and_DP
-684	SmallIrregular	SmallIrregular	14	test	True	CP_and_DP
-685	SmallIrregular	SmallIrregular Negative	11	test	True	CP_and_DP
-686	SmallIrregular Negative	SmallIrregular	171	test	True	CP_and_DP
-687	SmallIrregular Negative	SmallIrregular Negative	234	test	True	CP_and_DP
-688	Polylobed	Polylobed	14	test	True	CP_and_DP
-689	Polylobed	Polylobed Negative	41	test	True	CP_and_DP
-690	Polylobed Negative	Polylobed	243	test	True	CP_and_DP
-691	Polylobed Negative	Polylobed Negative	132	test	True	CP_and_DP
-692	Metaphase	Metaphase	2	test	True	CP_and_DP
-693	Metaphase	Metaphase Negative	9	test	True	CP_and_DP
-694	Metaphase Negative	Metaphase	235	test	True	CP_and_DP
-695	Metaphase Negative	Metaphase Negative	184	test	True	CP_and_DP
-696	Binuclear	Binuclear	16	test	True	CP_and_DP
-697	Binuclear	Binuclear Negative	12	test	True	CP_and_DP
-698	Binuclear Negative	Binuclear	193	test	True	CP_and_DP
-699	Binuclear Negative	Binuclear Negative	209	test	True	CP_and_DP
-700	Hole	Hole	8	test	True	CP_and_DP
-701	Hole	Hole Negative	9	test	True	CP_and_DP
-702	Hole Negative	Hole	232	test	True	CP_and_DP
-703	Hole Negative	Hole Negative	181	test	True	CP_and_DP
-704	Anaphase	Anaphase	3	test	True	CP_and_DP
-705	Anaphase	Anaphase Negative	10	test	True	CP_and_DP
-706	Anaphase Negative	Anaphase	221	test	True	CP_and_DP
-707	Anaphase Negative	Anaphase Negative	196	test	True	CP_and_DP
-708	MetaphaseAlignment	MetaphaseAlignment	16	test	True	CP_and_DP
-709	MetaphaseAlignment	MetaphaseAlignment Negative	10	test	True	CP_and_DP
-710	MetaphaseAlignment Negative	MetaphaseAlignment	170	test	True	CP_and_DP
-711	MetaphaseAlignment Negative	MetaphaseAlignment Negative	234	test	True	CP_and_DP
-712	Elongated	Elongated	7	test	True	CP_and_DP
-713	Elongated	Elongated Negative	9	test	True	CP_and_DP
-714	Elongated Negative	Elongated	236	test	True	CP_and_DP
-715	Elongated Negative	Elongated Negative	178	test	True	CP_and_DP
-716	OutOfFocus	OutOfFocus	23	test	True	CP_and_DP
-717	OutOfFocus	OutOfFocus Negative	23	test	True	CP_and_DP
-718	OutOfFocus Negative	OutOfFocus	202	test	True	CP_and_DP
-719	OutOfFocus Negative	OutOfFocus Negative	182	test	True	CP_and_DP
+582	Hole Negative	Hole	257	test	True	DP
+583	Hole Negative	Hole Negative	156	test	True	DP
+584	Anaphase	Anaphase	4	test	True	DP
+585	Anaphase	Anaphase Negative	9	test	True	DP
+586	Anaphase Negative	Anaphase	218	test	True	DP
+587	Anaphase Negative	Anaphase Negative	199	test	True	DP
+588	MetaphaseAlignment	MetaphaseAlignment	14	test	True	DP
+589	MetaphaseAlignment	MetaphaseAlignment Negative	12	test	True	DP
+590	MetaphaseAlignment Negative	MetaphaseAlignment	296	test	True	DP
+591	MetaphaseAlignment Negative	MetaphaseAlignment Negative	108	test	True	DP
+592	Elongated	Elongated	10	test	True	DP
+593	Elongated	Elongated Negative	6	test	True	DP
+594	Elongated Negative	Elongated	229	test	True	DP
+595	Elongated Negative	Elongated Negative	185	test	True	DP
+596	OutOfFocus	OutOfFocus	34	test	True	DP
+597	OutOfFocus	OutOfFocus Negative	12	test	True	DP
+598	OutOfFocus Negative	OutOfFocus	140	test	True	DP
+599	OutOfFocus Negative	OutOfFocus Negative	244	test	True	DP
+600	Large	Large	25	train	True	CP_and_DP
+601	Large	Large Negative	42	train	True	CP_and_DP
+602	Large Negative	Large	41	train	True	CP_and_DP
+603	Large Negative	Large Negative	26	train	True	CP_and_DP
+604	Prometaphase	Prometaphase	144	train	True	CP_and_DP
+605	Prometaphase	Prometaphase Negative	149	train	True	CP_and_DP
+606	Prometaphase Negative	Prometaphase	120	train	True	CP_and_DP
+607	Prometaphase Negative	Prometaphase Negative	173	train	True	CP_and_DP
+608	Grape	Grape	48	train	True	CP_and_DP
+609	Grape	Grape Negative	15	train	True	CP_and_DP
+610	Grape Negative	Grape	11	train	True	CP_and_DP
+611	Grape Negative	Grape Negative	52	train	True	CP_and_DP
+612	Interphase	Interphase	193	train	True	CP_and_DP
+613	Interphase	Interphase Negative	164	train	True	CP_and_DP
+614	Interphase Negative	Interphase	186	train	True	CP_and_DP
+615	Interphase Negative	Interphase Negative	171	train	True	CP_and_DP
+616	Apoptosis	Apoptosis	127	train	True	CP_and_DP
+617	Apoptosis	Apoptosis Negative	105	train	True	CP_and_DP
+618	Apoptosis Negative	Apoptosis	60	train	True	CP_and_DP
+619	Apoptosis Negative	Apoptosis Negative	172	train	True	CP_and_DP
+620	ADCCM	ADCCM	52	train	True	CP_and_DP
+621	ADCCM	ADCCM Negative	29	train	True	CP_and_DP
+622	ADCCM Negative	ADCCM	34	train	True	CP_and_DP
+623	ADCCM Negative	ADCCM Negative	47	train	True	CP_and_DP
+624	SmallIrregular	SmallIrregular	71	train	True	CP_and_DP
+625	SmallIrregular	SmallIrregular Negative	68	train	True	CP_and_DP
+626	SmallIrregular Negative	SmallIrregular	62	train	True	CP_and_DP
+627	SmallIrregular Negative	SmallIrregular Negative	77	train	True	CP_and_DP
+628	Polylobed	Polylobed	171	train	True	CP_and_DP
+629	Polylobed	Polylobed Negative	141	train	True	CP_and_DP
+630	Polylobed Negative	Polylobed	233	train	True	CP_and_DP
+631	Polylobed Negative	Polylobed Negative	79	train	True	CP_and_DP
+632	Metaphase	Metaphase	36	train	True	CP_and_DP
+633	Metaphase	Metaphase Negative	27	train	True	CP_and_DP
+634	Metaphase Negative	Metaphase	30	train	True	CP_and_DP
+635	Metaphase Negative	Metaphase Negative	33	train	True	CP_and_DP
+636	Binuclear	Binuclear	92	train	True	CP_and_DP
+637	Binuclear	Binuclear Negative	64	train	True	CP_and_DP
+638	Binuclear Negative	Binuclear	73	train	True	CP_and_DP
+639	Binuclear Negative	Binuclear Negative	83	train	True	CP_and_DP
+640	Hole	Hole	35	train	True	CP_and_DP
+641	Hole	Hole Negative	62	train	True	CP_and_DP
+642	Hole Negative	Hole	57	train	True	CP_and_DP
+643	Hole Negative	Hole Negative	40	train	True	CP_and_DP
+644	Anaphase	Anaphase	36	train	True	CP_and_DP
+645	Anaphase	Anaphase Negative	35	train	True	CP_and_DP
+646	Anaphase Negative	Anaphase	42	train	True	CP_and_DP
+647	Anaphase Negative	Anaphase Negative	29	train	True	CP_and_DP
+648	MetaphaseAlignment	MetaphaseAlignment	78	train	True	CP_and_DP
+649	MetaphaseAlignment	MetaphaseAlignment Negative	71	train	True	CP_and_DP
+650	MetaphaseAlignment Negative	MetaphaseAlignment	77	train	True	CP_and_DP
+651	MetaphaseAlignment Negative	MetaphaseAlignment Negative	72	train	True	CP_and_DP
+652	Elongated	Elongated	44	train	True	CP_and_DP
+653	Elongated	Elongated Negative	50	train	True	CP_and_DP
+654	Elongated Negative	Elongated	41	train	True	CP_and_DP
+655	Elongated Negative	Elongated Negative	53	train	True	CP_and_DP
+656	OutOfFocus	OutOfFocus	160	train	True	CP_and_DP
+657	OutOfFocus	OutOfFocus Negative	98	train	True	CP_and_DP
+658	OutOfFocus Negative	OutOfFocus	103	train	True	CP_and_DP
+659	OutOfFocus Negative	OutOfFocus Negative	155	train	True	CP_and_DP
+660	Large	Large	4	test	True	CP_and_DP
+661	Large	Large Negative	8	test	True	CP_and_DP
+662	Large Negative	Large	245	test	True	CP_and_DP
+663	Large Negative	Large Negative	173	test	True	CP_and_DP
+664	Prometaphase	Prometaphase	28	test	True	CP_and_DP
+665	Prometaphase	Prometaphase Negative	24	test	True	CP_and_DP
+666	Prometaphase Negative	Prometaphase	157	test	True	CP_and_DP
+667	Prometaphase Negative	Prometaphase Negative	221	test	True	CP_and_DP
+668	Grape	Grape	7	test	True	CP_and_DP
+669	Grape	Grape Negative	4	test	True	CP_and_DP
+670	Grape Negative	Grape	105	test	True	CP_and_DP
+671	Grape Negative	Grape Negative	314	test	True	CP_and_DP
+672	Interphase	Interphase	31	test	True	CP_and_DP
+673	Interphase	Interphase Negative	32	test	True	CP_and_DP
+674	Interphase Negative	Interphase	203	test	True	CP_and_DP
+675	Interphase Negative	Interphase Negative	164	test	True	CP_and_DP
+676	Apoptosis	Apoptosis	22	test	True	CP_and_DP
+677	Apoptosis	Apoptosis Negative	19	test	True	CP_and_DP
+678	Apoptosis Negative	Apoptosis	104	test	True	CP_and_DP
+679	Apoptosis Negative	Apoptosis Negative	285	test	True	CP_and_DP
+680	ADCCM	ADCCM	3	test	True	CP_and_DP
+681	ADCCM	ADCCM Negative	11	test	True	CP_and_DP
+682	ADCCM Negative	ADCCM	186	test	True	CP_and_DP
+683	ADCCM Negative	ADCCM Negative	230	test	True	CP_and_DP
+684	SmallIrregular	SmallIrregular	12	test	True	CP_and_DP
+685	SmallIrregular	SmallIrregular Negative	13	test	True	CP_and_DP
+686	SmallIrregular Negative	SmallIrregular	198	test	True	CP_and_DP
+687	SmallIrregular Negative	SmallIrregular Negative	207	test	True	CP_and_DP
+688	Polylobed	Polylobed	32	test	True	CP_and_DP
+689	Polylobed	Polylobed Negative	23	test	True	CP_and_DP
+690	Polylobed Negative	Polylobed	290	test	True	CP_and_DP
+691	Polylobed Negative	Polylobed Negative	85	test	True	CP_and_DP
+692	Metaphase	Metaphase	8	test	True	CP_and_DP
+693	Metaphase	Metaphase Negative	3	test	True	CP_and_DP
+694	Metaphase Negative	Metaphase	196	test	True	CP_and_DP
+695	Metaphase Negative	Metaphase Negative	223	test	True	CP_and_DP
+696	Binuclear	Binuclear	19	test	True	CP_and_DP
+697	Binuclear	Binuclear Negative	9	test	True	CP_and_DP
+698	Binuclear Negative	Binuclear	181	test	True	CP_and_DP
+699	Binuclear Negative	Binuclear Negative	221	test	True	CP_and_DP
+700	Hole	Hole	9	test	True	CP_and_DP
+701	Hole	Hole Negative	8	test	True	CP_and_DP
+702	Hole Negative	Hole	253	test	True	CP_and_DP
+703	Hole Negative	Hole Negative	160	test	True	CP_and_DP
+704	Anaphase	Anaphase	6	test	True	CP_and_DP
+705	Anaphase	Anaphase Negative	7	test	True	CP_and_DP
+706	Anaphase Negative	Anaphase	246	test	True	CP_and_DP
+707	Anaphase Negative	Anaphase Negative	171	test	True	CP_and_DP
+708	MetaphaseAlignment	MetaphaseAlignment	17	test	True	CP_and_DP
+709	MetaphaseAlignment	MetaphaseAlignment Negative	9	test	True	CP_and_DP
+710	MetaphaseAlignment Negative	MetaphaseAlignment	232	test	True	CP_and_DP
+711	MetaphaseAlignment Negative	MetaphaseAlignment Negative	172	test	True	CP_and_DP
+712	Elongated	Elongated	9	test	True	CP_and_DP
+713	Elongated	Elongated Negative	7	test	True	CP_and_DP
+714	Elongated Negative	Elongated	192	test	True	CP_and_DP
+715	Elongated Negative	Elongated Negative	222	test	True	CP_and_DP
+716	OutOfFocus	OutOfFocus	27	test	True	CP_and_DP
+717	OutOfFocus	OutOfFocus Negative	19	test	True	CP_and_DP
+718	OutOfFocus Negative	OutOfFocus	140	test	True	CP_and_DP
+719	OutOfFocus Negative	OutOfFocus Negative	244	test	True	CP_and_DP

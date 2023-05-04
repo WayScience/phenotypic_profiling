@@ -15,7 +15,7 @@ import pandas as pd
 # In[2]:
 
 
-labeled_data_hash = "e1f86cd007657f8247310b78df92891b22e51621"
+labeled_data_hash = "20369033f579dca1334cb2c58a1c6d532322f93e"
 labeled_data_url = f"https://raw.github.com/WayScience/mitocheck_data/{labeled_data_hash}/3.normalize_data/normalized_data/training_data.csv.gz"
 
 
