@@ -34,7 +34,7 @@ head(pr_df)
 pr_curve_gg <- (
     ggplot(pr_df, aes(x = Recall, y = Precision))
     + geom_line(aes(color = feature_type_with_data_split, linetype = shuffled))
-    + facet_wrap("~Phenotypic_Class")
+    + facet_wrap("~Phenotypic_Class", nrow = 3)
     + theme_bw()
     + xlab("Recall")
     + ylab("Precision")
@@ -63,6 +63,6 @@ pr_curve_gg <- (
     )
 )
 
-ggsave(output_file, pr_curve_gg, height = 7.5, width = 8.5, dpi = 500)
+ggsave(output_file, pr_curve_gg, height = 5.5, width = 8.5, dpi = 500)
 
 pr_curve_gg
