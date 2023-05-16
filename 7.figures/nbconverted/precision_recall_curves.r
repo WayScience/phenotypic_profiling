@@ -11,7 +11,7 @@ output_file <- file.path(
 
 # Load data
 results_dir <- file.path(
-    "..", "3.evaluate_model", "evaluations", "class_precision_recall_curves"
+    "..", "3.evaluate_model", "evaluations", "precision_recall_curves"
 )
 results_file <- file.path(results_dir, "compiled_class_PR_curves.tsv")
 
@@ -30,9 +30,6 @@ pr_df <- readr::read_tsv(
 
 print(dim(pr_df))
 head(pr_df)
-
-# How many different feature types and data splits
-table(pr_df$feature_type_with_data_split)
 
 pr_curve_gg <- (
     ggplot(pr_df, aes(x = Recall, y = Precision))
