@@ -19,12 +19,13 @@ shuffled_labels <- c(
 )
 
 feature_type_with_data_split_colors <- c(
-    "CP_and_DPtest" = "#C214CB",
-    "CP_and_DPtrain" = "#E88EED",
-    "CPtest" = "#EB4B4B",
-    "CPtrain" = "#F8B5B5",
-    "DPtest" = "#5158bb",
-    "DPtrain" = "#B5B9EA"
+    "CPtest" = "#1b9e77",
+    "DPtest" = "#d95f02",
+    "CP_and_DPtest" = "#7570b3",
+
+    "CPtrain" = "#c8e9df",
+    "DPtrain" = "#fedbcd",
+    "CP_and_DPtrain" = "#cbd4e7"
 )
 
 feature_type_with_data_split_labels <- c(
