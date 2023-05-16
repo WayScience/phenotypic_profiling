@@ -36,6 +36,8 @@ f1_score_df <- readr::read_tsv(
         shuffled == "False"
     )
 
+f1_score_df$Phenotypic_Class <- dplyr::recode(f1_score_df$Phenotypic_Class, Weighted = " OverallPerformance")
+
 print(dim(f1_score_df))
 head(f1_score_df)
 
