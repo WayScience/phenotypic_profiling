@@ -11,13 +11,14 @@ import pandas as pd
 import pathlib
 from joblib import load
 from matplotlib import pyplot as plt
+import itertools
 
 import sys
 
 sys.path.append("../utils")
 from split_utils import get_features_data
 from train_utils import get_dataset
-from evaluate_utils import class_PR_curves
+from evaluate_utils import class_PR_curves, class_PR_curves_SCM
 
 
 # ### Load models and datasets
@@ -32,21 +33,15 @@ data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
 features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
 features_dataframe = get_features_data(features_dataframe_path)
 
-train_data = get_dataset(features_dataframe, data_split_indexes, "train")
-test_data = get_dataset(features_dataframe, data_split_indexes, "test")
 
-save_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
-save_dir.mkdir(parents=True, exist_ok=True)
-
-
-# ### Evaluate Each Model on Each Dataset
+# ### Evaluate each model on each dataset (multiclass)
 # 
 
 # In[3]:
 
 
 # directory to load the models from
-models_dir = pathlib.Path("../2.train_model/models/")
+models_dir = pathlib.Path("../2.train_model/models/multi_class_models/")
 
 # use a list to keep track of scores in tidy long format for each model and dataset combination
 compiled_class_PR_curves = []
@@ -88,27 +83,132 @@ for model_path in sorted(models_dir.iterdir()):
         compiled_class_PR_curves.append(PR_data)
 
 
-# ### Save PR curves from each evaluation
+# ### Save PR curves from each evaluation (multiclass)
 # 
 
 # In[4]:
 
 
 # compile list of tidy data into one dataframe
-compiled_class_PR_curves = pd.concat(compiled_class_PR_curves).reset_index(drop=True)
+# some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
+compiled_class_PR_curves = (
+    pd.concat(compiled_class_PR_curves).dropna().reset_index(drop=True)
+)
 
 # specify results directory
-class_PR_curves_dir = pathlib.Path("evaluations/class_precision_recall_curves/")
-class_PR_curves_dir.mkdir(parents=True, exist_ok=True)
+PR_curves_dir = pathlib.Path("evaluations/precision_recall_curves/")
+PR_curves_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
-compiled_scores_save_path = pathlib.Path(
-    f"{class_PR_curves_dir}/compiled_class_PR_curves.tsv"
+compiled_PR_data_save_path = pathlib.Path(
+    f"{PR_curves_dir}/compiled_class_PR_curves.tsv"
 )
 
 # save data as tsv
-compiled_class_PR_curves.to_csv(compiled_scores_save_path, sep="\t")
+compiled_class_PR_curves.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
 compiled_class_PR_curves
 
+
+# ### Evaluate each model on each dataset (multiclass)
+# 
+
+# In[5]:
+
+
+# directory to load the models from
+single_class_models_dir = pathlib.Path("../2.train_model/models/single_class_models")
+
+# use a list to keep track of scores in tidy long format for each model and dataset combination
+compiled_class_PR_curves = []
+
+# define combinations to test over
+model_types = ["final", "shuffled_baseline"]
+feature_types = ["CP", "DP", "CP_and_DP"]
+evaluation_types = ["train", "test"]
+phenotypic_classes = features_dataframe["Mitocheck_Phenotypic_Class"].unique()
+
+# colors for plotted lines
+data_split_colors = {
+    "CP_and_DP (test)": "#C214CB",
+    "CP_and_DP (train)": "#E88EED",
+    "CP (test)": "#EB4B4B",
+    "CP (train)": "#F8B5B5",
+    "DP (test)": "#5158bb",
+    "DP (train)": "#B5B9EA",
+}
+
+# data from PR curves will be stored in tidy data format (eventually pandas dataframe)
+compiled_SCM_PR_data = []
+
+# iterate over each model type
+# this is not included in itertools product because the PR curves figure needs to be generated for each model type with plt.show()
+for model_type in model_types:
+    # create a figure that has 6x5 subplots
+    fig, axs = plt.subplots(6, 5)
+    fig.set_size_inches(15, 18)
+
+    # iterate through each combination of feature_types, evaluation_types, phenotypic_classes
+    for feature_type, evaluation_type, phenotypic_class in itertools.product(
+        feature_types, evaluation_types, phenotypic_classes
+    ):
+        # load single class model for this combination of model type, feature type, and phenotypic class
+        single_class_model_path = pathlib.Path(
+            f"{single_class_models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
+        )
+        single_class_model = load(single_class_model_path)
+
+        # load single cell data that will be used for evaluation
+        single_cell_data = get_dataset(
+            features_dataframe, data_split_indexes, evaluation_type
+        )
+
+        # index of phenotypic_class gives us an idea of where it should be plotted
+        phenotypic_class_index = phenotypic_classes.tolist().index(phenotypic_class)
+
+        # plot PR curves for single class models of this model type
+        # this function also returns the PR curve data for this model type
+        PR_data = class_PR_curves_SCM(
+            single_cell_data,
+            single_class_model,
+            fig,
+            axs,
+            phenotypic_class_index,
+            data_split_colors,
+            model_type,
+            feature_type,
+            evaluation_type,
+            phenotypic_class,
+        )
+        compiled_SCM_PR_data.append(PR_data)
+
+    # add title to figure with all subplots
+    fig.suptitle(f"PR curves for {model_type} models")
+    plt.show()
+
+
+# ### Save PR curves from each evaluation (multiclass)
+# 
+
+# In[6]:
+
+
+# compile tidy PR data
+# some thresholds are None because last PR value doesn't correspond to cell dataset (these values are always P=1, R=0), remove these rows from PR data
+compiled_SCM_PR_data = (
+    pd.concat(compiled_SCM_PR_data, axis=0).dropna().reset_index(drop=True)
+)
+
+# specify results directory
+PR_curves_dir = pathlib.Path("evaluations/precision_recall_curves/")
+PR_curves_dir.mkdir(parents=True, exist_ok=True)
+
+# define save path
+compiled_PR_data_save_path = pathlib.Path(f"{PR_curves_dir}/compiled_SCM_PR_curves.tsv")
+
+# save data as tsv
+compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
+
+# preview tidy data
+compiled_SCM_PR_data
