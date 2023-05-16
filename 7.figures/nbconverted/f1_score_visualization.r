@@ -9,6 +9,10 @@ output_file <- file.path(
     "figures", "f1_scores_multiclass.png"
 )
 
+output_top_file <- file.path(
+    "figures", "f1_scores_multiclass_topfeaturespace.png"
+)
+
 # Load data
 results_dir <- file.path(
     "..", "3.evaluate_model", "evaluations", "F1_scores"
@@ -50,7 +54,7 @@ f1_score_gg <- (
     + geom_bar(aes(fill = feature_type_with_data_split), stat = "identity", position = "dodge")
     + theme_bw()
     + xlab("Single cell phenotype")
-    + ylab("F1 Score")
+    + ylab("F1 Score (Test set)")
     + scale_fill_manual(
         name = "Model scenario",
         labels = feature_type_with_data_split_labels,
@@ -65,8 +69,36 @@ f1_score_gg <- (
         legend.key.width = unit(1, "lines"),
         axis.text.x = element_text(angle = 90)
     )
+    + coord_flip()
 )
 
-ggsave(output_file, f1_score_gg, height = 3, width = 6, dpi = 500)
+ggsave(output_file, f1_score_gg, height = 5, width = 4, dpi = 500)
+
+f1_score_gg
+
+f1_score_gg <- (
+    ggplot(top_scores_df, aes(x = Phenotypic_Class, y = F1_Score))
+    + geom_bar(aes(fill = feature_type_with_data_split), stat = "identity", position = "dodge")
+    + theme_bw()
+    + xlab("Single cell phenotype")
+    + ylab("F1 Score (Test set)\nTop feature space")
+    + scale_fill_manual(
+        name = "Model scenario",
+        labels = feature_type_with_data_split_labels,
+        values = feature_type_with_data_split_colors
+    )
+    + figure_theme
+    # Decrease spacing in legend and rotate text
+    + theme(
+        legend.spacing.y = unit(0.1, "cm"),
+        legend.box.spacing = unit(0.2, "cm"),
+        legend.key.size = unit(0.7, "lines"),
+        legend.key.width = unit(1, "lines"),
+        axis.text.x = element_text(angle = 90)
+    )
+    + coord_flip()
+)
+
+ggsave(output_top_file, f1_score_gg, height = 3, width = 4, dpi = 500)
 
 f1_score_gg
