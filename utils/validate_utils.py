@@ -54,7 +54,7 @@ def create_classification_profiles(
             col
             for col in cell_line_plate_classifications.columns.tolist()
             if ("Metadata" not in col)
-            or (col not in ["Location_Center_X", "Location_Center_Y"])
+            and (col not in ["Location_Center_X", "Location_Center_Y"])
         ]
         columns_to_keep = [
             "Metadata_pert_name",
