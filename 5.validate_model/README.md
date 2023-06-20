@@ -4,7 +4,7 @@ In this module, we validate the final ML model.
 
 ### Validation Method 1
 
-The final model from [2.train_model](../2.train_model/) is used to classify nuclei images from the [Cell Health Dataset](https://github.com/WayScience/cell-health-data).
+The models from [2.train_model](../2.train_model/) are used to classify nuclei images from the [Cell Health Dataset](https://github.com/WayScience/cell-health-data).
 The classification probabilities across CRISPR guide/cell line are then correlated to the Cell Health label for the the respective CRISPR perturbation/cell line.
 
 The Cell Health dataset has cell painting images across 119 CRISPR guide perturbations (~2 per gene perturbation) and 3 cell lines.
@@ -23,7 +23,13 @@ The Pearson correlation coefficient measures the linear relationship between two
 These correlations are interpreted with [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display the hierarchically-clustered correlation values.
 Searborn clustermap groups similar correlations into clusters that are broadly similar to each other.
 
-## Step 1: Validate Model
+## Step 1: Define Folder Paths
+
+Inside the notebook [cell_health_correlations.ipynb](cell_health_correlations.ipynb), the variable `classification_profiles_save_dir` needs to be set to specify where the classficiation profiles are saved.
+We used an external harddrive and therefore needed to use specific paths.
+The classification profiles are the output of [cell-health-data/4.classify-single-cell-phenotypes](https://github.com/roshankern/cell-health-data/tree/derive-classification-profiles/4.classify-single-cell-phenotypes).
+
+## Step 2: Validate Model
 
 Use the commands below to validate the final ML model:
 
