@@ -6,6 +6,7 @@ import pathlib
 
 import pandas as pd
 import numpy as np
+import seaborn as sns
 from ccc.coef import ccc
 from scipy.spatial.distance import squareform
 
@@ -112,3 +113,56 @@ def get_tidy_long_corrs(final_profile_dataframe: pd.DataFrame) -> pd.DataFrame:
     )
 
     return compiled_tidy_long_corrs
+
+
+def get_corr_clustermap(
+    tidy_corr_data: pd.DataFrame,
+    cell_line: str,
+    corr_type: str,
+    model_type: str,
+    feature_type: str,
+):
+    """
+    get seaborn clustermap from tidy long correlation data
+    will only plot data from the argument categories
+
+    Parameters
+    ----------
+    tidy_corr_data : pd.DataFrame
+        dataframe with correlation data in tidy long format
+    cell_line : str
+        all, A549, ES2, or HCC44
+    corr_type : str
+        pearson or ccc
+    model_type : str
+        final or shuffled_baseline
+    feature_type : str
+        CP, DP, or DP_and_DP
+    """
+
+    # get data of interest
+    corr_data = tidy_corr_data.loc[
+        (tidy_corr_data["cell_line"] == cell_line)
+        & (tidy_corr_data["corr_type"] == corr_type)
+        & (tidy_corr_data["model_type"] == model_type)
+        & (tidy_corr_data["feature_type"] == feature_type)
+    ]
+
+    # drop rows that have "Negative" in phenotypic_class row
+    # this will remove opposite values from single class models
+    corr_data = corr_data[~corr_data["phenotypic_class"].str.contains("Negative")]
+
+    # pivot the data to create matrix usable for graphing
+    pivoted_corr_data = corr_data.pivot(
+        "phenotypic_class", "cell_health_indicator", "corr_value"
+    )
+
+    # graph corr data
+    sns.clustermap(
+        pivoted_corr_data,
+        xticklabels=pivoted_corr_data.columns,
+        yticklabels=pivoted_corr_data.index,
+        cmap="RdBu_r",
+        linewidth=0.5,
+        figsize=(20, 10),
+    )
