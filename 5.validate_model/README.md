@@ -20,6 +20,9 @@ These indicators are averaged across across CRISPR guide/cell line to create 357
 We use [pandas.DataFrame.corr](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html) to find the [Pearson correlation coefficient](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) between the *classifiction profiles* and the *Cell Health label profiles*.
 The Pearson correlation coefficient measures the linear relationship between two datasets, with correlations of -1/+1 implying exact linear inverse/direct relationships respectively.
 
+We also derive the [Clustermatch Correlation Coefficient (CCC)](https://github.com/greenelab/ccc) introduced in [Pividori et al, 2022](https://www.biorxiv.org/content/10.1101/2022.06.15.496326v1).
+This is a not-only-linear coefficient based on machine learning models and gives an idea of how correlated the feature coefficients are (where 0 is no relationship and 1 is a perfect relationship).
+
 These correlations are briefly interpreted in [view_cell_health_correlations.ipynb](view_cell_health_correlations.ipynb) with [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display the hierarchically-clustered correlation values.
 Searborn clustermap groups similar correlations into clusters that are broadly similar to each other.
 
