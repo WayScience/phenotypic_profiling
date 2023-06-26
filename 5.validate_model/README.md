@@ -4,7 +4,7 @@ In this module, we validate the final ML model.
 
 ### Validation Method 1
 
-The models from [2.train_model](../2.train_model/) are used to classify nuclei images from the [Cell Health Dataset](https://github.com/WayScience/cell-health-data).
+We use the models from [2.train_model](../2.train_model/) to classify nuclei images from the [Cell Health Dataset](https://github.com/WayScience/cell-health-data).
 The classification probabilities across CRISPR guide/cell line are then correlated to the Cell Health label in [cell_health_correlations.ipynb](cell_health_correlations.ipynb) for the the respective CRISPR perturbation/cell line.
 
 The Cell Health dataset has cell painting images across 119 CRISPR guide perturbations (~2 per gene perturbation) and 3 cell lines.
