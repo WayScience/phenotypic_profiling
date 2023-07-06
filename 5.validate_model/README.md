@@ -23,7 +23,7 @@ The Pearson correlation coefficient measures the linear relationship between two
 We also derive the [Clustermatch Correlation Coefficient (CCC)](https://github.com/greenelab/ccc) introduced in [Pividori et al, 2022](https://www.biorxiv.org/content/10.1101/2022.06.15.496326v1).
 This is a not-only-linear coefficient based on machine learning models and gives an idea of how correlated the feature coefficients are (where 0 is no relationship and 1 is a perfect relationship).
 
-These correlations are briefly interpreted in [view_cell_health_correlations.ipynb](view_cell_health_correlations.ipynb) with [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display the hierarchically-clustered correlation values.
+These correlations are briefly interpreted in [preview_CH_correlations.ipynb](preview_CH_correlations.ipynb) and [preview_CH_correlations.ipynb](preview_CH_correlation_differences.ipynb) with [seaborn.clustermap](https://seaborn.pydata.org/generated/seaborn.clustermap.html) to display the hierarchically-clustered correlation values.
 Searborn clustermap groups similar correlations into clusters that are broadly similar to each other.
 
 ## Step 1: Define Folder Paths
