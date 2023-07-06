@@ -2,82 +2,167 @@
 utilities for validating logistic regression models on MitoCheck single-cell dataset
 """
 
+import pathlib
+
 import pandas as pd
+import numpy as np
+import seaborn as sns
+from ccc.coef import ccc
+from scipy.spatial.distance import squareform
 
 
-def create_classification_profiles(
-    plate_classifications_dir_link: str, cell_line_plates: dict
+def get_cell_health_corrs(
+    final_profile_dataframe: pd.DataFrame, corr_type: str, cell_line: str
 ) -> pd.DataFrame:
     """
-    create classsification profiles for correlation to cell health label profiles
-    a classification profile consists of classification probabilities averaged across perturbation and cell line
+    get correlations between cell health indicators and classification profiles
+    correlations are output in wide format
 
     Parameters
     ----------
-    plate_classifications_dir_link : str
-        raw GitHub link to plate classifications directory
-    cell_line_plates : dict
-        cell line names, each with a list of plate names that are correlated to their respective cell line
+    final_profile_dataframe : pd.DataFrame
+        dataframe with cell health indicator and classification profiles matched by perturbation
+    corr_type : str
+        type of correlation ("pearson" or "ccc")
+    cell_line : str
+        cell line metadata to add to correlations
 
     Returns
     -------
     pd.DataFrame
-        classification profiles dataframe
+        wide format dataframe with correlation info
     """
 
-    cell_line_classification_profiles = []
+    # remove metadata columns
+    cleaned_final_profile_dataframe = final_profile_dataframe.drop(
+        columns=["Metadata_profile_id", "Metadata_pert_name", "Metadata_cell_line"]
+    )
 
-    for cell_line in cell_line_plates:
-        # create one large dataframe for all 3 plates in the particular cell line
-        cell_line_plate_names = cell_line_plates[cell_line]
-        cell_line_plate_classifications = []
-        for cell_line_plate_name in cell_line_plate_names:
-            plate_classifications_link = f"{plate_classifications_dir_link}/{cell_line_plate_name}_cell_classifications.csv.gz"
-            plate_classifications = pd.read_csv(
-                plate_classifications_link, compression="gzip", index_col=0
-            )
-            cell_line_plate_classifications.append(plate_classifications)
-        cell_line_plate_classifications = pd.concat(
-            cell_line_plate_classifications, axis=0
-        ).reset_index(drop=True)
-
-        # create dataframe with cell classifications averaged across perturbation, include cell line metadata
-        # add cell line metadata
-        cell_line_plate_classifications["Metadata_cell_line"] = cell_line
-        # rename perturbation column to match the format of cell health label profiles, in this case "perturbation" corresponds to "reagent" because DeepProfiler (used much earlier in pipeline) makes no distinction
-        cell_line_plate_classifications = cell_line_plate_classifications.rename(
-            columns={"Metadata_Reagent": "Metadata_pert_name"}
+    # get correlations depending on type
+    if corr_type == "pearson":
+        corrs = cleaned_final_profile_dataframe.corr(method="pearson")
+    if corr_type == "ccc":
+        corrs = ccc(cleaned_final_profile_dataframe)
+        corrs = squareform(corrs)
+        np.fill_diagonal(corrs, 1.0)
+        corrs = pd.DataFrame(
+            corrs,
+            index=cleaned_final_profile_dataframe.columns.tolist(),
+            columns=cleaned_final_profile_dataframe.columns.tolist(),
         )
 
-        # get rid of extra metadata columns
-        phenotypic_classes = [
-            col
-            for col in cell_line_plate_classifications.columns.tolist()
-            if ("Metadata" not in col)
-            or (col not in ["Location_Center_X", "Location_Center_Y"])
+    # refactor correlations to easily readable format (from 70 cell health indicators)
+    corrs = corrs.iloc[70:, :70]
+    corrs.index.name = "phenotypic_class"
+    corrs = corrs.reset_index()
+
+    # add metadata to correlations
+    corrs["cell_line"] = cell_line
+    corrs["corr_type"] = corr_type
+
+    return corrs
+
+
+def get_tidy_long_corrs(final_profile_dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    get correlation values cell health indicators and classification profiles in tidy long format
+    correlations are derived for each cell line and all cell lines
+    pearson and ccc correlations are derived
+
+    Parameters
+    ----------
+    final_profile_dataframe : pd.DataFrame
+        dataframe with cell health indicator and classification profiles matched by perturbation
+
+    Returns
+    -------
+    pd.DataFrame
+        correlations in tidy long format
+    """
+
+    compiled_tidy_long_corrs = []
+
+    # get correlations for all cell lines
+    all_pearson_corrs = get_cell_health_corrs(final_profile_dataframe, "pearson", "all")
+    all_ccc_corrs = get_cell_health_corrs(final_profile_dataframe, "ccc", "all")
+    compiled_tidy_long_corrs += [all_pearson_corrs, all_ccc_corrs]
+
+    for cell_line in final_profile_dataframe["Metadata_cell_line"].unique():
+        # get subset of final profile dataframe for the particular cell line
+        cell_line_profiles = final_profile_dataframe.loc[
+            final_profile_dataframe["Metadata_cell_line"] == cell_line
         ]
-        columns_to_keep = [
-            "Metadata_pert_name",
-            "Metadata_cell_line",
-        ] + phenotypic_classes
-        cell_line_plate_classifications = cell_line_plate_classifications[
-            columns_to_keep
-        ]
+        # get correlations for this cell line subset
+        cell_line_pearson_corrs = get_cell_health_corrs(
+            cell_line_profiles, "pearson", cell_line
+        )
+        cell_line_ccc_corrs = get_cell_health_corrs(
+            cell_line_profiles, "ccc", cell_line
+        )
+        compiled_tidy_long_corrs += [cell_line_pearson_corrs, cell_line_ccc_corrs]
 
-        # average across perturbation
-        cell_line_classification_profile = cell_line_plate_classifications.groupby(
-            ["Metadata_pert_name", "Metadata_cell_line"]
-        ).mean()
-        cell_line_classification_profiles.append(cell_line_classification_profile)
+    # combine all correlations
+    compiled_tidy_long_corrs = pd.concat(compiled_tidy_long_corrs)
 
-    classification_profiles = pd.concat(cell_line_classification_profiles, axis=0)
-    # convert pandas index to columns
-    classification_profiles = classification_profiles.reset_index(
-        level=["Metadata_pert_name", "Metadata_cell_line"]
-    )
-    # convert no reagent to empty in pert column to follow format of cell health label profiles
-    classification_profiles = classification_profiles.replace(
-        {"Metadata_pert_name": "no reagent"}, "EMPTY"
+    # convert wide dataframe to tidy long format
+    compiled_tidy_long_corrs = pd.melt(
+        compiled_tidy_long_corrs,
+        id_vars=["phenotypic_class", "cell_line", "corr_type"],
+        var_name="cell_health_indicator",
+        value_name="corr_value",
     )
 
-    return classification_profiles
+    return compiled_tidy_long_corrs
+
+
+def get_corr_clustermap(
+    tidy_corr_data: pd.DataFrame,
+    cell_line: str,
+    corr_type: str,
+    model_type: str,
+    feature_type: str,
+):
+    """
+    get seaborn clustermap from tidy long correlation data
+    will only plot data from the argument categories
+
+    Parameters
+    ----------
+    tidy_corr_data : pd.DataFrame
+        dataframe with correlation data in tidy long format
+    cell_line : str
+        all, A549, ES2, or HCC44
+    corr_type : str
+        pearson or ccc
+    model_type : str
+        final or shuffled_baseline
+    feature_type : str
+        CP, DP, or DP_and_DP
+    """
+
+    # get data of interest
+    corr_data = tidy_corr_data.loc[
+        (tidy_corr_data["cell_line"] == cell_line)
+        & (tidy_corr_data["corr_type"] == corr_type)
+        & (tidy_corr_data["model_type"] == model_type)
+        & (tidy_corr_data["feature_type"] == feature_type)
+    ]
+
+    # drop rows that have "Negative" in phenotypic_class row
+    # this will remove opposite values from single class models
+    corr_data = corr_data[~corr_data["phenotypic_class"].str.contains("Negative")]
+
+    # pivot the data to create matrix usable for graphing
+    pivoted_corr_data = corr_data.pivot(
+        "phenotypic_class", "cell_health_indicator", "corr_value"
+    )
+
+    # graph corr data
+    sns.clustermap(
+        pivoted_corr_data,
+        xticklabels=pivoted_corr_data.columns,
+        yticklabels=pivoted_corr_data.index,
+        cmap="RdBu_r",
+        linewidth=0.5,
+        figsize=(20, 10),
+    )
