@@ -15,3 +15,7 @@ jupyter nbconvert --to python \
 jupyter nbconvert --to python \
         --FilesWriter.build_directory=scripts/nbconverted \
         --execute F1_scores.ipynb
+
+jupyter nbconvert --to python \
+        --FilesWriter.build_directory=scripts/nbconverted \
+        --execute get_LOIO_probabilities.ipynb

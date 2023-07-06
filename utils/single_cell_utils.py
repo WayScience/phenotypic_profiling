@@ -106,6 +106,7 @@ def get_class_sample_images(
     single_cell_images_dir_path: pathlib.Path,
     num_images: int = 3,
     correct: bool = True,
+    feature_type: str = "CP_and_DP"
 ) -> list:
     """
     get a list of sample image paths for a phenotypic class corresponding to whether or not the model correctly predicted the image
@@ -123,7 +124,10 @@ def get_class_sample_images(
     num_images : int, optional
         number of image paths to return, by default 3
     correct : bool, optional
-        whether or not the model has correctly predicted the image, by default True
+        whether or not the model has correctly predicted the image, by default True,
+    feature_type : str, optional
+        which dataset columns to get feature data for
+        can be "CP" or "DP" or by default "CP_and_DP"
 
     Returns
     -------
@@ -139,11 +143,17 @@ def get_class_sample_images(
         (dataset["Mitocheck_Phenotypic_Class"] == phenotypic_class)
     ]
     # columns of dataset that contain feature data
-    feature_columns = [column for column in dataset.columns if "efficientnet" in column]
+    # get DP,CP, or both features from all columns depending on desired dataset
+    if feature_type == "CP":
+        feature_cols = [col for col in dataset.columns if "CP__" in col]
+    elif feature_type == "DP":
+        feature_cols = [col for col in dataset.columns if "DP__" in col]
+    elif feature_type == "CP_and_DP":
+        feature_cols = [col for col in dataset.columns if "P__" in col]
 
     for _, cell in class_data.iterrows():
         # get model phenotypic class prediction for this cell
-        cell_features = cell[feature_columns].to_numpy().reshape(1, -1)
+        cell_features = cell[feature_cols].to_numpy().reshape(1, -1)
         cell_class_prediction = log_reg_model.predict(cell_features)[0]
 
         # try to find an image from sample images that matches this cell
@@ -176,6 +186,7 @@ def get_15_correct_sample_images(
     dataset: pd.DataFrame,
     log_reg_model: LogisticRegression,
     single_cell_images_dir_path: pathlib.Path,
+    feature_type: str = "CP_and_DP"
 ) -> pd.DataFrame:
     """
     get 15 accurately predicted sample images, 3 for each 5 phenotypic classes given as inputs
@@ -190,6 +201,9 @@ def get_15_correct_sample_images(
         model used to classify cells
     single_cell_images_dir_path : pathlib.Path
         path to single-cell sample images
+    feature_type : str, optional
+        which dataset columns to get feature data for
+        can be "CP" or "DP" or by default "CP_and_DP"
 
     Returns
     -------
@@ -206,6 +220,7 @@ def get_15_correct_sample_images(
             log_reg_model,
             single_cell_images_dir_path,
             correct=True,
+            feature_type=feature_type
         )
         # add these paths to compiled sample images
         sample_image_paths_dataframe = pd.Series(sample_image_paths).to_frame().T
