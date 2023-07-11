@@ -18,7 +18,6 @@ This repository is structured as follows:
 ## Data
 
 Instructions for data download/preprocessing can be found at: https://github.com/WayScience/mitocheck_data.
-
 This repository downloads labeled single-cell data from a specific version of the [mitocheck_data](https://github.com/WayScience/mitocheck_data) repository.
 For more information see [0.download_data/](0.download_data/).
 
@@ -76,3 +75,10 @@ conda env create -f phenotypic_profiling_env.yml
 
 conda activate phenotypic_profiling
 ```
+
+## Reproducibility
+
+Specific code and steps used are available within each module folder.
+
+The [Way Lab](https://www.waysciencelab.com/) always strives for readable, reproducible computational biology analyses and workflows.
+If struggle to understand or reproduce anything in this repository please [file an issue](https://github.com/WayScience/mitocheck_data/issues/new/choose)!
