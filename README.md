@@ -12,19 +12,21 @@ This repository is structured as follows:
 | [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML models on all data subsets |
 | [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML models |
 | [5.validate_model](5.validate_model/) | Validate model | Validate ML models |
+| [6.single_cell_images](6.single_cell_images/) | Single Cell Images | View single cell images and model interpretation |
+| [7.figures](7.figures/) | Figures | Create paper-worthy figures |
 
 ## Data
 
 Instructions for data download/preprocessing can be found at: https://github.com/WayScience/mitocheck_data.
 
-This repository downloads training data from a specific version of [MitoCheck_data](https://github.com/WayScience/mitocheck_data).
+This repository downloads labeled single-cell data from a specific version of the [mitocheck_data](https://github.com/WayScience/mitocheck_data) repository.
 For more information see [0.download_data/](0.download_data/).
 
-## Machine Learning Model
+## Machine Learning Models
 
 We use [Scikit-learn (sklearn)](https://scikit-learn.org/) for data manipulation, model training, and model evaluation.
 Scikit-learn is described in [Pedregosa et al., JMLR 12, pp. 2825-2830, 2011](http://jmlr.csail.mit.edu/papers/v12/pedregosa11a.html) as a machine learning library for Python.
-Its ease of implementation in a pipeline make it ideal for our use case.
+Its ease of implementation in a pipeline makes it ideal for our use case.
 
 We consistently use the following parameters with many `sklearn` functions:
 
@@ -43,13 +45,19 @@ All parts of the machine learning pipeline are completed with the following feat
 
 See [MitoCheck_data](https://github.com/WayScience/mitocheck_data) for more information on feature types and how they are extracted from `MitoCheck` labeled cells.
 
-All parts of the machine learning pipeline are also completed for a "final" model (from training data) and a "shuffled baseline" model (from shuffled training data).
-This shuffled baseline model provides a suitable baseline comparison for the final model during evaluation.
+All parts of the machine learning pipeline are completed to create two versions of the same machine learning model:
+- `final`: Model fit using real feature values
+- `shuffled_baseline`: Model fit using shuffled training data (to create a suitable baseline comparison for the final model during evaluation)
 
-**Note:** Throughout this repository, intermediate `.tsv` data are stored in tidy long format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+## Intermediate Data
+
+Throughout this repository, intermediate `.tsv` data are stored in tidy long format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
 This data structure makes later analysis easier.
 
-## Setup
+Some intermediate data used in this repository are too large to be stored on GitHub.
+These intermediate data are available on the [Way Lab Zenodo page](https://zenodo.org/communities/wayscience/).
+
+## Environment Setup
 
 Perform the following steps to set up the `phenotypic_profiling` environment necessary for processing data in this repository.
 
