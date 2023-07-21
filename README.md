@@ -64,7 +64,7 @@ All parts of the machine learning pipeline are completed with the following feat
 
 See [MitoCheck_data](https://github.com/WayScience/mitocheck_data) for more information on feature types and how they are extracted from `MitoCheck` labeled cells.
 
-All parts of the machine learning pipeline are completed to create two versions of the same machine learning model:
+We create two versions of the same machine learning model:
 - `final`: Model fit using real feature values
 - `shuffled_baseline`: Model fit using shuffled training data (to create a suitable baseline comparison for the final model during evaluation)
 
