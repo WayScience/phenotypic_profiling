@@ -37,7 +37,7 @@ The repository structure is as follows:
 
 ## Data
 
-Specific data download/preprocessing instructions are available t: https://github.com/WayScience/mitocheck_data.
+Specific data download/preprocessing instructions are available at: https://github.com/WayScience/mitocheck_data.
 This repository downloads labeled single-cell data from a specific version of the [mitocheck_data](https://github.com/WayScience/mitocheck_data) repository.
 For more information see [0.download_data/](0.download_data/).
 
