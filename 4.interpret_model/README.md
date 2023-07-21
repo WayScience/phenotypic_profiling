@@ -20,6 +20,14 @@ We also derive the [Clustermatch Correlation Coefficient (CCC)](https://github.c
 This is a not-only-linear coefficient based on machine learning models and gives an idea of how correlated the feature coefficients are (where 0 is no relationship and 1 is a perfect relationship).
 The correlations for each pair of coefficient vectors are displayed above their scatterplots.
 
+## Results
+
+Each model's interpretations can be found in [interpret_model_coefficients.ipynb](interpret_model_coefficients.ipynb).
+
+**Notes:** 
+1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+2) SCM stands for "single cell model(s)" and is used as an abbrevation for the binary, sinlge-class models throughout this module.
+
 ## Step 1: Interpret Model
 
 Use the commands below to interpret the ML models:
@@ -34,9 +42,3 @@ conda activate phenotypic_profiling
 # Interpret model
 bash interpret_model.sh
 ```
-
-## Results
-
-Each model's interpretations can be found in [interpret_model_coefficients.ipynb](interpret_model_coefficients.ipynb).
-
-**Note:** Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).

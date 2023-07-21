@@ -46,3 +46,7 @@ conda activate phenotypic_profiling
 # Interpret model
 bash validate_model.sh
 ```
+
+**Notes:** 
+1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
+2) SCM stands for "single cell model(s)" and is used as an abbrevation for the binary, sinlge-class models throughout this module.

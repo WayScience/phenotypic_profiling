@@ -31,7 +31,7 @@ The LOIO evaluation procedure is as follows:
     - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) on every cell that is **not** in the specific image.
     - Predict probabilities on every cell that **is** in the specific image.
 
-The probabilities are saved to [LOIO_probas](evaluations/LOIO_probas/).
+These probabilities are saved to [LOIO_probas](evaluations/LOIO_probas/).
 
 **Notes:** 
 1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).
