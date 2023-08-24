@@ -35,7 +35,7 @@ features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv
 features_dataframe = get_features_data(features_dataframe_path)
 
 
-# ### Get Each Model Predictions on Each Dataset (Multi Class Models)
+# ### Get Each Model Predictions on Each Dataset (multi class models)
 # 
 
 # In[3]:
@@ -89,7 +89,7 @@ for model_path in sorted(models_dir.iterdir()):
         compiled_predictions.append(predictions_df)
 
 
-# ### Compile and Save Predictions
+# ### Compile and Save Predictions (multi class models)
 # 
 
 # In[4]:
@@ -109,7 +109,8 @@ compiled_predictions.to_csv(compiled_predictions_save_path, sep="\t")
 compiled_predictions
 
 
-# ### Get Each Model Predictions on Each Dataset (Single Class Models)
+# ### Get Each Model Predictions on Each Dataset (single class models)
+# 
 
 # In[5]:
 
@@ -121,7 +122,10 @@ models_dir = pathlib.Path("../2.train_model/models/single_class_models")
 compiled_predictions = []
 
 # define combinations to test over
-model_types = ["final", "shuffled_baseline"] # only perform LOIO with hyper params from final models so skip shuffled_baseline models
+model_types = [
+    "final",
+    "shuffled_baseline",
+]  # only perform LOIO with hyper params from final models so skip shuffled_baseline models
 feature_types = ["CP", "DP", "CP_and_DP"]
 evaluation_types = ["train", "test"]
 phenotypic_classes = features_dataframe["Mitocheck_Phenotypic_Class"].unique()
@@ -135,20 +139,20 @@ for model_type, feature_type, phenotypic_class, evaluation_type in itertools.pro
         f"{models_dir}/{phenotypic_class}_models/{model_type}__{feature_type}.joblib"
     )
     model = load(single_class_model_path)
-    
+
     print(
-            f"Getting predictions for {phenotypic_class} model: {model_type}, trained with features: {feature_type}, on dataset: {evaluation_type}"
-        )
-    
+        f"Getting predictions for {phenotypic_class} model: {model_type}, trained with features: {feature_type}, on dataset: {evaluation_type}"
+    )
+
     # load dataset (train, test, etc)
     data = get_SCM_model_data(features_dataframe, phenotypic_class, evaluation_type)
-    
+
     # get features and labels dataframe
     X, y = get_X_y_data(data, feature_type)
-    
+
     # get predictions from model
     y_pred = model.predict(X)
-    
+
     # create dataframe with dataset index of cell being predicted,
     # predicted phenotypic class,
     # true phenotypic class,
@@ -167,7 +171,8 @@ for model_type, feature_type, phenotypic_class, evaluation_type in itertools.pro
     compiled_predictions.append(predictions_df)
 
 
-# ### Compile and Save Predictions
+# ### Compile and Save Predictions (single class models)
+# 
 
 # In[6]:
 
@@ -176,7 +181,9 @@ for model_type, feature_type, phenotypic_class, evaluation_type in itertools.pro
 compiled_predictions = pd.concat(compiled_predictions).reset_index(drop=True)
 
 # specify save path
-compiled_predictions_save_path = pathlib.Path("predictions/compiled_SCM_predictions.tsv")
+compiled_predictions_save_path = pathlib.Path(
+    "predictions/compiled_SCM_predictions.tsv"
+)
 compiled_predictions_save_path.parent.mkdir(parents=True, exist_ok=True)
 
 # save data as tsv
