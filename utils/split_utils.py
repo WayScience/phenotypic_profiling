@@ -13,14 +13,14 @@ np.random.seed(0)
 def get_features_data(load_path: pathlib.Path) -> pd.DataFrame:
     """get features data from csv at load path
     Args:
-        load_path (pathlib.Path): path to training data csv
+        load_path (pathlib.Path): path to labeled data csv
     Returns:
-        pd.DataFrame: training dataframe
+        pd.DataFrame: labeled cells dataframe
     """
     # read dataset into pandas dataframe
     features_data = pd.read_csv(load_path, index_col=0)
 
-    # remove fold class that has low representation
+    # exclude folded class that has significantly low representation/classification accuracy
     features_data = features_data[
         features_data["Mitocheck_Phenotypic_Class"] != "Folded"
     ]
