@@ -111,7 +111,7 @@ compiled_class_PR_curves.to_csv(compiled_PR_data_save_path, sep="\t")
 compiled_class_PR_curves
 
 
-# ### Evaluate each model on each dataset (multiclass)
+# ### Evaluate each model on each dataset (single class)
 # 
 
 # In[5]:
@@ -188,7 +188,7 @@ for model_type in model_types:
     plt.show()
 
 
-# ### Save PR curves from each evaluation (multiclass)
+# ### Save PR curves from each evaluation (single class)
 # 
 
 # In[6]:
@@ -212,3 +212,4 @@ compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
 compiled_SCM_PR_data
+

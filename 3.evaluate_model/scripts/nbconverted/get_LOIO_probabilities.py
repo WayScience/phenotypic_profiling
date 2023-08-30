@@ -49,7 +49,7 @@ num_images = labeled_data["Metadata_DNA"].unique().shape[0]
 print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 
 
-# ### Get LOIO probabilities
+# ### Get LOIO probabilities (multi class models)
 # 
 
 # In[4]:
@@ -133,7 +133,7 @@ for model_path in sorted(models_dir.iterdir()):
         compiled_LOIO_wide_data.append(test_cells_wide_data)
 
 
-# ### Format and save LOIO probabilities
+# ### Format and save LOIO probabilities (multi class models)
 # 
 
 # In[5]:
@@ -274,7 +274,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
         compiled_LOIO_wide_data.append(test_cells_wide_data)
 
 
-# ### Format and save LOIO probabilities
+# ### Format and save LOIO probabilities (single class models)
 # 
 
 # In[7]:
