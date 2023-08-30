@@ -39,7 +39,7 @@ The breakdown of cell counts by phenotypic class (as labeled manually by MitoChe
 | Folded              | 54    |
 
 **Note**: The `get_features_data()` function (defined in [split_utils.py](../utils/split_utils.py)) used to load the labeled cell dataset excludes cells from the `Folded` phenotypic class when loading the labeled cells.
-In our testing, the low representation of `Folded` cells leads to significantly low classification accuracy for this class.
+In our testing, the low representation of `Folded` cells leads to significantly low classification accuracy for this class (only tested with multi-class models).
 Thus, we opt to exclude these cells from all training and testing.
 
 ## Step 1: Download Data
