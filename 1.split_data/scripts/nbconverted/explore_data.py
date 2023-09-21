@@ -5,15 +5,13 @@
 # 
 # - Calculate pairwise correlations between single-cells
 
-# In[6]:
+# In[1]:
 
 
 import pathlib
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-
-from pycytominer import feature_select
 
 import sys
 sys.path.append("../utils")
