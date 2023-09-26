@@ -1,6 +1,8 @@
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(patchwork))
+
+# Load variables important for plotting (e.g., themes, phenotypes, etc.)
 source("themes.r")
 
 figure_dir <- "figures"
@@ -27,8 +29,11 @@ umap_df <- readr::read_csv(
         Embedding_Value = "d"
     )
 ) %>%
-    dplyr::select(!...1) %>%#7570b3
+    dplyr::select(!...1) %>%
+    # Wrangle UMAP columns for scatter plot
     tidyr::pivot_wider(names_from = UMAP_Embedding, values_from = Embedding_Value) %>%
+    # Generate a new column that we will use for plotting
+    # Note, we define focus_phenotypes in themes.r
     dplyr::mutate(Mitocheck_Plot_Label = if_else(
         Mitocheck_Phenotypic_Class %in% focus_phenotypes,
         Mitocheck_Phenotypic_Class,
