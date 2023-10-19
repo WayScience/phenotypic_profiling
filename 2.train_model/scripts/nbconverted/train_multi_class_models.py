@@ -28,9 +28,15 @@ from split_utils import get_features_data
 from train_utils import get_dataset, get_X_y_data
 
 
+# In[2]:
+
+
+warnings.simplefilter("ignore", category=ConvergenceWarning)
+
+
 # ### Specify results directory, load training data
 
-# In[2]:
+# In[3]:
 
 
 # set numpy seed to make random operations reproduceable
@@ -55,12 +61,12 @@ training_data
 
 # ### Train model on each combination of model type and feature type
 
-# In[3]:
+# In[4]:
 
 
 # specify model types and feature types
 model_types = ["final", "shuffled_baseline"]
-feature_types = ["CP", "DP", "CP_and_DP"]
+feature_types = ["CP", "DP", "CP_and_DP", "CP_zernike_only", "CP_areashape_only"]
 
 # create stratified data sets for k-fold cross validation
 straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
@@ -86,9 +92,28 @@ grid_search_cv = GridSearchCV(
 # train model on each combination of model type and feature type
 for model_type in model_types:
     for feature_type in feature_types:
-        print(f"Training {model_type} model on {feature_type} features...")
+        
+        if feature_type == "CP_zernike_only":
+            zernike_only = True
+            dataset = "CP"
+        else:
+            zernike_only = False
+            dataset = feature_type
+            
+        if feature_type == "CP_areashape_only":
+            area_shape_only = True
+            dataset = "CP"
+        else:
+            area_shape_only = False
 
-        X, y = get_X_y_data(training_data, feature_type)
+        print(f"Training {model_type} model on {feature_type} features with zernike only {zernike_only} or area features only {area_shape_only}...")
+        X, y = get_X_y_data(
+            training_data,
+            dataset,
+            zernike_only,
+            area_shape_only
+        )
+
         print(f"X has shape {X.shape}, y has shape {y.shape}")
 
         # shuffle columns of X (features) dataframe independently to create shuffled baseline
