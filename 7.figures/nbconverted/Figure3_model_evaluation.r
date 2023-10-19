@@ -338,7 +338,7 @@ fig_3_gg
 bottom_plot <- (
     pr_curve_subset_gg | 
     f1_score_subset_gg
-) + plot_layout(widths = c(3, 0.7))
+) + plot_layout(widths = c(3, 0.55))
 
 sup_fig_3_gg <- (
     wrap_elements(confusion_matrix_subset_gg) /
@@ -348,3 +348,5 @@ sup_fig_3_gg <- (
 ggsave(output_sup_figure_subset, dpi = 500, height = 14, width = 14)
 
 sup_fig_3_gg
+
+
