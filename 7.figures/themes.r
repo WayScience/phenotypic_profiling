@@ -30,6 +30,14 @@ focus_phenotype_labels <- c(
     "Other" = "Other"
 )
 
+feature_spaces <- c(
+    "CP" = "CellProfiler",
+    "DP" = "DeepProfiler",
+    "CP_and_DP" = "CP and DP",
+    "CP_zernike_only" = "CP Zernike",
+    "CP_areashape_only" = "CP AreaShape"
+)
+
 facet_labels <- c(
     "CP" = "CellProfiler",
     "DP" = "DeepProfiler",
@@ -79,6 +87,22 @@ feature_type_with_data_split_labels <- c(
     "CPtrain" = "CP (Train)",
     "DPtest" = "DP (Test)",
     "DPtrain" = "DP (Train)"
+)
+
+subset_feature_type_with_data_split_colors <- c(
+    "CP_areashape_onlytest" = "#1f78b4",
+    "CP_zernike_onlytest" = "#7beb1a",
+
+    "CP_areashape_onlytrain" = "#aacee6",
+    "CP_zernike_onlytrain" = "#b2df8a"
+)
+
+subset_feature_type_with_data_split_labels <- c(
+    "CP_areashape_onlytest" = "AreaShape only (Test)",
+    "CP_zernike_onlytest" = "Zernike only (Test)",
+
+    "CP_areashape_onlytrain" = "AreaShape only (Train)",
+    "CP_zernike_onlytrain" = "Zernike only (Train)"
 )
 
 phenotypic_ggplot_theme <- (
