@@ -22,11 +22,16 @@ pr_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
-    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split))
+    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
+    dplyr::filter(
+        balance_type == "balanced",
+        feature_type %in% c("CP", "DP", "CP_and_DP")
+    ) 
 
 print(dim(pr_df))
 head(pr_df)
@@ -66,3 +71,5 @@ pr_curve_gg <- (
 ggsave(output_file, pr_curve_gg, height = 5.5, width = 8.5, dpi = 500)
 
 pr_curve_gg
+
+
