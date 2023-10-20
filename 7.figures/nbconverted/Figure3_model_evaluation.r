@@ -22,7 +22,11 @@ cm_df <- readr::read_tsv(
     )
 ) %>%
     dplyr::select(!...1) %>%
-    dplyr::group_by(True_Label, data_split, shuffled, feature_type) %>%
+    dplyr::filter(
+        balance_type == "balanced",
+        feature_type %in% c("CP", "DP", "CP_and_DP")
+    ) %>%
+    dplyr::group_by(True_Label, data_split, shuffled, balance_type, feature_type) %>%
     dplyr::mutate(
         total_count = sum(Count),
         ratio = Count / total_count
@@ -80,11 +84,16 @@ pr_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
-    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split))
+    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
+    dplyr::filter(
+        balance_type == "balanced",
+        feature_type %in% c("CP", "DP", "CP_and_DP")
+    ) 
 
 print(dim(pr_df))
 head(pr_df)
@@ -139,12 +148,17 @@ f1_score_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
     dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
-    dplyr::filter(data_split == "test")
+    dplyr::filter(
+        data_split == "test",
+        balance_type == "balanced",
+        feature_type %in% c("CP", "DP", "CP_and_DP")
+    )
 
 f1_score_df$Phenotypic_Class <-
     dplyr::recode(f1_score_df$Phenotypic_Class, Weighted = "OverallPerformance")
