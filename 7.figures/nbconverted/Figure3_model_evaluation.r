@@ -18,11 +18,15 @@ cm_df <- readr::read_tsv(
     col_types = readr::cols(
         .default = "c",
         shuffled = "l",
-        Count = "d"
+        Count = "d",
+        balance_type = "c"
     )
 ) %>%
     dplyr::select(!...1) %>%
-    dplyr::group_by(True_Label, data_split, shuffled, feature_type) %>%
+    dplyr::filter(
+        balance_type == "balanced"
+    ) %>%
+    dplyr::group_by(True_Label, data_split, shuffled, balance_type, feature_type) %>%
     dplyr::mutate(
         total_count = sum(Count),
         ratio = Count / total_count
@@ -93,11 +97,15 @@ pr_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
-    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split))
+    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
+    dplyr::filter(
+        balance_type == "balanced"
+    ) 
 
 # Order feature types for plotting
 pr_df$feature_type <-
@@ -159,12 +167,16 @@ f1_score_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
     dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
-    dplyr::filter(data_split == "test")
+    dplyr::filter(
+        data_split == "test",
+        balance_type == "balanced"
+    )
 
 # Order feature types for plotting
 f1_score_df$feature_type <-
@@ -348,5 +360,3 @@ sup_fig_3_gg <- (
 ggsave(output_sup_figure_subset, dpi = 500, height = 14, width = 14)
 
 sup_fig_3_gg
-
-
