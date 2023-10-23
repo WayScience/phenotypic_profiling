@@ -28,9 +28,15 @@ from split_utils import get_features_data
 from train_utils import get_dataset, get_X_y_data
 
 
+# In[2]:
+
+
+warnings.simplefilter("ignore", category=ConvergenceWarning)
+
+
 # ### Specify results directory, load training data
 
-# In[2]:
+# In[3]:
 
 
 # set numpy seed to make random operations reproduceable
@@ -55,64 +61,90 @@ training_data
 
 # ### Train model on each combination of model type and feature type
 
-# In[3]:
+# In[4]:
 
 
 # specify model types and feature types
 model_types = ["final", "shuffled_baseline"]
-feature_types = ["CP", "DP", "CP_and_DP"]
-
-# create stratified data sets for k-fold cross validation
-straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-
-# create logistic regression model with following parameters
-log_reg_model = LogisticRegression(
-    penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
-)
+feature_types = ["CP", "DP", "CP_and_DP", "CP_zernike_only", "CP_areashape_only"]
+balanced_types = ["balanced", "unbalanced"]
 
 # specify parameters to tune for
 parameters = {"C": np.logspace(-3, 3, 7), "l1_ratio": np.linspace(0, 1, 11)}
 print(f"Parameters being tested during grid search: {parameters}\n")
 
-# create grid search with cross validation with hypertuning params
-grid_search_cv = GridSearchCV(
-    log_reg_model,
-    parameters,
-    cv=straified_k_folds,
-    n_jobs=-1,
-    scoring="f1_weighted",
-)
-
-# train model on each combination of model type and feature type
-for model_type in model_types:
-    for feature_type in feature_types:
-        print(f"Training {model_type} model on {feature_type} features...")
-
-        X, y = get_X_y_data(training_data, feature_type)
-        print(f"X has shape {X.shape}, y has shape {y.shape}")
-
-        # shuffle columns of X (features) dataframe independently to create shuffled baseline
-        if model_type == "shuffled_baseline":
-            for column in X.T:
-                np.random.shuffle(column)
-
-        # fit grid search cv to X and y data
-        # capture convergence warning from sklearn
-        # this warning does not affect the model but takes up lots of space in the output
-        with parallel_backend("multiprocessing"):
-            with warnings.catch_warnings():
-                warnings.filterwarnings(
-                    "ignore", category=ConvergenceWarning, module="sklearn"
+# train model on each combination of model type, feature type, and balance type
+for balance in balanced_types:
+    # Set sklearn class_weight parameter for balanced or unbalanced models
+    if balance == "balanced":
+        balance_model = "balanced"
+    else:
+        balance_model = None
+        
+    for model_type in model_types:
+        for feature_type in feature_types:
+            
+            if feature_type == "CP_zernike_only":
+                zernike_only = True
+                dataset = "CP"
+            else:
+                zernike_only = False
+                dataset = feature_type
+                
+            if feature_type == "CP_areashape_only":
+                area_shape_only = True
+                dataset = "CP"
+            else:
+                area_shape_only = False
+    
+            print(f"Training {model_type} {balance} model on {feature_type} features with zernike only {zernike_only} or area features only {area_shape_only}...")
+            
+            X, y = get_X_y_data(
+                training_data,
+                dataset,
+                zernike_only,
+                area_shape_only
+            )
+    
+            print(f"X has shape {X.shape}, y has shape {y.shape}")
+    
+            # shuffle columns of X (features) dataframe independently to create shuffled baseline
+            if model_type == "shuffled_baseline":
+                for column in X.T:
+                    np.random.shuffle(column)
+    
+            # fit grid search cv to X and y data
+            with parallel_backend("multiprocessing"):
+                # create stratified data sets for k-fold cross validation
+                straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
+                
+                # create logistic regression model with following parameters
+                log_reg_model = LogisticRegression(
+                    penalty="elasticnet",
+                    solver="saga",
+                    class_weight=balance_model,
+                    max_iter=100,
+                    n_jobs=-1,
+                    random_state=0
+                )
+                
+                # create grid search with cross validation with hypertuning params
+                grid_search_cv = GridSearchCV(
+                    log_reg_model,
+                    parameters,
+                    cv=straified_k_folds,
+                    n_jobs=-1,
+                    scoring="f1_weighted",
                 )
                 grid_search_cv = grid_search_cv.fit(X, y)
-
-        # print info for best estimator
-        print(f"Best parameters: {grid_search_cv.best_params_}")
-        print(f"Score of best estimator: {grid_search_cv.best_score_}\n")
-
-        # save final estimator
-        dump(
-            grid_search_cv.best_estimator_,
-            f"{results_dir}/{model_type}__{feature_type}.joblib",
-        )
+    
+            # print info for best estimator
+            print(f"Best parameters: {grid_search_cv.best_params_}")
+            print(f"Score of best estimator: {grid_search_cv.best_score_}\n")
+    
+            # save final estimator
+            dump(
+                grid_search_cv.best_estimator_,
+                f"{results_dir}/{model_type}__{feature_type}__{balance}.joblib",
+            )
 

@@ -5,6 +5,7 @@ utilities for training logistic regression models on MitoCheck single-cell datas
 import pandas as pd
 import numpy as np
 from sklearn.utils import shuffle
+from typing import List 
 
 # set numpy seed to make random operations reproduceable
 np.random.seed(0)
@@ -28,7 +29,12 @@ def get_dataset(
     return data
 
 
-def get_X_y_data(labeled_data: pd.DataFrame, dataset: str = "CP_and_DP"):
+def get_X_y_data(
+    labeled_data: pd.DataFrame,
+    dataset: str = "CP_and_DP",
+    zernike_only: bool = False,
+    area_shape_only: bool = False
+):
     """generate X (features) and y (labels) dataframes from training data
     Args:
         labeled_data (pd.DataFrame):
@@ -36,6 +42,8 @@ def get_X_y_data(labeled_data: pd.DataFrame, dataset: str = "CP_and_DP"):
         dataset : str, optional
             which dataset columns to get feature data for
             can be "CP" or "DP" or by default "CP_and_DP"
+        zernike_only : bool, optional
+            Select only the zernike features for CellProfiler features
     Returns:
         pd.DataFrame, pd.DataFrame: X, y dataframes
     """
@@ -44,6 +52,10 @@ def get_X_y_data(labeled_data: pd.DataFrame, dataset: str = "CP_and_DP"):
     # get DP,CP, or both features from all columns depending on desired dataset
     if dataset == "CP":
         feature_cols = [col for col in all_cols if "CP__" in col]
+        if zernike_only:
+            feature_cols = [col for col in feature_cols if "Zernike" in col]
+        if area_shape_only:
+            feature_cols = [col for col in feature_cols if "AreaShape" in col]
     elif dataset == "DP":
         feature_cols = [col for col in all_cols if "DP__" in col]
     elif dataset == "CP_and_DP":
