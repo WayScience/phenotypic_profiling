@@ -51,15 +51,20 @@ compiled_class_PR_curves = []
 for model_path in sorted(models_dir.iterdir()):
     # load model
     model = load(model_path)
-    # determine model/feature type from model file name
-    model_type = model_path.name.split("__")[0]
-    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
+    # determine model/feature type/balance type from model file name
+    model_components = model_path.name.split("__")
+    # Older models only have 2 components, skip these
+    if len(model_components) == 2:
+        continue
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2].replace(".joblib", "")
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(
-            f"Evaluating model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+            f"Evaluating {balance_type} model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
         )
 
         # load dataset (train, test, etc)
@@ -68,7 +73,7 @@ for model_path in sorted(models_dir.iterdir()):
         # get class PR curve data and show curve
         fig, PR_data = class_PR_curves(data, model, feature_type)
         fig.suptitle(
-            f"PR curves for {model_type} model using {feature_type} features on {label} dataset"
+            f"PR curves for {model_type} {balance_type} model using {feature_type} features on {label} dataset"
         )
         plt.show()
 
@@ -78,7 +83,8 @@ for model_path in sorted(models_dir.iterdir()):
         PR_data["shuffled"] = "shuffled" in model_type
         # add feature type column to indicate which features model has been trained on/is using
         PR_data["feature_type"] = feature_type
-
+        # add balance type column
+        PR_data["balance_type"] = balance_type
         # add this score data to the tidy scores compiling list
         compiled_class_PR_curves.append(PR_data)
 
@@ -108,7 +114,8 @@ compiled_PR_data_save_path = pathlib.Path(
 compiled_class_PR_curves.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
-compiled_class_PR_curves
+print(compiled_class_PR_curves.shape)
+compiled_class_PR_curves.head()
 
 
 # ### Evaluate each model on each dataset (single class)
@@ -211,5 +218,7 @@ compiled_PR_data_save_path = pathlib.Path(f"{PR_curves_dir}/compiled_SCM_PR_curv
 compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
 
 # preview tidy data
-compiled_SCM_PR_data
+print(compiled_SCM_PR_data.shape)
+compiled_SCM_PR_data.head()
+
 

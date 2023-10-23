@@ -51,15 +51,20 @@ compiled_scores = []
 # sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
-    # determine model/feature type from model file name
-    model_type = model_path.name.split("__")[0]
-    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
+    # determine model/feature type/balance type from model file name
+    model_components = model_path.name.split("__")
+    # Older models only have 2 components, skip these
+    if len(model_components) == 2:
+        continue
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2].replace(".joblib", "")
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(
-            f"Evaluating model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+            f"Evaluating {balance_type} model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
         )
 
         # load dataset (train, test, etc)
@@ -82,7 +87,8 @@ for model_path in sorted(models_dir.iterdir()):
         score["shuffled"] = "shuffled" in model_type
         # add feature type column to indicate which features model has been trained on/is using
         score["feature_type"] = feature_type
-
+        # add balance type column
+        score["balance_type"] = balance_type
         # add this score data to the tidy scores compiling list
         compiled_scores.append(score)
 
@@ -107,7 +113,8 @@ compiled_scores_save_path = pathlib.Path(f"{f1_scores_dir}/compiled_F1_scores.ts
 compiled_scores.to_csv(compiled_scores_save_path, sep="\t")
 
 # preview tidy data
-compiled_scores
+print(compiled_scores.shape)
+compiled_scores.head()
 
 
 # ### Evaluate Each Model on Each Dataset (single class models)
@@ -213,5 +220,6 @@ compiled_scores_save_path = pathlib.Path(f"{f1_scores_dir}/compiled_SCM_F1_score
 compiled_scores.to_csv(compiled_scores_save_path, sep="\t")
 
 # preview tidy data
-compiled_scores
+print(compiled_scores.shape)
+compiled_scores.head()
 
