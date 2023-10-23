@@ -75,6 +75,7 @@ print(f"Parameters being tested during grid search: {parameters}\n")
 
 # train model on each combination of model type, feature type, and balance type
 for balance in balanced_types:
+    # Set sklearn class_weight parameter for balanced or unbalanced models
     if balance == "balanced":
         balance_model = "balanced"
     else:
