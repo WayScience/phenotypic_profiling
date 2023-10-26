@@ -30,10 +30,35 @@ focus_phenotype_labels <- c(
     "Other" = "Other"
 )
 
+phenotype_categories <- list(
+    "Interphase" = c("Interphase", "Elongated", "Large"),
+    "Mitosis" = c("Prometaphase", "MetaphaseAlignment", "Metaphase", "Anaphase"),
+    "Mitotic conseq." = c("Binuclear", "Polylobed", "Grape"),
+    "Dynamic changes" = c("Hole", "SmallIrregular", "Folded"),
+    "Other" = c("Apoptosis", "OutOfFocus", "ADCCM")
+)
+
 facet_labels <- c(
     "CP" = "CellProfiler",
     "DP" = "DeepProfiler",
     "CP_and_DP" = "CP and DP"
+)
+
+feature_space_labels <- c(
+    "CP" = "CellProfiler",
+    "DP" = "DeepProfiler",
+    "CP_and_DP" = "CP and DP"
+)
+
+feature_space_colors <- c(
+    "CP" = "#1b9e77",
+    "DP" = "#d95f02",
+    "CP_and_DP" = "#7570b3"
+)
+
+focus_corr_colors <- c(
+    "TRUE" = "blue",
+    "FALSE" = "orange"
 )
 
 data_split_colors <- c(
@@ -58,6 +83,7 @@ focus_corr_colors = c(
     "FALSE" = "orange"
 )
 focus_corr_labels  = c(
+
     "TRUE" = "Yes",
     "FALSE" = "No"
 )
