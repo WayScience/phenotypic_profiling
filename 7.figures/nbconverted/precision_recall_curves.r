@@ -2,12 +2,18 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 
 # Load figure themes and colors
+source("themes.r")
 source("figure_themes.R")
 
 # Set output files
 output_file <- file.path(
     "figures", "pr_curves_multiclass.png"
 )
+
+# Feature spaces to subset
+# Note: facet_labels defined in `themes.r`
+focus_feature_spaces <- paste(facet_labels)
+focus_feature_spaces
 
 # Load data
 results_dir <- file.path(
@@ -22,17 +28,29 @@ pr_df <- readr::read_tsv(
         "Phenotypic_Class" = "c",
         "data_split" = "c",
         "shuffled" = "c",
-        "feature_type" = "c"
+        "feature_type" = "c",
+        "balance_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
-    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split))
+    dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
+    dplyr::filter(
+        balance_type == "balanced"
+    )
+
+# Order feature types for plotting
+pr_df$feature_type <-
+    dplyr::recode_factor(pr_df$feature_type, !!!feature_spaces)
 
 print(dim(pr_df))
 head(pr_df)
 
 pr_curve_gg <- (
-    ggplot(pr_df, aes(x = Recall, y = Precision))
+    ggplot(
+        pr_df %>%
+            dplyr::filter(feature_type %in% !!focus_feature_spaces),
+        aes(x = Recall, y = Precision)
+    )
     + geom_line(aes(color = feature_type_with_data_split, linetype = shuffled))
     + facet_wrap("~Phenotypic_Class", nrow = 3)
     + theme_bw()
