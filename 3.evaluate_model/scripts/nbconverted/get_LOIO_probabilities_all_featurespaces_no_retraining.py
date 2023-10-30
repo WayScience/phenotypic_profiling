@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ### Load Libraries
-# 
-
 # In[1]:
 
 
@@ -51,9 +48,16 @@ print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 
 
 # ### Get LOIO probabilities (multi class models)
-# 
 
 # In[4]:
+
+
+# specify parameters to tune for
+parameters = {"C": np.logspace(-2, 2, 5), "l1_ratio": np.linspace(0, 1, 6)}
+parameters
+
+
+# In[5]:
 
 
 # directory to load the models from
@@ -99,6 +103,7 @@ for model_path in sorted(models_dir.iterdir()):
     
     # iterate through image paths
     for image_path in labeled_data["Metadata_DNA"].unique():
+        print(f"Training on everything but: {image_path}")
         # get training and testing cells from image path
         # every cell from the image path is for testing, the rest are for training
         train_cells = labeled_data.loc[labeled_data["Metadata_DNA"] != image_path]
@@ -151,6 +156,7 @@ for model_path in sorted(models_dir.iterdir()):
         metadata_dataframe["Model_l1_ratio"] = model.l1_ratio
 
         # predict probabilities for test cells and make these probabilities into a dataframe
+        print(f"Evaluating: {image_path}")
         probas = LOIO_model.predict_proba(X_test)
         probas_dataframe = pd.DataFrame(probas, columns=model.classes_)
 
@@ -189,7 +195,7 @@ LOIO_probas_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
 compiled_LOIO_save_path = pathlib.Path(
-    f"{LOIO_probas_dir}/compiled_LOIO_probabilites.tsv"
+    f"{LOIO_probas_dir}/compiled_LOIO_probabilites_withshuffled.tsv"
 )
 
 # save data as tsv
@@ -202,7 +208,7 @@ compiled_LOIO_tidy_long_data
 # ### Get LOIO probabilities (single class models)
 # 
 
-# In[6]:
+# In[7]:
 
 
 # directory to load the models from
@@ -305,7 +311,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
 # ### Format and save LOIO probabilities (single class models)
 # 
 
-# In[7]:
+# In[8]:
 
 
 # compile list of wide data into one dataframe
