@@ -85,13 +85,17 @@ shuffled_labels <- c(
     "False" = "False",
     "True" = "True"
 )
+shuffled_colors = c(
+    "FALSE" = "#482C3D",
+    "TRUE" = "#FF7E6B"
+)
 
 focus_corr_colors = c(
     "TRUE" = "blue",
     "FALSE" = "orange"
 )
-focus_corr_labels  = c(
 
+focus_corr_labels  = c(
     "TRUE" = "Yes",
     "FALSE" = "No"
 )
