@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ### Load Libraries
-# 
-
 # In[1]:
 
 
@@ -17,10 +14,6 @@ import pandas as pd
 from joblib import load
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import (
-    StratifiedKFold,
-    GridSearchCV,
-)
 from sklearn.utils import parallel_backend
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.metrics import f1_score
@@ -76,17 +69,23 @@ compiled_LOIO_wide_data = []
 # iterate through each model (final model, shuffled baseline model, etc)
 # sorted so final models are loaded before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
-    # only perform LOIO with hyper params from final models so skip shuffled_baseline models
-    if "shuffled" in model_path.name:
-        model_type = "shuffled"
+    # determine model/feature type/balance type from model file name
+    model_components = model_path.name.split("__")
+    # Older models only have 2 components, skip these
+    if len(model_components) == 2:
+        continue
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2].replace(".joblib", "")
+    if balance_type == "balanced":
+        balance_model = "balanced"
     else:
-        model_type = "final"
-
-    # load the model
+        balance_model = None
+    # Load the model
     model = load(model_path)
     
     print(
-        f"Performing LOIO for model type {model_type} and feature type {feature_type}"
+        f"Performing LOIO for model {model_type} with balance type {balance_type} and feature type {feature_type} with parameters C: {model.C}, l1_ratio: {model.l1_ratio}"
     )
 
     if feature_type == "CP_zernike_only":
@@ -111,31 +110,13 @@ for model_path in sorted(models_dir.iterdir()):
         test_cells = labeled_data.loc[labeled_data["Metadata_DNA"] == image_path]
 
         # get X, y from training and testing cells
-        X_train, y_train = get_X_y_data(train_cells, feature_type)
+        X_train, y_train = get_X_y_data(train_cells, dataset, zernike_only, area_shape_only)
+        X_test, y_test = get_X_y_data(test_cells, dataset, zernike_only, area_shape_only)
         
         # shuffle columns of X (features) dataframe independently to create shuffled baseline
-        if model_type == "shuffled":
+        if model_type == "shuffled_baseline":
             for column in X_train.T:
                 np.random.shuffle(column)
-                
-        X_test, y_test = get_X_y_data(test_cells, feature_type)
-
-        # Setup grid search logic
-        straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-        
-        # create logistic regression model with following parameters
-        log_reg_model = LogisticRegression(
-            penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
-        )
-
-        # create grid search with cross validation with hypertuning params
-        grid_search_cv = GridSearchCV(
-            log_reg_model,
-            parameters,
-            cv=straified_k_folds,
-            n_jobs=-1,
-            scoring="f1_weighted",
-        )
 
         # capture convergence warning from sklearn
         # this warning does not affect the model but takes up lots of space in the output
@@ -148,7 +129,16 @@ for model_path in sorted(models_dir.iterdir()):
                 )
 
                 # fit a logisitc regression model on the training X, y
-                LOIO_model = grid_search_cv.fit(X_train, y_train)
+                LOIO_model = LogisticRegression(
+                    penalty="elasticnet",
+                    solver="saga",
+                    class_weight=balance_model,
+                    max_iter=100,
+                    n_jobs=-1,
+                    random_state=0,
+                    C=model.C,
+                    l1_ratio=model.l1_ratio,
+                ).fit(X_train, y_train)
 
         # create metadata dataframe for test cells with model parameters
         metadata_dataframe = pd.concat(
@@ -161,9 +151,9 @@ for model_path in sorted(models_dir.iterdir()):
         ).reset_index(drop=True)
         metadata_dataframe["Model_Type"] = model_type
         metadata_dataframe["Model_Feature_Type"] = feature_type
-        metadata_dataframe["Model_C"] = grid_search_cv.best_params_["C"]
-        metadata_dataframe["Model_l1_ratio"] = grid_search_cv.best_params_["l1_ratio"]
-        metadata_dataframe["Model_type"] = model_type
+        metadata_dataframe["Model_Balance_Type"] = balance_type
+        metadata_dataframe["Model_C"] = model.C
+        metadata_dataframe["Model_l1_ratio"] = model.l1_ratio
 
         # predict probabilities for test cells and make these probabilities into a dataframe
         print(f"Evaluating: {image_path}")
@@ -180,7 +170,7 @@ for model_path in sorted(models_dir.iterdir()):
 # ### Format and save LOIO probabilities (multi class models)
 # 
 
-# In[6]:
+# In[5]:
 
 
 # compile list of wide data into one dataframe
