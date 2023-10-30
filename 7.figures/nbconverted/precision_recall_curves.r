@@ -11,11 +11,9 @@ output_file <- file.path(
 )
 
 # Feature spaces to subset
-focus_feature_spaces <- c(
-    "CellProfiler",
-    "DeepProfiler",
-    "CP and DP"
-)
+# Note: facet_labels defined in `themes.r`
+focus_feature_spaces <- paste(facet_labels)
+focus_feature_spaces
 
 # Load data
 results_dir <- file.path(

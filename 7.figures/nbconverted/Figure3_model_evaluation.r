@@ -43,16 +43,13 @@ cm_df$feature_type <-
 print(dim(cm_df))
 head(cm_df)
 
-focus_feature_spaces <- c(
-    "CellProfiler",
-    "DeepProfiler",
-    "CP and DP"
-)
+# Feature spaces to subset
+# Note: facet_labels and feature_spaces defined in `themes.r`
+focus_feature_spaces <- paste(facet_labels)
+focus_feature_spaces
 
-subset_feature_spaces <- c(
-    "CP Zernike",
-    "CP AreaShape"
-)
+subset_feature_spaces <- paste(feature_spaces[!(paste(feature_spaces) %in% focus_feature_spaces)])
+subset_feature_spaces
 
 custom_labeller <- function(value) {
   paste("Shuffled:", value)
