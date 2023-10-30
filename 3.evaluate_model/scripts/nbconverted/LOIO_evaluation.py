@@ -59,10 +59,10 @@ def compute_avg_rank_and_pvalue(grouped_df):
 
 # Set I/O
 proba_dir = pathlib.Path("evaluations", "LOIO_probas")
-loio_file = pathlib.Path(proba_dir, "compiled_LOIO_probabilites_withshuffled.tsv")
+loio_file = pathlib.Path(proba_dir, "compiled_LOIO_probabilites.tsv")
 
-output_summary_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_withshuffled.tsv")
-output_summary_phenotype_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_perphenotype_withshuffled.tsv")
+output_summary_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_allfeaturespaces.tsv")
+output_summary_phenotype_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_perphenotype_allfeaturespaces.tsv")
 
 
 # In[4]:
@@ -92,21 +92,40 @@ phenotype_classes
 
 
 # Calculate average rank for each Metadata_DNA
+rank_groups = [
+    "Metadata_DNA",
+    "Model_Type",
+    "Mitocheck_Phenotypic_Class",
+    "Model_Feature_Type",
+    "Model_Balance_Type"
+]
+
+# Output data columns
+output_data_columns = [
+    "Average_Rank",
+    "Average_P_Value",
+    "Min_IQR_Rank",
+    "Max_IQR_Rank", 
+    "Min_IQR_P_Value",
+    "Max_IQR_P_Value", 
+    "Count"
+]
+
 avg_ranks = (
-    loio_df.groupby(["Metadata_DNA", "Model_type", "Mitocheck_Phenotypic_Class", "Model_Feature_Type"])
+    loio_df.groupby(rank_groups)
     .apply(compute_avg_rank_and_pvalue)
     .reset_index()
 )
 
-avg_ranks.columns = ["Metadata_DNA", "Model_type", "Mitocheck_Phenotypic_Class", "Model_Feature_Type", "Average_Scores"]
+avg_ranks.columns = rank_groups + ["Average_Scores"]
 
 loio_scores_df = (
     pd.concat([
         avg_ranks.drop(columns="Average_Scores"),
-        pd.DataFrame(avg_ranks.Average_Scores.tolist(), columns=[
-            "Average_Rank", "Average_P_Value", "Min_IQR_Rank", "Max_IQR_Rank", 
-            "Min_IQR_P_Value", "Max_IQR_P_Value",  "Count"
-        ])
+        pd.DataFrame(
+            avg_ranks.Average_Scores.tolist(),
+            columns=output_data_columns
+        )
     ], axis="columns")
 )
 
@@ -116,7 +135,7 @@ print(loio_scores_df.shape)
 loio_scores_df.head()
 
 
-# ## Get average ranks and p value of correct prediction
+# ## Get average ranks and p value per phenotype
 # 
 # - Per model type (final vs. shuffled)
 # - Per Phenotype
@@ -127,22 +146,24 @@ loio_scores_df.head()
 # In[7]:
 
 
-# Calculate average rank for each Metadata_DNA
+# Calculate average rank for each phenotype
+rank_groups.remove("Metadata_DNA")  # Remove the per image to group on
+
 avg_ranks = (
-    loio_df.groupby(["Model_type", "Mitocheck_Phenotypic_Class", "Model_Feature_Type"])
+    loio_df.groupby(rank_groups)
     .apply(compute_avg_rank_and_pvalue)
     .reset_index()
 )
 
-avg_ranks.columns = ["Model_type", "Mitocheck_Phenotypic_Class", "Model_Feature_Type", "Average_Scores"]
+avg_ranks.columns = rank_groups + ["Average_Scores"]
 
 loio_scores_df = (
     pd.concat([
         avg_ranks.drop(columns="Average_Scores"),
-        pd.DataFrame(avg_ranks.Average_Scores.tolist(), columns=[
-            "Average_Rank", "Average_P_Value", "Min_IQR_Rank", "Max_IQR_Rank", 
-            "Min_IQR_P_Value", "Max_IQR_P_Value",  "Count"
-        ])
+        pd.DataFrame(
+            avg_ranks.Average_Scores.tolist(),
+            columns=output_data_columns
+        )
     ], axis="columns")
 )
 
