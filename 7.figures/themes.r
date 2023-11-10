@@ -131,6 +131,16 @@ subset_feature_type_with_data_split_labels <- c(
     "CP_zernike_onlytrain" = "Zernike only (Train)"
 )
 
+# Set feature group colors for CellProfiler features
+cp_feature_group_colors <- c(
+    "AreaShape" = "#1f78b4",
+    "Granularity" = "#e41a1c",
+    "Intensity" = "#4daf4a",
+    "Neighbors" = "#984ea3",
+    "RadialDistribution" = "#ff7f00",
+    "Texture" = "#ffff33"
+)
+
 phenotypic_ggplot_theme <- (
     theme_bw()
     + theme(
