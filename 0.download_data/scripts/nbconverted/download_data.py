@@ -45,15 +45,21 @@ for data_type in labeled_data_paths:
     labeled_data = pd.read_csv(labeled_data_load_path, compression="gzip", index_col=0)
     
     # save data
-    labeled_data_save_path = pathlib.Path(f"{labeled_data_save_dir}/training_data__{data_type}.csv.gz")
+    labeled_data_save_path = pathlib.Path(f"{labeled_data_save_dir}/labeled_data__{data_type}.csv.gz")
     labeled_data.to_csv(labeled_data_save_path, compression="gzip")
-    
-    
+
+
+# ## Preview data
+
+# In[4]:
+
+
+labeled_data
 
 
 # ### View counts of each class in the labeled dataset
 
-# In[4]:
+# In[5]:
 
 
 labeled_data["Mitocheck_Phenotypic_Class"].value_counts()
