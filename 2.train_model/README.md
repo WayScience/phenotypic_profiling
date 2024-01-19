@@ -25,8 +25,19 @@ We search over the following parameters: `[0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.
 - `C`: Inversely proportional to regularization strength.
 We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02, 1.e+03]`
 
-We train three final multiclass models with CP features, DP features, and merged (CP and DP) features.
-We also train shuffled baseline models for each of these feature types as well, with each column of the feature data being shuffled independently to create a shuffled baseline for comparison.
+We train models for each combination of the following model types, feature, balance, and dataset types:
+```python
+model_types = ["final", "shuffled_baseline"]
+feature_types = ["CP", "DP", "CP_and_DP", "CP_zernike_only", "CP_areashape_only"]
+balance_types = ["balanced", "unbalanced"]
+dataset_types = ["ic", "no_ic"]
+```
+Here, these types represent:
+- Which version of features the model is trained on. For `shuffled_baseline`, each column of the feature data is shuffled independently to create a shuffled baseline for comparison.
+- Which features to use for trainining.
+- Whether or not to balance `class_weight` of each model when training.
+- Which `mitocheck_data` dataset to use for feature training. We have datasets extracted with and without illumination correction.
+
 The notebooks save each model in [models/](models/).
 
 ## Step 1: Train Model
