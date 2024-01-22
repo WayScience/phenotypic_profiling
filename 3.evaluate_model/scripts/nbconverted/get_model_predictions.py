@@ -22,17 +22,15 @@ from train_utils import get_dataset, get_X_y_data
 from evaluate_utils import get_SCM_model_data
 
 
-# ### Load necessary data
+# ## Set Data Load Paths
 # 
 
 # In[2]:
 
 
 # load features data from indexes and features dataframe
-data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
-data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
-features_dataframe = get_features_data(features_dataframe_path)
+data_split_dir_path = pathlib.Path("../1.split_data/indexes/")
+features_dataframe_dir_path = pathlib.Path("../0.download_data/data/")
 
 
 # ### Get Each Model Predictions on Each Dataset (multi class models)
@@ -51,15 +49,28 @@ compiled_predictions = []
 # sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
-    # determine model/feature type from model file name
-    model_type = model_path.name.split("__")[0]
-    feature_type = model_path.name.split("__")[1].replace(".joblib", "")
+    # determine model/feature type/balance/dataset type from model file name
+    model_components = model_path.name.split("__")
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2]
+    dataset_type = model_components[3].replace(".joblib", "")
+    
+    # load features data from indexes and features dataframe
+    data_split_path = pathlib.Path(
+        f"{data_split_dir_path}/data_split_indexes__{dataset_type}.tsv"
+    )
+    data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+    features_dataframe_path = pathlib.Path(
+        f"{features_dataframe_dir_path}/labeled_data__{dataset_type}.csv.gz"
+    )
+    features_dataframe = get_features_data(features_dataframe_path)
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(
-            f"Getting predictions for model: {model_type}, trained with features: {feature_type}, on dataset: {label}"
+            f"Getting predictions for model with types {model_type}, {balance_type}, {feature_type}, {dataset_type} on {label} dataset"
         )
 
         # load dataset (train, test, etc)
@@ -83,6 +94,8 @@ for model_path in sorted(models_dir.iterdir()):
                 "data_split": label,
                 "shuffled": "shuffled" in model_type,
                 "feature_type": feature_type,
+                "balance_type": balance_type,
+                "dataset_type": dataset_type,
             }
         )
 
@@ -113,6 +126,19 @@ compiled_predictions
 # 
 
 # In[5]:
+
+
+# load features data from indexes and features dataframe
+# single class models only trained on ic data
+data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes__ic.tsv")
+data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+features_dataframe_path = pathlib.Path(
+    "../0.download_data/data/labeled_data__ic.csv.gz"
+)
+features_dataframe = get_features_data(features_dataframe_path)
+
+
+# In[6]:
 
 
 # directory to load the models from
@@ -174,7 +200,7 @@ for model_type, feature_type, phenotypic_class, evaluation_type in itertools.pro
 # ### Compile and Save Predictions (single class models)
 # 
 
-# In[6]:
+# In[7]:
 
 
 # compile predictions and reset index of dataframe
