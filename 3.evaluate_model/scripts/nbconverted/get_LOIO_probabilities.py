@@ -31,25 +31,26 @@ from train_utils import get_X_y_data
 from evaluate_utils import get_SCM_model_data
 
 
-# ### Load/Preview Labeled Data
+# ### Set Load Path
 # 
 
 # In[2]:
 
 
 # load labeled data
-labeled_data_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
-labeled_data = get_features_data(labeled_data_path)
+labeled_data_dir_path = pathlib.Path("../0.download_data/data/")
 
-# preview labeled data
-print(labeled_data.shape)
-labeled_data.head(5)
 
+# ### See number of cells for LOIO evaluation
 
 # In[3]:
 
 
-# see number of images to
+# load labeled data
+labeled_data_path = pathlib.Path(f"{labeled_data_dir_path}/labeled_data__ic.csv.gz")
+labeled_data = get_features_data(labeled_data_path)
+
+# see number of images to evaluate on
 num_images = labeled_data["Metadata_DNA"].unique().shape[0]
 print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 
@@ -74,34 +75,25 @@ models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
 compiled_LOIO_wide_data = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
-# sorted so final models are loaded before shuffled_baseline
+# sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
-    # only perform LOIO with hyper params from final models so skip shuffled_baseline models
-    if "shuffled" in model_path.name:
-        model_type = "shuffled"
-    else:
-        model_type = "final"
-
-    # load the model
     model = load(model_path)
-    
-    print(
-        f"Performing LOIO for model type {model_type} and feature type {feature_type}"
-    )
+    # determine model/feature type/balance/dataset type from model file name
+    model_components = model_path.name.split("__")
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2]
+    # version of dataset used to train model (ic, no_ic)
+    dataset_type = model_components[3].replace(".joblib", "")
 
-    if feature_type == "CP_zernike_only":
-        zernike_only = True
-        dataset = "CP"
-    else:
-        zernike_only = False
-        dataset = feature_type
-        
-    if feature_type == "CP_areashape_only":
-        area_shape_only = True
-        dataset = "CP"
-    else:
-        area_shape_only = False
+    print(
+        f"Performing LOIO for model with types {model_type}, {balance_type}, {feature_type}, {dataset_type}"
+    )
     
+    # load labeled data
+    labeled_data_path = pathlib.Path(f"{labeled_data_dir_path}/labeled_data__{dataset_type}.csv.gz")
+    labeled_data = get_features_data(labeled_data_path)
+
     # iterate through image paths
     for image_path in labeled_data["Metadata_DNA"].unique():
         print(f"Training on everything but: {image_path}")
@@ -114,7 +106,7 @@ for model_path in sorted(models_dir.iterdir()):
         X_train, y_train = get_X_y_data(train_cells, feature_type)
         
         # shuffle columns of X (features) dataframe independently to create shuffled baseline
-        if model_type == "shuffled":
+        if model_type == "shuffled_baseline":
             for column in X_train.T:
                 np.random.shuffle(column)
                 
@@ -159,7 +151,6 @@ for model_path in sorted(models_dir.iterdir()):
             ],
             axis=1,
         ).reset_index(drop=True)
-        metadata_dataframe["Model_Type"] = model_type
         metadata_dataframe["Model_Feature_Type"] = feature_type
         metadata_dataframe["Model_C"] = grid_search_cv.best_params_["C"]
         metadata_dataframe["Model_l1_ratio"] = grid_search_cv.best_params_["l1_ratio"]
@@ -175,6 +166,9 @@ for model_path in sorted(models_dir.iterdir()):
 
         # add tidy long data to compiled data
         compiled_LOIO_wide_data.append(test_cells_wide_data)
+        
+        break
+    break
 
 
 # ### Format and save LOIO probabilities (multi class models)
@@ -218,7 +212,7 @@ compiled_LOIO_tidy_long_data
 # ### Get LOIO probabilities (single class models)
 # 
 
-# In[7]:
+# In[ ]:
 
 
 # directory to load the models from
@@ -321,7 +315,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
 # ### Format and save LOIO probabilities (single class models)
 # 
 
-# In[8]:
+# In[ ]:
 
 
 # compile list of wide data into one dataframe

@@ -1,641 +1,1281 @@
-	Phenotypic_Class	F1_Score	data_split	shuffled	feature_type	balance_type
-0	ADCCM	0.885057471264368	train	False	CP	balanced
-1	Anaphase	0.8220858895705522	train	False	CP	balanced
-2	Apoptosis	0.8539325842696629	train	False	CP	balanced
-3	Binuclear	0.8313253012048192	train	False	CP	balanced
-4	Elongated	0.9484536082474226	train	False	CP	balanced
-5	Grape	0.7999999999999999	train	False	CP	balanced
-6	Hole	0.7982062780269059	train	False	CP	balanced
-7	Interphase	0.820754716981132	train	False	CP	balanced
-8	Large	0.8344370860927153	train	False	CP	balanced
-9	Metaphase	0.9185185185185185	train	False	CP	balanced
-10	MetaphaseAlignment	0.7655172413793103	train	False	CP	balanced
-11	OutOfFocus	0.9825242718446603	train	False	CP	balanced
-12	Polylobed	0.8486956521739131	train	False	CP	balanced
-13	Prometaphase	0.8430335097001763	train	False	CP	balanced
-14	SmallIrregular	0.7774294670846396	train	False	CP	balanced
-15	Weighted	0.8507560782311118	train	False	CP	balanced
-16	ADCCM	0.7878787878787878	test	False	CP	balanced
-17	Anaphase	0.8000000000000002	test	False	CP	balanced
-18	Apoptosis	0.7560975609756099	test	False	CP	balanced
-19	Binuclear	0.6666666666666666	test	False	CP	balanced
-20	Elongated	0.9411764705882353	test	False	CP	balanced
-21	Grape	0.5161290322580645	test	False	CP	balanced
-22	Hole	0.6666666666666667	test	False	CP	balanced
-23	Interphase	0.7857142857142857	test	False	CP	balanced
-24	Large	0.6874999999999999	test	False	CP	balanced
-25	Metaphase	0.8181818181818182	test	False	CP	balanced
-26	MetaphaseAlignment	0.7037037037037038	test	False	CP	balanced
-27	OutOfFocus	0.9438202247191011	test	False	CP	balanced
-28	Polylobed	0.6382978723404256	test	False	CP	balanced
-29	Prometaphase	0.7755102040816326	test	False	CP	balanced
-30	SmallIrregular	0.8399999999999999	test	False	CP	balanced
-31	Weighted	0.7629336886951087	test	False	CP	balanced
-32	ADCCM	0.8999999999999999	train	False	CP	unbalanced
-33	Anaphase	0.8551724137931033	train	False	CP	unbalanced
-34	Apoptosis	0.8860759493670886	train	False	CP	unbalanced
-35	Binuclear	0.8370607028753994	train	False	CP	unbalanced
-36	Elongated	0.9528795811518325	train	False	CP	unbalanced
-37	Grape	0.7522935779816514	train	False	CP	unbalanced
-38	Hole	0.8663101604278075	train	False	CP	unbalanced
-39	Interphase	0.8688293370944993	train	False	CP	unbalanced
-40	Large	0.8661417322834646	train	False	CP	unbalanced
-41	Metaphase	0.944	train	False	CP	unbalanced
-42	MetaphaseAlignment	0.794425087108014	train	False	CP	unbalanced
-43	OutOfFocus	0.9864077669902912	train	False	CP	unbalanced
-44	Polylobed	0.8620689655172414	train	False	CP	unbalanced
-45	Prometaphase	0.8896210873146624	train	False	CP	unbalanced
-46	SmallIrregular	0.808664259927798	train	False	CP	unbalanced
-47	Weighted	0.8771926530043208	train	False	CP	unbalanced
-48	ADCCM	0.896551724137931	test	False	CP	unbalanced
-49	Anaphase	0.8461538461538461	test	False	CP	unbalanced
-50	Apoptosis	0.8095238095238095	test	False	CP	unbalanced
-51	Binuclear	0.7272727272727273	test	False	CP	unbalanced
-52	Elongated	0.9090909090909091	test	False	CP	unbalanced
-53	Grape	0.6363636363636364	test	False	CP	unbalanced
-54	Hole	0.7741935483870968	test	False	CP	unbalanced
-55	Interphase	0.8412698412698413	test	False	CP	unbalanced
-56	Large	0.7407407407407408	test	False	CP	unbalanced
-57	Metaphase	0.7826086956521738	test	False	CP	unbalanced
-58	MetaphaseAlignment	0.7169811320754716	test	False	CP	unbalanced
-59	OutOfFocus	0.9438202247191011	test	False	CP	unbalanced
-60	Polylobed	0.7407407407407407	test	False	CP	unbalanced
-61	Prometaphase	0.7636363636363636	test	False	CP	unbalanced
-62	SmallIrregular	0.7727272727272727	test	False	CP	unbalanced
-63	Weighted	0.80031492869813	test	False	CP	unbalanced
-64	ADCCM	0.9938650306748467	train	False	CP_and_DP	balanced
-65	Anaphase	0.9726027397260273	train	False	CP_and_DP	balanced
-66	Apoptosis	0.9718004338394794	train	False	CP_and_DP	balanced
-67	Binuclear	0.9509202453987731	train	False	CP_and_DP	balanced
-68	Elongated	0.9894736842105264	train	False	CP_and_DP	balanced
-69	Grape	0.9264705882352942	train	False	CP_and_DP	balanced
-70	Hole	0.9696969696969696	train	False	CP_and_DP	balanced
-71	Interphase	0.9194029850746269	train	False	CP_and_DP	balanced
-72	Large	0.9852941176470589	train	False	CP_and_DP	balanced
-73	Metaphase	1.0	train	False	CP_and_DP	balanced
-74	MetaphaseAlignment	0.9539473684210527	train	False	CP_and_DP	balanced
-75	OutOfFocus	0.9922779922779923	train	False	CP_and_DP	balanced
-76	Polylobed	0.9570957095709571	train	False	CP_and_DP	balanced
-77	Prometaphase	0.9457627118644067	train	False	CP_and_DP	balanced
-78	SmallIrregular	0.9319727891156463	train	False	CP_and_DP	balanced
-79	Weighted	0.9578338427135425	train	False	CP_and_DP	balanced
-80	ADCCM	0.7741935483870968	test	False	CP_and_DP	balanced
-81	Anaphase	0.9285714285714286	test	False	CP_and_DP	balanced
-82	Apoptosis	0.9047619047619047	test	False	CP_and_DP	balanced
-83	Binuclear	0.75	test	False	CP_and_DP	balanced
-84	Elongated	0.9411764705882353	test	False	CP_and_DP	balanced
-85	Grape	0.64	test	False	CP_and_DP	balanced
-86	Hole	0.7999999999999999	test	False	CP_and_DP	balanced
-87	Interphase	0.7857142857142857	test	False	CP_and_DP	balanced
-88	Large	0.6923076923076924	test	False	CP_and_DP	balanced
-89	Metaphase	0.9	test	False	CP_and_DP	balanced
-90	MetaphaseAlignment	0.8	test	False	CP_and_DP	balanced
-91	OutOfFocus	0.9782608695652174	test	False	CP_and_DP	balanced
-92	Polylobed	0.7692307692307693	test	False	CP_and_DP	balanced
-93	Prometaphase	0.8653846153846154	test	False	CP_and_DP	balanced
-94	SmallIrregular	0.888888888888889	test	False	CP_and_DP	balanced
-95	Weighted	0.8366088528165224	test	False	CP_and_DP	balanced
-96	ADCCM	0.9937888198757764	train	False	CP_and_DP	unbalanced
-97	Anaphase	0.9857142857142858	train	False	CP_and_DP	unbalanced
-98	Apoptosis	0.9870689655172413	train	False	CP_and_DP	unbalanced
-99	Binuclear	0.9712460063897764	train	False	CP_and_DP	unbalanced
-100	Elongated	1.0	train	False	CP_and_DP	unbalanced
-101	Grape	0.975609756097561	train	False	CP_and_DP	unbalanced
-102	Hole	0.9791666666666666	train	False	CP_and_DP	unbalanced
-103	Interphase	0.9662921348314607	train	False	CP_and_DP	unbalanced
-104	Large	1.0	train	False	CP_and_DP	unbalanced
-105	Metaphase	0.976	train	False	CP_and_DP	unbalanced
-106	MetaphaseAlignment	0.9664429530201343	train	False	CP_and_DP	unbalanced
-107	OutOfFocus	0.9941972920696325	train	False	CP_and_DP	unbalanced
-108	Polylobed	0.9823434991974318	train	False	CP_and_DP	unbalanced
-109	Prometaphase	0.9682804674457429	train	False	CP_and_DP	unbalanced
-110	SmallIrregular	0.9454545454545454	train	False	CP_and_DP	unbalanced
-111	Weighted	0.9773899222908923	train	False	CP_and_DP	unbalanced
-112	ADCCM	0.8275862068965518	test	False	CP_and_DP	unbalanced
-113	Anaphase	0.9285714285714286	test	False	CP_and_DP	unbalanced
-114	Apoptosis	0.9156626506024096	test	False	CP_and_DP	unbalanced
-115	Binuclear	0.7169811320754718	test	False	CP_and_DP	unbalanced
-116	Elongated	0.9375	test	False	CP_and_DP	unbalanced
-117	Grape	0.6666666666666667	test	False	CP_and_DP	unbalanced
-118	Hole	0.7741935483870968	test	False	CP_and_DP	unbalanced
-119	Interphase	0.8455284552845528	test	False	CP_and_DP	unbalanced
-120	Large	0.64	test	False	CP_and_DP	unbalanced
-121	Metaphase	0.9	test	False	CP_and_DP	unbalanced
-122	MetaphaseAlignment	0.8076923076923077	test	False	CP_and_DP	unbalanced
-123	OutOfFocus	0.989010989010989	test	False	CP_and_DP	unbalanced
-124	Polylobed	0.7636363636363637	test	False	CP_and_DP	unbalanced
-125	Prometaphase	0.8679245283018868	test	False	CP_and_DP	unbalanced
-126	SmallIrregular	0.9056603773584904	test	False	CP_and_DP	unbalanced
-127	Weighted	0.8462471687902301	test	False	CP_and_DP	unbalanced
-128	ADCCM	0.4039408866995074	train	False	CP_areashape_only	balanced
-129	Anaphase	0.5610859728506787	train	False	CP_areashape_only	balanced
-130	Apoptosis	0.32835820895522394	train	False	CP_areashape_only	balanced
-131	Binuclear	0.4090909090909091	train	False	CP_areashape_only	balanced
-132	Elongated	0.8316831683168316	train	False	CP_areashape_only	balanced
-133	Grape	0.3883495145631068	train	False	CP_areashape_only	balanced
-134	Hole	0.3359375	train	False	CP_areashape_only	balanced
-135	Interphase	0.5359477124183006	train	False	CP_areashape_only	balanced
-136	Large	0.5235602094240838	train	False	CP_areashape_only	balanced
-137	Metaphase	0.6666666666666667	train	False	CP_areashape_only	balanced
-138	MetaphaseAlignment	0.35947712418300654	train	False	CP_areashape_only	balanced
-139	OutOfFocus	0.7782426778242678	train	False	CP_areashape_only	balanced
-140	Polylobed	0.3566878980891719	train	False	CP_areashape_only	balanced
-141	Prometaphase	0.5608465608465609	train	False	CP_areashape_only	balanced
-142	SmallIrregular	0.3851351351351351	train	False	CP_areashape_only	balanced
-143	Weighted	0.49329473560544146	train	False	CP_areashape_only	balanced
-144	ADCCM	0.33333333333333326	test	False	CP_areashape_only	balanced
-145	Anaphase	0.5853658536585366	test	False	CP_areashape_only	balanced
-146	Apoptosis	0.34920634920634924	test	False	CP_areashape_only	balanced
-147	Binuclear	0.3055555555555556	test	False	CP_areashape_only	balanced
-148	Elongated	0.8108108108108109	test	False	CP_areashape_only	balanced
-149	Grape	0.25	test	False	CP_areashape_only	balanced
-150	Hole	0.23255813953488372	test	False	CP_areashape_only	balanced
-151	Interphase	0.4615384615384615	test	False	CP_areashape_only	balanced
-152	Large	0.41025641025641024	test	False	CP_areashape_only	balanced
-153	Metaphase	0.5714285714285714	test	False	CP_areashape_only	balanced
-154	MetaphaseAlignment	0.33333333333333337	test	False	CP_areashape_only	balanced
-155	OutOfFocus	0.6	test	False	CP_areashape_only	balanced
-156	Polylobed	0.2682926829268293	test	False	CP_areashape_only	balanced
-157	Prometaphase	0.5490196078431373	test	False	CP_areashape_only	balanced
-158	SmallIrregular	0.1886792452830189	test	False	CP_areashape_only	balanced
-159	Weighted	0.41721018426880163	test	False	CP_areashape_only	balanced
-160	ADCCM	0.26785714285714285	train	False	CP_areashape_only	unbalanced
-161	Anaphase	0.6708860759493671	train	False	CP_areashape_only	unbalanced
-162	Apoptosis	0.4372294372294372	train	False	CP_areashape_only	unbalanced
-163	Binuclear	0.3605150214592275	train	False	CP_areashape_only	unbalanced
-164	Elongated	0.8762886597938143	train	False	CP_areashape_only	unbalanced
-165	Grape	0.26666666666666666	train	False	CP_areashape_only	unbalanced
-166	Hole	0.2170542635658915	train	False	CP_areashape_only	unbalanced
-167	Interphase	0.5885167464114832	train	False	CP_areashape_only	unbalanced
-168	Large	0.5862068965517242	train	False	CP_areashape_only	unbalanced
-169	Metaphase	0.6861313868613138	train	False	CP_areashape_only	unbalanced
-170	MetaphaseAlignment	0.3414634146341463	train	False	CP_areashape_only	unbalanced
-171	OutOfFocus	0.7954545454545455	train	False	CP_areashape_only	unbalanced
-172	Polylobed	0.5251076040172167	train	False	CP_areashape_only	unbalanced
-173	Prometaphase	0.5794947994056464	train	False	CP_areashape_only	unbalanced
-174	SmallIrregular	0.3715415019762846	train	False	CP_areashape_only	unbalanced
-175	Weighted	0.5268133500028908	train	False	CP_areashape_only	unbalanced
-176	ADCCM	0.36363636363636365	test	False	CP_areashape_only	unbalanced
-177	Anaphase	0.6428571428571429	test	False	CP_areashape_only	unbalanced
-178	Apoptosis	0.4285714285714286	test	False	CP_areashape_only	unbalanced
-179	Binuclear	0.28	test	False	CP_areashape_only	unbalanced
-180	Elongated	0.8571428571428572	test	False	CP_areashape_only	unbalanced
-181	Grape	0.12500000000000003	test	False	CP_areashape_only	unbalanced
-182	Hole	0.16666666666666666	test	False	CP_areashape_only	unbalanced
-183	Interphase	0.5512820512820512	test	False	CP_areashape_only	unbalanced
-184	Large	0.48000000000000004	test	False	CP_areashape_only	unbalanced
-185	Metaphase	0.6	test	False	CP_areashape_only	unbalanced
-186	MetaphaseAlignment	0.3414634146341463	test	False	CP_areashape_only	unbalanced
-187	OutOfFocus	0.6966292134831461	test	False	CP_areashape_only	unbalanced
-188	Polylobed	0.41441441441441446	test	False	CP_areashape_only	unbalanced
-189	Prometaphase	0.5245901639344263	test	False	CP_areashape_only	unbalanced
-190	SmallIrregular	0.21621621621621623	test	False	CP_areashape_only	unbalanced
-191	Weighted	0.4657505770264412	test	False	CP_areashape_only	unbalanced
-192	ADCCM	0.2786069651741293	train	False	CP_zernike_only	balanced
-193	Anaphase	0.43037974683544306	train	False	CP_zernike_only	balanced
-194	Apoptosis	0.25	train	False	CP_zernike_only	balanced
-195	Binuclear	0.2625	train	False	CP_zernike_only	balanced
-196	Elongated	0.787878787878788	train	False	CP_zernike_only	balanced
-197	Grape	0.2933333333333333	train	False	CP_zernike_only	balanced
-198	Hole	0.2696629213483146	train	False	CP_zernike_only	balanced
-199	Interphase	0.29296875	train	False	CP_zernike_only	balanced
-200	Large	0.17500000000000002	train	False	CP_zernike_only	balanced
-201	Metaphase	0.4752475247524752	train	False	CP_zernike_only	balanced
-202	MetaphaseAlignment	0.33557046979865773	train	False	CP_zernike_only	balanced
-203	OutOfFocus	0.5850091407678245	train	False	CP_zernike_only	balanced
-204	Polylobed	0.31460674157303375	train	False	CP_zernike_only	balanced
-205	Prometaphase	0.5261324041811847	train	False	CP_zernike_only	balanced
-206	SmallIrregular	0.24444444444444444	train	False	CP_zernike_only	balanced
-207	Weighted	0.371814024398425	train	False	CP_zernike_only	balanced
-208	ADCCM	0.2380952380952381	test	False	CP_zernike_only	balanced
-209	Anaphase	0.3333333333333333	test	False	CP_zernike_only	balanced
-210	Apoptosis	0.15686274509803924	test	False	CP_zernike_only	balanced
-211	Binuclear	0.19047619047619047	test	False	CP_zernike_only	balanced
-212	Elongated	0.7647058823529411	test	False	CP_zernike_only	balanced
-213	Grape	0.2857142857142857	test	False	CP_zernike_only	balanced
-214	Hole	0.26666666666666666	test	False	CP_zernike_only	balanced
-215	Interphase	0.20689655172413796	test	False	CP_zernike_only	balanced
-216	Large	0.13333333333333333	test	False	CP_zernike_only	balanced
-217	Metaphase	0.3636363636363636	test	False	CP_zernike_only	balanced
-218	MetaphaseAlignment	0.3137254901960784	test	False	CP_zernike_only	balanced
-219	OutOfFocus	0.5111111111111111	test	False	CP_zernike_only	balanced
-220	Polylobed	0.16666666666666669	test	False	CP_zernike_only	balanced
-221	Prometaphase	0.5087719298245613	test	False	CP_zernike_only	balanced
-222	SmallIrregular	0.24489795918367346	test	False	CP_zernike_only	balanced
-223	Weighted	0.3055594645460992	test	False	CP_zernike_only	balanced
-224	ADCCM	0.25225225225225223	train	False	CP_zernike_only	unbalanced
-225	Anaphase	0.5223880597014925	train	False	CP_zernike_only	unbalanced
-226	Apoptosis	0.31840796019900497	train	False	CP_zernike_only	unbalanced
-227	Binuclear	0.21645021645021645	train	False	CP_zernike_only	unbalanced
-228	Elongated	0.8059701492537313	train	False	CP_zernike_only	unbalanced
-229	Grape	0.1518987341772152	train	False	CP_zernike_only	unbalanced
-230	Hole	0.22047244094488186	train	False	CP_zernike_only	unbalanced
-231	Interphase	0.45614035087719296	train	False	CP_zernike_only	unbalanced
-232	Large	0.11111111111111112	train	False	CP_zernike_only	unbalanced
-233	Metaphase	0.5333333333333333	train	False	CP_zernike_only	unbalanced
-234	MetaphaseAlignment	0.27091633466135456	train	False	CP_zernike_only	unbalanced
-235	OutOfFocus	0.5801801801801801	train	False	CP_zernike_only	unbalanced
-236	Polylobed	0.4965893587994543	train	False	CP_zernike_only	unbalanced
-237	Prometaphase	0.5685714285714286	train	False	CP_zernike_only	unbalanced
-238	SmallIrregular	0.27149321266968324	train	False	CP_zernike_only	unbalanced
-239	Weighted	0.4214966864288179	train	False	CP_zernike_only	unbalanced
-240	ADCCM	0.23529411764705882	test	False	CP_zernike_only	unbalanced
-241	Anaphase	0.41666666666666663	test	False	CP_zernike_only	unbalanced
-242	Apoptosis	0.35135135135135137	test	False	CP_zernike_only	unbalanced
-243	Binuclear	0.09302325581395349	test	False	CP_zernike_only	unbalanced
-244	Elongated	0.7647058823529411	test	False	CP_zernike_only	unbalanced
-245	Grape	0.0	test	False	CP_zernike_only	unbalanced
-246	Hole	0.16666666666666666	test	False	CP_zernike_only	unbalanced
-247	Interphase	0.389937106918239	test	False	CP_zernike_only	unbalanced
-248	Large	0.0	test	False	CP_zernike_only	unbalanced
-249	Metaphase	0.3703703703703703	test	False	CP_zernike_only	unbalanced
-250	MetaphaseAlignment	0.3902439024390244	test	False	CP_zernike_only	unbalanced
-251	OutOfFocus	0.5617977528089888	test	False	CP_zernike_only	unbalanced
-252	Polylobed	0.42105263157894735	test	False	CP_zernike_only	unbalanced
-253	Prometaphase	0.5076923076923076	test	False	CP_zernike_only	unbalanced
-254	SmallIrregular	0.25	test	False	CP_zernike_only	unbalanced
-255	Weighted	0.374945379005338	test	False	CP_zernike_only	unbalanced
-256	ADCCM	1.0	train	False	DP	balanced
-257	Anaphase	0.993006993006993	train	False	DP	balanced
-258	Apoptosis	0.978448275862069	train	False	DP	balanced
-259	Binuclear	0.951219512195122	train	False	DP	balanced
-260	Elongated	1.0	train	False	DP	balanced
-261	Grape	0.9843749999999999	train	False	DP	balanced
-262	Hole	0.989795918367347	train	False	DP	balanced
-263	Interphase	0.9239940387481371	train	False	DP	balanced
-264	Large	0.9925925925925926	train	False	DP	balanced
-265	Metaphase	1.0	train	False	DP	balanced
-266	MetaphaseAlignment	0.9704918032786884	train	False	DP	balanced
-267	OutOfFocus	0.9980657640232108	train	False	DP	balanced
-268	Polylobed	0.9759229534510432	train	False	DP	balanced
-269	Prometaphase	0.9659863945578231	train	False	DP	balanced
-270	SmallIrregular	0.9517241379310345	train	False	DP	balanced
-271	Weighted	0.970479038275268	train	False	DP	balanced
-272	ADCCM	0.896551724137931	test	False	DP	balanced
-273	Anaphase	0.962962962962963	test	False	DP	balanced
-274	Apoptosis	0.8461538461538461	test	False	DP	balanced
-275	Binuclear	0.5714285714285714	test	False	DP	balanced
-276	Elongated	0.8125	test	False	DP	balanced
-277	Grape	0.5925925925925926	test	False	DP	balanced
-278	Hole	0.4666666666666667	test	False	DP	balanced
-279	Interphase	0.7027027027027026	test	False	DP	balanced
-280	Large	0.7692307692307692	test	False	DP	balanced
-281	Metaphase	0.8571428571428572	test	False	DP	balanced
-282	MetaphaseAlignment	0.6792452830188679	test	False	DP	balanced
-283	OutOfFocus	0.989247311827957	test	False	DP	balanced
-284	Polylobed	0.7339449541284404	test	False	DP	balanced
-285	Prometaphase	0.75	test	False	DP	balanced
-286	SmallIrregular	0.6785714285714285	test	False	DP	balanced
-287	Weighted	0.7573047093584803	test	False	DP	balanced
-288	ADCCM	1.0	train	False	DP	unbalanced
-289	Anaphase	0.993006993006993	train	False	DP	unbalanced
-290	Apoptosis	0.9826086956521738	train	False	DP	unbalanced
-291	Binuclear	0.9871794871794872	train	False	DP	unbalanced
-292	Elongated	1.0	train	False	DP	unbalanced
-293	Grape	0.9919999999999999	train	False	DP	unbalanced
-294	Hole	0.9738219895287958	train	False	DP	unbalanced
-295	Interphase	0.9646393210749648	train	False	DP	unbalanced
-296	Large	1.0	train	False	DP	unbalanced
-297	Metaphase	0.9919999999999999	train	False	DP	unbalanced
-298	MetaphaseAlignment	0.9731543624161074	train	False	DP	unbalanced
-299	OutOfFocus	0.9980657640232108	train	False	DP	unbalanced
-300	Polylobed	0.9888000000000001	train	False	DP	unbalanced
-301	Prometaphase	0.9665551839464883	train	False	DP	unbalanced
-302	SmallIrregular	0.960573476702509	train	False	DP	unbalanced
-303	Weighted	0.9810956553366837	train	False	DP	unbalanced
-304	ADCCM	0.9333333333333333	test	False	DP	unbalanced
-305	Anaphase	0.9230769230769231	test	False	DP	unbalanced
-306	Apoptosis	0.8354430379746836	test	False	DP	unbalanced
-307	Binuclear	0.56	test	False	DP	unbalanced
-308	Elongated	0.7142857142857143	test	False	DP	unbalanced
-309	Grape	0.6956521739130435	test	False	DP	unbalanced
-310	Hole	0.4827586206896552	test	False	DP	unbalanced
-311	Interphase	0.6666666666666666	test	False	DP	unbalanced
-312	Large	0.6956521739130435	test	False	DP	unbalanced
-313	Metaphase	0.8421052631578948	test	False	DP	unbalanced
-314	MetaphaseAlignment	0.6666666666666666	test	False	DP	unbalanced
-315	OutOfFocus	0.989247311827957	test	False	DP	unbalanced
-316	Polylobed	0.7586206896551724	test	False	DP	unbalanced
-317	Prometaphase	0.7610619469026548	test	False	DP	unbalanced
-318	SmallIrregular	0.6666666666666666	test	False	DP	unbalanced
-319	Weighted	0.7504725409598133	test	False	DP	unbalanced
-320	ADCCM	0.018779342723004695	train	True	CP	balanced
-321	Anaphase	0.013071895424836602	train	True	CP	balanced
-322	Apoptosis	0.13256484149855907	train	True	CP	balanced
-323	Binuclear	0.013245033112582781	train	True	CP	balanced
-324	Elongated	0.007246376811594203	train	True	CP	balanced
-325	Grape	0.015037593984962405	train	True	CP	balanced
-326	Hole	0.09491525423728812	train	True	CP	balanced
-327	Interphase	0.010178117048346055	train	True	CP	balanced
-328	Large	0.01038961038961039	train	True	CP	balanced
-329	Metaphase	0.0	train	True	CP	balanced
-330	MetaphaseAlignment	0.024096385542168672	train	True	CP	balanced
-331	OutOfFocus	0.048780487804878044	train	True	CP	balanced
-332	Polylobed	0.31919191919191914	train	True	CP	balanced
-333	Prometaphase	0.01183431952662722	train	True	CP	balanced
-334	SmallIrregular	0.06696428571428571	train	True	CP	balanced
-335	Weighted	0.07359152809892526	train	True	CP	balanced
-336	ADCCM	0.0	test	True	CP	balanced
-337	Anaphase	0.0	test	True	CP	balanced
-338	Apoptosis	0.13793103448275862	test	True	CP	balanced
-339	Binuclear	0.0	test	True	CP	balanced
-340	Elongated	0.0	test	True	CP	balanced
-341	Grape	0.0	test	True	CP	balanced
-342	Hole	0.0	test	True	CP	balanced
-343	Interphase	0.0	test	True	CP	balanced
-344	Large	0.0	test	True	CP	balanced
-345	Metaphase	0.0	test	True	CP	balanced
-346	MetaphaseAlignment	0.06779661016949153	test	True	CP	balanced
-347	OutOfFocus	0.0	test	True	CP	balanced
-348	Polylobed	0.3529411764705882	test	True	CP	balanced
-349	Prometaphase	0.0	test	True	CP	balanced
-350	SmallIrregular	0.07058823529411766	test	True	CP	balanced
-351	Weighted	0.06649849968938412	test	True	CP	balanced
-352	ADCCM	0.0	train	True	CP	unbalanced
-353	Anaphase	0.0	train	True	CP	unbalanced
-354	Apoptosis	0.041044776119402986	train	True	CP	unbalanced
-355	Binuclear	0.0	train	True	CP	unbalanced
-356	Elongated	0.0	train	True	CP	unbalanced
-357	Grape	0.0	train	True	CP	unbalanced
-358	Hole	0.0	train	True	CP	unbalanced
-359	Interphase	0.22443890274314215	train	True	CP	unbalanced
-360	Large	0.0	train	True	CP	unbalanced
-361	Metaphase	0.0	train	True	CP	unbalanced
-362	MetaphaseAlignment	0.0	train	True	CP	unbalanced
-363	OutOfFocus	0.010526315789473684	train	True	CP	unbalanced
-364	Polylobed	0.15053763440860213	train	True	CP	unbalanced
-365	Prometaphase	0.06706114398422092	train	True	CP	unbalanced
-366	SmallIrregular	0.0	train	True	CP	unbalanced
-367	Weighted	0.06536986962810365	train	True	CP	unbalanced
-368	ADCCM	0.0	test	True	CP	unbalanced
-369	Anaphase	0.0	test	True	CP	unbalanced
-370	Apoptosis	0.0396039603960396	test	True	CP	unbalanced
-371	Binuclear	0.0	test	True	CP	unbalanced
-372	Elongated	0.0	test	True	CP	unbalanced
-373	Grape	0.0	test	True	CP	unbalanced
-374	Hole	0.0	test	True	CP	unbalanced
-375	Interphase	0.18957345971563982	test	True	CP	unbalanced
-376	Large	0.0	test	True	CP	unbalanced
-377	Metaphase	0.0	test	True	CP	unbalanced
-378	MetaphaseAlignment	0.0	test	True	CP	unbalanced
-379	OutOfFocus	0.05405405405405405	test	True	CP	unbalanced
-380	Polylobed	0.15151515151515152	test	True	CP	unbalanced
-381	Prometaphase	0.02380952380952381	test	True	CP	unbalanced
-382	SmallIrregular	0.058823529411764705	test	True	CP	unbalanced
-383	Weighted	0.06301254332914444	test	True	CP	unbalanced
-384	ADCCM	0.0	train	True	CP_and_DP	balanced
-385	Anaphase	0.0	train	True	CP_and_DP	balanced
-386	Apoptosis	0.16289592760180993	train	True	CP_and_DP	balanced
-387	Binuclear	0.013377926421404682	train	True	CP_and_DP	balanced
-388	Elongated	0.0	train	True	CP_and_DP	balanced
-389	Grape	0.0	train	True	CP_and_DP	balanced
-390	Hole	0.012944983818770225	train	True	CP_and_DP	balanced
-391	Interphase	0.04457652303120357	train	True	CP_and_DP	balanced
-392	Large	0.024096385542168672	train	True	CP_and_DP	balanced
-393	Metaphase	0.0	train	True	CP_and_DP	balanced
-394	MetaphaseAlignment	0.02586206896551724	train	True	CP_and_DP	balanced
-395	OutOfFocus	0.009302325581395349	train	True	CP_and_DP	balanced
-396	Polylobed	0.054140127388535034	train	True	CP_and_DP	balanced
-397	Prometaphase	0.2108345534407028	train	True	CP_and_DP	balanced
-398	SmallIrregular	0.005291005291005291	train	True	CP_and_DP	balanced
-399	Weighted	0.05934123915456637	train	True	CP_and_DP	balanced
-400	ADCCM	0.0	test	True	CP_and_DP	balanced
-401	Anaphase	0.0	test	True	CP_and_DP	balanced
-402	Apoptosis	0.1388888888888889	test	True	CP_and_DP	balanced
-403	Binuclear	0.0	test	True	CP_and_DP	balanced
-404	Elongated	0.0	test	True	CP_and_DP	balanced
-405	Grape	0.0	test	True	CP_and_DP	balanced
-406	Hole	0.0	test	True	CP_and_DP	balanced
-407	Interphase	0.050420168067226885	test	True	CP_and_DP	balanced
-408	Large	0.11764705882352941	test	True	CP_and_DP	balanced
-409	Metaphase	0.0	test	True	CP_and_DP	balanced
-410	MetaphaseAlignment	0.1111111111111111	test	True	CP_and_DP	balanced
-411	OutOfFocus	0.01639344262295082	test	True	CP_and_DP	balanced
-412	Polylobed	0.02	test	True	CP_and_DP	balanced
-413	Prometaphase	0.16923076923076924	test	True	CP_and_DP	balanced
-414	SmallIrregular	0.0	test	True	CP_and_DP	balanced
-415	Weighted	0.05540852787931795	test	True	CP_and_DP	balanced
-416	ADCCM	0.0	train	True	CP_and_DP	unbalanced
-417	Anaphase	0.07272727272727272	train	True	CP_and_DP	unbalanced
-418	Apoptosis	0.14393939393939395	train	True	CP_and_DP	unbalanced
-419	Binuclear	0.0851063829787234	train	True	CP_and_DP	unbalanced
-420	Elongated	0.034188034188034185	train	True	CP_and_DP	unbalanced
-421	Grape	0.0	train	True	CP_and_DP	unbalanced
-422	Hole	0.021164021164021166	train	True	CP_and_DP	unbalanced
-423	Interphase	0.10927573062261754	train	True	CP_and_DP	unbalanced
-424	Large	0.055045871559633024	train	True	CP_and_DP	unbalanced
-425	Metaphase	0.02247191011235955	train	True	CP_and_DP	unbalanced
-426	MetaphaseAlignment	0.022058823529411763	train	True	CP_and_DP	unbalanced
-427	OutOfFocus	0.020703933747412008	train	True	CP_and_DP	unbalanced
-428	Polylobed	0.1883656509695291	train	True	CP_and_DP	unbalanced
-429	Prometaphase	0.1986062717770035	train	True	CP_and_DP	unbalanced
-430	SmallIrregular	0.028037383177570097	train	True	CP_and_DP	unbalanced
-431	Weighted	0.09486155137345494	train	True	CP_and_DP	unbalanced
-432	ADCCM	0.0	test	True	CP_and_DP	unbalanced
-433	Anaphase	0.125	test	True	CP_and_DP	unbalanced
-434	Apoptosis	0.14953271028037382	test	True	CP_and_DP	unbalanced
-435	Binuclear	0.08695652173913043	test	True	CP_and_DP	unbalanced
-436	Elongated	0.09523809523809523	test	True	CP_and_DP	unbalanced
-437	Grape	0.0	test	True	CP_and_DP	unbalanced
-438	Hole	0.07692307692307691	test	True	CP_and_DP	unbalanced
-439	Interphase	0.1037037037037037	test	True	CP_and_DP	unbalanced
-440	Large	0.0	test	True	CP_and_DP	unbalanced
-441	Metaphase	0.0	test	True	CP_and_DP	unbalanced
-442	MetaphaseAlignment	0.0	test	True	CP_and_DP	unbalanced
-443	OutOfFocus	0.0	test	True	CP_and_DP	unbalanced
-444	Polylobed	0.2727272727272727	test	True	CP_and_DP	unbalanced
-445	Prometaphase	0.20754716981132074	test	True	CP_and_DP	unbalanced
-446	SmallIrregular	0.04761904761904763	test	True	CP_and_DP	unbalanced
-447	Weighted	0.10822880910625816	test	True	CP_and_DP	unbalanced
-448	ADCCM	0.007272727272727274	train	True	CP_areashape_only	balanced
-449	Anaphase	0.0	train	True	CP_areashape_only	balanced
-450	Apoptosis	0.009685230024213074	train	True	CP_areashape_only	balanced
-451	Binuclear	0.011080332409972301	train	True	CP_areashape_only	balanced
-452	Elongated	0.0065359477124183	train	True	CP_areashape_only	balanced
-453	Grape	0.08064516129032259	train	True	CP_areashape_only	balanced
-454	Hole	0.07829181494661923	train	True	CP_areashape_only	balanced
-455	Interphase	0.13530655391120505	train	True	CP_areashape_only	balanced
-456	Large	0.0449438202247191	train	True	CP_areashape_only	balanced
-457	Metaphase	0.013157894736842105	train	True	CP_areashape_only	balanced
-458	MetaphaseAlignment	0.03287671232876712	train	True	CP_areashape_only	balanced
-459	OutOfFocus	0.011560693641618497	train	True	CP_areashape_only	balanced
-460	Polylobed	0.023460410557184747	train	True	CP_areashape_only	balanced
-461	Prometaphase	0.016574585635359115	train	True	CP_areashape_only	balanced
-462	SmallIrregular	0.0	train	True	CP_areashape_only	balanced
-463	Weighted	0.0370295395880127	train	True	CP_areashape_only	balanced
-464	ADCCM	0.0	test	True	CP_areashape_only	balanced
-465	Anaphase	0.03508771929824561	test	True	CP_areashape_only	balanced
-466	Apoptosis	0.0	test	True	CP_areashape_only	balanced
-467	Binuclear	0.0689655172413793	test	True	CP_areashape_only	balanced
-468	Elongated	0.0	test	True	CP_areashape_only	balanced
-469	Grape	0.13333333333333333	test	True	CP_areashape_only	balanced
-470	Hole	0.0	test	True	CP_areashape_only	balanced
-471	Interphase	0.09999999999999999	test	True	CP_areashape_only	balanced
-472	Large	0.06451612903225808	test	True	CP_areashape_only	balanced
-473	Metaphase	0.0	test	True	CP_areashape_only	balanced
-474	MetaphaseAlignment	0.06451612903225808	test	True	CP_areashape_only	balanced
-475	OutOfFocus	0.0	test	True	CP_areashape_only	balanced
-476	Polylobed	0.0	test	True	CP_areashape_only	balanced
-477	Prometaphase	0.1142857142857143	test	True	CP_areashape_only	balanced
-478	SmallIrregular	0.0	test	True	CP_areashape_only	balanced
-479	Weighted	0.04313560824740797	test	True	CP_areashape_only	balanced
-480	ADCCM	0.012195121951219513	train	True	CP_areashape_only	unbalanced
-481	Anaphase	0.0	train	True	CP_areashape_only	unbalanced
-482	Apoptosis	0.1642105263157895	train	True	CP_areashape_only	unbalanced
-483	Binuclear	0.06081081081081081	train	True	CP_areashape_only	unbalanced
-484	Elongated	0.0	train	True	CP_areashape_only	unbalanced
-485	Grape	0.0	train	True	CP_areashape_only	unbalanced
-486	Hole	0.0	train	True	CP_areashape_only	unbalanced
-487	Interphase	0.12059158134243458	train	True	CP_areashape_only	unbalanced
-488	Large	0.0	train	True	CP_areashape_only	unbalanced
-489	Metaphase	0.0	train	True	CP_areashape_only	unbalanced
-490	MetaphaseAlignment	0.06870229007633587	train	True	CP_areashape_only	unbalanced
-491	OutOfFocus	0.01851851851851852	train	True	CP_areashape_only	unbalanced
-492	Polylobed	0.14099783080260306	train	True	CP_areashape_only	unbalanced
-493	Prometaphase	0.07854984894259819	train	True	CP_areashape_only	unbalanced
-494	SmallIrregular	0.02643171806167401	train	True	CP_areashape_only	unbalanced
-495	Weighted	0.07291002663214043	train	True	CP_areashape_only	unbalanced
-496	ADCCM	0.058823529411764705	test	True	CP_areashape_only	unbalanced
-497	Anaphase	0.0	test	True	CP_areashape_only	unbalanced
-498	Apoptosis	0.12903225806451613	test	True	CP_areashape_only	unbalanced
-499	Binuclear	0.0	test	True	CP_areashape_only	unbalanced
-500	Elongated	0.0	test	True	CP_areashape_only	unbalanced
-501	Grape	0.0	test	True	CP_areashape_only	unbalanced
-502	Hole	0.0	test	True	CP_areashape_only	unbalanced
-503	Interphase	0.13071895424836602	test	True	CP_areashape_only	unbalanced
-504	Large	0.0	test	True	CP_areashape_only	unbalanced
-505	Metaphase	0.0	test	True	CP_areashape_only	unbalanced
-506	MetaphaseAlignment	0.11764705882352941	test	True	CP_areashape_only	unbalanced
-507	OutOfFocus	0.0	test	True	CP_areashape_only	unbalanced
-508	Polylobed	0.11464968152866241	test	True	CP_areashape_only	unbalanced
-509	Prometaphase	0.10526315789473684	test	True	CP_areashape_only	unbalanced
-510	SmallIrregular	0.0	test	True	CP_areashape_only	unbalanced
-511	Weighted	0.06787764263737543	test	True	CP_areashape_only	unbalanced
-512	ADCCM	0.03692307692307692	train	True	CP_zernike_only	balanced
-513	Anaphase	0.040955631399317405	train	True	CP_zernike_only	balanced
-514	Apoptosis	0.03649635036496351	train	True	CP_zernike_only	balanced
-515	Binuclear	0.09216589861751152	train	True	CP_zernike_only	balanced
-516	Elongated	0.0	train	True	CP_zernike_only	balanced
-517	Grape	0.05673758865248227	train	True	CP_zernike_only	balanced
-518	Hole	0.13547237076648838	train	True	CP_zernike_only	balanced
-519	Interphase	0.018099547511312215	train	True	CP_zernike_only	balanced
-520	Large	0.03785488958990536	train	True	CP_zernike_only	balanced
-521	Metaphase	0.023809523809523808	train	True	CP_zernike_only	balanced
-522	MetaphaseAlignment	0.007220216606498194	train	True	CP_zernike_only	balanced
-523	OutOfFocus	0.0058997050147492625	train	True	CP_zernike_only	balanced
-524	Polylobed	0.028490028490028487	train	True	CP_zernike_only	balanced
-525	Prometaphase	0.047619047619047616	train	True	CP_zernike_only	balanced
-526	SmallIrregular	0.0759493670886076	train	True	CP_zernike_only	balanced
-527	Weighted	0.03780959073906324	train	True	CP_zernike_only	balanced
-528	ADCCM	0.03508771929824561	test	True	CP_zernike_only	balanced
-529	Anaphase	0.03703703703703704	test	True	CP_zernike_only	balanced
-530	Apoptosis	0.03921568627450981	test	True	CP_zernike_only	balanced
-531	Binuclear	0.0	test	True	CP_zernike_only	balanced
-532	Elongated	0.0	test	True	CP_zernike_only	balanced
-533	Grape	0.12000000000000001	test	True	CP_zernike_only	balanced
-534	Hole	0.0930232558139535	test	True	CP_zernike_only	balanced
-535	Interphase	0.02531645569620253	test	True	CP_zernike_only	balanced
-536	Large	0.11111111111111112	test	True	CP_zernike_only	balanced
-537	Metaphase	0.0	test	True	CP_zernike_only	balanced
-538	MetaphaseAlignment	0.0	test	True	CP_zernike_only	balanced
-539	OutOfFocus	0.0	test	True	CP_zernike_only	balanced
-540	Polylobed	0.0303030303030303	test	True	CP_zernike_only	balanced
-541	Prometaphase	0.028571428571428574	test	True	CP_zernike_only	balanced
-542	SmallIrregular	0.0	test	True	CP_zernike_only	balanced
-543	Weighted	0.02688976519145134	test	True	CP_zernike_only	balanced
-544	ADCCM	0.0	train	True	CP_zernike_only	unbalanced
-545	Anaphase	0.0	train	True	CP_zernike_only	unbalanced
-546	Apoptosis	0.07741935483870968	train	True	CP_zernike_only	unbalanced
-547	Binuclear	0.01869158878504673	train	True	CP_zernike_only	unbalanced
-548	Elongated	0.0	train	True	CP_zernike_only	unbalanced
-549	Grape	0.0	train	True	CP_zernike_only	unbalanced
-550	Hole	0.0	train	True	CP_zernike_only	unbalanced
-551	Interphase	0.297780959198282	train	True	CP_zernike_only	unbalanced
-552	Large	0.0	train	True	CP_zernike_only	unbalanced
-553	Metaphase	0.0	train	True	CP_zernike_only	unbalanced
-554	MetaphaseAlignment	0.0	train	True	CP_zernike_only	unbalanced
-555	OutOfFocus	0.26640926640926643	train	True	CP_zernike_only	unbalanced
-556	Polylobed	0.21281464530892447	train	True	CP_zernike_only	unbalanced
-557	Prometaphase	0.27761194029850744	train	True	CP_zernike_only	unbalanced
-558	SmallIrregular	0.0	train	True	CP_zernike_only	unbalanced
-559	Weighted	0.14130634834879624	train	True	CP_zernike_only	unbalanced
-560	ADCCM	0.0	test	True	CP_zernike_only	unbalanced
-561	Anaphase	0.0	test	True	CP_zernike_only	unbalanced
-562	Apoptosis	0.14285714285714285	test	True	CP_zernike_only	unbalanced
-563	Binuclear	0.0	test	True	CP_zernike_only	unbalanced
-564	Elongated	0.0	test	True	CP_zernike_only	unbalanced
-565	Grape	0.0	test	True	CP_zernike_only	unbalanced
-566	Hole	0.0	test	True	CP_zernike_only	unbalanced
-567	Interphase	0.2578125	test	True	CP_zernike_only	unbalanced
-568	Large	0.0	test	True	CP_zernike_only	unbalanced
-569	Metaphase	0.0	test	True	CP_zernike_only	unbalanced
-570	MetaphaseAlignment	0.0	test	True	CP_zernike_only	unbalanced
-571	OutOfFocus	0.18604651162790697	test	True	CP_zernike_only	unbalanced
-572	Polylobed	0.21250000000000002	test	True	CP_zernike_only	unbalanced
-573	Prometaphase	0.33928571428571425	test	True	CP_zernike_only	unbalanced
-574	SmallIrregular	0.0	test	True	CP_zernike_only	unbalanced
-575	Weighted	0.13950657449972959	test	True	CP_zernike_only	unbalanced
-576	ADCCM	0.0	train	True	DP	balanced
-577	Anaphase	0.0	train	True	DP	balanced
-578	Apoptosis	0.030973451327433628	train	True	DP	balanced
-579	Binuclear	0.008	train	True	DP	balanced
-580	Elongated	0.15492957746478875	train	True	DP	balanced
-581	Grape	0.018518518518518514	train	True	DP	balanced
-582	Hole	0.125	train	True	DP	balanced
-583	Interphase	0.08643457382953182	train	True	DP	balanced
-584	Large	0.06666666666666667	train	True	DP	balanced
-585	Metaphase	0.0392156862745098	train	True	DP	balanced
-586	MetaphaseAlignment	0.10062893081761005	train	True	DP	balanced
-587	OutOfFocus	0.05594405594405594	train	True	DP	balanced
-588	Polylobed	0.49622166246851385	train	True	DP	balanced
-589	Prometaphase	0.26380368098159507	train	True	DP	balanced
-590	SmallIrregular	0.020942408376963352	train	True	DP	balanced
-591	Weighted	0.1392011490637323	train	True	DP	balanced
-592	ADCCM	0.0	test	True	DP	balanced
-593	Anaphase	0.0	test	True	DP	balanced
-594	Apoptosis	0.024096385542168676	test	True	DP	balanced
-595	Binuclear	0.0	test	True	DP	balanced
-596	Elongated	0.09090909090909091	test	True	DP	balanced
-597	Grape	0.0	test	True	DP	balanced
-598	Hole	0.12121212121212122	test	True	DP	balanced
-599	Interphase	0.15584415584415584	test	True	DP	balanced
-600	Large	0.0	test	True	DP	balanced
-601	Metaphase	0.21428571428571427	test	True	DP	balanced
-602	MetaphaseAlignment	0.03571428571428572	test	True	DP	balanced
-603	OutOfFocus	0.056338028169014086	test	True	DP	balanced
-604	Polylobed	0.45569620253164556	test	True	DP	balanced
-605	Prometaphase	0.2018348623853211	test	True	DP	balanced
-606	SmallIrregular	0.0	test	True	DP	balanced
-607	Weighted	0.12966802954727533	test	True	DP	balanced
-608	ADCCM	0.14414414414414414	train	True	DP	unbalanced
-609	Anaphase	0.017857142857142856	train	True	DP	unbalanced
-610	Apoptosis	0.0345572354211663	train	True	DP	unbalanced
-611	Binuclear	0.021660649819494584	train	True	DP	unbalanced
-612	Elongated	0.0	train	True	DP	unbalanced
-613	Grape	0.0	train	True	DP	unbalanced
-614	Hole	0.010471204188481674	train	True	DP	unbalanced
-615	Interphase	0.13670133729569092	train	True	DP	unbalanced
-616	Large	0.0	train	True	DP	unbalanced
-617	Metaphase	0.031746031746031744	train	True	DP	unbalanced
-618	MetaphaseAlignment	0.022222222222222223	train	True	DP	unbalanced
-619	OutOfFocus	0.618066561014263	train	True	DP	unbalanced
-620	Polylobed	0.12012012012012012	train	True	DP	unbalanced
-621	Prometaphase	0.3274853801169591	train	True	DP	unbalanced
-622	SmallIrregular	0.16216216216216217	train	True	DP	unbalanced
-623	Weighted	0.16237725134621994	train	True	DP	unbalanced
-624	ADCCM	0.125	test	True	DP	unbalanced
-625	Anaphase	0.0	test	True	DP	unbalanced
-626	Apoptosis	0.046511627906976744	test	True	DP	unbalanced
-627	Binuclear	0.0	test	True	DP	unbalanced
-628	Elongated	0.0	test	True	DP	unbalanced
-629	Grape	0.0	test	True	DP	unbalanced
-630	Hole	0.0	test	True	DP	unbalanced
-631	Interphase	0.06722689075630252	test	True	DP	unbalanced
-632	Large	0.0	test	True	DP	unbalanced
-633	Metaphase	0.0	test	True	DP	unbalanced
-634	MetaphaseAlignment	0.0	test	True	DP	unbalanced
-635	OutOfFocus	0.6324786324786325	test	True	DP	unbalanced
-636	Polylobed	0.07207207207207206	test	True	DP	unbalanced
-637	Prometaphase	0.3773584905660377	test	True	DP	unbalanced
-638	SmallIrregular	0.2264150943396226	test	True	DP	unbalanced
-639	Weighted	0.15403086229706672	test	True	DP	unbalanced
+	Phenotypic_Class	F1_Score	data_split	shuffled	feature_type	balance_type	dataset_type
+0	ADCCM	0.885057471264368	train	False	CP	balanced	ic
+1	Anaphase	0.8220858895705522	train	False	CP	balanced	ic
+2	Apoptosis	0.8539325842696629	train	False	CP	balanced	ic
+3	Binuclear	0.8313253012048192	train	False	CP	balanced	ic
+4	Elongated	0.9484536082474226	train	False	CP	balanced	ic
+5	Grape	0.7999999999999999	train	False	CP	balanced	ic
+6	Hole	0.7982062780269059	train	False	CP	balanced	ic
+7	Interphase	0.820754716981132	train	False	CP	balanced	ic
+8	Large	0.8344370860927153	train	False	CP	balanced	ic
+9	Metaphase	0.9185185185185185	train	False	CP	balanced	ic
+10	MetaphaseAlignment	0.7655172413793103	train	False	CP	balanced	ic
+11	OutOfFocus	0.9825242718446603	train	False	CP	balanced	ic
+12	Polylobed	0.8486956521739131	train	False	CP	balanced	ic
+13	Prometaphase	0.8430335097001763	train	False	CP	balanced	ic
+14	SmallIrregular	0.7774294670846396	train	False	CP	balanced	ic
+15	Weighted	0.8507560782311118	train	False	CP	balanced	ic
+16	ADCCM	0.7878787878787878	test	False	CP	balanced	ic
+17	Anaphase	0.8000000000000002	test	False	CP	balanced	ic
+18	Apoptosis	0.7560975609756099	test	False	CP	balanced	ic
+19	Binuclear	0.6666666666666666	test	False	CP	balanced	ic
+20	Elongated	0.9411764705882353	test	False	CP	balanced	ic
+21	Grape	0.5161290322580645	test	False	CP	balanced	ic
+22	Hole	0.6666666666666667	test	False	CP	balanced	ic
+23	Interphase	0.7857142857142857	test	False	CP	balanced	ic
+24	Large	0.6874999999999999	test	False	CP	balanced	ic
+25	Metaphase	0.8181818181818182	test	False	CP	balanced	ic
+26	MetaphaseAlignment	0.7037037037037038	test	False	CP	balanced	ic
+27	OutOfFocus	0.9438202247191011	test	False	CP	balanced	ic
+28	Polylobed	0.6382978723404256	test	False	CP	balanced	ic
+29	Prometaphase	0.7755102040816326	test	False	CP	balanced	ic
+30	SmallIrregular	0.8399999999999999	test	False	CP	balanced	ic
+31	Weighted	0.7629336886951087	test	False	CP	balanced	ic
+32	ADCCM	0.9426751592356688	train	False	CP	balanced	no_ic
+33	Anaphase	0.8903225806451612	train	False	CP	balanced	no_ic
+34	Apoptosis	0.8665207877461708	train	False	CP	balanced	no_ic
+35	Binuclear	0.8253968253968255	train	False	CP	balanced	no_ic
+36	Elongated	0.9578947368421054	train	False	CP	balanced	no_ic
+37	Grape	0.8051948051948052	train	False	CP	balanced	no_ic
+38	Hole	0.792626728110599	train	False	CP	balanced	no_ic
+39	Interphase	0.8289676425269645	train	False	CP	balanced	no_ic
+40	Large	0.8421052631578947	train	False	CP	balanced	no_ic
+41	Metaphase	0.9457364341085271	train	False	CP	balanced	no_ic
+42	MetaphaseAlignment	0.8039867109634551	train	False	CP	balanced	no_ic
+43	OutOfFocus	0.9823874755381605	train	False	CP	balanced	no_ic
+44	Polylobed	0.8324324324324324	train	False	CP	balanced	no_ic
+45	Prometaphase	0.8380281690140845	train	False	CP	balanced	no_ic
+46	SmallIrregular	0.7987421383647798	train	False	CP	balanced	no_ic
+47	Weighted	0.8585949775292885	train	False	CP	balanced	no_ic
+48	ADCCM	0.7741935483870968	test	False	CP	balanced	no_ic
+49	Anaphase	0.6875	test	False	CP	balanced	no_ic
+50	Apoptosis	0.8311688311688312	test	False	CP	balanced	no_ic
+51	Binuclear	0.7719298245614036	test	False	CP	balanced	no_ic
+52	Elongated	0.8823529411764706	test	False	CP	balanced	no_ic
+53	Grape	0.5384615384615384	test	False	CP	balanced	no_ic
+54	Hole	0.6486486486486486	test	False	CP	balanced	no_ic
+55	Interphase	0.8403361344537815	test	False	CP	balanced	no_ic
+56	Large	0.7407407407407408	test	False	CP	balanced	no_ic
+57	Metaphase	0.8333333333333333	test	False	CP	balanced	no_ic
+58	MetaphaseAlignment	0.5833333333333334	test	False	CP	balanced	no_ic
+59	OutOfFocus	0.9777777777777777	test	False	CP	balanced	no_ic
+60	Polylobed	0.8041237113402061	test	False	CP	balanced	no_ic
+61	Prometaphase	0.7961165048543688	test	False	CP	balanced	no_ic
+62	SmallIrregular	0.7692307692307692	test	False	CP	balanced	no_ic
+63	Weighted	0.7961335141899194	test	False	CP	balanced	no_ic
+64	ADCCM	0.8999999999999999	train	False	CP	unbalanced	ic
+65	Anaphase	0.8551724137931033	train	False	CP	unbalanced	ic
+66	Apoptosis	0.8860759493670886	train	False	CP	unbalanced	ic
+67	Binuclear	0.8370607028753994	train	False	CP	unbalanced	ic
+68	Elongated	0.9528795811518325	train	False	CP	unbalanced	ic
+69	Grape	0.7522935779816514	train	False	CP	unbalanced	ic
+70	Hole	0.8663101604278075	train	False	CP	unbalanced	ic
+71	Interphase	0.8688293370944993	train	False	CP	unbalanced	ic
+72	Large	0.8661417322834646	train	False	CP	unbalanced	ic
+73	Metaphase	0.944	train	False	CP	unbalanced	ic
+74	MetaphaseAlignment	0.794425087108014	train	False	CP	unbalanced	ic
+75	OutOfFocus	0.9864077669902912	train	False	CP	unbalanced	ic
+76	Polylobed	0.8620689655172414	train	False	CP	unbalanced	ic
+77	Prometaphase	0.8896210873146624	train	False	CP	unbalanced	ic
+78	SmallIrregular	0.808664259927798	train	False	CP	unbalanced	ic
+79	Weighted	0.8771926530043208	train	False	CP	unbalanced	ic
+80	ADCCM	0.896551724137931	test	False	CP	unbalanced	ic
+81	Anaphase	0.8461538461538461	test	False	CP	unbalanced	ic
+82	Apoptosis	0.8095238095238095	test	False	CP	unbalanced	ic
+83	Binuclear	0.7272727272727273	test	False	CP	unbalanced	ic
+84	Elongated	0.9090909090909091	test	False	CP	unbalanced	ic
+85	Grape	0.6363636363636364	test	False	CP	unbalanced	ic
+86	Hole	0.7741935483870968	test	False	CP	unbalanced	ic
+87	Interphase	0.8412698412698413	test	False	CP	unbalanced	ic
+88	Large	0.7407407407407408	test	False	CP	unbalanced	ic
+89	Metaphase	0.7826086956521738	test	False	CP	unbalanced	ic
+90	MetaphaseAlignment	0.7169811320754716	test	False	CP	unbalanced	ic
+91	OutOfFocus	0.9438202247191011	test	False	CP	unbalanced	ic
+92	Polylobed	0.7407407407407407	test	False	CP	unbalanced	ic
+93	Prometaphase	0.7636363636363636	test	False	CP	unbalanced	ic
+94	SmallIrregular	0.7727272727272727	test	False	CP	unbalanced	ic
+95	Weighted	0.80031492869813	test	False	CP	unbalanced	ic
+96	ADCCM	0.9271523178807947	train	False	CP	unbalanced	no_ic
+97	Anaphase	0.9295774647887324	train	False	CP	unbalanced	no_ic
+98	Apoptosis	0.9029535864978904	train	False	CP	unbalanced	no_ic
+99	Binuclear	0.8280701754385965	train	False	CP	unbalanced	no_ic
+100	Elongated	0.9340659340659341	train	False	CP	unbalanced	no_ic
+101	Grape	0.7787610619469028	train	False	CP	unbalanced	no_ic
+102	Hole	0.8260869565217391	train	False	CP	unbalanced	no_ic
+103	Interphase	0.8765603328710124	train	False	CP	unbalanced	no_ic
+104	Large	0.8976377952755904	train	False	CP	unbalanced	no_ic
+105	Metaphase	0.9516129032258064	train	False	CP	unbalanced	no_ic
+106	MetaphaseAlignment	0.7956989247311828	train	False	CP	unbalanced	no_ic
+107	OutOfFocus	0.9902152641878669	train	False	CP	unbalanced	no_ic
+108	Polylobed	0.8669796557120499	train	False	CP	unbalanced	no_ic
+109	Prometaphase	0.8664495114006514	train	False	CP	unbalanced	no_ic
+110	SmallIrregular	0.8368794326241136	train	False	CP	unbalanced	no_ic
+111	Weighted	0.8817264491070167	train	False	CP	unbalanced	no_ic
+112	ADCCM	0.8333333333333333	test	False	CP	unbalanced	no_ic
+113	Anaphase	0.6896551724137931	test	False	CP	unbalanced	no_ic
+114	Apoptosis	0.8354430379746836	test	False	CP	unbalanced	no_ic
+115	Binuclear	0.8163265306122449	test	False	CP	unbalanced	no_ic
+116	Elongated	0.9090909090909091	test	False	CP	unbalanced	no_ic
+117	Grape	0.631578947368421	test	False	CP	unbalanced	no_ic
+118	Hole	0.7058823529411765	test	False	CP	unbalanced	no_ic
+119	Interphase	0.8461538461538461	test	False	CP	unbalanced	no_ic
+120	Large	0.7199999999999999	test	False	CP	unbalanced	no_ic
+121	Metaphase	0.7826086956521738	test	False	CP	unbalanced	no_ic
+122	MetaphaseAlignment	0.6274509803921569	test	False	CP	unbalanced	no_ic
+123	OutOfFocus	0.9777777777777777	test	False	CP	unbalanced	no_ic
+124	Polylobed	0.8392857142857144	test	False	CP	unbalanced	no_ic
+125	Prometaphase	0.8108108108108109	test	False	CP	unbalanced	no_ic
+126	SmallIrregular	0.7111111111111111	test	False	CP	unbalanced	no_ic
+127	Weighted	0.8114992191584947	test	False	CP	unbalanced	no_ic
+128	ADCCM	0.9938650306748467	train	False	CP_and_DP	balanced	ic
+129	Anaphase	0.9726027397260273	train	False	CP_and_DP	balanced	ic
+130	Apoptosis	0.9718004338394794	train	False	CP_and_DP	balanced	ic
+131	Binuclear	0.9509202453987731	train	False	CP_and_DP	balanced	ic
+132	Elongated	0.9894736842105264	train	False	CP_and_DP	balanced	ic
+133	Grape	0.9264705882352942	train	False	CP_and_DP	balanced	ic
+134	Hole	0.9696969696969696	train	False	CP_and_DP	balanced	ic
+135	Interphase	0.9194029850746269	train	False	CP_and_DP	balanced	ic
+136	Large	0.9852941176470589	train	False	CP_and_DP	balanced	ic
+137	Metaphase	1.0	train	False	CP_and_DP	balanced	ic
+138	MetaphaseAlignment	0.9539473684210527	train	False	CP_and_DP	balanced	ic
+139	OutOfFocus	0.9922779922779923	train	False	CP_and_DP	balanced	ic
+140	Polylobed	0.9570957095709571	train	False	CP_and_DP	balanced	ic
+141	Prometaphase	0.9457627118644067	train	False	CP_and_DP	balanced	ic
+142	SmallIrregular	0.9319727891156463	train	False	CP_and_DP	balanced	ic
+143	Weighted	0.9578338427135425	train	False	CP_and_DP	balanced	ic
+144	ADCCM	0.7741935483870968	test	False	CP_and_DP	balanced	ic
+145	Anaphase	0.9285714285714286	test	False	CP_and_DP	balanced	ic
+146	Apoptosis	0.9047619047619047	test	False	CP_and_DP	balanced	ic
+147	Binuclear	0.75	test	False	CP_and_DP	balanced	ic
+148	Elongated	0.9411764705882353	test	False	CP_and_DP	balanced	ic
+149	Grape	0.64	test	False	CP_and_DP	balanced	ic
+150	Hole	0.7999999999999999	test	False	CP_and_DP	balanced	ic
+151	Interphase	0.7857142857142857	test	False	CP_and_DP	balanced	ic
+152	Large	0.6923076923076924	test	False	CP_and_DP	balanced	ic
+153	Metaphase	0.9	test	False	CP_and_DP	balanced	ic
+154	MetaphaseAlignment	0.8	test	False	CP_and_DP	balanced	ic
+155	OutOfFocus	0.9782608695652174	test	False	CP_and_DP	balanced	ic
+156	Polylobed	0.7692307692307693	test	False	CP_and_DP	balanced	ic
+157	Prometaphase	0.8653846153846154	test	False	CP_and_DP	balanced	ic
+158	SmallIrregular	0.888888888888889	test	False	CP_and_DP	balanced	ic
+159	Weighted	0.8366088528165224	test	False	CP_and_DP	balanced	ic
+160	ADCCM	0.9934640522875817	train	False	CP_and_DP	balanced	no_ic
+161	Anaphase	1.0	train	False	CP_and_DP	balanced	no_ic
+162	Apoptosis	0.9978768577494692	train	False	CP_and_DP	balanced	no_ic
+163	Binuclear	0.9866666666666666	train	False	CP_and_DP	balanced	no_ic
+164	Elongated	1.0	train	False	CP_and_DP	balanced	no_ic
+165	Grape	1.0	train	False	CP_and_DP	balanced	no_ic
+166	Hole	1.0	train	False	CP_and_DP	balanced	no_ic
+167	Interphase	0.9829545454545454	train	False	CP_and_DP	balanced	no_ic
+168	Large	1.0	train	False	CP_and_DP	balanced	no_ic
+169	Metaphase	1.0	train	False	CP_and_DP	balanced	no_ic
+170	MetaphaseAlignment	0.9966555183946488	train	False	CP_and_DP	balanced	no_ic
+171	OutOfFocus	1.0	train	False	CP_and_DP	balanced	no_ic
+172	Polylobed	0.9885807504078303	train	False	CP_and_DP	balanced	no_ic
+173	Prometaphase	0.9897959183673468	train	False	CP_and_DP	balanced	no_ic
+174	SmallIrregular	1.0	train	False	CP_and_DP	balanced	no_ic
+175	Weighted	0.9933591470965641	train	False	CP_and_DP	balanced	no_ic
+176	ADCCM	0.9230769230769231	test	False	CP_and_DP	balanced	no_ic
+177	Anaphase	0.896551724137931	test	False	CP_and_DP	balanced	no_ic
+178	Apoptosis	0.860759493670886	test	False	CP_and_DP	balanced	no_ic
+179	Binuclear	0.6666666666666666	test	False	CP_and_DP	balanced	no_ic
+180	Elongated	0.9411764705882353	test	False	CP_and_DP	balanced	no_ic
+181	Grape	0.761904761904762	test	False	CP_and_DP	balanced	no_ic
+182	Hole	0.7647058823529412	test	False	CP_and_DP	balanced	no_ic
+183	Interphase	0.8205128205128205	test	False	CP_and_DP	balanced	no_ic
+184	Large	0.7826086956521738	test	False	CP_and_DP	balanced	no_ic
+185	Metaphase	0.8333333333333333	test	False	CP_and_DP	balanced	no_ic
+186	MetaphaseAlignment	0.5769230769230769	test	False	CP_and_DP	balanced	no_ic
+187	OutOfFocus	1.0	test	False	CP_and_DP	balanced	no_ic
+188	Polylobed	0.8141592920353983	test	False	CP_and_DP	balanced	no_ic
+189	Prometaphase	0.8440366972477065	test	False	CP_and_DP	balanced	no_ic
+190	SmallIrregular	0.75	test	False	CP_and_DP	balanced	no_ic
+191	Weighted	0.8228012046686051	test	False	CP_and_DP	balanced	no_ic
+192	ADCCM	0.9937888198757764	train	False	CP_and_DP	unbalanced	ic
+193	Anaphase	0.9857142857142858	train	False	CP_and_DP	unbalanced	ic
+194	Apoptosis	0.9870689655172413	train	False	CP_and_DP	unbalanced	ic
+195	Binuclear	0.9712460063897764	train	False	CP_and_DP	unbalanced	ic
+196	Elongated	1.0	train	False	CP_and_DP	unbalanced	ic
+197	Grape	0.975609756097561	train	False	CP_and_DP	unbalanced	ic
+198	Hole	0.9791666666666666	train	False	CP_and_DP	unbalanced	ic
+199	Interphase	0.9662921348314607	train	False	CP_and_DP	unbalanced	ic
+200	Large	1.0	train	False	CP_and_DP	unbalanced	ic
+201	Metaphase	0.976	train	False	CP_and_DP	unbalanced	ic
+202	MetaphaseAlignment	0.9664429530201343	train	False	CP_and_DP	unbalanced	ic
+203	OutOfFocus	0.9941972920696325	train	False	CP_and_DP	unbalanced	ic
+204	Polylobed	0.9823434991974318	train	False	CP_and_DP	unbalanced	ic
+205	Prometaphase	0.9682804674457429	train	False	CP_and_DP	unbalanced	ic
+206	SmallIrregular	0.9454545454545454	train	False	CP_and_DP	unbalanced	ic
+207	Weighted	0.9773899222908923	train	False	CP_and_DP	unbalanced	ic
+208	ADCCM	0.8275862068965518	test	False	CP_and_DP	unbalanced	ic
+209	Anaphase	0.9285714285714286	test	False	CP_and_DP	unbalanced	ic
+210	Apoptosis	0.9156626506024096	test	False	CP_and_DP	unbalanced	ic
+211	Binuclear	0.7169811320754718	test	False	CP_and_DP	unbalanced	ic
+212	Elongated	0.9375	test	False	CP_and_DP	unbalanced	ic
+213	Grape	0.6666666666666667	test	False	CP_and_DP	unbalanced	ic
+214	Hole	0.7741935483870968	test	False	CP_and_DP	unbalanced	ic
+215	Interphase	0.8455284552845528	test	False	CP_and_DP	unbalanced	ic
+216	Large	0.64	test	False	CP_and_DP	unbalanced	ic
+217	Metaphase	0.9	test	False	CP_and_DP	unbalanced	ic
+218	MetaphaseAlignment	0.8076923076923077	test	False	CP_and_DP	unbalanced	ic
+219	OutOfFocus	0.989010989010989	test	False	CP_and_DP	unbalanced	ic
+220	Polylobed	0.7636363636363637	test	False	CP_and_DP	unbalanced	ic
+221	Prometaphase	0.8679245283018868	test	False	CP_and_DP	unbalanced	ic
+222	SmallIrregular	0.9056603773584904	test	False	CP_and_DP	unbalanced	ic
+223	Weighted	0.8462471687902301	test	False	CP_and_DP	unbalanced	ic
+224	ADCCM	1.0	train	False	CP_and_DP	unbalanced	no_ic
+225	Anaphase	1.0	train	False	CP_and_DP	unbalanced	no_ic
+226	Apoptosis	0.9978768577494692	train	False	CP_and_DP	unbalanced	no_ic
+227	Binuclear	0.9966329966329966	train	False	CP_and_DP	unbalanced	no_ic
+228	Elongated	1.0	train	False	CP_and_DP	unbalanced	no_ic
+229	Grape	1.0	train	False	CP_and_DP	unbalanced	no_ic
+230	Hole	0.9948186528497409	train	False	CP_and_DP	unbalanced	no_ic
+231	Interphase	0.9929676511954993	train	False	CP_and_DP	unbalanced	no_ic
+232	Large	1.0	train	False	CP_and_DP	unbalanced	no_ic
+233	Metaphase	1.0	train	False	CP_and_DP	unbalanced	no_ic
+234	MetaphaseAlignment	0.9966329966329966	train	False	CP_and_DP	unbalanced	no_ic
+235	OutOfFocus	1.0	train	False	CP_and_DP	unbalanced	no_ic
+236	Polylobed	0.99836867862969	train	False	CP_and_DP	unbalanced	no_ic
+237	Prometaphase	0.9931972789115646	train	False	CP_and_DP	unbalanced	no_ic
+238	SmallIrregular	1.0	train	False	CP_and_DP	unbalanced	no_ic
+239	Weighted	0.9971006386841553	train	False	CP_and_DP	unbalanced	no_ic
+240	ADCCM	0.8148148148148148	test	False	CP_and_DP	unbalanced	no_ic
+241	Anaphase	0.8125000000000001	test	False	CP_and_DP	unbalanced	no_ic
+242	Apoptosis	0.8500000000000001	test	False	CP_and_DP	unbalanced	no_ic
+243	Binuclear	0.6666666666666666	test	False	CP_and_DP	unbalanced	no_ic
+244	Elongated	0.9696969696969697	test	False	CP_and_DP	unbalanced	no_ic
+245	Grape	0.8	test	False	CP_and_DP	unbalanced	no_ic
+246	Hole	0.7647058823529412	test	False	CP_and_DP	unbalanced	no_ic
+247	Interphase	0.8688524590163935	test	False	CP_and_DP	unbalanced	no_ic
+248	Large	0.7826086956521738	test	False	CP_and_DP	unbalanced	no_ic
+249	Metaphase	0.761904761904762	test	False	CP_and_DP	unbalanced	no_ic
+250	MetaphaseAlignment	0.52	test	False	CP_and_DP	unbalanced	no_ic
+251	OutOfFocus	1.0	test	False	CP_and_DP	unbalanced	no_ic
+252	Polylobed	0.8214285714285715	test	False	CP_and_DP	unbalanced	no_ic
+253	Prometaphase	0.8468468468468469	test	False	CP_and_DP	unbalanced	no_ic
+254	SmallIrregular	0.8076923076923077	test	False	CP_and_DP	unbalanced	no_ic
+255	Weighted	0.824517624527811	test	False	CP_and_DP	unbalanced	no_ic
+256	ADCCM	0.4039408866995074	train	False	CP_areashape_only	balanced	ic
+257	Anaphase	0.5610859728506787	train	False	CP_areashape_only	balanced	ic
+258	Apoptosis	0.32835820895522394	train	False	CP_areashape_only	balanced	ic
+259	Binuclear	0.4090909090909091	train	False	CP_areashape_only	balanced	ic
+260	Elongated	0.8316831683168316	train	False	CP_areashape_only	balanced	ic
+261	Grape	0.3883495145631068	train	False	CP_areashape_only	balanced	ic
+262	Hole	0.3359375	train	False	CP_areashape_only	balanced	ic
+263	Interphase	0.5359477124183006	train	False	CP_areashape_only	balanced	ic
+264	Large	0.5235602094240838	train	False	CP_areashape_only	balanced	ic
+265	Metaphase	0.6666666666666667	train	False	CP_areashape_only	balanced	ic
+266	MetaphaseAlignment	0.35947712418300654	train	False	CP_areashape_only	balanced	ic
+267	OutOfFocus	0.7782426778242678	train	False	CP_areashape_only	balanced	ic
+268	Polylobed	0.3566878980891719	train	False	CP_areashape_only	balanced	ic
+269	Prometaphase	0.5608465608465609	train	False	CP_areashape_only	balanced	ic
+270	SmallIrregular	0.3851351351351351	train	False	CP_areashape_only	balanced	ic
+271	Weighted	0.49329473560544146	train	False	CP_areashape_only	balanced	ic
+272	ADCCM	0.33333333333333326	test	False	CP_areashape_only	balanced	ic
+273	Anaphase	0.5853658536585366	test	False	CP_areashape_only	balanced	ic
+274	Apoptosis	0.34920634920634924	test	False	CP_areashape_only	balanced	ic
+275	Binuclear	0.3055555555555556	test	False	CP_areashape_only	balanced	ic
+276	Elongated	0.8108108108108109	test	False	CP_areashape_only	balanced	ic
+277	Grape	0.25	test	False	CP_areashape_only	balanced	ic
+278	Hole	0.23255813953488372	test	False	CP_areashape_only	balanced	ic
+279	Interphase	0.4615384615384615	test	False	CP_areashape_only	balanced	ic
+280	Large	0.41025641025641024	test	False	CP_areashape_only	balanced	ic
+281	Metaphase	0.5714285714285714	test	False	CP_areashape_only	balanced	ic
+282	MetaphaseAlignment	0.33333333333333337	test	False	CP_areashape_only	balanced	ic
+283	OutOfFocus	0.6	test	False	CP_areashape_only	balanced	ic
+284	Polylobed	0.2682926829268293	test	False	CP_areashape_only	balanced	ic
+285	Prometaphase	0.5490196078431373	test	False	CP_areashape_only	balanced	ic
+286	SmallIrregular	0.1886792452830189	test	False	CP_areashape_only	balanced	ic
+287	Weighted	0.41721018426880163	test	False	CP_areashape_only	balanced	ic
+288	ADCCM	0.41711229946524064	train	False	CP_areashape_only	balanced	no_ic
+289	Anaphase	0.6220095693779905	train	False	CP_areashape_only	balanced	no_ic
+290	Apoptosis	0.44800000000000006	train	False	CP_areashape_only	balanced	no_ic
+291	Binuclear	0.43023255813953487	train	False	CP_areashape_only	balanced	no_ic
+292	Elongated	0.865979381443299	train	False	CP_areashape_only	balanced	no_ic
+293	Grape	0.45128205128205123	train	False	CP_areashape_only	balanced	no_ic
+294	Hole	0.3109243697478991	train	False	CP_areashape_only	balanced	no_ic
+295	Interphase	0.5855263157894737	train	False	CP_areashape_only	balanced	no_ic
+296	Large	0.544502617801047	train	False	CP_areashape_only	balanced	no_ic
+297	Metaphase	0.6666666666666666	train	False	CP_areashape_only	balanced	no_ic
+298	MetaphaseAlignment	0.4037267080745341	train	False	CP_areashape_only	balanced	no_ic
+299	OutOfFocus	0.8	train	False	CP_areashape_only	balanced	no_ic
+300	Polylobed	0.3930885529157668	train	False	CP_areashape_only	balanced	no_ic
+301	Prometaphase	0.5457943925233645	train	False	CP_areashape_only	balanced	no_ic
+302	SmallIrregular	0.4648318042813456	train	False	CP_areashape_only	balanced	no_ic
+303	Weighted	0.5307244893878078	train	False	CP_areashape_only	balanced	no_ic
+304	ADCCM	0.43243243243243246	test	False	CP_areashape_only	balanced	no_ic
+305	Anaphase	0.5	test	False	CP_areashape_only	balanced	no_ic
+306	Apoptosis	0.3823529411764706	test	False	CP_areashape_only	balanced	no_ic
+307	Binuclear	0.32727272727272727	test	False	CP_areashape_only	balanced	no_ic
+308	Elongated	0.8571428571428572	test	False	CP_areashape_only	balanced	no_ic
+309	Grape	0.3157894736842105	test	False	CP_areashape_only	balanced	no_ic
+310	Hole	0.36842105263157887	test	False	CP_areashape_only	balanced	no_ic
+311	Interphase	0.6206896551724137	test	False	CP_areashape_only	balanced	no_ic
+312	Large	0.23076923076923075	test	False	CP_areashape_only	balanced	no_ic
+313	Metaphase	0.5384615384615385	test	False	CP_areashape_only	balanced	no_ic
+314	MetaphaseAlignment	0.2413793103448276	test	False	CP_areashape_only	balanced	no_ic
+315	OutOfFocus	0.688888888888889	test	False	CP_areashape_only	balanced	no_ic
+316	Polylobed	0.3013698630136986	test	False	CP_areashape_only	balanced	no_ic
+317	Prometaphase	0.5208333333333334	test	False	CP_areashape_only	balanced	no_ic
+318	SmallIrregular	0.2413793103448276	test	False	CP_areashape_only	balanced	no_ic
+319	Weighted	0.4572046745501144	test	False	CP_areashape_only	balanced	no_ic
+320	ADCCM	0.26785714285714285	train	False	CP_areashape_only	unbalanced	ic
+321	Anaphase	0.6708860759493671	train	False	CP_areashape_only	unbalanced	ic
+322	Apoptosis	0.4372294372294372	train	False	CP_areashape_only	unbalanced	ic
+323	Binuclear	0.3605150214592275	train	False	CP_areashape_only	unbalanced	ic
+324	Elongated	0.8762886597938143	train	False	CP_areashape_only	unbalanced	ic
+325	Grape	0.26666666666666666	train	False	CP_areashape_only	unbalanced	ic
+326	Hole	0.2170542635658915	train	False	CP_areashape_only	unbalanced	ic
+327	Interphase	0.5885167464114832	train	False	CP_areashape_only	unbalanced	ic
+328	Large	0.5862068965517242	train	False	CP_areashape_only	unbalanced	ic
+329	Metaphase	0.6861313868613138	train	False	CP_areashape_only	unbalanced	ic
+330	MetaphaseAlignment	0.3414634146341463	train	False	CP_areashape_only	unbalanced	ic
+331	OutOfFocus	0.7954545454545455	train	False	CP_areashape_only	unbalanced	ic
+332	Polylobed	0.5251076040172167	train	False	CP_areashape_only	unbalanced	ic
+333	Prometaphase	0.5794947994056464	train	False	CP_areashape_only	unbalanced	ic
+334	SmallIrregular	0.3715415019762846	train	False	CP_areashape_only	unbalanced	ic
+335	Weighted	0.5268133500028908	train	False	CP_areashape_only	unbalanced	ic
+336	ADCCM	0.36363636363636365	test	False	CP_areashape_only	unbalanced	ic
+337	Anaphase	0.6428571428571429	test	False	CP_areashape_only	unbalanced	ic
+338	Apoptosis	0.4285714285714286	test	False	CP_areashape_only	unbalanced	ic
+339	Binuclear	0.28	test	False	CP_areashape_only	unbalanced	ic
+340	Elongated	0.8571428571428572	test	False	CP_areashape_only	unbalanced	ic
+341	Grape	0.12500000000000003	test	False	CP_areashape_only	unbalanced	ic
+342	Hole	0.16666666666666666	test	False	CP_areashape_only	unbalanced	ic
+343	Interphase	0.5512820512820512	test	False	CP_areashape_only	unbalanced	ic
+344	Large	0.48000000000000004	test	False	CP_areashape_only	unbalanced	ic
+345	Metaphase	0.6	test	False	CP_areashape_only	unbalanced	ic
+346	MetaphaseAlignment	0.3414634146341463	test	False	CP_areashape_only	unbalanced	ic
+347	OutOfFocus	0.6966292134831461	test	False	CP_areashape_only	unbalanced	ic
+348	Polylobed	0.41441441441441446	test	False	CP_areashape_only	unbalanced	ic
+349	Prometaphase	0.5245901639344263	test	False	CP_areashape_only	unbalanced	ic
+350	SmallIrregular	0.21621621621621623	test	False	CP_areashape_only	unbalanced	ic
+351	Weighted	0.4657505770264412	test	False	CP_areashape_only	unbalanced	ic
+352	ADCCM	0.2524271844660194	train	False	CP_areashape_only	unbalanced	no_ic
+353	Anaphase	0.6826347305389222	train	False	CP_areashape_only	unbalanced	no_ic
+354	Apoptosis	0.5188284518828452	train	False	CP_areashape_only	unbalanced	no_ic
+355	Binuclear	0.35714285714285715	train	False	CP_areashape_only	unbalanced	no_ic
+356	Elongated	0.8756756756756756	train	False	CP_areashape_only	unbalanced	no_ic
+357	Grape	0.35789473684210527	train	False	CP_areashape_only	unbalanced	no_ic
+358	Hole	0.15624999999999997	train	False	CP_areashape_only	unbalanced	no_ic
+359	Interphase	0.5878136200716847	train	False	CP_areashape_only	unbalanced	no_ic
+360	Large	0.40816326530612246	train	False	CP_areashape_only	unbalanced	no_ic
+361	Metaphase	0.6666666666666666	train	False	CP_areashape_only	unbalanced	no_ic
+362	MetaphaseAlignment	0.3916666666666667	train	False	CP_areashape_only	unbalanced	no_ic
+363	OutOfFocus	0.8136882129277565	train	False	CP_areashape_only	unbalanced	no_ic
+364	Polylobed	0.5457184325108854	train	False	CP_areashape_only	unbalanced	no_ic
+365	Prometaphase	0.5794947994056464	train	False	CP_areashape_only	unbalanced	no_ic
+366	SmallIrregular	0.392	train	False	CP_areashape_only	unbalanced	no_ic
+367	Weighted	0.5380260307875585	train	False	CP_areashape_only	unbalanced	no_ic
+368	ADCCM	0.125	test	False	CP_areashape_only	unbalanced	no_ic
+369	Anaphase	0.4444444444444445	test	False	CP_areashape_only	unbalanced	no_ic
+370	Apoptosis	0.46808510638297873	test	False	CP_areashape_only	unbalanced	no_ic
+371	Binuclear	0.35000000000000003	test	False	CP_areashape_only	unbalanced	no_ic
+372	Elongated	0.9090909090909091	test	False	CP_areashape_only	unbalanced	no_ic
+373	Grape	0.2105263157894737	test	False	CP_areashape_only	unbalanced	no_ic
+374	Hole	0.0	test	False	CP_areashape_only	unbalanced	no_ic
+375	Interphase	0.6274509803921569	test	False	CP_areashape_only	unbalanced	no_ic
+376	Large	0.11764705882352941	test	False	CP_areashape_only	unbalanced	no_ic
+377	Metaphase	0.6086956521739131	test	False	CP_areashape_only	unbalanced	no_ic
+378	MetaphaseAlignment	0.20512820512820515	test	False	CP_areashape_only	unbalanced	no_ic
+379	OutOfFocus	0.7157894736842104	test	False	CP_areashape_only	unbalanced	no_ic
+380	Polylobed	0.5210084033613446	test	False	CP_areashape_only	unbalanced	no_ic
+381	Prometaphase	0.6086956521739131	test	False	CP_areashape_only	unbalanced	no_ic
+382	SmallIrregular	0.2666666666666666	test	False	CP_areashape_only	unbalanced	no_ic
+383	Weighted	0.4803648936836982	test	False	CP_areashape_only	unbalanced	no_ic
+384	ADCCM	0.2786069651741293	train	False	CP_zernike_only	balanced	ic
+385	Anaphase	0.43037974683544306	train	False	CP_zernike_only	balanced	ic
+386	Apoptosis	0.25	train	False	CP_zernike_only	balanced	ic
+387	Binuclear	0.2625	train	False	CP_zernike_only	balanced	ic
+388	Elongated	0.787878787878788	train	False	CP_zernike_only	balanced	ic
+389	Grape	0.2933333333333333	train	False	CP_zernike_only	balanced	ic
+390	Hole	0.2696629213483146	train	False	CP_zernike_only	balanced	ic
+391	Interphase	0.29296875	train	False	CP_zernike_only	balanced	ic
+392	Large	0.17500000000000002	train	False	CP_zernike_only	balanced	ic
+393	Metaphase	0.4752475247524752	train	False	CP_zernike_only	balanced	ic
+394	MetaphaseAlignment	0.33557046979865773	train	False	CP_zernike_only	balanced	ic
+395	OutOfFocus	0.5850091407678245	train	False	CP_zernike_only	balanced	ic
+396	Polylobed	0.31460674157303375	train	False	CP_zernike_only	balanced	ic
+397	Prometaphase	0.5261324041811847	train	False	CP_zernike_only	balanced	ic
+398	SmallIrregular	0.24444444444444444	train	False	CP_zernike_only	balanced	ic
+399	Weighted	0.371814024398425	train	False	CP_zernike_only	balanced	ic
+400	ADCCM	0.2380952380952381	test	False	CP_zernike_only	balanced	ic
+401	Anaphase	0.3333333333333333	test	False	CP_zernike_only	balanced	ic
+402	Apoptosis	0.15686274509803924	test	False	CP_zernike_only	balanced	ic
+403	Binuclear	0.19047619047619047	test	False	CP_zernike_only	balanced	ic
+404	Elongated	0.7647058823529411	test	False	CP_zernike_only	balanced	ic
+405	Grape	0.2857142857142857	test	False	CP_zernike_only	balanced	ic
+406	Hole	0.26666666666666666	test	False	CP_zernike_only	balanced	ic
+407	Interphase	0.20689655172413796	test	False	CP_zernike_only	balanced	ic
+408	Large	0.13333333333333333	test	False	CP_zernike_only	balanced	ic
+409	Metaphase	0.3636363636363636	test	False	CP_zernike_only	balanced	ic
+410	MetaphaseAlignment	0.3137254901960784	test	False	CP_zernike_only	balanced	ic
+411	OutOfFocus	0.5111111111111111	test	False	CP_zernike_only	balanced	ic
+412	Polylobed	0.16666666666666669	test	False	CP_zernike_only	balanced	ic
+413	Prometaphase	0.5087719298245613	test	False	CP_zernike_only	balanced	ic
+414	SmallIrregular	0.24489795918367346	test	False	CP_zernike_only	balanced	ic
+415	Weighted	0.3055594645460992	test	False	CP_zernike_only	balanced	ic
+416	ADCCM	0.2871287128712871	train	False	CP_zernike_only	balanced	no_ic
+417	Anaphase	0.37837837837837834	train	False	CP_zernike_only	balanced	no_ic
+418	Apoptosis	0.31518624641833815	train	False	CP_zernike_only	balanced	no_ic
+419	Binuclear	0.30246913580246915	train	False	CP_zernike_only	balanced	no_ic
+420	Elongated	0.7614213197969543	train	False	CP_zernike_only	balanced	no_ic
+421	Grape	0.3063063063063063	train	False	CP_zernike_only	balanced	no_ic
+422	Hole	0.2288135593220339	train	False	CP_zernike_only	balanced	no_ic
+423	Interphase	0.3230769230769231	train	False	CP_zernike_only	balanced	no_ic
+424	Large	0.2	train	False	CP_zernike_only	balanced	no_ic
+425	Metaphase	0.4699453551912568	train	False	CP_zernike_only	balanced	no_ic
+426	MetaphaseAlignment	0.4177215189873418	train	False	CP_zernike_only	balanced	no_ic
+427	OutOfFocus	0.5230202578268877	train	False	CP_zernike_only	balanced	no_ic
+428	Polylobed	0.20654911838790932	train	False	CP_zernike_only	balanced	no_ic
+429	Prometaphase	0.4883303411131059	train	False	CP_zernike_only	balanced	no_ic
+430	SmallIrregular	0.32587859424920124	train	False	CP_zernike_only	balanced	no_ic
+431	Weighted	0.36694759211055755	train	False	CP_zernike_only	balanced	no_ic
+432	ADCCM	0.21621621621621623	test	False	CP_zernike_only	balanced	no_ic
+433	Anaphase	0.35555555555555557	test	False	CP_zernike_only	balanced	no_ic
+434	Apoptosis	0.3225806451612903	test	False	CP_zernike_only	balanced	no_ic
+435	Binuclear	0.16	test	False	CP_zernike_only	balanced	no_ic
+436	Elongated	0.7777777777777777	test	False	CP_zernike_only	balanced	no_ic
+437	Grape	0.2631578947368421	test	False	CP_zernike_only	balanced	no_ic
+438	Hole	0.22222222222222224	test	False	CP_zernike_only	balanced	no_ic
+439	Interphase	0.3333333333333333	test	False	CP_zernike_only	balanced	no_ic
+440	Large	0.0	test	False	CP_zernike_only	balanced	no_ic
+441	Metaphase	0.4242424242424242	test	False	CP_zernike_only	balanced	no_ic
+442	MetaphaseAlignment	0.22641509433962265	test	False	CP_zernike_only	balanced	no_ic
+443	OutOfFocus	0.49484536082474223	test	False	CP_zernike_only	balanced	no_ic
+444	Polylobed	0.3142857142857142	test	False	CP_zernike_only	balanced	no_ic
+445	Prometaphase	0.4807692307692308	test	False	CP_zernike_only	balanced	no_ic
+446	SmallIrregular	0.23529411764705882	test	False	CP_zernike_only	balanced	no_ic
+447	Weighted	0.3427847392827875	test	False	CP_zernike_only	balanced	no_ic
+448	ADCCM	0.25225225225225223	train	False	CP_zernike_only	unbalanced	ic
+449	Anaphase	0.5223880597014925	train	False	CP_zernike_only	unbalanced	ic
+450	Apoptosis	0.31840796019900497	train	False	CP_zernike_only	unbalanced	ic
+451	Binuclear	0.21645021645021645	train	False	CP_zernike_only	unbalanced	ic
+452	Elongated	0.8059701492537313	train	False	CP_zernike_only	unbalanced	ic
+453	Grape	0.1518987341772152	train	False	CP_zernike_only	unbalanced	ic
+454	Hole	0.22047244094488186	train	False	CP_zernike_only	unbalanced	ic
+455	Interphase	0.45614035087719296	train	False	CP_zernike_only	unbalanced	ic
+456	Large	0.11111111111111112	train	False	CP_zernike_only	unbalanced	ic
+457	Metaphase	0.5333333333333333	train	False	CP_zernike_only	unbalanced	ic
+458	MetaphaseAlignment	0.27091633466135456	train	False	CP_zernike_only	unbalanced	ic
+459	OutOfFocus	0.5801801801801801	train	False	CP_zernike_only	unbalanced	ic
+460	Polylobed	0.4965893587994543	train	False	CP_zernike_only	unbalanced	ic
+461	Prometaphase	0.5685714285714286	train	False	CP_zernike_only	unbalanced	ic
+462	SmallIrregular	0.27149321266968324	train	False	CP_zernike_only	unbalanced	ic
+463	Weighted	0.4214966864288179	train	False	CP_zernike_only	unbalanced	ic
+464	ADCCM	0.23529411764705882	test	False	CP_zernike_only	unbalanced	ic
+465	Anaphase	0.41666666666666663	test	False	CP_zernike_only	unbalanced	ic
+466	Apoptosis	0.35135135135135137	test	False	CP_zernike_only	unbalanced	ic
+467	Binuclear	0.09302325581395349	test	False	CP_zernike_only	unbalanced	ic
+468	Elongated	0.7647058823529411	test	False	CP_zernike_only	unbalanced	ic
+469	Grape	0.0	test	False	CP_zernike_only	unbalanced	ic
+470	Hole	0.16666666666666666	test	False	CP_zernike_only	unbalanced	ic
+471	Interphase	0.389937106918239	test	False	CP_zernike_only	unbalanced	ic
+472	Large	0.0	test	False	CP_zernike_only	unbalanced	ic
+473	Metaphase	0.3703703703703703	test	False	CP_zernike_only	unbalanced	ic
+474	MetaphaseAlignment	0.3902439024390244	test	False	CP_zernike_only	unbalanced	ic
+475	OutOfFocus	0.5617977528089888	test	False	CP_zernike_only	unbalanced	ic
+476	Polylobed	0.42105263157894735	test	False	CP_zernike_only	unbalanced	ic
+477	Prometaphase	0.5076923076923076	test	False	CP_zernike_only	unbalanced	ic
+478	SmallIrregular	0.25	test	False	CP_zernike_only	unbalanced	ic
+479	Weighted	0.374945379005338	test	False	CP_zernike_only	unbalanced	ic
+480	ADCCM	0.15555555555555556	train	False	CP_zernike_only	unbalanced	no_ic
+481	Anaphase	0.5441176470588235	train	False	CP_zernike_only	unbalanced	no_ic
+482	Apoptosis	0.3599088838268793	train	False	CP_zernike_only	unbalanced	no_ic
+483	Binuclear	0.22641509433962265	train	False	CP_zernike_only	unbalanced	no_ic
+484	Elongated	0.7897435897435897	train	False	CP_zernike_only	unbalanced	no_ic
+485	Grape	0.0821917808219178	train	False	CP_zernike_only	unbalanced	no_ic
+486	Hole	0.144	train	False	CP_zernike_only	unbalanced	no_ic
+487	Interphase	0.4606613454960091	train	False	CP_zernike_only	unbalanced	no_ic
+488	Large	0.0	train	False	CP_zernike_only	unbalanced	no_ic
+489	Metaphase	0.5179856115107914	train	False	CP_zernike_only	unbalanced	no_ic
+490	MetaphaseAlignment	0.37647058823529406	train	False	CP_zernike_only	unbalanced	no_ic
+491	OutOfFocus	0.5474452554744526	train	False	CP_zernike_only	unbalanced	no_ic
+492	Polylobed	0.4797843665768194	train	False	CP_zernike_only	unbalanced	no_ic
+493	Prometaphase	0.5391061452513967	train	False	CP_zernike_only	unbalanced	no_ic
+494	SmallIrregular	0.23696682464454977	train	False	CP_zernike_only	unbalanced	no_ic
+495	Weighted	0.41091786944095055	train	False	CP_zernike_only	unbalanced	no_ic
+496	ADCCM	0.0	test	False	CP_zernike_only	unbalanced	no_ic
+497	Anaphase	0.32	test	False	CP_zernike_only	unbalanced	no_ic
+498	Apoptosis	0.38961038961038963	test	False	CP_zernike_only	unbalanced	no_ic
+499	Binuclear	0.16666666666666669	test	False	CP_zernike_only	unbalanced	no_ic
+500	Elongated	0.7368421052631579	test	False	CP_zernike_only	unbalanced	no_ic
+501	Grape	0.0	test	False	CP_zernike_only	unbalanced	no_ic
+502	Hole	0.19047619047619047	test	False	CP_zernike_only	unbalanced	no_ic
+503	Interphase	0.5031446540880503	test	False	CP_zernike_only	unbalanced	no_ic
+504	Large	0.0	test	False	CP_zernike_only	unbalanced	no_ic
+505	Metaphase	0.2727272727272727	test	False	CP_zernike_only	unbalanced	no_ic
+506	MetaphaseAlignment	0.26666666666666666	test	False	CP_zernike_only	unbalanced	no_ic
+507	OutOfFocus	0.48936170212765956	test	False	CP_zernike_only	unbalanced	no_ic
+508	Polylobed	0.44961240310077527	test	False	CP_zernike_only	unbalanced	no_ic
+509	Prometaphase	0.5076923076923076	test	False	CP_zernike_only	unbalanced	no_ic
+510	SmallIrregular	0.2702702702702703	test	False	CP_zernike_only	unbalanced	no_ic
+511	Weighted	0.3772197648539029	test	False	CP_zernike_only	unbalanced	no_ic
+512	ADCCM	1.0	train	False	DP	balanced	ic
+513	Anaphase	0.993006993006993	train	False	DP	balanced	ic
+514	Apoptosis	0.978448275862069	train	False	DP	balanced	ic
+515	Binuclear	0.951219512195122	train	False	DP	balanced	ic
+516	Elongated	1.0	train	False	DP	balanced	ic
+517	Grape	0.9843749999999999	train	False	DP	balanced	ic
+518	Hole	0.989795918367347	train	False	DP	balanced	ic
+519	Interphase	0.9239940387481371	train	False	DP	balanced	ic
+520	Large	0.9925925925925926	train	False	DP	balanced	ic
+521	Metaphase	1.0	train	False	DP	balanced	ic
+522	MetaphaseAlignment	0.9704918032786884	train	False	DP	balanced	ic
+523	OutOfFocus	0.9980657640232108	train	False	DP	balanced	ic
+524	Polylobed	0.9759229534510432	train	False	DP	balanced	ic
+525	Prometaphase	0.9659863945578231	train	False	DP	balanced	ic
+526	SmallIrregular	0.9517241379310345	train	False	DP	balanced	ic
+527	Weighted	0.970479038275268	train	False	DP	balanced	ic
+528	ADCCM	0.896551724137931	test	False	DP	balanced	ic
+529	Anaphase	0.962962962962963	test	False	DP	balanced	ic
+530	Apoptosis	0.8461538461538461	test	False	DP	balanced	ic
+531	Binuclear	0.5714285714285714	test	False	DP	balanced	ic
+532	Elongated	0.8125	test	False	DP	balanced	ic
+533	Grape	0.5925925925925926	test	False	DP	balanced	ic
+534	Hole	0.4666666666666667	test	False	DP	balanced	ic
+535	Interphase	0.7027027027027026	test	False	DP	balanced	ic
+536	Large	0.7692307692307692	test	False	DP	balanced	ic
+537	Metaphase	0.8571428571428572	test	False	DP	balanced	ic
+538	MetaphaseAlignment	0.6792452830188679	test	False	DP	balanced	ic
+539	OutOfFocus	0.989247311827957	test	False	DP	balanced	ic
+540	Polylobed	0.7339449541284404	test	False	DP	balanced	ic
+541	Prometaphase	0.75	test	False	DP	balanced	ic
+542	SmallIrregular	0.6785714285714285	test	False	DP	balanced	ic
+543	Weighted	0.7573047093584803	test	False	DP	balanced	ic
+544	ADCCM	0.9934640522875817	train	False	DP	balanced	no_ic
+545	Anaphase	0.9659863945578232	train	False	DP	balanced	no_ic
+546	Apoptosis	0.9473684210526315	train	False	DP	balanced	no_ic
+547	Binuclear	0.91875	train	False	DP	balanced	no_ic
+548	Elongated	0.9732620320855615	train	False	DP	balanced	no_ic
+549	Grape	0.949640287769784	train	False	DP	balanced	no_ic
+550	Hole	0.9595959595959594	train	False	DP	balanced	no_ic
+551	Interphase	0.879019908116386	train	False	DP	balanced	no_ic
+552	Large	0.9774436090225563	train	False	DP	balanced	no_ic
+553	Metaphase	0.9843749999999999	train	False	DP	balanced	no_ic
+554	MetaphaseAlignment	0.957377049180328	train	False	DP	balanced	no_ic
+555	OutOfFocus	0.9961389961389961	train	False	DP	balanced	no_ic
+556	Polylobed	0.9484193011647255	train	False	DP	balanced	no_ic
+557	Prometaphase	0.9393414211438474	train	False	DP	balanced	no_ic
+558	SmallIrregular	0.9183673469387755	train	False	DP	balanced	no_ic
+559	Weighted	0.9441579139242199	train	False	DP	balanced	no_ic
+560	ADCCM	0.7333333333333334	test	False	DP	balanced	no_ic
+561	Anaphase	0.8461538461538461	test	False	DP	balanced	no_ic
+562	Apoptosis	0.8250000000000001	test	False	DP	balanced	no_ic
+563	Binuclear	0.5416666666666667	test	False	DP	balanced	no_ic
+564	Elongated	0.8108108108108109	test	False	DP	balanced	no_ic
+565	Grape	0.64	test	False	DP	balanced	no_ic
+566	Hole	0.6315789473684211	test	False	DP	balanced	no_ic
+567	Interphase	0.6285714285714286	test	False	DP	balanced	no_ic
+568	Large	0.7199999999999999	test	False	DP	balanced	no_ic
+569	Metaphase	0.6086956521739131	test	False	DP	balanced	no_ic
+570	MetaphaseAlignment	0.6206896551724138	test	False	DP	balanced	no_ic
+571	OutOfFocus	0.989247311827957	test	False	DP	balanced	no_ic
+572	Polylobed	0.6666666666666666	test	False	DP	balanced	no_ic
+573	Prometaphase	0.7454545454545455	test	False	DP	balanced	no_ic
+574	SmallIrregular	0.5490196078431373	test	False	DP	balanced	no_ic
+575	Weighted	0.7140505102039799	test	False	DP	balanced	no_ic
+576	ADCCM	1.0	train	False	DP	unbalanced	ic
+577	Anaphase	0.993006993006993	train	False	DP	unbalanced	ic
+578	Apoptosis	0.9826086956521738	train	False	DP	unbalanced	ic
+579	Binuclear	0.9871794871794872	train	False	DP	unbalanced	ic
+580	Elongated	1.0	train	False	DP	unbalanced	ic
+581	Grape	0.9919999999999999	train	False	DP	unbalanced	ic
+582	Hole	0.9738219895287958	train	False	DP	unbalanced	ic
+583	Interphase	0.9646393210749648	train	False	DP	unbalanced	ic
+584	Large	1.0	train	False	DP	unbalanced	ic
+585	Metaphase	0.9919999999999999	train	False	DP	unbalanced	ic
+586	MetaphaseAlignment	0.9731543624161074	train	False	DP	unbalanced	ic
+587	OutOfFocus	0.9980657640232108	train	False	DP	unbalanced	ic
+588	Polylobed	0.9888000000000001	train	False	DP	unbalanced	ic
+589	Prometaphase	0.9665551839464883	train	False	DP	unbalanced	ic
+590	SmallIrregular	0.960573476702509	train	False	DP	unbalanced	ic
+591	Weighted	0.9810956553366837	train	False	DP	unbalanced	ic
+592	ADCCM	0.9333333333333333	test	False	DP	unbalanced	ic
+593	Anaphase	0.9230769230769231	test	False	DP	unbalanced	ic
+594	Apoptosis	0.8354430379746836	test	False	DP	unbalanced	ic
+595	Binuclear	0.56	test	False	DP	unbalanced	ic
+596	Elongated	0.7142857142857143	test	False	DP	unbalanced	ic
+597	Grape	0.6956521739130435	test	False	DP	unbalanced	ic
+598	Hole	0.4827586206896552	test	False	DP	unbalanced	ic
+599	Interphase	0.6666666666666666	test	False	DP	unbalanced	ic
+600	Large	0.6956521739130435	test	False	DP	unbalanced	ic
+601	Metaphase	0.8421052631578948	test	False	DP	unbalanced	ic
+602	MetaphaseAlignment	0.6666666666666666	test	False	DP	unbalanced	ic
+603	OutOfFocus	0.989247311827957	test	False	DP	unbalanced	ic
+604	Polylobed	0.7586206896551724	test	False	DP	unbalanced	ic
+605	Prometaphase	0.7610619469026548	test	False	DP	unbalanced	ic
+606	SmallIrregular	0.6666666666666666	test	False	DP	unbalanced	ic
+607	Weighted	0.7504725409598133	test	False	DP	unbalanced	ic
+608	ADCCM	1.0	train	False	DP	unbalanced	no_ic
+609	Anaphase	0.9787234042553192	train	False	DP	unbalanced	no_ic
+610	Apoptosis	0.9662447257383966	train	False	DP	unbalanced	no_ic
+611	Binuclear	0.9444444444444445	train	False	DP	unbalanced	no_ic
+612	Elongated	0.994475138121547	train	False	DP	unbalanced	no_ic
+613	Grape	0.9770992366412214	train	False	DP	unbalanced	no_ic
+614	Hole	0.963350785340314	train	False	DP	unbalanced	no_ic
+615	Interphase	0.9382022471910112	train	False	DP	unbalanced	no_ic
+616	Large	0.9767441860465116	train	False	DP	unbalanced	no_ic
+617	Metaphase	0.9919999999999999	train	False	DP	unbalanced	no_ic
+618	MetaphaseAlignment	0.9664429530201343	train	False	DP	unbalanced	no_ic
+619	OutOfFocus	0.9980657640232108	train	False	DP	unbalanced	no_ic
+620	Polylobed	0.9568000000000001	train	False	DP	unbalanced	no_ic
+621	Prometaphase	0.9575551782682513	train	False	DP	unbalanced	no_ic
+622	SmallIrregular	0.9527272727272728	train	False	DP	unbalanced	no_ic
+623	Weighted	0.9647809282297104	train	False	DP	unbalanced	no_ic
+624	ADCCM	0.7692307692307693	test	False	DP	unbalanced	no_ic
+625	Anaphase	0.8333333333333333	test	False	DP	unbalanced	no_ic
+626	Apoptosis	0.8048780487804877	test	False	DP	unbalanced	no_ic
+627	Binuclear	0.5333333333333333	test	False	DP	unbalanced	no_ic
+628	Elongated	0.8333333333333334	test	False	DP	unbalanced	no_ic
+629	Grape	0.631578947368421	test	False	DP	unbalanced	no_ic
+630	Hole	0.5882352941176471	test	False	DP	unbalanced	no_ic
+631	Interphase	0.7288135593220338	test	False	DP	unbalanced	no_ic
+632	Large	0.8181818181818182	test	False	DP	unbalanced	no_ic
+633	Metaphase	0.5555555555555556	test	False	DP	unbalanced	no_ic
+634	MetaphaseAlignment	0.6551724137931033	test	False	DP	unbalanced	no_ic
+635	OutOfFocus	0.989247311827957	test	False	DP	unbalanced	no_ic
+636	Polylobed	0.6964285714285714	test	False	DP	unbalanced	no_ic
+637	Prometaphase	0.7288135593220337	test	False	DP	unbalanced	no_ic
+638	SmallIrregular	0.5714285714285714	test	False	DP	unbalanced	no_ic
+639	Weighted	0.7325242369991688	test	False	DP	unbalanced	no_ic
+640	ADCCM	0.018779342723004695	train	True	CP	balanced	ic
+641	Anaphase	0.013071895424836602	train	True	CP	balanced	ic
+642	Apoptosis	0.13256484149855907	train	True	CP	balanced	ic
+643	Binuclear	0.013245033112582781	train	True	CP	balanced	ic
+644	Elongated	0.007246376811594203	train	True	CP	balanced	ic
+645	Grape	0.015037593984962405	train	True	CP	balanced	ic
+646	Hole	0.09491525423728812	train	True	CP	balanced	ic
+647	Interphase	0.010178117048346055	train	True	CP	balanced	ic
+648	Large	0.01038961038961039	train	True	CP	balanced	ic
+649	Metaphase	0.0	train	True	CP	balanced	ic
+650	MetaphaseAlignment	0.024096385542168672	train	True	CP	balanced	ic
+651	OutOfFocus	0.048780487804878044	train	True	CP	balanced	ic
+652	Polylobed	0.31919191919191914	train	True	CP	balanced	ic
+653	Prometaphase	0.01183431952662722	train	True	CP	balanced	ic
+654	SmallIrregular	0.06696428571428571	train	True	CP	balanced	ic
+655	Weighted	0.07359152809892526	train	True	CP	balanced	ic
+656	ADCCM	0.0	test	True	CP	balanced	ic
+657	Anaphase	0.0	test	True	CP	balanced	ic
+658	Apoptosis	0.13793103448275862	test	True	CP	balanced	ic
+659	Binuclear	0.0	test	True	CP	balanced	ic
+660	Elongated	0.0	test	True	CP	balanced	ic
+661	Grape	0.0	test	True	CP	balanced	ic
+662	Hole	0.0	test	True	CP	balanced	ic
+663	Interphase	0.0	test	True	CP	balanced	ic
+664	Large	0.0	test	True	CP	balanced	ic
+665	Metaphase	0.0	test	True	CP	balanced	ic
+666	MetaphaseAlignment	0.06779661016949153	test	True	CP	balanced	ic
+667	OutOfFocus	0.0	test	True	CP	balanced	ic
+668	Polylobed	0.3529411764705882	test	True	CP	balanced	ic
+669	Prometaphase	0.0	test	True	CP	balanced	ic
+670	SmallIrregular	0.07058823529411766	test	True	CP	balanced	ic
+671	Weighted	0.06649849968938412	test	True	CP	balanced	ic
+672	ADCCM	0.0311284046692607	train	True	CP	balanced	no_ic
+673	Anaphase	0.0	train	True	CP	balanced	no_ic
+674	Apoptosis	0.06597938144329898	train	True	CP	balanced	no_ic
+675	Binuclear	0.199288256227758	train	True	CP	balanced	no_ic
+676	Elongated	0.12648221343873517	train	True	CP	balanced	no_ic
+677	Grape	0.0	train	True	CP	balanced	no_ic
+678	Hole	0.0	train	True	CP	balanced	no_ic
+679	Interphase	0.05894736842105262	train	True	CP	balanced	no_ic
+680	Large	0.0149812734082397	train	True	CP	balanced	no_ic
+681	Metaphase	0.18439716312056736	train	True	CP	balanced	no_ic
+682	MetaphaseAlignment	0.15425531914893617	train	True	CP	balanced	no_ic
+683	OutOfFocus	0.09374999999999999	train	True	CP	balanced	no_ic
+684	Polylobed	0.07706422018348624	train	True	CP	balanced	no_ic
+685	Prometaphase	0.07072691552062868	train	True	CP	balanced	no_ic
+686	SmallIrregular	0.03065134099616858	train	True	CP	balanced	no_ic
+687	Weighted	0.07798894148311168	train	True	CP	balanced	no_ic
+688	ADCCM	0.0	test	True	CP	balanced	no_ic
+689	Anaphase	0.0	test	True	CP	balanced	no_ic
+690	Apoptosis	0.14583333333333334	test	True	CP	balanced	no_ic
+691	Binuclear	0.08888888888888889	test	True	CP	balanced	no_ic
+692	Elongated	0.0851063829787234	test	True	CP	balanced	no_ic
+693	Grape	0.0	test	True	CP	balanced	no_ic
+694	Hole	0.0	test	True	CP	balanced	no_ic
+695	Interphase	0.09090909090909091	test	True	CP	balanced	no_ic
+696	Large	0.0	test	True	CP	balanced	no_ic
+697	Metaphase	0.14814814814814814	test	True	CP	balanced	no_ic
+698	MetaphaseAlignment	0.09836065573770493	test	True	CP	balanced	no_ic
+699	OutOfFocus	0.0	test	True	CP	balanced	no_ic
+700	Polylobed	0.12371134020618559	test	True	CP	balanced	no_ic
+701	Prometaphase	0.08888888888888889	test	True	CP	balanced	no_ic
+702	SmallIrregular	0.0	test	True	CP	balanced	no_ic
+703	Weighted	0.07229249158050652	test	True	CP	balanced	no_ic
+704	ADCCM	0.0	train	True	CP	unbalanced	ic
+705	Anaphase	0.06315789473684211	train	True	CP	unbalanced	ic
+706	Apoptosis	0.03678929765886288	train	True	CP	unbalanced	ic
+707	Binuclear	0.0	train	True	CP	unbalanced	ic
+708	Elongated	0.0	train	True	CP	unbalanced	ic
+709	Grape	0.0	train	True	CP	unbalanced	ic
+710	Hole	0.0	train	True	CP	unbalanced	ic
+711	Interphase	0.3195057369814651	train	True	CP	unbalanced	ic
+712	Large	0.019417475728155338	train	True	CP	unbalanced	ic
+713	Metaphase	0.0	train	True	CP	unbalanced	ic
+714	MetaphaseAlignment	0.03940886699507389	train	True	CP	unbalanced	ic
+715	OutOfFocus	0.012345679012345678	train	True	CP	unbalanced	ic
+716	Polylobed	0.06358381502890174	train	True	CP	unbalanced	ic
+717	Prometaphase	0.2873900293255132	train	True	CP	unbalanced	ic
+718	SmallIrregular	0.0	train	True	CP	unbalanced	ic
+719	Weighted	0.09929456488823411	train	True	CP	unbalanced	ic
+720	ADCCM	0.0	test	True	CP	unbalanced	ic
+721	Anaphase	0.11764705882352941	test	True	CP	unbalanced	ic
+722	Apoptosis	0.018018018018018018	test	True	CP	unbalanced	ic
+723	Binuclear	0.0	test	True	CP	unbalanced	ic
+724	Elongated	0.0	test	True	CP	unbalanced	ic
+725	Grape	0.0	test	True	CP	unbalanced	ic
+726	Hole	0.0	test	True	CP	unbalanced	ic
+727	Interphase	0.2127659574468085	test	True	CP	unbalanced	ic
+728	Large	0.0	test	True	CP	unbalanced	ic
+729	Metaphase	0.0	test	True	CP	unbalanced	ic
+730	MetaphaseAlignment	0.05714285714285715	test	True	CP	unbalanced	ic
+731	OutOfFocus	0.0	test	True	CP	unbalanced	ic
+732	Polylobed	0.037383177570093455	test	True	CP	unbalanced	ic
+733	Prometaphase	0.2033898305084746	test	True	CP	unbalanced	ic
+734	SmallIrregular	0.0	test	True	CP	unbalanced	ic
+735	Weighted	0.06928015363047363	test	True	CP	unbalanced	ic
+736	ADCCM	0.0	train	True	CP	unbalanced	no_ic
+737	Anaphase	0.05263157894736842	train	True	CP	unbalanced	no_ic
+738	Apoptosis	0.3162393162393162	train	True	CP	unbalanced	no_ic
+739	Binuclear	0.03389830508474576	train	True	CP	unbalanced	no_ic
+740	Elongated	0.0	train	True	CP	unbalanced	no_ic
+741	Grape	0.0	train	True	CP	unbalanced	no_ic
+742	Hole	0.0	train	True	CP	unbalanced	no_ic
+743	Interphase	0.2705882352941177	train	True	CP	unbalanced	no_ic
+744	Large	0.0	train	True	CP	unbalanced	no_ic
+745	Metaphase	0.0	train	True	CP	unbalanced	no_ic
+746	MetaphaseAlignment	0.041884816753926704	train	True	CP	unbalanced	no_ic
+747	OutOfFocus	0.24715447154471548	train	True	CP	unbalanced	no_ic
+748	Polylobed	0.11878453038674033	train	True	CP	unbalanced	no_ic
+749	Prometaphase	0.04005722460658083	train	True	CP	unbalanced	no_ic
+750	SmallIrregular	0.0	train	True	CP	unbalanced	no_ic
+751	Weighted	0.12328490113176466	train	True	CP	unbalanced	no_ic
+752	ADCCM	0.0	test	True	CP	unbalanced	no_ic
+753	Anaphase	0.1111111111111111	test	True	CP	unbalanced	no_ic
+754	Apoptosis	0.3209876543209877	test	True	CP	unbalanced	no_ic
+755	Binuclear	0.0	test	True	CP	unbalanced	no_ic
+756	Elongated	0.0	test	True	CP	unbalanced	no_ic
+757	Grape	0.0	test	True	CP	unbalanced	no_ic
+758	Hole	0.0	test	True	CP	unbalanced	no_ic
+759	Interphase	0.3243243243243244	test	True	CP	unbalanced	no_ic
+760	Large	0.0	test	True	CP	unbalanced	no_ic
+761	Metaphase	0.0	test	True	CP	unbalanced	no_ic
+762	MetaphaseAlignment	0.0	test	True	CP	unbalanced	no_ic
+763	OutOfFocus	0.13592233009708737	test	True	CP	unbalanced	no_ic
+764	Polylobed	0.09302325581395349	test	True	CP	unbalanced	no_ic
+765	Prometaphase	0.03125	test	True	CP	unbalanced	no_ic
+766	SmallIrregular	0.0	test	True	CP	unbalanced	no_ic
+767	Weighted	0.1122671046895946	test	True	CP	unbalanced	no_ic
+768	ADCCM	0.0	train	True	CP_and_DP	balanced	ic
+769	Anaphase	0.0	train	True	CP_and_DP	balanced	ic
+770	Apoptosis	0.034188034188034185	train	True	CP_and_DP	balanced	ic
+771	Binuclear	0.05128205128205129	train	True	CP_and_DP	balanced	ic
+772	Elongated	0.05263157894736841	train	True	CP_and_DP	balanced	ic
+773	Grape	0.0	train	True	CP_and_DP	balanced	ic
+774	Hole	0.14201183431952663	train	True	CP_and_DP	balanced	ic
+775	Interphase	0.08883553421368548	train	True	CP_and_DP	balanced	ic
+776	Large	0.1	train	True	CP_and_DP	balanced	ic
+777	Metaphase	0.02185792349726776	train	True	CP_and_DP	balanced	ic
+778	MetaphaseAlignment	0.0	train	True	CP_and_DP	balanced	ic
+779	OutOfFocus	0.2232704402515723	train	True	CP_and_DP	balanced	ic
+780	Polylobed	0.05647840531561462	train	True	CP_and_DP	balanced	ic
+781	Prometaphase	0.044673539518900345	train	True	CP_and_DP	balanced	ic
+782	SmallIrregular	0.0728744939271255	train	True	CP_and_DP	balanced	ic
+783	Weighted	0.071089396774083	train	True	CP_and_DP	balanced	ic
+784	ADCCM	0.0	test	True	CP_and_DP	balanced	ic
+785	Anaphase	0.0	test	True	CP_and_DP	balanced	ic
+786	Apoptosis	0.0	test	True	CP_and_DP	balanced	ic
+787	Binuclear	0.0	test	True	CP_and_DP	balanced	ic
+788	Elongated	0.16	test	True	CP_and_DP	balanced	ic
+789	Grape	0.0	test	True	CP_and_DP	balanced	ic
+790	Hole	0.18750000000000003	test	True	CP_and_DP	balanced	ic
+791	Interphase	0.1232876712328767	test	True	CP_and_DP	balanced	ic
+792	Large	0.0	test	True	CP_and_DP	balanced	ic
+793	Metaphase	0.13333333333333333	test	True	CP_and_DP	balanced	ic
+794	MetaphaseAlignment	0.0	test	True	CP_and_DP	balanced	ic
+795	OutOfFocus	0.2456140350877193	test	True	CP_and_DP	balanced	ic
+796	Polylobed	0.0808080808080808	test	True	CP_and_DP	balanced	ic
+797	Prometaphase	0.03508771929824561	test	True	CP_and_DP	balanced	ic
+798	SmallIrregular	0.0	test	True	CP_and_DP	balanced	ic
+799	Weighted	0.0756942823635493	test	True	CP_and_DP	balanced	ic
+800	ADCCM	0.0	train	True	CP_and_DP	balanced	no_ic
+801	Anaphase	0.0	train	True	CP_and_DP	balanced	no_ic
+802	Apoptosis	0.10626185958254268	train	True	CP_and_DP	balanced	no_ic
+803	Binuclear	0.05970149253731343	train	True	CP_and_DP	balanced	no_ic
+804	Elongated	0.0	train	True	CP_and_DP	balanced	no_ic
+805	Grape	0.0	train	True	CP_and_DP	balanced	no_ic
+806	Hole	0.11428571428571428	train	True	CP_and_DP	balanced	no_ic
+807	Interphase	0.1412742382271468	train	True	CP_and_DP	balanced	no_ic
+808	Large	0.021505376344086023	train	True	CP_and_DP	balanced	no_ic
+809	Metaphase	0.0	train	True	CP_and_DP	balanced	no_ic
+810	MetaphaseAlignment	0.07476635514018691	train	True	CP_and_DP	balanced	no_ic
+811	OutOfFocus	0.5050215208034433	train	True	CP_and_DP	balanced	no_ic
+812	Polylobed	0.1326530612244898	train	True	CP_and_DP	balanced	no_ic
+813	Prometaphase	0.3135464231354642	train	True	CP_and_DP	balanced	no_ic
+814	SmallIrregular	0.13978494623655915	train	True	CP_and_DP	balanced	no_ic
+815	Weighted	0.16157580324732038	train	True	CP_and_DP	balanced	no_ic
+816	ADCCM	0.0	test	True	CP_and_DP	balanced	no_ic
+817	Anaphase	0.0	test	True	CP_and_DP	balanced	no_ic
+818	Apoptosis	0.04761904761904762	test	True	CP_and_DP	balanced	no_ic
+819	Binuclear	0.0	test	True	CP_and_DP	balanced	no_ic
+820	Elongated	0.0	test	True	CP_and_DP	balanced	no_ic
+821	Grape	0.0	test	True	CP_and_DP	balanced	no_ic
+822	Hole	0.13333333333333333	test	True	CP_and_DP	balanced	no_ic
+823	Interphase	0.05755395683453238	test	True	CP_and_DP	balanced	no_ic
+824	Large	0.0	test	True	CP_and_DP	balanced	no_ic
+825	Metaphase	0.0	test	True	CP_and_DP	balanced	no_ic
+826	MetaphaseAlignment	0.1142857142857143	test	True	CP_and_DP	balanced	no_ic
+827	OutOfFocus	0.557142857142857	test	True	CP_and_DP	balanced	no_ic
+828	Polylobed	0.101010101010101	test	True	CP_and_DP	balanced	no_ic
+829	Prometaphase	0.33333333333333337	test	True	CP_and_DP	balanced	no_ic
+830	SmallIrregular	0.12121212121212122	test	True	CP_and_DP	balanced	no_ic
+831	Weighted	0.1458152897372482	test	True	CP_and_DP	balanced	no_ic
+832	ADCCM	0.0	train	True	CP_and_DP	unbalanced	ic
+833	Anaphase	0.0	train	True	CP_and_DP	unbalanced	ic
+834	Apoptosis	0.07239819004524886	train	True	CP_and_DP	unbalanced	ic
+835	Binuclear	0.017543859649122806	train	True	CP_and_DP	unbalanced	ic
+836	Elongated	0.01680672268907563	train	True	CP_and_DP	unbalanced	ic
+837	Grape	0.0	train	True	CP_and_DP	unbalanced	ic
+838	Hole	0.08849557522123894	train	True	CP_and_DP	unbalanced	ic
+839	Interphase	0.16493055555555552	train	True	CP_and_DP	unbalanced	ic
+840	Large	0.0	train	True	CP_and_DP	unbalanced	ic
+841	Metaphase	0.0	train	True	CP_and_DP	unbalanced	ic
+842	MetaphaseAlignment	0.007168458781362006	train	True	CP_and_DP	unbalanced	ic
+843	OutOfFocus	0.14516129032258063	train	True	CP_and_DP	unbalanced	ic
+844	Polylobed	0.3125	train	True	CP_and_DP	unbalanced	ic
+845	Prometaphase	0.06276747503566334	train	True	CP_and_DP	unbalanced	ic
+846	SmallIrregular	0.009389671361502348	train	True	CP_and_DP	unbalanced	ic
+847	Weighted	0.10044945765817205	train	True	CP_and_DP	unbalanced	ic
+848	ADCCM	0.0	test	True	CP_and_DP	unbalanced	ic
+849	Anaphase	0.0	test	True	CP_and_DP	unbalanced	ic
+850	Apoptosis	0.02666666666666667	test	True	CP_and_DP	unbalanced	ic
+851	Binuclear	0.05555555555555556	test	True	CP_and_DP	unbalanced	ic
+852	Elongated	0.0	test	True	CP_and_DP	unbalanced	ic
+853	Grape	0.0	test	True	CP_and_DP	unbalanced	ic
+854	Hole	0.0	test	True	CP_and_DP	unbalanced	ic
+855	Interphase	0.24242424242424243	test	True	CP_and_DP	unbalanced	ic
+856	Large	0.0	test	True	CP_and_DP	unbalanced	ic
+857	Metaphase	0.0	test	True	CP_and_DP	unbalanced	ic
+858	MetaphaseAlignment	0.0	test	True	CP_and_DP	unbalanced	ic
+859	OutOfFocus	0.21428571428571427	test	True	CP_and_DP	unbalanced	ic
+860	Polylobed	0.2833333333333334	test	True	CP_and_DP	unbalanced	ic
+861	Prometaphase	0.06896551724137931	test	True	CP_and_DP	unbalanced	ic
+862	SmallIrregular	0.0	test	True	CP_and_DP	unbalanced	ic
+863	Weighted	0.10918209127591645	test	True	CP_and_DP	unbalanced	ic
+864	ADCCM	0.0	train	True	CP_and_DP	unbalanced	no_ic
+865	Anaphase	0.0	train	True	CP_and_DP	unbalanced	no_ic
+866	Apoptosis	0.10547667342799187	train	True	CP_and_DP	unbalanced	no_ic
+867	Binuclear	0.00980392156862745	train	True	CP_and_DP	unbalanced	no_ic
+868	Elongated	0.0	train	True	CP_and_DP	unbalanced	no_ic
+869	Grape	0.0	train	True	CP_and_DP	unbalanced	no_ic
+870	Hole	0.0	train	True	CP_and_DP	unbalanced	no_ic
+871	Interphase	0.12879708383961117	train	True	CP_and_DP	unbalanced	no_ic
+872	Large	0.020408163265306124	train	True	CP_and_DP	unbalanced	no_ic
+873	Metaphase	0.0	train	True	CP_and_DP	unbalanced	no_ic
+874	MetaphaseAlignment	0.0	train	True	CP_and_DP	unbalanced	no_ic
+875	OutOfFocus	0.09420289855072464	train	True	CP_and_DP	unbalanced	no_ic
+876	Polylobed	0.06349206349206349	train	True	CP_and_DP	unbalanced	no_ic
+877	Prometaphase	0.0453857791225416	train	True	CP_and_DP	unbalanced	no_ic
+878	SmallIrregular	0.07441860465116279	train	True	CP_and_DP	unbalanced	no_ic
+879	Weighted	0.05834918051137042	train	True	CP_and_DP	unbalanced	no_ic
+880	ADCCM	0.0	test	True	CP_and_DP	unbalanced	no_ic
+881	Anaphase	0.0	test	True	CP_and_DP	unbalanced	no_ic
+882	Apoptosis	0.18181818181818182	test	True	CP_and_DP	unbalanced	no_ic
+883	Binuclear	0.0	test	True	CP_and_DP	unbalanced	no_ic
+884	Elongated	0.0	test	True	CP_and_DP	unbalanced	no_ic
+885	Grape	0.0	test	True	CP_and_DP	unbalanced	no_ic
+886	Hole	0.08695652173913045	test	True	CP_and_DP	unbalanced	no_ic
+887	Interphase	0.11688311688311688	test	True	CP_and_DP	unbalanced	no_ic
+888	Large	0.11764705882352941	test	True	CP_and_DP	unbalanced	no_ic
+889	Metaphase	0.0	test	True	CP_and_DP	unbalanced	no_ic
+890	MetaphaseAlignment	0.0	test	True	CP_and_DP	unbalanced	no_ic
+891	OutOfFocus	0.0784313725490196	test	True	CP_and_DP	unbalanced	no_ic
+892	Polylobed	0.04761904761904762	test	True	CP_and_DP	unbalanced	no_ic
+893	Prometaphase	0.017699115044247787	test	True	CP_and_DP	unbalanced	no_ic
+894	SmallIrregular	0.08888888888888889	test	True	CP_and_DP	unbalanced	no_ic
+895	Weighted	0.06330223725254325	test	True	CP_and_DP	unbalanced	no_ic
+896	ADCCM	0.12299465240641712	train	True	CP_areashape_only	balanced	ic
+897	Anaphase	0.07547169811320756	train	True	CP_areashape_only	balanced	ic
+898	Apoptosis	0.12535612535612536	train	True	CP_areashape_only	balanced	ic
+899	Binuclear	0.04838709677419355	train	True	CP_areashape_only	balanced	ic
+900	Elongated	0.4411764705882353	train	True	CP_areashape_only	balanced	ic
+901	Grape	0.004761904761904762	train	True	CP_areashape_only	balanced	ic
+902	Hole	0.0	train	True	CP_areashape_only	balanced	ic
+903	Interphase	0.07032967032967033	train	True	CP_areashape_only	balanced	ic
+904	Large	0.12121212121212122	train	True	CP_areashape_only	balanced	ic
+905	Metaphase	0.014705882352941175	train	True	CP_areashape_only	balanced	ic
+906	MetaphaseAlignment	0.091324200913242	train	True	CP_areashape_only	balanced	ic
+907	OutOfFocus	0.0	train	True	CP_areashape_only	balanced	ic
+908	Polylobed	0.017045454545454544	train	True	CP_areashape_only	balanced	ic
+909	Prometaphase	0.21794871794871798	train	True	CP_areashape_only	balanced	ic
+910	SmallIrregular	0.056338028169014086	train	True	CP_areashape_only	balanced	ic
+911	Weighted	0.0898410677925612	train	True	CP_areashape_only	balanced	ic
+912	ADCCM	0.058823529411764705	test	True	CP_areashape_only	balanced	ic
+913	Anaphase	0.04	test	True	CP_areashape_only	balanced	ic
+914	Apoptosis	0.0923076923076923	test	True	CP_areashape_only	balanced	ic
+915	Binuclear	0.0	test	True	CP_areashape_only	balanced	ic
+916	Elongated	0.47058823529411753	test	True	CP_areashape_only	balanced	ic
+917	Grape	0.028571428571428574	test	True	CP_areashape_only	balanced	ic
+918	Hole	0.06060606060606061	test	True	CP_areashape_only	balanced	ic
+919	Interphase	0.0	test	True	CP_areashape_only	balanced	ic
+920	Large	0.04878048780487805	test	True	CP_areashape_only	balanced	ic
+921	Metaphase	0.0	test	True	CP_areashape_only	balanced	ic
+922	MetaphaseAlignment	0.0	test	True	CP_areashape_only	balanced	ic
+923	OutOfFocus	0.0	test	True	CP_areashape_only	balanced	ic
+924	Polylobed	0.032258064516129024	test	True	CP_areashape_only	balanced	ic
+925	Prometaphase	0.1686746987951807	test	True	CP_areashape_only	balanced	ic
+926	SmallIrregular	0.0	test	True	CP_areashape_only	balanced	ic
+927	Weighted	0.05844834661644127	test	True	CP_areashape_only	balanced	ic
+928	ADCCM	0.018518518518518517	train	True	CP_areashape_only	balanced	no_ic
+929	Anaphase	0.18888888888888888	train	True	CP_areashape_only	balanced	no_ic
+930	Apoptosis	0.08306709265175719	train	True	CP_areashape_only	balanced	no_ic
+931	Binuclear	0.09638554216867469	train	True	CP_areashape_only	balanced	no_ic
+932	Elongated	0.008968609865470852	train	True	CP_areashape_only	balanced	no_ic
+933	Grape	0.032407407407407406	train	True	CP_areashape_only	balanced	no_ic
+934	Hole	0.023696682464454978	train	True	CP_areashape_only	balanced	no_ic
+935	Interphase	0.09850107066381157	train	True	CP_areashape_only	balanced	no_ic
+936	Large	0.053763440860215055	train	True	CP_areashape_only	balanced	no_ic
+937	Metaphase	0.11971830985915492	train	True	CP_areashape_only	balanced	no_ic
+938	MetaphaseAlignment	0.07563025210084033	train	True	CP_areashape_only	balanced	no_ic
+939	OutOfFocus	0.03529411764705882	train	True	CP_areashape_only	balanced	no_ic
+940	Polylobed	0.04627249357326478	train	True	CP_areashape_only	balanced	no_ic
+941	Prometaphase	0.03636363636363636	train	True	CP_areashape_only	balanced	no_ic
+942	SmallIrregular	0.04428044280442805	train	True	CP_areashape_only	balanced	no_ic
+943	Weighted	0.0626972605215499	train	True	CP_areashape_only	balanced	no_ic
+944	ADCCM	0.0	test	True	CP_areashape_only	balanced	no_ic
+945	Anaphase	0.126984126984127	test	True	CP_areashape_only	balanced	no_ic
+946	Apoptosis	0.09523809523809522	test	True	CP_areashape_only	balanced	no_ic
+947	Binuclear	0.05	test	True	CP_areashape_only	balanced	no_ic
+948	Elongated	0.0	test	True	CP_areashape_only	balanced	no_ic
+949	Grape	0.024390243902439022	test	True	CP_areashape_only	balanced	no_ic
+950	Hole	0.03333333333333333	test	True	CP_areashape_only	balanced	no_ic
+951	Interphase	0.16091954022988506	test	True	CP_areashape_only	balanced	no_ic
+952	Large	0.0	test	True	CP_areashape_only	balanced	no_ic
+953	Metaphase	0.13953488372093023	test	True	CP_areashape_only	balanced	no_ic
+954	MetaphaseAlignment	0.13636363636363638	test	True	CP_areashape_only	balanced	no_ic
+955	OutOfFocus	0.0	test	True	CP_areashape_only	balanced	no_ic
+956	Polylobed	0.02816901408450704	test	True	CP_areashape_only	balanced	no_ic
+957	Prometaphase	0.0	test	True	CP_areashape_only	balanced	no_ic
+958	SmallIrregular	0.03389830508474576	test	True	CP_areashape_only	balanced	no_ic
+959	Weighted	0.05925470453770738	test	True	CP_areashape_only	balanced	no_ic
+960	ADCCM	0.0	train	True	CP_areashape_only	unbalanced	ic
+961	Anaphase	0.0	train	True	CP_areashape_only	unbalanced	ic
+962	Apoptosis	0.11358024691358025	train	True	CP_areashape_only	unbalanced	ic
+963	Binuclear	0.0	train	True	CP_areashape_only	unbalanced	ic
+964	Elongated	0.009950248756218905	train	True	CP_areashape_only	unbalanced	ic
+965	Grape	0.0	train	True	CP_areashape_only	unbalanced	ic
+966	Hole	0.0	train	True	CP_areashape_only	unbalanced	ic
+967	Interphase	0.270516717325228	train	True	CP_areashape_only	unbalanced	ic
+968	Large	0.0	train	True	CP_areashape_only	unbalanced	ic
+969	Metaphase	0.0	train	True	CP_areashape_only	unbalanced	ic
+970	MetaphaseAlignment	0.010362694300518133	train	True	CP_areashape_only	unbalanced	ic
+971	OutOfFocus	0.052401746724890834	train	True	CP_areashape_only	unbalanced	ic
+972	Polylobed	0.24665676077265974	train	True	CP_areashape_only	unbalanced	ic
+973	Prometaphase	0.11475409836065574	train	True	CP_areashape_only	unbalanced	ic
+974	SmallIrregular	0.025477707006369428	train	True	CP_areashape_only	unbalanced	ic
+975	Weighted	0.1040482575298388	train	True	CP_areashape_only	unbalanced	ic
+976	ADCCM	0.0	test	True	CP_areashape_only	unbalanced	ic
+977	Anaphase	0.0	test	True	CP_areashape_only	unbalanced	ic
+978	Apoptosis	0.05555555555555555	test	True	CP_areashape_only	unbalanced	ic
+979	Binuclear	0.0	test	True	CP_areashape_only	unbalanced	ic
+980	Elongated	0.0	test	True	CP_areashape_only	unbalanced	ic
+981	Grape	0.0	test	True	CP_areashape_only	unbalanced	ic
+982	Hole	0.0	test	True	CP_areashape_only	unbalanced	ic
+983	Interphase	0.32098765432098764	test	True	CP_areashape_only	unbalanced	ic
+984	Large	0.0	test	True	CP_areashape_only	unbalanced	ic
+985	Metaphase	0.0	test	True	CP_areashape_only	unbalanced	ic
+986	MetaphaseAlignment	0.0	test	True	CP_areashape_only	unbalanced	ic
+987	OutOfFocus	0.07874015748031496	test	True	CP_areashape_only	unbalanced	ic
+988	Polylobed	0.17094017094017094	test	True	CP_areashape_only	unbalanced	ic
+989	Prometaphase	0.05825242718446602	test	True	CP_areashape_only	unbalanced	ic
+990	SmallIrregular	0.0	test	True	CP_areashape_only	unbalanced	ic
+991	Weighted	0.08965786711487471	test	True	CP_areashape_only	unbalanced	ic
+992	ADCCM	0.020618556701030927	train	True	CP_areashape_only	unbalanced	no_ic
+993	Anaphase	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+994	Apoptosis	0.029325513196480937	train	True	CP_areashape_only	unbalanced	no_ic
+995	Binuclear	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+996	Elongated	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+997	Grape	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+998	Hole	0.04166666666666667	train	True	CP_areashape_only	unbalanced	no_ic
+999	Interphase	0.2776349614395887	train	True	CP_areashape_only	unbalanced	no_ic
+1000	Large	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+1001	Metaphase	0.0	train	True	CP_areashape_only	unbalanced	no_ic
+1002	MetaphaseAlignment	0.02553191489361702	train	True	CP_areashape_only	unbalanced	no_ic
+1003	OutOfFocus	0.004796163069544364	train	True	CP_areashape_only	unbalanced	no_ic
+1004	Polylobed	0.11392405063291139	train	True	CP_areashape_only	unbalanced	no_ic
+1005	Prometaphase	0.05808080808080808	train	True	CP_areashape_only	unbalanced	no_ic
+1006	SmallIrregular	0.053475935828877004	train	True	CP_areashape_only	unbalanced	no_ic
+1007	Weighted	0.07282742321163937	train	True	CP_areashape_only	unbalanced	no_ic
+1008	ADCCM	0.13333333333333336	test	True	CP_areashape_only	unbalanced	no_ic
+1009	Anaphase	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1010	Apoptosis	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1011	Binuclear	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1012	Elongated	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1013	Grape	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1014	Hole	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1015	Interphase	0.3105022831050228	test	True	CP_areashape_only	unbalanced	no_ic
+1016	Large	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1017	Metaphase	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1018	MetaphaseAlignment	0.05555555555555555	test	True	CP_areashape_only	unbalanced	no_ic
+1019	OutOfFocus	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1020	Polylobed	0.18705035971223025	test	True	CP_areashape_only	unbalanced	no_ic
+1021	Prometaphase	0.047619047619047616	test	True	CP_areashape_only	unbalanced	no_ic
+1022	SmallIrregular	0.0	test	True	CP_areashape_only	unbalanced	no_ic
+1023	Weighted	0.08270803633265837	test	True	CP_areashape_only	unbalanced	no_ic
+1024	ADCCM	0.07142857142857142	train	True	CP_zernike_only	balanced	ic
+1025	Anaphase	0.033057851239669415	train	True	CP_zernike_only	balanced	ic
+1026	Apoptosis	0.07829181494661921	train	True	CP_zernike_only	balanced	ic
+1027	Binuclear	0.07166123778501628	train	True	CP_zernike_only	balanced	ic
+1028	Elongated	0.2492401215805471	train	True	CP_zernike_only	balanced	ic
+1029	Grape	0.05150214592274679	train	True	CP_zernike_only	balanced	ic
+1030	Hole	0.036458333333333336	train	True	CP_zernike_only	balanced	ic
+1031	Interphase	0.050761421319796954	train	True	CP_zernike_only	balanced	ic
+1032	Large	0.06206896551724138	train	True	CP_zernike_only	balanced	ic
+1033	Metaphase	0.004555808656036446	train	True	CP_zernike_only	balanced	ic
+1034	MetaphaseAlignment	0.034013605442176874	train	True	CP_zernike_only	balanced	ic
+1035	OutOfFocus	0.057471264367816084	train	True	CP_zernike_only	balanced	ic
+1036	Polylobed	0.0636604774535809	train	True	CP_zernike_only	balanced	ic
+1037	Prometaphase	0.018292682926829267	train	True	CP_zernike_only	balanced	ic
+1038	SmallIrregular	0.08196721311475409	train	True	CP_zernike_only	balanced	ic
+1039	Weighted	0.060346910358063215	train	True	CP_zernike_only	balanced	ic
+1040	ADCCM	0.04878048780487805	test	True	CP_zernike_only	balanced	ic
+1041	Anaphase	0.045454545454545456	test	True	CP_zernike_only	balanced	ic
+1042	Apoptosis	0.038461538461538464	test	True	CP_zernike_only	balanced	ic
+1043	Binuclear	0.15625000000000003	test	True	CP_zernike_only	balanced	ic
+1044	Elongated	0.25	test	True	CP_zernike_only	balanced	ic
+1045	Grape	0.0	test	True	CP_zernike_only	balanced	ic
+1046	Hole	0.08108108108108107	test	True	CP_zernike_only	balanced	ic
+1047	Interphase	0.0	test	True	CP_zernike_only	balanced	ic
+1048	Large	0.0851063829787234	test	True	CP_zernike_only	balanced	ic
+1049	Metaphase	0.0	test	True	CP_zernike_only	balanced	ic
+1050	MetaphaseAlignment	0.0	test	True	CP_zernike_only	balanced	ic
+1051	OutOfFocus	0.031746031746031744	test	True	CP_zernike_only	balanced	ic
+1052	Polylobed	0.0	test	True	CP_zernike_only	balanced	ic
+1053	Prometaphase	0.06779661016949154	test	True	CP_zernike_only	balanced	ic
+1054	SmallIrregular	0.06557377049180328	test	True	CP_zernike_only	balanced	ic
+1055	Weighted	0.04709418470383633	test	True	CP_zernike_only	balanced	ic
+1056	ADCCM	0.11139240506329112	train	True	CP_zernike_only	balanced	no_ic
+1057	Anaphase	0.02531645569620253	train	True	CP_zernike_only	balanced	no_ic
+1058	Apoptosis	0.054982817869415807	train	True	CP_zernike_only	balanced	no_ic
+1059	Binuclear	0.04861111111111111	train	True	CP_zernike_only	balanced	no_ic
+1060	Elongated	0.0	train	True	CP_zernike_only	balanced	no_ic
+1061	Grape	0.013114754098360654	train	True	CP_zernike_only	balanced	no_ic
+1062	Hole	0.05952380952380953	train	True	CP_zernike_only	balanced	no_ic
+1063	Interphase	0.0	train	True	CP_zernike_only	balanced	no_ic
+1064	Large	0.07003891050583658	train	True	CP_zernike_only	balanced	no_ic
+1065	Metaphase	0.0042194092827004225	train	True	CP_zernike_only	balanced	no_ic
+1066	MetaphaseAlignment	0.07079646017699115	train	True	CP_zernike_only	balanced	no_ic
+1067	OutOfFocus	0.016666666666666666	train	True	CP_zernike_only	balanced	no_ic
+1068	Polylobed	0.017804154302670624	train	True	CP_zernike_only	balanced	no_ic
+1069	Prometaphase	0.04142011834319527	train	True	CP_zernike_only	balanced	no_ic
+1070	SmallIrregular	0.022388059701492533	train	True	CP_zernike_only	balanced	no_ic
+1071	Weighted	0.03206255839078034	train	True	CP_zernike_only	balanced	no_ic
+1072	ADCCM	0.05555555555555555	test	True	CP_zernike_only	balanced	no_ic
+1073	Anaphase	0.0	test	True	CP_zernike_only	balanced	no_ic
+1074	Apoptosis	0.03508771929824562	test	True	CP_zernike_only	balanced	no_ic
+1075	Binuclear	0.0	test	True	CP_zernike_only	balanced	no_ic
+1076	Elongated	0.0	test	True	CP_zernike_only	balanced	no_ic
+1077	Grape	0.0	test	True	CP_zernike_only	balanced	no_ic
+1078	Hole	0.0	test	True	CP_zernike_only	balanced	no_ic
+1079	Interphase	0.0	test	True	CP_zernike_only	balanced	no_ic
+1080	Large	0.07547169811320753	test	True	CP_zernike_only	balanced	no_ic
+1081	Metaphase	0.0	test	True	CP_zernike_only	balanced	no_ic
+1082	MetaphaseAlignment	0.14545454545454548	test	True	CP_zernike_only	balanced	no_ic
+1083	OutOfFocus	0.03125	test	True	CP_zernike_only	balanced	no_ic
+1084	Polylobed	0.0	test	True	CP_zernike_only	balanced	no_ic
+1085	Prometaphase	0.06779661016949154	test	True	CP_zernike_only	balanced	no_ic
+1086	SmallIrregular	0.041666666666666664	test	True	CP_zernike_only	balanced	no_ic
+1087	Weighted	0.030100439503763916	test	True	CP_zernike_only	balanced	no_ic
+1088	ADCCM	0.0	train	True	CP_zernike_only	unbalanced	ic
+1089	Anaphase	0.0	train	True	CP_zernike_only	unbalanced	ic
+1090	Apoptosis	0.0273224043715847	train	True	CP_zernike_only	unbalanced	ic
+1091	Binuclear	0.0	train	True	CP_zernike_only	unbalanced	ic
+1092	Elongated	0.0	train	True	CP_zernike_only	unbalanced	ic
+1093	Grape	0.0	train	True	CP_zernike_only	unbalanced	ic
+1094	Hole	0.0	train	True	CP_zernike_only	unbalanced	ic
+1095	Interphase	0.2715546503733876	train	True	CP_zernike_only	unbalanced	ic
+1096	Large	0.02777777777777778	train	True	CP_zernike_only	unbalanced	ic
+1097	Metaphase	0.0	train	True	CP_zernike_only	unbalanced	ic
+1098	MetaphaseAlignment	0.0	train	True	CP_zernike_only	unbalanced	ic
+1099	OutOfFocus	0.006980802792321116	train	True	CP_zernike_only	unbalanced	ic
+1100	Polylobed	0.24768518518518523	train	True	CP_zernike_only	unbalanced	ic
+1101	Prometaphase	0.21527777777777776	train	True	CP_zernike_only	unbalanced	ic
+1102	SmallIrregular	0.0	train	True	CP_zernike_only	unbalanced	ic
+1103	Weighted	0.10168590990777289	train	True	CP_zernike_only	unbalanced	ic
+1104	ADCCM	0.0	test	True	CP_zernike_only	unbalanced	ic
+1105	Anaphase	0.0	test	True	CP_zernike_only	unbalanced	ic
+1106	Apoptosis	0.0	test	True	CP_zernike_only	unbalanced	ic
+1107	Binuclear	0.06451612903225806	test	True	CP_zernike_only	unbalanced	ic
+1108	Elongated	0.0	test	True	CP_zernike_only	unbalanced	ic
+1109	Grape	0.0	test	True	CP_zernike_only	unbalanced	ic
+1110	Hole	0.0	test	True	CP_zernike_only	unbalanced	ic
+1111	Interphase	0.26022304832713755	test	True	CP_zernike_only	unbalanced	ic
+1112	Large	0.0	test	True	CP_zernike_only	unbalanced	ic
+1113	Metaphase	0.0	test	True	CP_zernike_only	unbalanced	ic
+1114	MetaphaseAlignment	0.0	test	True	CP_zernike_only	unbalanced	ic
+1115	OutOfFocus	0.021052631578947368	test	True	CP_zernike_only	unbalanced	ic
+1116	Polylobed	0.32704402515723274	test	True	CP_zernike_only	unbalanced	ic
+1117	Prometaphase	0.21999999999999997	test	True	CP_zernike_only	unbalanced	ic
+1118	SmallIrregular	0.0	test	True	CP_zernike_only	unbalanced	ic
+1119	Weighted	0.11301475835765643	test	True	CP_zernike_only	unbalanced	ic
+1120	ADCCM	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1121	Anaphase	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1122	Apoptosis	0.07984031936127745	train	True	CP_zernike_only	unbalanced	no_ic
+1123	Binuclear	0.011049723756906077	train	True	CP_zernike_only	unbalanced	no_ic
+1124	Elongated	0.02173913043478261	train	True	CP_zernike_only	unbalanced	no_ic
+1125	Grape	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1126	Hole	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1127	Interphase	0.1665470208183776	train	True	CP_zernike_only	unbalanced	no_ic
+1128	Large	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1129	Metaphase	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1130	MetaphaseAlignment	0.03529411764705882	train	True	CP_zernike_only	unbalanced	no_ic
+1131	OutOfFocus	0.21327967806841044	train	True	CP_zernike_only	unbalanced	no_ic
+1132	Polylobed	0.16518424396442186	train	True	CP_zernike_only	unbalanced	no_ic
+1133	Prometaphase	0.13483146067415733	train	True	CP_zernike_only	unbalanced	no_ic
+1134	SmallIrregular	0.0	train	True	CP_zernike_only	unbalanced	no_ic
+1135	Weighted	0.09617605459506927	train	True	CP_zernike_only	unbalanced	no_ic
+1136	ADCCM	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1137	Anaphase	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1138	Apoptosis	0.10869565217391304	test	True	CP_zernike_only	unbalanced	no_ic
+1139	Binuclear	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1140	Elongated	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1141	Grape	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1142	Hole	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1143	Interphase	0.14173228346456693	test	True	CP_zernike_only	unbalanced	no_ic
+1144	Large	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1145	Metaphase	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1146	MetaphaseAlignment	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1147	OutOfFocus	0.09999999999999999	test	True	CP_zernike_only	unbalanced	no_ic
+1148	Polylobed	0.2553191489361702	test	True	CP_zernike_only	unbalanced	no_ic
+1149	Prometaphase	0.1320754716981132	test	True	CP_zernike_only	unbalanced	no_ic
+1150	SmallIrregular	0.0	test	True	CP_zernike_only	unbalanced	no_ic
+1151	Weighted	0.09049370999590921	test	True	CP_zernike_only	unbalanced	no_ic
+1152	ADCCM	0.0	train	True	DP	balanced	ic
+1153	Anaphase	0.0	train	True	DP	balanced	ic
+1154	Apoptosis	0.07317073170731707	train	True	DP	balanced	ic
+1155	Binuclear	0.053412462908011875	train	True	DP	balanced	ic
+1156	Elongated	0.05357142857142857	train	True	DP	balanced	ic
+1157	Grape	0.0	train	True	DP	balanced	ic
+1158	Hole	0.0	train	True	DP	balanced	ic
+1159	Interphase	0.1258426966292135	train	True	DP	balanced	ic
+1160	Large	0.08917197452229299	train	True	DP	balanced	ic
+1161	Metaphase	0.0	train	True	DP	balanced	ic
+1162	MetaphaseAlignment	0.09418282548476456	train	True	DP	balanced	ic
+1163	OutOfFocus	0.037383177570093455	train	True	DP	balanced	ic
+1164	Polylobed	0.05519480519480519	train	True	DP	balanced	ic
+1165	Prometaphase	0.18892508143322478	train	True	DP	balanced	ic
+1166	SmallIrregular	0.06086956521739131	train	True	DP	balanced	ic
+1167	Weighted	0.07646333540350742	train	True	DP	balanced	ic
+1168	ADCCM	0.0	test	True	DP	balanced	ic
+1169	Anaphase	0.0	test	True	DP	balanced	ic
+1170	Apoptosis	0.0	test	True	DP	balanced	ic
+1171	Binuclear	0.031746031746031744	test	True	DP	balanced	ic
+1172	Elongated	0.0	test	True	DP	balanced	ic
+1173	Grape	0.0	test	True	DP	balanced	ic
+1174	Hole	0.07692307692307691	test	True	DP	balanced	ic
+1175	Interphase	0.1019108280254777	test	True	DP	balanced	ic
+1176	Large	0.06896551724137931	test	True	DP	balanced	ic
+1177	Metaphase	0.0	test	True	DP	balanced	ic
+1178	MetaphaseAlignment	0.06896551724137931	test	True	DP	balanced	ic
+1179	OutOfFocus	0.07407407407407408	test	True	DP	balanced	ic
+1180	Polylobed	0.09174311926605505	test	True	DP	balanced	ic
+1181	Prometaphase	0.1801801801801802	test	True	DP	balanced	ic
+1182	SmallIrregular	0.0	test	True	DP	balanced	ic
+1183	Weighted	0.06758209617155468	test	True	DP	balanced	ic
+1184	ADCCM	0.0	train	True	DP	balanced	no_ic
+1185	Anaphase	0.0	train	True	DP	balanced	no_ic
+1186	Apoptosis	0.14487632508833923	train	True	DP	balanced	no_ic
+1187	Binuclear	0.03908794788273616	train	True	DP	balanced	no_ic
+1188	Elongated	0.0	train	True	DP	balanced	no_ic
+1189	Grape	0.0	train	True	DP	balanced	no_ic
+1190	Hole	0.010101010101010102	train	True	DP	balanced	no_ic
+1191	Interphase	0.05943536404160475	train	True	DP	balanced	no_ic
+1192	Large	0.08888888888888889	train	True	DP	balanced	no_ic
+1193	Metaphase	0.0	train	True	DP	balanced	no_ic
+1194	MetaphaseAlignment	0.044554455445544545	train	True	DP	balanced	no_ic
+1195	OutOfFocus	0.11428571428571428	train	True	DP	balanced	no_ic
+1196	Polylobed	0.2579617834394904	train	True	DP	balanced	no_ic
+1197	Prometaphase	0.20382165605095542	train	True	DP	balanced	no_ic
+1198	SmallIrregular	0.009900990099009901	train	True	DP	balanced	no_ic
+1199	Weighted	0.10114419906731896	train	True	DP	balanced	no_ic
+1200	ADCCM	0.0	test	True	DP	balanced	no_ic
+1201	Anaphase	0.0	test	True	DP	balanced	no_ic
+1202	Apoptosis	0.21052631578947367	test	True	DP	balanced	no_ic
+1203	Binuclear	0.0	test	True	DP	balanced	no_ic
+1204	Elongated	0.0	test	True	DP	balanced	no_ic
+1205	Grape	0.0	test	True	DP	balanced	no_ic
+1206	Hole	0.0	test	True	DP	balanced	no_ic
+1207	Interphase	0.07751937984496125	test	True	DP	balanced	no_ic
+1208	Large	0.0	test	True	DP	balanced	no_ic
+1209	Metaphase	0.0	test	True	DP	balanced	no_ic
+1210	MetaphaseAlignment	0.0	test	True	DP	balanced	no_ic
+1211	OutOfFocus	0.15999999999999998	test	True	DP	balanced	no_ic
+1212	Polylobed	0.23076923076923075	test	True	DP	balanced	no_ic
+1213	Prometaphase	0.22608695652173913	test	True	DP	balanced	no_ic
+1214	SmallIrregular	0.0	test	True	DP	balanced	no_ic
+1215	Weighted	0.10560505873131118	test	True	DP	balanced	no_ic
+1216	ADCCM	0.0	train	True	DP	unbalanced	ic
+1217	Anaphase	0.019801980198019802	train	True	DP	unbalanced	ic
+1218	Apoptosis	0.04472843450479234	train	True	DP	unbalanced	ic
+1219	Binuclear	0.11363636363636365	train	True	DP	unbalanced	ic
+1220	Elongated	0.09580838323353293	train	True	DP	unbalanced	ic
+1221	Grape	0.0	train	True	DP	unbalanced	ic
+1222	Hole	0.0	train	True	DP	unbalanced	ic
+1223	Interphase	0.1370716510903427	train	True	DP	unbalanced	ic
+1224	Large	0.09090909090909091	train	True	DP	unbalanced	ic
+1225	Metaphase	0.0	train	True	DP	unbalanced	ic
+1226	MetaphaseAlignment	0.0	train	True	DP	unbalanced	ic
+1227	OutOfFocus	0.030634573304157548	train	True	DP	unbalanced	ic
+1228	Polylobed	0.13353115727002965	train	True	DP	unbalanced	ic
+1229	Prometaphase	0.10384615384615384	train	True	DP	unbalanced	ic
+1230	SmallIrregular	0.03883495145631068	train	True	DP	unbalanced	ic
+1231	Weighted	0.07357405797312074	train	True	DP	unbalanced	ic
+1232	ADCCM	0.0	test	True	DP	unbalanced	ic
+1233	Anaphase	0.1	test	True	DP	unbalanced	ic
+1234	Apoptosis	0.020202020202020204	test	True	DP	unbalanced	ic
+1235	Binuclear	0.1951219512195122	test	True	DP	unbalanced	ic
+1236	Elongated	0.07407407407407407	test	True	DP	unbalanced	ic
+1237	Grape	0.0	test	True	DP	unbalanced	ic
+1238	Hole	0.0	test	True	DP	unbalanced	ic
+1239	Interphase	0.15384615384615383	test	True	DP	unbalanced	ic
+1240	Large	0.0	test	True	DP	unbalanced	ic
+1241	Metaphase	0.0	test	True	DP	unbalanced	ic
+1242	MetaphaseAlignment	0.03571428571428572	test	True	DP	unbalanced	ic
+1243	OutOfFocus	0.04938271604938271	test	True	DP	unbalanced	ic
+1244	Polylobed	0.09022556390977444	test	True	DP	unbalanced	ic
+1245	Prometaphase	0.12121212121212122	test	True	DP	unbalanced	ic
+1246	SmallIrregular	0.052631578947368425	test	True	DP	unbalanced	ic
+1247	Weighted	0.07965254069422602	test	True	DP	unbalanced	ic
+1248	ADCCM	0.0	train	True	DP	unbalanced	no_ic
+1249	Anaphase	0.0	train	True	DP	unbalanced	no_ic
+1250	Apoptosis	0.01596806387225549	train	True	DP	unbalanced	no_ic
+1251	Binuclear	0.0449438202247191	train	True	DP	unbalanced	no_ic
+1252	Elongated	0.0	train	True	DP	unbalanced	no_ic
+1253	Grape	0.0	train	True	DP	unbalanced	no_ic
+1254	Hole	0.01941747572815534	train	True	DP	unbalanced	no_ic
+1255	Interphase	0.17863720073664824	train	True	DP	unbalanced	no_ic
+1256	Large	0.0	train	True	DP	unbalanced	no_ic
+1257	Metaphase	0.0	train	True	DP	unbalanced	no_ic
+1258	MetaphaseAlignment	0.03809523809523809	train	True	DP	unbalanced	no_ic
+1259	OutOfFocus	0.009630818619582664	train	True	DP	unbalanced	no_ic
+1260	Polylobed	0.1907216494845361	train	True	DP	unbalanced	no_ic
+1261	Prometaphase	0.17405063291139242	train	True	DP	unbalanced	no_ic
+1262	SmallIrregular	0.011627906976744188	train	True	DP	unbalanced	no_ic
+1263	Weighted	0.08086500480352822	train	True	DP	unbalanced	no_ic
+1264	ADCCM	0.0	test	True	DP	unbalanced	no_ic
+1265	Anaphase	0.0	test	True	DP	unbalanced	no_ic
+1266	Apoptosis	0.024096385542168676	test	True	DP	unbalanced	no_ic
+1267	Binuclear	0.0	test	True	DP	unbalanced	no_ic
+1268	Elongated	0.0	test	True	DP	unbalanced	no_ic
+1269	Grape	0.0	test	True	DP	unbalanced	no_ic
+1270	Hole	0.0	test	True	DP	unbalanced	no_ic
+1271	Interphase	0.2040816326530612	test	True	DP	unbalanced	no_ic
+1272	Large	0.0	test	True	DP	unbalanced	no_ic
+1273	Metaphase	0.0	test	True	DP	unbalanced	no_ic
+1274	MetaphaseAlignment	0.0	test	True	DP	unbalanced	no_ic
+1275	OutOfFocus	0.0	test	True	DP	unbalanced	no_ic
+1276	Polylobed	0.15037593984962405	test	True	DP	unbalanced	no_ic
+1277	Prometaphase	0.16793893129770993	test	True	DP	unbalanced	no_ic
+1278	SmallIrregular	0.0	test	True	DP	unbalanced	no_ic
+1279	Weighted	0.07189278651927958	test	True	DP	unbalanced	no_ic
