@@ -8,3 +8,6 @@ __pycache__/
 3.ML_model/autosklearn.ipynb
 # Mac files
 .DS_Store
+
+# REMOVE BEFORE MERGING PR
+2.train_model/models/multi_class_models
