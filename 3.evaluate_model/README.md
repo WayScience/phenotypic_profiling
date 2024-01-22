@@ -3,7 +3,7 @@
 In this module, we evaluate the final and shuffled baseline ML models.
 
 After training the models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training and testing datasets and evaluate their predictive performance.
-Evaluations are done on each model for each combination of model type (final, shuffled baseline), feature type (CP, DP, CP_and_DP), balance type (balanced, unbalanced), dataset type (ic, no_ic) and dataset (train, test).
+We evaluate each model for each combination of model type (final, shuffled baseline), feature type (CP, DP, CP_and_DP), balance type (balanced, unbalanced), dataset type (ic, no_ic) and dataset (train, test).
 See [2.train_model/README.md](../2.train_model/README.md) for more information on model combinations.
 
 In [get_model_predictions.ipynb](get_model_predictions.ipynb), we derive the predicted and true phenotypic class for each model, feature type, and dataset combination.
