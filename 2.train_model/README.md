@@ -26,17 +26,14 @@ We search over the following parameters: `[0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.
 We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02, 1.e+03]`
 
 We train models for each combination of the following model types, feature, balance, and dataset types:
-```python
-model_types = ["final", "shuffled_baseline"]
-feature_types = ["CP", "DP", "CP_and_DP", "CP_zernike_only", "CP_areashape_only"]
-balance_types = ["balanced", "unbalanced"]
-dataset_types = ["ic", "no_ic"]
-```
-Here, these types represent:
-- Which version of features the model is trained on. For `shuffled_baseline`, each column of the feature data is shuffled independently to create a shuffled baseline for comparison.
-- Which features to use for trainining.
-- Whether or not to balance `class_weight` of each model when training.
-- Which `mitocheck_data` dataset to use for feature training. We have datasets extracted with and without illumination correction.
+- model_types: final, shuffled_baseline
+    - Which version of features the model is trained on. For `shuffled_baseline`, each column of the feature data is shuffled independently to create a shuffled baseline for comparison.
+- feature_types: CP, DP, CP_and_DP, CP_zernike_only, CP_areashape_only
+    - Which features to use for trainining.
+- balance_types: balanced, unbalanced
+    - Whether or not to balance `class_weight` of each model when training.
+- dataset_types: ic, no_ic
+    - Which `mitocheck_data` dataset to use for feature training. We have datasets extracted with and without illumination correction.
 
 The notebooks save each model in [models/](models/).
 
