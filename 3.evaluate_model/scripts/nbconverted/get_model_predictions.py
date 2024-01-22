@@ -54,6 +54,7 @@ for model_path in sorted(models_dir.iterdir()):
     model_type = model_components[0]
     feature_type = model_components[1]
     balance_type = model_components[2]
+    # version of dataset used to train model (ic, no_ic)
     dataset_type = model_components[3].replace(".joblib", "")
     
     # load features data from indexes and features dataframe
