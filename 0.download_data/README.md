@@ -14,7 +14,7 @@ We specify the path to each set of `mitocheck_data` with `labeled_data_paths` in
 ### Data Preview
 
 The labeled dataset includes CellProfiler (CP) and DeepProfiler (DP) features as well as metadata (location, perturbation, etc) for cells from the original MitoCheck project.
-The breakdown of cell counts by phenotypic class for `ic` dataset (as labeled manually by MitoCheck) is as follows:
+The breakdown of cell counts by manually-assigned phenotypic class for the `ic` (illumination corrected) dataset is as follows:
 
 | Phenotypic Class    | Cell Count |
 |---------------------|-------|
