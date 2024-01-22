@@ -114,6 +114,7 @@ PR_curves_dir = pathlib.Path("evaluations/precision_recall_curves/")
 PR_curves_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
+# compressed to save space for larger tsv file
 compiled_PR_data_save_path = pathlib.Path(
     f"{PR_curves_dir}/compiled_class_PR_curves.tsv.gz"
 )
