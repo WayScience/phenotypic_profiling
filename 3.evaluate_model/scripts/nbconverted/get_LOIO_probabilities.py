@@ -60,23 +60,24 @@ print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 # In[4]:
 
 
-# specify parameters to tune for
-parameters = {"C": np.logspace(-2, 2, 5), "l1_ratio": np.linspace(0, 1, 6)}
-parameters
+# directory to load the models from
+models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
+
+# Which models to perform LOIO
+all_model_paths = [model for model in sorted(models_dir.iterdir())]
+print(f"There are {len(all_model_paths)} models to run LOIO\n\nThey include:")
+all_model_paths
 
 
 # In[5]:
 
-
-# directory to load the models from
-models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
 
 # use a list to keep track of LOIO probabilities in tidy long format for each model combination
 compiled_LOIO_wide_data = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
 # sorted so final models are shown before shuffled_baseline
-for model_path in sorted(models_dir.iterdir()):
+for model_path in all_model_paths:
     model = load(model_path)
     # determine model/feature type/balance/dataset type from model file name
     model_components = model_path.name.split("__")
@@ -112,23 +113,6 @@ for model_path in sorted(models_dir.iterdir()):
                 
         X_test, y_test = get_X_y_data(test_cells, feature_type)
 
-        # Setup grid search logic
-        straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-        
-        # create logistic regression model with following parameters
-        log_reg_model = LogisticRegression(
-            penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
-        )
-
-        # create grid search with cross validation with hypertuning params
-        grid_search_cv = GridSearchCV(
-            log_reg_model,
-            parameters,
-            cv=straified_k_folds,
-            n_jobs=-1,
-            scoring="f1_weighted",
-        )
-
         # capture convergence warning from sklearn
         # this warning does not affect the model but takes up lots of space in the output
         # this warning must be caught with parallel_backend because the logistic regression model uses parallel_backend
@@ -140,7 +124,18 @@ for model_path in sorted(models_dir.iterdir()):
                 )
 
                 # fit a logisitc regression model on the training X, y
-                LOIO_model = grid_search_cv.fit(X_train, y_train)
+                # Use the optimal model parameters as identified previously.
+                # Note that we tried performing a full grid search once again,
+                # but this did not impact performance (data not shown)
+                LOIO_model = LogisticRegression(
+                    penalty="elasticnet",
+                    solver="saga",
+                    max_iter=100,
+                    n_jobs=-1,
+                    random_state=0,
+                    C=model.C,
+                    l1_ratio=model.l1_ratio,
+                ).fit(X_train, y_train)
 
         # create metadata dataframe for test cells with model parameters
         metadata_dataframe = pd.concat(
@@ -152,9 +147,11 @@ for model_path in sorted(models_dir.iterdir()):
             axis=1,
         ).reset_index(drop=True)
         metadata_dataframe["Model_Feature_Type"] = feature_type
-        metadata_dataframe["Model_C"] = grid_search_cv.best_params_["C"]
-        metadata_dataframe["Model_l1_ratio"] = grid_search_cv.best_params_["l1_ratio"]
+        metadata_dataframe["Model_C"] = model.C
+        metadata_dataframe["Model_l1_ratio"] = model.l1_ratio
         metadata_dataframe["Model_type"] = model_type
+        metadata_dataframe["Dataset_type"] = dataset_type
+        metadata_dataframe["Balance_type"] = balance_type
 
         # predict probabilities for test cells and make these probabilities into a dataframe
         print(f"Evaluating: {image_path}")
@@ -166,13 +163,9 @@ for model_path in sorted(models_dir.iterdir()):
 
         # add tidy long data to compiled data
         compiled_LOIO_wide_data.append(test_cells_wide_data)
-        
-        break
-    break
 
 
 # ### Format and save LOIO probabilities (multi class models)
-# 
 
 # In[6]:
 
@@ -199,7 +192,7 @@ LOIO_probas_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
 compiled_LOIO_save_path = pathlib.Path(
-    f"{LOIO_probas_dir}/compiled_LOIO_probabilites_withshuffled.tsv"
+    f"{LOIO_probas_dir}/compiled_LOIO_probabilites_withshuffled_withnoic.tsv"
 )
 
 # save data as tsv
@@ -212,7 +205,7 @@ compiled_LOIO_tidy_long_data
 # ### Get LOIO probabilities (single class models)
 # 
 
-# In[ ]:
+# In[7]:
 
 
 # directory to load the models from
@@ -315,7 +308,7 @@ for model_type, feature_type, phenotypic_class in itertools.product(
 # ### Format and save LOIO probabilities (single class models)
 # 
 
-# In[ ]:
+# In[8]:
 
 
 # compile list of wide data into one dataframe
