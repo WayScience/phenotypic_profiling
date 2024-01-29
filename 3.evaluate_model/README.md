@@ -29,7 +29,7 @@ Our LOIO is within the family of [leave one out cross validation](https://machin
 The LOIO evaluation procedure is as follows:
 1) Load in entire MitoChecks labeled cell dataset (from [labeled_data.csv.gz](../data/labeled_data.csv.gz))
 2) For each image in MitoCheck labeled cell dataset (as specified by the `Metadata_DNA` field):
-    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) on every cell that is **not** in the specific image.
+    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) determined for a particular model in [train_model.ipynb](../2.train_model/train_model.ipynb) on every cell that is **not** in the specific image.
     - Predict probabilities on every cell that **is** in the specific image.
 
 These probabilities are saved to [LOIO_probas](evaluations/LOIO_probas/).
