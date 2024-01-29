@@ -17,13 +17,16 @@ sys.path.append("../utils")
 from split_utils import get_features_data
 
 
-# ## Specify datasets, save path
+# ## Specify datasets, test ratio, save path
 
 # In[2]:
 
 
 # datasets to split
 datasets = ["ic", "no_ic"]
+
+# ratio of data to be used for testing (ex 0.15 = 15%)
+test_ratio = 0.15
 
 # make results dir for saving
 results_dir = pathlib.Path("indexes/")
@@ -42,9 +45,6 @@ for dataset in datasets:
     labeled_data_path = pathlib.Path(f"../0.download_data/data/labeled_data__{dataset}.csv.gz")
     labeled_data = get_features_data(labeled_data_path)
     print(f"Dataset shape: {labeled_data.shape}")
-    
-    # ratio of data to be used for testing (ex 0.15 = 15%)
-    test_ratio = 0.15
 
     # get indexes of training and testing data
     training_data, testing_data = train_test_split(
