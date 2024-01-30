@@ -192,7 +192,7 @@ LOIO_probas_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
 compiled_LOIO_save_path = pathlib.Path(
-    f"{LOIO_probas_dir}/compiled_LOIO_probabilites_withshuffled_withnoic.tsv"
+    f"{LOIO_probas_dir}/compiled_LOIO_probabilites.tsv"
 )
 
 # save data as tsv
