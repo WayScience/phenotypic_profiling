@@ -64,11 +64,6 @@ feature_space_colors <- c(
     "CP_and_DP" = "#7570b3"
 )
 
-focus_corr_colors <- c(
-    "TRUE" = "blue",
-    "FALSE" = "orange"
-)
-
 data_split_colors <- c(
     "test" = "#D64933",
     "train" = "#044389"
@@ -90,11 +85,10 @@ shuffled_colors = c(
     "TRUE" = "#FF7E6B"
 )
 
-focus_corr_colors = c(
-    "TRUE" = "blue",
-    "FALSE" = "orange"
+focus_corr_colors <- c(
+    "TRUE" = "#addde6",
+    "FALSE" = "#e6b6ad"
 )
-
 focus_corr_labels  = c(
     "TRUE" = "Yes",
     "FALSE" = "No"
