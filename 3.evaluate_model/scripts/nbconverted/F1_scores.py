@@ -22,17 +22,15 @@ from train_utils import get_dataset
 from evaluate_utils import model_F1_score, get_SCM_model_data
 
 
-# ### Load Necessary Data
+# ## Set Data Load Paths
 # 
 
 # In[2]:
 
 
 # load features data from indexes and features dataframe
-data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
-data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
-features_dataframe = get_features_data(features_dataframe_path)
+data_split_dir_path = pathlib.Path("../1.split_data/indexes/")
+features_dataframe_dir_path = pathlib.Path("../0.download_data/data/")
 
 
 # ### Evaluate Each Model on Each Dataset (multi class models)
@@ -51,20 +49,29 @@ compiled_scores = []
 # sorted so final models are shown before shuffled_baseline
 for model_path in sorted(models_dir.iterdir()):
     model = load(model_path)
-    # determine model/feature type/balance type from model file name
+    # determine model/feature type/balance/dataset type from model file name
     model_components = model_path.name.split("__")
-    # Older models only have 2 components, skip these
-    if len(model_components) == 2:
-        continue
     model_type = model_components[0]
     feature_type = model_components[1]
-    balance_type = model_components[2].replace(".joblib", "")
+    balance_type = model_components[2]
+    # version of dataset used to train model (ic, no_ic)
+    dataset_type = model_components[3].replace(".joblib", "")
+
+    # load features data from indexes and features dataframe
+    data_split_path = pathlib.Path(
+        f"{data_split_dir_path}/data_split_indexes__{dataset_type}.tsv"
+    )
+    data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+    features_dataframe_path = pathlib.Path(
+        f"{features_dataframe_dir_path}/labeled_data__{dataset_type}.csv.gz"
+    )
+    features_dataframe = get_features_data(features_dataframe_path)
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(
-            f"Evaluating {balance_type} model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+            f"Evaluating model with types {model_type}, {balance_type}, {feature_type}, {dataset_type} on {label} dataset"
         )
 
         # load dataset (train, test, etc)
@@ -89,6 +96,8 @@ for model_path in sorted(models_dir.iterdir()):
         score["feature_type"] = feature_type
         # add balance type column
         score["balance_type"] = balance_type
+        # add dataset type column
+        score["dataset_type"] = dataset_type
         # add this score data to the tidy scores compiling list
         compiled_scores.append(score)
 
@@ -121,6 +130,19 @@ compiled_scores.head()
 # 
 
 # In[5]:
+
+
+# load features data from indexes and features dataframe
+# single class models only trained on ic data
+data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes__ic.tsv")
+data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+features_dataframe_path = pathlib.Path(
+    "../0.download_data/data/labeled_data__ic.csv.gz"
+)
+features_dataframe = get_features_data(features_dataframe_path)
+
+
+# In[6]:
 
 
 # directory to load the models from
@@ -203,7 +225,7 @@ for model_type, feature_type, evaluation_type in itertools.product(
 # ### Save scores from each evaluation (single class models)
 # 
 
-# In[6]:
+# In[7]:
 
 
 # compile list of tidy data into one dataframe

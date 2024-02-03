@@ -3,7 +3,8 @@
 In this module, we evaluate the final and shuffled baseline ML models.
 
 After training the models in [2.train_model](../2.train_model/), we use these models to predict the labels of the training and testing datasets and evaluate their predictive performance.
-Evaluations are done on each model for each combination of model type (final, shuffled baseline), feature type (CP, DP, CP_and_DP), and dataset (train, test).
+We evaluate each model for each combination of model type (final, shuffled baseline), feature type (CP, DP, CP_and_DP), balance type (balanced, unbalanced), dataset type (ic, no_ic) and dataset (train, test).
+See [2.train_model/README.md](../2.train_model/README.md) for more information on model combinations.
 
 In [get_model_predictions.ipynb](get_model_predictions.ipynb), we derive the predicted and true phenotypic class for each model, feature type, and dataset combination.
 These predictions are saved in [predictions](predictions/).
@@ -28,7 +29,7 @@ Our LOIO is within the family of [leave one out cross validation](https://machin
 The LOIO evaluation procedure is as follows:
 1) Load in entire MitoChecks labeled cell dataset (from [labeled_data.csv.gz](../data/labeled_data.csv.gz))
 2) For each image in MitoCheck labeled cell dataset (as specified by the `Metadata_DNA` field):
-    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) on every cell that is **not** in the specific image.
+    - Train a logistic regression model with optimal hyperparameters (`C` and `l1_ratio`) determined for a particular model in [train_model.ipynb](../2.train_model/train_model.ipynb) on every cell that is **not** in the specific image.
     - Predict probabilities on every cell that **is** in the specific image.
 
 These probabilities are saved to [LOIO_probas](evaluations/LOIO_probas/).
