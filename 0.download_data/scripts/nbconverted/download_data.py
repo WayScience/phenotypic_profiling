@@ -17,12 +17,12 @@ import pandas as pd
 # In[2]:
 
 
-labeled_data_hash__ic = "20369033f579dca1334cb2c58a1c6d532322f93e"
-labeled_data_url__ic = f"https://raw.github.com/WayScience/mitocheck_data/{labeled_data_hash__ic}/3.normalize_data/normalized_data/training_data.csv.gz"
+labeled_data_hash__ic = "b7abbdfda06d8dcc8e897cb9b89674b8d7a49c49"
+labeled_data_url__ic = f"https://raw.github.com/WayScience/mitocheck_data/{labeled_data_hash__ic}/3.normalize_data/normalized_data/training_data__ic.csv.gz"
 
 # ADD PATH TO DATA FROM GITHUB
-# labeled_data_hash = ""
-labeled_data_url__no_ic = f"/home/roshankern/Desktop/Github/mitocheck_data/3.normalize_data/normalized_data__no_ic/training_data.csv.gz"
+labeled_data_hash__no_ic = "b7abbdfda06d8dcc8e897cb9b89674b8d7a49c49"
+labeled_data_url__no_ic = f"https://raw.github.com/WayScience/mitocheck_data/{labeled_data_hash__no_ic}/3.normalize_data/normalized_data/training_data__no_ic.csv.gz"
 
 labeled_data_paths = {
     "ic": labeled_data_url__ic,
