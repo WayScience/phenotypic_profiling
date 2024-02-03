@@ -92,7 +92,6 @@ phenotype_classes
 # In[6]:
 
 
-# Calculate average rank for each Metadata_DNA
 rank_groups = [
     "Metadata_DNA",
     "Model_type",
