@@ -59,10 +59,10 @@ def compute_avg_rank_and_pvalue(grouped_df):
 
 # Set I/O
 proba_dir = pathlib.Path("evaluations", "LOIO_probas")
-loio_file = pathlib.Path(proba_dir, "compiled_LOIO_probabilites.tsv")
+loio_file = pathlib.Path(proba_dir, "compiled_LOIO_probabilities.tsv")
 
-output_summary_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_allfeaturespaces.tsv")
-output_summary_phenotype_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_perphenotype_allfeaturespaces.tsv")
+output_summary_file = pathlib.Path(proba_dir, "LOIO_summary_ranks.tsv.gz")
+output_summary_phenotype_file = pathlib.Path(proba_dir, "LOIO_summary_ranks_perphenotype.tsv.gz")
 
 
 # In[4]:
@@ -85,6 +85,7 @@ phenotype_classes
 # 
 # - Per Image
 # - Per model type (final vs. shuffled)
+# - Per illumination correction function (IC vs. No-IC)
 # - Phenotype
 # - Feature Space
 
@@ -94,10 +95,11 @@ phenotype_classes
 # Calculate average rank for each Metadata_DNA
 rank_groups = [
     "Metadata_DNA",
-    "Model_Type",
+    "Model_type",
+    "Dataset_type",
     "Mitocheck_Phenotypic_Class",
     "Model_Feature_Type",
-    "Model_Balance_Type"
+    "Balance_type"
 ]
 
 # Output data columns
@@ -129,7 +131,7 @@ loio_scores_df = (
     ], axis="columns")
 )
 
-loio_scores_df.to_csv(output_summary_file, index=False, sep="\t")
+loio_scores_df.to_csv(output_summary_file, index=False, compression="gzip", sep="\t")
 
 print(loio_scores_df.shape)
 loio_scores_df.head()
@@ -138,8 +140,9 @@ loio_scores_df.head()
 # ## Get average ranks and p value per phenotype
 # 
 # - Per model type (final vs. shuffled)
+# - Per illumination correction function (IC vs. No-IC)
 # - Per Phenotype
-# - Per Feature space
+# - Per Feature Space
 # 
 # (i.e., not on a per-image basis)
 
@@ -167,7 +170,7 @@ loio_scores_df = (
     ], axis="columns")
 )
 
-loio_scores_df.to_csv(output_summary_phenotype_file, index=False, sep="\t")
+loio_scores_df.to_csv(output_summary_phenotype_file, index=False, compression="gzip", sep="\t")
 
 print(loio_scores_df.shape)
 loio_scores_df.head()
