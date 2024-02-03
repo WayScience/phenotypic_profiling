@@ -9,11 +9,11 @@ source("themes.r")
 results_dir <- file.path("..", "3.evaluate_model", "evaluations", "LOIO_probas")
 
 # Results from `get_LOIO_probabilities.ipynb`
-results_file <- file.path(results_dir, "compiled_LOIO_probabilites.tsv")
+results_file <- file.path(results_dir, "compiled_LOIO_probabilities.tsv")
 
 # Results from `LOIO_evaluation.ipynb`
-results_summary_file <- file.path(results_dir, "LOIO_summary_ranks_allfeaturespaces.tsv")
-results_summary_perphenotype_file <- file.path(results_dir, "LOIO_summary_ranks_perphenotype_allfeaturespaces.tsv")
+results_summary_file <- file.path(results_dir, "LOIO_summary_ranks.tsv.gz")
+results_summary_perphenotype_file <- file.path(results_dir, "LOIO_summary_ranks_perphenotype.tsv.gz")
 
 output_fig_loio <- file.path("figures", "main_figure_4_loio.png")
 
@@ -45,19 +45,21 @@ loio_df <- readr::read_tsv(
         "Mitocheck_Phenotypic_Class" = "c",
         "Cell_UUID" = "c",
         "Metadata_DNA" = "c",
-        "Model_Type" = "c",
-        "Model_Balance_Type" = "c",
+        "Model_type" = "c",
+        "Balance_type" = "c",
+        "Dataset_type" = "c",
         "Model_Feature_Type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
     dplyr::group_by(
         Cell_UUID,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Metadata_DNA,
         Mitocheck_Phenotypic_Class,
         Model_Feature_Type,
+        Dataset_type,
         Model_C,
         Model_l1_ratio
     ) %>%
@@ -87,15 +89,24 @@ loio_df$correct_pred <-
     dplyr::recode_factor(loio_df$correct_pred, !!!refactor_logical)
 
 loio_df$Shuffled <- dplyr::recode_factor(
-    loio_df$Model_Type,
+    loio_df$Model_type,
     "final" = "FALSE", "shuffled_baseline" = "TRUE"
 )
 
 print(dim(loio_df))
 head(loio_df, 5)
 
+# Focus main result on select LOIO parameters:
+# Balanced model, with ic, select feature spaces (CP, DP, CP_and_DP)
+loio_focus_df <- loio_df %>%
+    dplyr::filter(
+        Balance_type == "balanced",
+        Dataset_type == "ic",
+        Model_Feature_Type %in% c("CellProfiler", "DeepProfiler", "CP and DP")
+    )
+
 loio_feature_space_gg <- (
-    ggplot(loio_df,
+    ggplot(loio_focus_df,
         aes(x = rank_value, y = Predicted_Probability)
           )
     + geom_boxplot(aes(fill = correct_pred), outlier.size = 0.1, lwd = 0.3)
@@ -121,9 +132,10 @@ loio_summary_per_phenotype_df <- readr::read_tsv(
     col_types = readr::cols(
         .default = "d",
         "Metadata_DNA" = "c",
-        "Model_Type" = "c",
+        "Model_type" = "c",
         "Mitocheck_Phenotypic_Class" = "c",
-        "Model_Balance_Type" = "c",
+        "Balance_type" = "c",
+        "Dataset_type" = "c",
         "Model_Feature_Type" = "c"
     )
 ) %>%
@@ -134,8 +146,7 @@ loio_summary_per_phenotype_df <- readr::read_tsv(
         Mitocheck_Phenotypic_Class %in% focus_phenotypes,
         Mitocheck_Phenotypic_Class,
         "Other"
-    )) %>%
-    dplyr::filter(Model_Balance_Type == "balanced")
+    ))
 
 #feature_order <- c("CP" = "CP", "DP" = "DP", "CP_and_DP" = "CP_and_DP")
 
@@ -146,20 +157,54 @@ loio_summary_per_phenotype_df$Mitocheck_Plot_Label <-
     dplyr::recode_factor(loio_summary_per_phenotype_df$Mitocheck_Plot_Label, !!!focus_phenotype_labels)
 
 loio_summary_per_phenotype_df$Shuffled <- dplyr::recode_factor(
-    loio_summary_per_phenotype_df$Model_Type,
+    loio_summary_per_phenotype_df$Model_type,
     "final" = "FALSE", "shuffled_baseline" = "TRUE"
 )
 
 head(loio_summary_per_phenotype_df, 3)
 
+# Focus main result on select LOIO parameters:
+# Balanced model, with ic, select feature spaces (CP, DP, CP_and_DP)
+loio_summary_per_phenotype_focus_df <- loio_summary_per_phenotype_df %>%
+    dplyr::filter(
+        Balance_type == "balanced",
+        Dataset_type == "ic",
+        Model_Feature_Type %in% c("CellProfiler", "DeepProfiler", "CP and DP")
+    )
+
+percent_summary_df <- loio_summary_per_phenotype_focus_df %>%
+    dplyr::mutate(pass_on_average = Average_Rank < 2) %>%
+    dplyr::filter(Shuffled == FALSE) %>%
+    dplyr::group_by(
+        Mitocheck_Plot_Label,
+        Model_Feature_Type
+    ) %>%
+    dplyr::mutate(total_pass = sum(pass_on_average), total_count = n()) %>%
+    dplyr::mutate(
+        percent_pass = round((total_pass / total_count) * 100, 1)
+    ) %>%
+    dplyr::select(
+        Mitocheck_Plot_Label,
+        Model_Feature_Type,
+        percent_pass,
+        total_pass,
+        total_count
+    ) %>%
+    dplyr::distinct() %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(add_plot_text = paste0(total_pass, "/", total_count, "\n", "(", percent_pass, "%)"))
+
+head(percent_summary_df)
+
 per_image_category_gg <- (
-    ggplot(loio_summary_per_phenotype_df, aes(x = Average_Rank, y = Average_P_Value))
+    ggplot(loio_summary_per_phenotype_focus_df, aes(x = Average_Rank, y = Average_P_Value))
     + geom_point(aes(size = Count, color = Shuffled), alpha = 0.2)
     + theme_bw()
     + phenotypic_ggplot_theme
     + facet_grid(
         "Mitocheck_Plot_Label~Model_Feature_Type"
     )
+    + geom_text(data=percent_summary_df, aes(label = add_plot_text, x = 12, y = 0.8))
     + labs(
         x = "Average rank of correct label\n(per held out image)",
         y = "Average probability of correct label\n(per held out image)"
@@ -190,20 +235,20 @@ per_image_category_gg <- (
 
 per_image_category_gg
 
-phenotypic_class_category_counts <- loio_df %>%
+phenotypic_class_category_counts <- loio_focus_df %>%
     dplyr::ungroup() %>%
     dplyr::select(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred,
         correct_class_pred
     ) %>%
     dplyr::group_by(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred,
         correct_class_pred
@@ -211,13 +256,13 @@ phenotypic_class_category_counts <- loio_df %>%
     dplyr::summarize(phenotype_count = n()) %>%
     dplyr::ungroup()
 
-loio_thresh_df <- loio_df %>%
+loio_thresh_df <- loio_focus_df %>%
     dplyr::ungroup() %>%
     dplyr::mutate(pass_threshold = paste(Predicted_Probability >= high_threshold)) %>%
     dplyr::group_by(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred,
         correct_class_pred,
@@ -228,39 +273,39 @@ loio_thresh_df <- loio_df %>%
         phenotypic_class_category_counts,
         by = c(
             "Mitocheck_Phenotypic_Class",
-            "Model_Type",
-            "Model_Balance_Type",
+            "Model_type",
+            "Balance_type",
             "Model_Feature_Type",
             "correct_pred"
         )
     ) %>%
     dplyr::mutate(phenotype_prop = count / phenotype_count)
 
-phenotypic_class_counts <- loio_df %>%
+phenotypic_class_counts <- loio_focus_df %>%
     dplyr::ungroup() %>%
     dplyr::select(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred
     ) %>%
     dplyr::group_by(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred
     ) %>%
     dplyr::summarize(phenotype_count = n()) %>%
     dplyr::ungroup()
 
-loio_thresh_df <- loio_df %>%
+loio_thresh_df <- loio_focus_df %>%
     dplyr::mutate(pass_threshold = paste(Predicted_Probability >= high_threshold)) %>%
     dplyr::group_by(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_pred,
         pass_threshold
@@ -270,8 +315,8 @@ loio_thresh_df <- loio_df %>%
         phenotypic_class_counts,
         by = c(
             "Mitocheck_Phenotypic_Class",
-            "Model_Type",
-            "Model_Balance_Type",
+            "Model_type",
+            "Balance_type",
             "Model_Feature_Type",
             "correct_pred"
         )
@@ -283,7 +328,7 @@ loio_thresh_df$Mitocheck_Phenotypic_Class <-
     factor(loio_thresh_df$Mitocheck_Phenotypic_Class, levels = rev(unique(loio_thresh_df$Mitocheck_Phenotypic_Class)))
 
 loio_thresh_df$Shuffled <- dplyr::recode_factor(
-    loio_thresh_df$Model_Type,
+    loio_thresh_df$Model_type,
     "final" = "FALSE", "shuffled_baseline" = "TRUE"
 )
 
@@ -293,8 +338,8 @@ correct_pred_proportion_gg <- (
     ggplot(
         loio_thresh_df %>%
             dplyr::filter(
-                Model_Balance_Type == "balanced",
-                Model_Feature_Type == "CellProfiler"
+                Balance_type == "balanced",
+                Shuffled == FALSE
             ),
         aes(
             x = phenotype_prop,
@@ -306,8 +351,8 @@ correct_pred_proportion_gg <- (
     + geom_text(
         data = loio_thresh_df %>%
             dplyr::filter(
-                Model_Balance_Type == "balanced",
-                Model_Feature_Type == "CellProfiler",
+                Balance_type == "balanced",
+                Shuffled == FALSE,
                 pass_threshold == TRUE
             ),
         color = "black",
@@ -316,7 +361,7 @@ correct_pred_proportion_gg <- (
         size = 3
     )
     + facet_grid(
-        "Shuffled~correct_pred",
+        "Model_Feature_Type~correct_pred",
         labeller = labeller(correct_pred = custom_labeller, Shuffled = shuffled_labeller)
     )
     + theme_bw()
@@ -333,13 +378,13 @@ correct_pred_proportion_gg <- (
 
 correct_pred_proportion_gg
 
-same_class_wrong_pred_summary_df <- loio_df %>%
+same_class_wrong_pred_summary_df <- loio_focus_df %>%
     dplyr::filter(correct_pred == "FALSE") %>%
     dplyr::filter(rank_value == 1) %>%
     dplyr::group_by(
         Mitocheck_Phenotypic_Class,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_class_pred
     ) %>%
@@ -348,8 +393,8 @@ same_class_wrong_pred_summary_df <- loio_df %>%
     dplyr::left_join(phenotype_categories_df, by = "Mitocheck_Phenotypic_Class") %>%
     dplyr::group_by(
         Mitocheck_Category,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         correct_class_pred
     ) %>%
@@ -358,16 +403,16 @@ same_class_wrong_pred_summary_df <- loio_df %>%
 phenotypic_category_counts <- same_class_wrong_pred_summary_df %>%
     dplyr::select(
         Mitocheck_Category,
-        Model_Type,
-        Model_Balance_Type,
+        Model_type,
+        Balance_type,
         Model_Feature_Type,
         total_count
     ) %>%
     dplyr::group_by(
         Mitocheck_Category,
-        Model_Type,
-        Model_Balance_Type,
-        Model_Feature_Type
+        Model_type,
+        Balance_type,
+        Model_Feature_Type,
     ) %>%
     dplyr::summarize(phenotype_category_count = sum(total_count)) %>%
     dplyr::ungroup()
@@ -377,8 +422,8 @@ same_class_wrong_pred_summary_df <- same_class_wrong_pred_summary_df %>%
         phenotypic_category_counts,
         by = c(
             "Mitocheck_Category",
-            "Model_Type",
-            "Model_Balance_Type",
+            "Model_type",
+            "Balance_type",
             "Model_Feature_Type"
         )
     ) %>%
@@ -390,7 +435,7 @@ same_class_wrong_pred_summary_df$Mitocheck_Category <- factor(
 )
 
 same_class_wrong_pred_summary_df$Shuffled <- dplyr::recode_factor(
-    same_class_wrong_pred_summary_df$Model_Type,
+    same_class_wrong_pred_summary_df$Model_type,
     "final" = "FALSE", "shuffled_baseline" = "TRUE"
 )
 
@@ -399,10 +444,10 @@ head(same_class_wrong_pred_summary_df)
 correct_class_phenotype_pred_gg <- (
     ggplot(
         same_class_wrong_pred_summary_df %>%
-            dplyr::filter(
-                Model_Balance_Type == "balanced",
-                Model_Feature_Type == "CellProfiler"
-            ),
+        dplyr::filter(
+                Balance_type == "balanced",
+                Shuffled == FALSE
+        ),
         aes(
             x = Mitocheck_Category,
             y = category_proportion,
@@ -411,15 +456,15 @@ correct_class_phenotype_pred_gg <- (
     )
     + geom_bar(stat = "identity")
     + facet_grid(
-        "~Shuffled",
+        "~Model_Feature_Type",
         labeller = labeller(Shuffled = shuffled_labeller)
     )
     + geom_text(
         data = same_class_wrong_pred_summary_df %>%
             dplyr::filter(
                 correct_class_pred == TRUE,
-                Model_Balance_Type == "balanced",
-                Model_Feature_Type == "CellProfiler"
+                Balance_type == "balanced",
+                Shuffled == FALSE
             ),
         color = "black",
         aes(label = total_count),
@@ -434,7 +479,8 @@ correct_class_phenotype_pred_gg <- (
     )
     + theme_bw()
     + phenotypic_ggplot_theme
-    + labs(x = "Mitocheck Pheno categories", y = "Cell proportions\nof incorrect phenotype predictions")
+    + theme(axis.text.x = element_text(size = 6.5))
+    + labs(x = "Mitocheck pheno categories", y = "Cell proportions")
 )
 
 correct_class_phenotype_pred_gg
@@ -450,8 +496,8 @@ bottom_nested <- (
 compiled_fig <- (
     loio_feature_space_gg /
     bottom_nested
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(0.4, 1)) 
+) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(0.34, 1)) 
 
-ggsave(output_fig_loio, dpi = 500, height = 11, width = 14)
+ggsave(output_fig_loio, dpi = 500, height = 14, width = 15)
 
 compiled_fig
