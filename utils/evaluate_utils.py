@@ -49,20 +49,7 @@ def class_PR_curves(
 
     phenotypic_classes = log_reg_model.classes_
     
-    if feature_type == "CP_zernike_only":
-        zernike_only = True
-        updated_feature_type = "CP"
-    else:
-        zernike_only = False
-        updated_feature_type = feature_type
-    
-    if feature_type == "CP_areashape_only":
-        area_shape_only = True
-        updated_feature_type = "CP"
-    else:
-        area_shape_only = False
-    
-    X, y = get_X_y_data(single_cell_data, updated_feature_type, zernike_only, area_shape_only)
+    X, y = get_X_y_data(single_cell_data, feature_type)
 
     # binarize labels for precision recall curve function
     y_binarized = label_binarize(y, classes=phenotypic_classes)
@@ -317,22 +304,8 @@ def model_confusion_matrix(
     matplotlib.axes.Axes
         Axes object with confusion matrix display
     """
-
-    # get features and labels dataframes
-    if feature_type == "CP_zernike_only":
-        zernike_only = True
-        updated_feature_type = "CP"
-    else:
-        zernike_only = False
-        updated_feature_type = feature_type
     
-    if feature_type == "CP_areashape_only":
-        area_shape_only = True
-        updated_feature_type = "CP"
-    else:
-        area_shape_only = False
-    
-    X, y = get_X_y_data(dataset, updated_feature_type, zernike_only, area_shape_only)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)
@@ -395,22 +368,8 @@ def model_F1_score(
     matplotlib.axes.Axes
         Axes object with F1 scores bar graph
     """
-
-    # get features and labels dataframes
-    if feature_type == "CP_zernike_only":
-        zernike_only = True
-        updated_feature_type = "CP"
-    else:
-        zernike_only = False
-        updated_feature_type = feature_type
-        
-    if feature_type == "CP_areashape_only":
-        area_shape_only = True
-        updated_feature_type = "CP"
-    else:
-        area_shape_only = False
     
-    X, y = get_X_y_data(dataset, updated_feature_type, zernike_only, area_shape_only)
+    X, y = get_X_y_data(dataset, feature_type)
 
     # get predictions from model
     y_pred = log_reg_model.predict(X)
