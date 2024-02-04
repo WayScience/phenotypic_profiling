@@ -105,27 +105,6 @@ loio_focus_df <- loio_df %>%
         Model_Feature_Type %in% c("CellProfiler", "DeepProfiler", "CP and DP")
     )
 
-loio_feature_space_gg <- (
-    ggplot(loio_focus_df,
-        aes(x = rank_value, y = Predicted_Probability)
-          )
-    + geom_boxplot(aes(fill = correct_pred), outlier.size = 0.1, lwd = 0.3)
-    + theme_bw()
-    + phenotypic_ggplot_theme
-    + facet_grid(
-        "Shuffled~Model_Feature_Type",
-        labeller = labeller(Shuffled = shuffled_labeller)
-    )
-    + labs(x = "Rank of prediction", y = "Prediction probability")
-    + scale_fill_manual(
-        "Correct\nphenotype\nprediction?",
-        values = focus_corr_colors,
-        labels = focus_corr_labels
-    )
-)
-
-loio_feature_space_gg
-
 # Load per image, per phenotype, per feature space summary
 loio_summary_per_phenotype_df <- readr::read_tsv(
     results_summary_file,
@@ -480,7 +459,7 @@ correct_class_phenotype_pred_gg <- (
     + theme_bw()
     + phenotypic_ggplot_theme
     + theme(axis.text.x = element_text(size = 6.5))
-    + labs(x = "Mitocheck pheno categories", y = "Cell proportions")
+    + labs(x = "Mitocheck phenotype categories", y = "Cell proportions")
 )
 
 correct_class_phenotype_pred_gg
@@ -489,15 +468,10 @@ right_bottom_nested <- (
     correct_pred_proportion_gg / correct_class_phenotype_pred_gg
 ) + plot_layout(heights = c(1, 0.7)) 
 
-bottom_nested <- (
-    per_image_category_gg | right_bottom_nested
-) + plot_layout(widths = c(1, 0.72))
-
 compiled_fig <- (
-    loio_feature_space_gg /
-    bottom_nested
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(0.34, 1)) 
+    per_image_category_gg | right_bottom_nested
+) + plot_layout(widths = c(1, 0.72)) + plot_annotation(tag_levels = "A")
 
-ggsave(output_fig_loio, dpi = 500, height = 14, width = 15)
+ggsave(output_fig_loio, dpi = 500, height = 10, width = 15)
 
 compiled_fig
