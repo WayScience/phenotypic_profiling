@@ -23,5 +23,6 @@ dependencies:
   - conda-forge::r-reshape2
   - conda-forge::r-cowplot
   - conda-forge::r-patchwork
+  - conda-forge::r-magick
   - bioconda::bioconductor-complexheatmap
 
