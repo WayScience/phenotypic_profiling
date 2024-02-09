@@ -1,5 +1,4 @@
 suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(magick))
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(patchwork))
 suppressPackageStartupMessages(library(ComplexHeatmap))
@@ -64,6 +63,7 @@ for (shuffled_value in unique(coef_df$shuffled)) {
     for (feature_type_value in unique(coef_df$feature_type)) {
         list_name_index <- paste0(feature_type_value, "__", shuffled_value)
         print(paste("Transforming model coefficients:", list_name_index))
+        
         # Subset the coeficient dataframe
         coef_subset <- coef_df %>%
             dplyr::filter(
@@ -104,6 +104,7 @@ for (shuffled_value in unique(coef_df$shuffled)) {
         # Store in list
         feature_matrix_list[[list_name_index]] <- list()
         feature_matrix_list[[list_name_index]][["coef_matrix"]] <- coef_subset_mat
+        feature_matrix_list[[list_name_index]][["min_max_for_plotting"]] <- c(min(coef_subset_mat), max(coef_subset_mat))
         feature_matrix_list[[list_name_index]][["metadata_annotation"]] <- metadata_subset
     }
 }
@@ -113,9 +114,9 @@ for (model in names(feature_matrix_list)) {
     print(paste("Generating heatmap for:", model))
 
     # Create output file
-    output_file <- file.path(output_dir, paste0("heatmap_", model, ".pdf"))
+    output_file <- file.path(output_dir, paste0("heatmap_", model, ".png"))
 
-    # Store model file in a list for downstream loading with magick
+    # Store model file in a list for downstream loading
     model_heatmap_file_names[model] <- output_file
     
     # Create components for plotheatmap_gg_list[["CP__False"]]ting and subsetting
@@ -132,8 +133,14 @@ for (model in names(feature_matrix_list)) {
     # Generate heatmaps depending on the feature space
     if (feature_space == "CP") {
         column_title <- paste("CellProfiler features", column_title)
+        heatmap_color_range <- c(
+            feature_matrix_list[["CP__False"]][["min_max_for_plotting"]][1], 0,
+            feature_matrix_list[["CP__False"]][["min_max_for_plotting"]][2]
+        )
+        
         coef_heatmap <- Heatmap(
             feature_matrix_list[[model]][["coef_matrix"]],
+            col = circlize::colorRamp2(heatmap_color_range, c("blue", "white", "red")),
             top_annotation = HeatmapAnnotation(
                 df = as.data.frame(feature_matrix_list[[model]][["metadata_annotation"]]) %>%
                     dplyr::select(feature_group),
@@ -148,8 +155,14 @@ for (model in names(feature_matrix_list)) {
 
     } else if (feature_space == "CP_and_DP") {
         column_title <- paste("CP and DP features", column_title)
+        heatmap_color_range <- c(
+            feature_matrix_list[["CP_and_DP__False"]][["min_max_for_plotting"]][1], 0,
+            feature_matrix_list[["CP_and_DP__False"]][["min_max_for_plotting"]][2]
+        )
+        
         coef_heatmap <- Heatmap(
             feature_matrix_list[[model]][["coef_matrix"]],
+            col = circlize::colorRamp2(heatmap_color_range, c("blue", "white", "red")),
             top_annotation = HeatmapAnnotation(
                 df = as.data.frame(feature_matrix_list[[model]][["metadata_annotation"]]) %>%
                     dplyr::select(feature_space),
@@ -162,8 +175,14 @@ for (model in names(feature_matrix_list)) {
         )
     } else {
         column_title <- paste("DeepProfiler features", column_title)
+        heatmap_color_range <- c(
+            feature_matrix_list[["DP__False"]][["min_max_for_plotting"]][1], 0,
+            feature_matrix_list[["DP__False"]][["min_max_for_plotting"]][2]
+        )
+        
         coef_heatmap <- Heatmap(
             feature_matrix_list[[model]][["coef_matrix"]],
+            col = circlize::colorRamp2(heatmap_color_range, c("blue", "white", "red")),
             top_annotation = HeatmapAnnotation(
                 df = as.data.frame(feature_matrix_list[[model]][["metadata_annotation"]]) %>%
                     dplyr::select(feature_space),
@@ -177,44 +196,7 @@ for (model in names(feature_matrix_list)) {
         )
     }
 
-    pdf(output_file, width = 10, height = 6)
+    png(output_file, width = 570, height = 275)
     draw(coef_heatmap, merge_legend = TRUE)
     dev.off()
 }
-
-model_heatmap_file_names
-
-heatmap_gg_list <- list()
-for (model in names(model_heatmap_file_names)) {
-    model_file <- model_heatmap_file_names[[model]]
-    heatmap_image <- magick::image_read(model_file)
-    heatmap_gg_list[[model]] <- (
-        ggplot()
-        + annotation_custom(
-            rasterGrob(image_trim(heatmap_image), interpolate = TRUE),
-            xmin=-Inf,
-            xmax=Inf,
-            ymin=-Inf,
-            ymax=Inf
-        )
-        + theme_void()
-        + theme(
-            plot.margin = margin(unit(c(0, 0, 0, 0), "lines"))
-        )
-    )
-    print(paste("Converting to ggplot object:", model))
-}
-
-# Create heatmap patchwork
-heatmap_top_gg <- (
-    heatmap_gg_list[["CP__False"]] | heatmap_gg_list[["DP__False"]] | heatmap_gg_list[["CP_and_DP__False"]]
-)
-ggsave(heatmap_real_file, dpi = 600, height = 4.5, width = 12)
-
-heatmap_bottom_gg <- (
-    heatmap_gg_list[["CP__True"]] | heatmap_gg_list[["DP__True"]] | heatmap_gg_list[["CP_and_DP__True"]]
-)
-ggsave(heatmap_shuffled_file, dpi = 600, height = 4.5, width = 12)
-
-
-heatmap_top_gg
