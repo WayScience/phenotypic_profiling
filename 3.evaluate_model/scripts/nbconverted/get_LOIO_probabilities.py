@@ -31,25 +31,26 @@ from train_utils import get_X_y_data
 from evaluate_utils import get_SCM_model_data
 
 
-# ### Load/Preview Labeled Data
+# ### Set Load Path
 # 
 
 # In[2]:
 
 
 # load labeled data
-labeled_data_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
-labeled_data = get_features_data(labeled_data_path)
+labeled_data_dir_path = pathlib.Path("../0.download_data/data/")
 
-# preview labeled data
-print(labeled_data.shape)
-labeled_data.head(5)
 
+# ### See number of cells for LOIO evaluation
 
 # In[3]:
 
 
-# see number of images to
+# load labeled data
+labeled_data_path = pathlib.Path(f"{labeled_data_dir_path}/labeled_data__ic.csv.gz")
+labeled_data = get_features_data(labeled_data_path)
+
+# see number of images to evaluate on
 num_images = labeled_data["Metadata_DNA"].unique().shape[0]
 print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 
@@ -59,49 +60,41 @@ print(f"There are {num_images} images to perform LOIO evaluation on per model.")
 # In[4]:
 
 
-# specify parameters to tune for
-parameters = {"C": np.logspace(-2, 2, 5), "l1_ratio": np.linspace(0, 1, 6)}
-parameters
+# directory to load the models from
+models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
+
+# Which models to perform LOIO
+all_model_paths = [model for model in sorted(models_dir.iterdir())]
+print(f"There are {len(all_model_paths)} models to run LOIO\n\nThey include:")
+all_model_paths
 
 
 # In[5]:
 
 
-# directory to load the models from
-models_dir = pathlib.Path("../2.train_model/models/multi_class_models")
-
 # use a list to keep track of LOIO probabilities in tidy long format for each model combination
 compiled_LOIO_wide_data = []
 
 # iterate through each model (final model, shuffled baseline model, etc)
-# sorted so final models are loaded before shuffled_baseline
-for model_path in sorted(models_dir.iterdir()):
-    # only perform LOIO with hyper params from final models so skip shuffled_baseline models
-    if "shuffled" in model_path.name:
-        model_type = "shuffled"
-    else:
-        model_type = "final"
-
-    # load the model
+# sorted so final models are shown before shuffled_baseline
+for model_path in all_model_paths:
     model = load(model_path)
-    
-    print(
-        f"Performing LOIO for model type {model_type} and feature type {feature_type}"
-    )
+    # determine model/feature type/balance/dataset type from model file name
+    model_components = model_path.name.split("__")
+    model_type = model_components[0]
+    feature_type = model_components[1]
+    balance_type = model_components[2]
+    # version of dataset used to train model (ic, no_ic)
+    dataset_type = model_components[3].replace(".joblib", "")
 
-    if feature_type == "CP_zernike_only":
-        zernike_only = True
-        dataset = "CP"
-    else:
-        zernike_only = False
-        dataset = feature_type
-        
-    if feature_type == "CP_areashape_only":
-        area_shape_only = True
-        dataset = "CP"
-    else:
-        area_shape_only = False
+    print(
+        f"Performing LOIO for model with types {model_type}, {balance_type}, {feature_type}, {dataset_type}"
+    )
     
+    # load labeled data
+    labeled_data_path = pathlib.Path(f"{labeled_data_dir_path}/labeled_data__{dataset_type}.csv.gz")
+    labeled_data = get_features_data(labeled_data_path)
+
     # iterate through image paths
     for image_path in labeled_data["Metadata_DNA"].unique():
         print(f"Training on everything but: {image_path}")
@@ -114,28 +107,11 @@ for model_path in sorted(models_dir.iterdir()):
         X_train, y_train = get_X_y_data(train_cells, feature_type)
         
         # shuffle columns of X (features) dataframe independently to create shuffled baseline
-        if model_type == "shuffled":
+        if model_type == "shuffled_baseline":
             for column in X_train.T:
                 np.random.shuffle(column)
                 
         X_test, y_test = get_X_y_data(test_cells, feature_type)
-
-        # Setup grid search logic
-        straified_k_folds = StratifiedKFold(n_splits=10, shuffle=False)
-        
-        # create logistic regression model with following parameters
-        log_reg_model = LogisticRegression(
-            penalty="elasticnet", solver="saga", max_iter=100, n_jobs=-1, random_state=0
-        )
-
-        # create grid search with cross validation with hypertuning params
-        grid_search_cv = GridSearchCV(
-            log_reg_model,
-            parameters,
-            cv=straified_k_folds,
-            n_jobs=-1,
-            scoring="f1_weighted",
-        )
 
         # capture convergence warning from sklearn
         # this warning does not affect the model but takes up lots of space in the output
@@ -148,7 +124,18 @@ for model_path in sorted(models_dir.iterdir()):
                 )
 
                 # fit a logisitc regression model on the training X, y
-                LOIO_model = grid_search_cv.fit(X_train, y_train)
+                # Use the optimal model parameters as identified previously.
+                # Note that we tried performing a full grid search once again,
+                # but this did not impact performance (data not shown)
+                LOIO_model = LogisticRegression(
+                    penalty="elasticnet",
+                    solver="saga",
+                    max_iter=100,
+                    n_jobs=-1,
+                    random_state=0,
+                    C=model.C,
+                    l1_ratio=model.l1_ratio,
+                ).fit(X_train, y_train)
 
         # create metadata dataframe for test cells with model parameters
         metadata_dataframe = pd.concat(
@@ -159,11 +146,12 @@ for model_path in sorted(models_dir.iterdir()):
             ],
             axis=1,
         ).reset_index(drop=True)
-        metadata_dataframe["Model_Type"] = model_type
         metadata_dataframe["Model_Feature_Type"] = feature_type
-        metadata_dataframe["Model_C"] = grid_search_cv.best_params_["C"]
-        metadata_dataframe["Model_l1_ratio"] = grid_search_cv.best_params_["l1_ratio"]
+        metadata_dataframe["Model_C"] = model.C
+        metadata_dataframe["Model_l1_ratio"] = model.l1_ratio
         metadata_dataframe["Model_type"] = model_type
+        metadata_dataframe["Dataset_type"] = dataset_type
+        metadata_dataframe["Balance_type"] = balance_type
 
         # predict probabilities for test cells and make these probabilities into a dataframe
         print(f"Evaluating: {image_path}")
@@ -178,7 +166,6 @@ for model_path in sorted(models_dir.iterdir()):
 
 
 # ### Format and save LOIO probabilities (multi class models)
-# 
 
 # In[6]:
 
@@ -205,7 +192,7 @@ LOIO_probas_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
 compiled_LOIO_save_path = pathlib.Path(
-    f"{LOIO_probas_dir}/compiled_LOIO_probabilites_withshuffled.tsv"
+    f"{LOIO_probas_dir}/compiled_LOIO_probabilities.tsv"
 )
 
 # save data as tsv

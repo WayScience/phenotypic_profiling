@@ -21,17 +21,15 @@ from train_utils import get_dataset
 from evaluate_utils import class_PR_curves, class_PR_curves_SCM
 
 
-# ### Load models and datasets
+# ## Set Data Load Paths
 # 
 
 # In[2]:
 
 
 # load features data from indexes and features dataframe
-data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes.tsv")
-data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
-features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
-features_dataframe = get_features_data(features_dataframe_path)
+data_split_dir_path = pathlib.Path("../1.split_data/indexes/")
+features_dataframe_dir_path = pathlib.Path("../0.download_data/data/")
 
 
 # ### Evaluate each model on each dataset (multiclass)
@@ -51,20 +49,29 @@ compiled_class_PR_curves = []
 for model_path in sorted(models_dir.iterdir()):
     # load model
     model = load(model_path)
-    # determine model/feature type/balance type from model file name
+    # determine model/feature type/balance/dataset type from model file name
     model_components = model_path.name.split("__")
-    # Older models only have 2 components, skip these
-    if len(model_components) == 2:
-        continue
     model_type = model_components[0]
     feature_type = model_components[1]
-    balance_type = model_components[2].replace(".joblib", "")
+    balance_type = model_components[2]
+    # version of dataset used to train model (ic, no_ic)
+    dataset_type = model_components[3].replace(".joblib", "")
+
+    # load features data from indexes and features dataframe
+    data_split_path = pathlib.Path(
+        f"{data_split_dir_path}/data_split_indexes__{dataset_type}.tsv"
+    )
+    data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+    features_dataframe_path = pathlib.Path(
+        f"{features_dataframe_dir_path}/labeled_data__{dataset_type}.csv.gz"
+    )
+    features_dataframe = get_features_data(features_dataframe_path)
 
     # iterate through label datasets (labels correspond to train, test, etc)
     # with nested for loops, we test each model on each dataset(corresponding to a label)
     for label in data_split_indexes["label"].unique():
         print(
-            f"Evaluating {balance_type} model: {model_type} \nTrained with features: {feature_type} \nEvaluating with dataset: {label}"
+            f"Evaluating model with types {model_type}, {balance_type}, {feature_type}, {dataset_type} on {label} dataset"
         )
 
         # load dataset (train, test, etc)
@@ -73,7 +80,7 @@ for model_path in sorted(models_dir.iterdir()):
         # get class PR curve data and show curve
         fig, PR_data = class_PR_curves(data, model, feature_type)
         fig.suptitle(
-            f"PR curves for {model_type} {balance_type} model using {feature_type} features on {label} dataset"
+            f"PR curves for model with types {model_type}, {balance_type}, {feature_type}, {dataset_type} on {label} dataset"
         )
         plt.show()
 
@@ -85,6 +92,8 @@ for model_path in sorted(models_dir.iterdir()):
         PR_data["feature_type"] = feature_type
         # add balance type column
         PR_data["balance_type"] = balance_type
+        # add dataset type column
+        PR_data["dataset_type"] = dataset_type
         # add this score data to the tidy scores compiling list
         compiled_class_PR_curves.append(PR_data)
 
@@ -106,12 +115,13 @@ PR_curves_dir = pathlib.Path("evaluations/precision_recall_curves/")
 PR_curves_dir.mkdir(parents=True, exist_ok=True)
 
 # define save path
+# compressed to save space for larger tsv file
 compiled_PR_data_save_path = pathlib.Path(
-    f"{PR_curves_dir}/compiled_class_PR_curves.tsv"
+    f"{PR_curves_dir}/compiled_class_PR_curves.tsv.gz"
 )
 
 # save data as tsv
-compiled_class_PR_curves.to_csv(compiled_PR_data_save_path, sep="\t")
+compiled_class_PR_curves.to_csv(compiled_PR_data_save_path, sep="\t", compression="gzip")
 
 # preview tidy data
 print(compiled_class_PR_curves.shape)
@@ -122,6 +132,17 @@ compiled_class_PR_curves.head()
 # 
 
 # In[5]:
+
+
+# load features data from indexes and features dataframe
+# single class models only trained on ic data
+data_split_path = pathlib.Path("../1.split_data/indexes/data_split_indexes__ic.tsv")
+data_split_indexes = pd.read_csv(data_split_path, sep="\t", index_col=0)
+features_dataframe_path = pathlib.Path("../0.download_data/data/labeled_data__ic.csv.gz")
+features_dataframe = get_features_data(features_dataframe_path)
+
+
+# In[6]:
 
 
 # directory to load the models from
@@ -198,7 +219,7 @@ for model_type in model_types:
 # ### Save PR curves from each evaluation (single class)
 # 
 
-# In[6]:
+# In[7]:
 
 
 # compile tidy PR data
@@ -220,5 +241,4 @@ compiled_SCM_PR_data.to_csv(compiled_PR_data_save_path, sep="\t")
 # preview tidy data
 print(compiled_SCM_PR_data.shape)
 compiled_SCM_PR_data.head()
-
 
