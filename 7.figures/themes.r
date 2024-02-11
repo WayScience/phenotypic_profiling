@@ -129,6 +129,15 @@ subset_feature_type_with_data_split_labels <- c(
     "CP_zernike_onlytrain" = "Zernike only (Train)"
 )
 
+dataset_colors <- c(
+    "jump" = "#48A9A6",
+    "mitocheck" = "#C1666B"
+)
+dataset_labels  = c(
+    "jump" = "JUMP-CP",
+    "mitocheck" = "Mitocheck"
+)
+
 # Set feature group colors for CellProfiler features
 cp_feature_group_colors <- c(
     "AreaShape" = "#1f78b4",
