@@ -25,7 +25,7 @@ class_count_df <- class_count_df %>%
   mutate(Phenotype_Category = case_when(
     Mitocheck_Phenotypic_Class %in% phenotype_categories$Interphase ~ "Interphase",
     Mitocheck_Phenotypic_Class %in% phenotype_categories$Mitosis ~ "Mitosis",
-    Mitocheck_Phenotypic_Class %in% phenotype_categories$`Mitotic conseq.` ~ "Mitotic conseq.",
+    Mitocheck_Phenotypic_Class %in% phenotype_categories$`Mitotic conseq.` ~ "Mitotic consequences",
     Mitocheck_Phenotypic_Class %in% phenotype_categories$`Dynamic changes` ~ "Dynamic changes",
     Mitocheck_Phenotypic_Class %in% phenotype_categories$Other ~ "Other",
     TRUE ~ "Unknown"
@@ -43,7 +43,7 @@ class_counts_plot <-
   geom_bar(stat = "identity", position = "dodge") +
   
   # Adding labels and title
-  labs(x = "MitoCheck Phenotypic Class", y = "Single-cell counts", fill = "Phenotype category") +
+  labs(x = "MitoCheck phenotypic class", y = "Single cell counts", fill = "Phenotype category") +
   
   theme_bw() + 
 
