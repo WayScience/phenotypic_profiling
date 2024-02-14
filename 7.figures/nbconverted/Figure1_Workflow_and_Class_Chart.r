@@ -99,7 +99,7 @@ workflow
 align_plot_gg <- (
     free(class_counts_plot) /
     workflow
-) + plot_layout(heights = c(2, 2))
+) + plot_layout(heights = c(2, 2.25))
 
 fig_1_gg <- (
   align_plot_gg
@@ -109,3 +109,5 @@ fig_1_gg <- (
 ggsave(output_main_figure_1, dpi = 500, height = 14, width = 14)
 
 fig_1_gg
+
+
