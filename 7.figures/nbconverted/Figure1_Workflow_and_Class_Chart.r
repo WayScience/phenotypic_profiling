@@ -2,6 +2,7 @@ suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(grid))
 suppressPackageStartupMessages(library(patchwork))
+suppressPackageStartupMessages(library(RColorBrewer))
 
 # Load variables important for plotting (e.g., themes, phenotypes, etc.)
 source("themes.r")
@@ -42,17 +43,19 @@ class_counts_plot <-
   geom_bar(stat = "identity", position = "dodge") +
   
   # Adding labels and title
-  labs(x = "MitoCheck Phenotypic Class", y = "Single Cell Counts", fill = "Phenotype Category") +
+  labs(x = "MitoCheck Phenotypic Class", y = "Single-cell counts", fill = "Phenotype category") +
   
   theme_bw() + 
+
+  scale_fill_brewer(palette = "Dark2") +
   
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 14),  # Adjust font size for x-axis labels
-    axis.text.y = element_text(size = 14),  # Adjust font size for y-axis labels
-    axis.title.x = element_text(size = 16),  # Adjust font size for x-axis title
-    axis.title.y = element_text(size = 16),  # Adjust font size for y-axis title
-    legend.title = element_text(size = 17),  # Adjust font size for legend title
-    legend.text = element_text(size = 15),  # Adjust font size for legend text
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 16),  # Adjust font size for x-axis labels
+    axis.text.y = element_text(size = 16),  # Adjust font size for y-axis labels
+    axis.title.x = element_text(size = 20),  # Adjust font size for x-axis title
+    axis.title.y = element_text(size = 20),  # Adjust font size for y-axis title
+    legend.title = element_text(size = 20),  # Adjust font size for legend title
+    legend.text = element_text(size = 18),  # Adjust font size for legend text
     legend.position = c(0.98, 0.98),  # Adjust the position of the legend within the plot
     legend.justification = c("right", "top"),  # Align legend to the right and top
     legend.box.just = "right",  # Justify the legend box to the right
@@ -93,11 +96,16 @@ workflow <- ggplot() +
 
 workflow
 
-fig_1_gg <- (
-    class_counts_plot /
+align_plot_gg <- (
+    free(class_counts_plot) /
     workflow
-) + plot_annotation(tag_levels = "A", theme = theme(aspect.ratio = 0.2)) + plot_layout(heights = c(1.25, 2.25), widths = c(6, 14))
+) + plot_layout(heights = c(2, 2))
 
-ggsave(output_main_figure_1, dpi = 500, height = 15, width = 20)
+fig_1_gg <- (
+  align_plot_gg
+) + plot_annotation(tag_levels = "A") & theme(plot.tag = element_text(size = 25))
+
+# Save or display the plot
+ggsave(output_main_figure_1, dpi = 500, height = 14, width = 14)
 
 fig_1_gg
