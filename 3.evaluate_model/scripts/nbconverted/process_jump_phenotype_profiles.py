@@ -7,13 +7,14 @@
 # 
 # We then performed a series of KS tests to identify how different treatment distributions of all phenotype probabilities differed from controls.
 # 
-# See https://github.com/WayScience/JUMP-single-cell for complete details.
+# See https://github.com/WayScience/JUMP-single-cell/tree/main/3.analyze_data#analyze-predicted-probabilities for complete details.
 # 
 # Here, we perform the following:
 # 
 # 1. Load in this data from the JUMP-single-cell repo
-# 2. Explore the top results per phenotype/treatment_type/model_type
-# 3. Convert it to wide format
+# 2. Summarize replicate KS test metrics (mean value) and align across cell types and time variables
+# 3. Explore the top results per phenotype/treatment_type/model_type
+# 4. Convert it to wide format
 # 
 # This wide format represents a "phenotypic profile" which we can use similarly as an image-based morphology profile.
 # 
@@ -23,6 +24,7 @@
 
 
 import pathlib
+from typing import List
 import pandas as pd
 
 import umap
@@ -31,33 +33,66 @@ import umap
 # In[2]:
 
 
+def umap_phenotype(
+    phenotype_df: pd.DataFrame,
+    feature_columns: List[str],
+    metadata_columns: List[str],
+    n_components: int,
+    random_seed: int,
+    model_type: str
+) -> pd.DataFrame:
+    """
+    Fit a UMAP (Uniform Manifold Approximation and Projection) model on the provided phenotype profile and return a transformed DataFrame with metadata.
+
+    Parameters:
+    - phenotype_df (pd.DataFrame): DataFrame containing the phenotype profile with both feature and metadata columns.
+    - feature_columns (List[str]): List of column names in phenotype_df that represent the features to be used for UMAP embedding.
+    - metadata_columns (List[str]): List of column names in phenotype_df that represent metadata to be retained in the output.
+    - n_components (int): Number of dimensions for the UMAP embedding.
+    - random_seed (int): Random seed for reproducibility of the UMAP model.
+    - model_type (str): Identifier for the model type, to be added as a column in the output DataFrame.
+
+    Returns:
+    - umap_embeddings_with_metadata_df (pd.DataFrame): DataFrame with UMAP embeddings and specified metadata columns, including an additional 'model_type' column.
+    """
+    
+    # Initialize UMAP
+    umap_fit = umap.UMAP(random_state=random_seed, n_components=n_components)
+    
+    # Fit UMAP and convert to pandas DataFrame
+    embeddings = pd.DataFrame(
+        umap_fit.fit_transform(phenotype_df.loc[:, feature_columns]),
+        columns=[f"UMAP{x}" for x in range(0, n_components)],
+    )
+    
+    # Combine with metadata
+    umap_embeddings_with_metadata_df = pd.concat([phenotype_df.loc[:, metadata_columns], embeddings], axis=1).assign(model_type=model_type)
+    return umap_embeddings_with_metadata_df
+
+
+# In[3]:
+
+
 # Set file paths
-# 1) JUMP phenotype probabilities from AreaShape model
-commit = "2c063b6dc48049201a57b060d18f97a5fc783488"
+# JUMP phenotype probabilities from AreaShape model
+commit = "4225e427fd9da59159de69f53be65c31b4d4644a"
 
 url = "https://github.com/WayScience/JUMP-single-cell/raw"
 file = "3.analyze_data/class_balanced_well_log_reg_comparison_results/class_balanced_well_log_reg_areashape_model_comparisons.parquet"
 
 jump_sc_pred_file = f"{url}/{commit}/{file}"
 
-# 2) JUMP additional metadata needed to summarize/groupby results
-jump_metadta_commit = "a18fd7719c05b638c731142b0d42a92c645e2b33"
-
-jump_metadta_url = "https://github.com/jump-cellpainting/2023_Chandrasekaran_submitted/raw"
-jump_metadta_file = "benchmark/output/experiment-metadata.tsv"
-
-jump_metadata_full_file = f"{jump_metadta_url}/{jump_metadta_commit}/{jump_metadta_file}"
-
 # Set constants
 n_top_results_to_explore = 10
 
 
-# In[3]:
+# In[4]:
 
 
 # Set output files
 output_dir = "jump_phenotype_profiles"
 
+cell_type_time_comparison_file = pathlib.Path(output_dir, "jump_compare_cell_types_and_time_across_phenotypes.tsv.gz")
 top_results_summary_file = pathlib.Path(output_dir, "jump_most_significant_phenotype_enrichment.tsv")
 final_jump_phenotype_file = pathlib.Path(output_dir, "jump_phenotype_profiles.tsv.gz")
 shuffled_jump_phenotype_file = pathlib.Path(output_dir, "jump_phenotype_profiles_shuffled.tsv.gz")
@@ -67,7 +102,7 @@ jump_umap_file = pathlib.Path(output_dir, "jump_phenotype_profiling_umap.tsv.gz"
 
 # ## Load and process data
 
-# In[4]:
+# In[5]:
 
 
 # Load KS test results and drop uninformative columns
@@ -80,50 +115,52 @@ print(jump_pred_df.shape)
 jump_pred_df.head()
 
 
-# In[5]:
-
-
-# Load JUMP metadata for JUMP-CP Pilot
-# For an explanation of these metadata columns see: 
-# https://github.com/jump-cellpainting/2023_Chandrasekaran_submitted/blob/9edd26d60524a62f993d4df40a5d8908206714f5/README.md#batch-and-plate-metadata
-jump_metadata_df = (
-    pd.read_csv(jump_metadata_full_file, sep="\t")
-    .query("Batch == '2020_11_04_CPJUMP1'")
-)
-
-print(jump_metadata_df.shape)
-jump_metadata_df.head()
-
-
 # In[6]:
 
 
-# Merge dataframes and retain only informative columns
-jump_pred_df = (
+# Process data to match treatments and scores across cell types
+jump_pred_compare_df = (
     jump_pred_df
-    .merge(
-        jump_metadata_df,
-        left_on="Metadata_Plate",
-        right_on="Assay_Plate_Barcode"
-    )
-    .drop(columns=[
-        "Batch",
-        "Plate_Map_Name",
-        "Perturbation",
-        "Density",
-        "Antibiotics",
-        "Cell_line",
-        "Time_delay",
-        "Times_imaged",
-        "Anomaly",
-        "Number_of_images",
-        "Assay_Plate_Barcode"
+    # Summarize replicate scores
+    .groupby([
+        "Cell_type",
+        "Time",
+        "treatment",
+        "treatment_type",
+        "Metadata_model_type",
+        "phenotype"
     ])
-    .reset_index(drop=True)
+    .agg({
+        "comparison_metric_value": "mean",
+        "p_value": "mean"
+    })
+    .reset_index()
+    # Compare per treatment scores across cell types
+    .pivot(
+        index=[
+            "treatment",
+            "treatment_type",
+            "Time",
+            "phenotype",
+            "Metadata_model_type"
+        ],
+        columns="Cell_type",
+        values=[
+            "comparison_metric_value",
+            "p_value"
+        ]
+    )
+    .reset_index()
 )
 
-print(jump_pred_df.shape)
-jump_pred_df.head()
+# Clen up column names
+jump_pred_compare_df.columns = jump_pred_compare_df.columns.map(lambda x: '_'.join(filter(None, x)))
+
+# Output file
+jump_pred_compare_df.to_csv(cell_type_time_comparison_file, sep="\t", index=False)
+
+print(jump_pred_compare_df.shape)
+jump_pred_compare_df.head()
 
 
 # In[7]:
@@ -238,33 +275,27 @@ print(len(feature_columns))
 # In[16]:
 
 
-# Initialize UMAP
-umap_fit = umap.UMAP(random_state=umap_random_seed, n_components=umap_n_components)
-
-# Fit UMAP and convert to pandas DataFrame
-embeddings = pd.DataFrame(
-    umap_fit.fit_transform(jump_wide_final_df.loc[:, feature_columns]),
-    columns=[f"UMAP{x}" for x in range(0, umap_n_components)],
+umap_with_metadata_df = umap_phenotype(
+    phenotype_df=jump_wide_final_df,
+    feature_columns=feature_columns,
+    metadata_columns=metadata_columns,
+    n_components=umap_n_components,
+    random_seed=umap_random_seed,
+    model_type="final"
 )
-
-# Combine with metadata
-umap_with_metadata_df = pd.concat([jump_wide_final_df.loc[:, metadata_columns], embeddings], axis=1).assign(model_type="final")
 
 
 # In[17]:
 
 
-# Initialize UMAP
-umap_fit = umap.UMAP(random_state=umap_random_seed, n_components=umap_n_components)
-
-# Fit UMAP and convert to pandas DataFrame
-embeddings = pd.DataFrame(
-    umap_fit.fit_transform(jump_wide_shuffled_df.loc[:, feature_columns]),
-    columns=[f"UMAP{x}" for x in range(0, umap_n_components)],
+umap_shuffled_with_metadata_df = umap_phenotype(
+    phenotype_df=jump_wide_shuffled_df,
+    feature_columns=feature_columns,
+    metadata_columns=metadata_columns,
+    n_components=umap_n_components,
+    random_seed=umap_random_seed,
+    model_type="shuffled"
 )
-
-# Combine with metadata
-umap_shuffled_with_metadata_df = pd.concat([jump_wide_shuffled_df.loc[:, metadata_columns], embeddings], axis=1).assign(model_type="shuffled")
 
 
 # In[18]:
