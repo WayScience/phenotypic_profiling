@@ -1,5 +1,11 @@
 # Phenotypic Profiling Model
 
+## Dataset and analysis approach
+
+![main_figure_1](./7.figures/figures/main_figure_1_class_count_and_workflow.png)
+
+> Figure 1. Dataset and analysis approach. (A) Single-cell counts per labeled phenotype stratified by phenotype category. The labeled MitoCheck dataset included a total of 2,916 single nuclei. The original dataset contained labels for 16 classes, but we have removed “folded” because of low counts. Counts are not evenly distributed between the classes. (B) Our analysis pipeline incorporated image analysis, image-based profiling, and machine learning.
+
 ## Environment Setup
 
 Perform the following steps to set up the `phenotypic_profiling` environment necessary for processing data in this repository.
