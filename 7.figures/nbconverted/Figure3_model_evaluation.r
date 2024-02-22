@@ -24,7 +24,8 @@ cm_df <- readr::read_tsv(
 ) %>%
     dplyr::select(!...1) %>%
     dplyr::filter(
-        balance_type == "balanced"
+        balance_type == "balanced",
+        dataset_type == "ic"
     ) %>%
     dplyr::group_by(True_Label, data_split, shuffled, balance_type, feature_type) %>%
     dplyr::mutate(
@@ -85,7 +86,7 @@ confusion_matrix_gg
 results_dir <- file.path(
     "..", "3.evaluate_model", "evaluations", "precision_recall_curves"
 )
-results_file <- file.path(results_dir, "compiled_class_PR_curves.tsv")
+results_file <- file.path(results_dir, "compiled_class_PR_curves.tsv.gz")
 
 pr_df <- readr::read_tsv(
     results_file,
@@ -95,14 +96,16 @@ pr_df <- readr::read_tsv(
         "data_split" = "c",
         "shuffled" = "c",
         "feature_type" = "c",
-        "balance_type" = "c"
+        "balance_type" = "c",
+        "dataset_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
     dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
     dplyr::filter(
-        balance_type == "balanced"
-    ) 
+        balance_type == "balanced",
+        dataset_type == "ic"
+    )
 
 # Order feature types for plotting
 pr_df$feature_type <-
@@ -165,14 +168,16 @@ f1_score_df <- readr::read_tsv(
         "data_split" = "c",
         "shuffled" = "c",
         "feature_type" = "c",
-        "balance_type" = "c"
+        "balance_type" = "c",
+        "dataset_type" = "c"
     )
 ) %>%
     dplyr::select(!`...1`) %>%
     dplyr::mutate(feature_type_with_data_split = paste0(feature_type, data_split)) %>%
     dplyr::filter(
         data_split == "test",
-        balance_type == "balanced"
+        balance_type == "balanced",
+        dataset_type == "ic"
     )
 
 # Order feature types for plotting
@@ -189,7 +194,6 @@ new_order <- c(rev(remaining_levels), front_level)
 
 f1_score_df$Phenotypic_Class <-
     factor(f1_score_df$Phenotypic_Class, levels = new_order)
-
 
 print(dim(f1_score_df))
 head(f1_score_df)
@@ -300,10 +304,16 @@ pr_curve_subset_gg <- (
 
 pr_curve_subset_gg
 
+# Reorder test set features for plotting f1 score summary
+f1_score_df$feature_type_with_data_split <-
+    factor(
+        f1_score_df$feature_type_with_data_split,
+        levels = c("CP_and_DPtest", "CPtest", "DPtest", "CP_areashape_onlytest", "CP_zernike_onlytest")
+    )
+
 f1_score_subset_gg <- (
     ggplot(
-        f1_score_df %>%
-            dplyr::filter(feature_type %in% !!subset_feature_spaces),
+        f1_score_df,
         aes(x = Phenotypic_Class, y = F1_Score))
     + geom_bar(aes(fill = feature_type_with_data_split), stat = "identity", position = "dodge")
     + theme_bw()
@@ -311,8 +321,8 @@ f1_score_subset_gg <- (
     + ylab("F1 Score (Test set)")
     + scale_fill_manual(
         name = "Model scenario",
-        labels = subset_feature_type_with_data_split_labels,
-        values = subset_feature_type_with_data_split_colors
+        labels = c(subset_feature_type_with_data_split_labels, feature_type_with_data_split_labels),
+        values = c(subset_feature_type_with_data_split_colors, feature_type_with_data_split_colors)
     )
     + phenotypic_ggplot_theme
     # Decrease spacing in legend and rotate text
@@ -347,13 +357,15 @@ fig_3_gg
 bottom_plot <- (
     pr_curve_subset_gg | 
     f1_score_subset_gg
-) + plot_layout(widths = c(3, 0.55))
+) + plot_layout(widths = c(3, 0.7))
 
 sup_fig_3_gg <- (
     wrap_elements(confusion_matrix_subset_gg) /
     bottom_plot
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 0.6))
+) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 0.5))
 
 ggsave(output_sup_figure_subset, dpi = 500, height = 14, width = 14)
 
 sup_fig_3_gg
+
+
