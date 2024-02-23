@@ -83,7 +83,7 @@ file = "3.analyze_data/class_balanced_well_log_reg_comparison_results/class_bala
 jump_sc_pred_file = f"{url}/{commit}/{file}"
 
 # Set constants
-n_top_results_to_explore = 10
+n_top_results_to_explore = 100
 
 
 # In[4]:
@@ -169,6 +169,7 @@ jump_pred_compare_df.head()
 # Focus on the top results for downstream interpretation
 jump_focused_top_results_df = (
     jump_pred_df
+    .query("Metadata_model_type == 'final'")
     .groupby(["Metadata_model_type", "treatment_type", "Cell_type", "Time", "phenotype"])
     .apply(lambda x: x.nsmallest(n_top_results_to_explore, "p_value"))
     .reset_index(drop=True)
