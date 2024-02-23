@@ -5,6 +5,12 @@ suppressPackageStartupMessages(library(patchwork))
 # Load variables important for plotting (e.g., themes, phenotypes, etc.)
 source("themes.r")
 
+# Set output file paths
+output_folder <- "figures"
+
+jump_phenotype_enrichment_supplementary_file <- file.path(output_folder, "supplementary", "supplementary_jump_enrichment_shuffled_and_extended.png")
+output_fig_5_file <- file.path(output_folder, "main_figure_5_jump_application.png")
+
 # Set paths to load UMAP coordinates
 # Loaded from: https://github.com/WayScience/JUMP-single-cell/tree/main/3.analyze_data/UMAP_analysis/results/Mito_JUMP_areashape_features
 repo <- "https://github.com/WayScience/JUMP-single-cell"
@@ -61,10 +67,12 @@ all_feature_umap_gg <- (
     )
     + labs(x = "UMAP 1", y = "UMAP 2")
     + scale_color_manual(
-        "All features\n\nDataset",
+        "Dataset",
         values = dataset_colors,
         labels = dataset_labels
     )
+    + ggtitle("All features")
+    + coord_fixed()
 )
 
 all_feature_umap_gg
@@ -91,10 +99,368 @@ area_shape_umap_gg <- (
     )
     + labs(x = "UMAP 1", y = "UMAP 2")
     + scale_color_manual(
-        "AreaShape\nfeatures only\n\nDataset",
+        "Dataset",
         values = dataset_colors,
         labels = dataset_labels
     )
+    + ggtitle("AreaShape features only")
+    + coord_fixed()
 ) 
 
 area_shape_umap_gg
+
+# Set file paths
+jump_path <- file.path("..", "3.evaluate_model", "jump_phenotype_profiles")
+
+jump_compare_conditions_file <- file.path(jump_path, "jump_compare_cell_types_and_time_across_phenotypes.tsv.gz")
+jump_phenotype_umap_file <- file.path(jump_path, "jump_phenotype_profiling_umap.tsv.gz")
+
+#  Load and process data
+jump_compare_df <- readr::read_tsv(
+    jump_compare_conditions_file,
+    show_col_types = FALSE
+) %>%
+    # Generate new columns that we will use for plotting:
+    # 1) Phenotype colors
+    # Note, we define focus_phenotypes in themes.r
+    dplyr::mutate(phenotype_plot_label = if_else(
+        phenotype %in% focus_phenotypes,
+        phenotype,
+        "Other"
+    )) %>%
+    # 2) High vs. low incubation time
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "orf" & Time == 48,
+        "Low",
+        "tbd"
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "orf" & Time == 96,
+        "High",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "compound" & Time == 24,
+        "Low",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "compound" & Time == 48,
+        "High",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "crispr" & Time == 96,
+        "Low",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "crispr" & Time == 144,
+        "High",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(
+        neg_log10_pval_A549 = -log10(p_value_A549),
+        neg_log10_pval_U2OS = -log10(p_value_U2OS)
+    )
+
+jump_compare_df$time_plot_label <-
+    factor(jump_compare_df$time_plot_label, levels = c("Low", "High"))
+
+jump_compare_df$phenotype_plot_label <-
+    dplyr::recode_factor(jump_compare_df$phenotype_plot_label, !!!focus_phenotype_labels)
+
+print(dim(jump_compare_df))
+head(jump_compare_df)
+
+custom_time_labeller <- function(value) {
+  paste("Time:", value)
+}
+
+compare_phenotype_enrichment_ggs <- list()
+for (model_type in c("final", "shuffled")) {
+    jump_subset_compare_df <- jump_compare_df %>%
+        dplyr::filter(Metadata_model_type == !!model_type)
+    
+    compare_phenotype_enrichment_ggs[[model_type]] <- (
+        ggplot(
+            jump_subset_compare_df,
+            aes(
+                x = neg_log10_pval_A549,
+                y = neg_log10_pval_U2OS,
+                color = phenotype_plot_label
+            )
+        )
+        + geom_point(
+            size = 0.8,
+            alpha = 0.4
+        )
+        + geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed")
+        + theme_bw()
+        + scale_color_manual(
+            "Phenotype",
+            values = focus_phenotype_colors,
+            labels = focus_phenotype_labels
+        )
+        + phenotypic_ggplot_theme
+        + guides(
+            color = guide_legend(
+                override.aes = list(size = 2)
+            )
+        )
+        + facet_grid(
+            "time_plot_label~treatment_type",
+            labeller = labeller(time_plot_label = custom_time_labeller)
+        )
+        + coord_fixed()
+        + scale_x_continuous(limits = c(0, 130))
+        + scale_y_continuous(limits = c(0, 130))
+        + labs(
+            x = "A549 phenotype enrichment\n(KS test -log10 pvalue)",
+            y = "U20S phenotype enrichment\n(KS test -log10 pvalue)"
+        )
+    )
+}
+
+
+compare_phenotype_enrichment_ggs[["final"]]
+
+# Load and process phenotype UMAP
+jump_phenotype_umap_df <- readr::read_tsv(
+    jump_phenotype_umap_file,
+    show_col_types = FALSE
+) %>%
+    # 2) High vs. low incubation time
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "orf" & Time == 48,
+        "Low",
+        "tbd"
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "orf" & Time == 96,
+        "High",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "compound" & Time == 24,
+        "Low",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "compound" & Time == 48,
+        "High",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "crispr" & Time == 96,
+        "Low",
+        time_plot_label
+    )) %>%
+    dplyr::mutate(time_plot_label = if_else(
+        treatment_type == "crispr" & Time == 144,
+        "High",
+        time_plot_label
+    ))
+
+jump_phenotype_umap_df$time_plot_label <-
+    factor(jump_phenotype_umap_df$time_plot_label, levels = c("Low", "High"))
+
+print(dim(jump_phenotype_umap_df))
+head(jump_phenotype_umap_df)
+
+phenotype_umap_gg <- (
+    ggplot(jump_phenotype_umap_df %>% dplyr::filter(model_type == "final"), aes(x = UMAP0, y = UMAP1))
+    + geom_point(
+        aes(color = treatment_type),
+        size = 0.07,
+        alpha = 0.5
+    )
+    + theme_bw()
+    + phenotypic_ggplot_theme
+    + guides(
+        color = guide_legend(
+            override.aes = list(size = 2)
+        )
+    )
+    + labs(x = "UMAP 1", y = "UMAP 2")
+    + scale_color_manual(
+        "Treatment type",
+        values = treatment_type_colors,
+        labels = treatment_type_labels
+    )
+    + coord_fixed()
+    + facet_grid(
+        "Cell_type~time_plot_label",
+        labeller = labeller(time_plot_label = custom_time_labeller)
+    )
+    + ggtitle("Phenotypic profiling UMAP")
+) 
+
+phenotype_umap_gg
+
+top_plot <- (
+    all_feature_umap_gg | 
+    area_shape_umap_gg
+) + plot_layout(guides = "collect")
+
+fig_5_gg <- (
+    wrap_elements(top_plot) /
+    wrap_elements(compare_phenotype_enrichment_ggs[["final"]]) /
+    wrap_elements(phenotype_umap_gg)
+) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 1.1, 1))
+
+ggsave(output_fig_5_file, dpi = 500, height = 12, width = 8)
+
+#fig_5_gg
+
+jump_other_phenotype_df <- jump_compare_df %>% 
+    dplyr::filter(
+        !phenotype %in% focus_phenotypes,
+        Metadata_model_type == "final"
+    )
+
+head(jump_other_phenotype_df)
+
+# Custom function for name repair
+name_repair_function <- function(names) {
+  names[4] <- paste0(names[4], "_original")
+  return(names)
+}
+
+expanded_phenotype_colors_time_ggs <- list()
+focus_phenotype_colors_time_ggs <- list()
+
+for (time_point in c("Low", "High")) {
+    # Focus other phenotypes to specific time points
+    jump_other_phenotype_per_time_df <- jump_other_phenotype_df %>%
+        dplyr::filter(time_plot_label == !!time_point)
+
+    # Create a background data for plotting gray points
+    df_background <- tidyr::crossing(
+        jump_other_phenotype_per_time_df,
+        phenotype = unique(jump_other_phenotype_per_time_df$phenotype),
+        .name_repair = name_repair_function
+    )
+
+    # Create the figure for other phenotypes
+    jump_sup_fig_other_gg <- (
+        ggplot(
+            jump_other_phenotype_per_time_df,
+            aes(x = neg_log10_pval_A549, y = neg_log10_pval_U2OS)
+        )
+        + geom_point(
+            data = df_background,
+            color = "lightgray",
+            size = 0.8,
+            alpha = 0.6
+        )
+        + geom_point(
+            aes(color = phenotype),
+            size = 0.8
+        )
+        + geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed")
+        + facet_grid("treatment_type~phenotype")
+        + theme_bw()
+        + phenotypic_ggplot_theme
+        + guides(
+            color = guide_legend(
+                override.aes = list(size = 2)
+            )
+        )
+        + labs(
+            x = "A549 phenotype enrichment\n(KS test -log10 pvalue)",
+            y = "U20S phenotype enrichment\n(KS test -log10 pvalue)"
+        )
+        + theme(
+            legend.position = "none",
+            strip.text = element_text(size = 8),
+        )
+    )
+
+    # Save in gg list
+    expanded_phenotype_colors_time_ggs[[time_point]] <- jump_sup_fig_other_gg
+
+    # Now switch to the focus phenotypes
+    jump_focus_phenotype_per_time_df <- jump_compare_df %>% 
+        dplyr::filter(
+            phenotype %in% focus_phenotypes,
+            Metadata_model_type == "final",
+            time_plot_label == !!time_point
+        )
+
+    df_background <- tidyr::crossing(
+        jump_focus_phenotype_per_time_df,
+        phenotype = unique(jump_focus_phenotype_per_time_df$phenotype),
+        .name_repair = name_repair_function
+    )
+    
+    # Create the figure for focus phenotypes
+    jump_sup_fig_focus_gg <- (
+        ggplot(
+            jump_focus_phenotype_per_time_df,
+            aes(x = neg_log10_pval_A549, y = neg_log10_pval_U2OS)
+        )
+        + geom_point(
+            data = df_background,
+            color = "lightgray",
+            size = 0.8,
+            alpha = 0.6
+        )
+        + geom_point(
+            aes(color = phenotype),
+            size = 0.8
+        )
+        + geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed")
+        + facet_grid("treatment_type~phenotype")
+        + theme_bw()
+        + phenotypic_ggplot_theme
+        + guides(
+            color = guide_legend(
+                override.aes = list(size = 2)
+            )
+        )
+        + scale_color_manual(
+            "Phenotype",
+            values = focus_phenotype_colors,
+            labels = focus_phenotype_labels
+        )
+        + labs(
+            x = "A549 phenotype enrichment\n(KS test -log10 pvalue)",
+            y = "U20S phenotype enrichment\n(KS test -log10 pvalue)"
+        )
+        + theme(
+            legend.position = "none",
+            strip.text = element_text(size = 8.5),
+        )
+    )
+
+    # Save in gg list
+    focus_phenotype_colors_time_ggs[[time_point]] <- jump_sup_fig_focus_gg
+}
+
+## Save supplementary figure for shuffled p values
+
+nested_plot <- (
+    focus_phenotype_colors_time_ggs[["High"]] | plot_spacer()
+) + plot_layout(widths = c(3, 1.35))
+
+jump_kstest_full_high_fig <- (
+    nested_plot / expanded_phenotype_colors_time_ggs[["High"]]
+) + plot_layout(heights = c(1, 1))
+
+nested_low_plot <- (
+    focus_phenotype_colors_time_ggs[["Low"]] | plot_spacer()
+) + plot_layout(widths = c(3, 1.35))
+
+jump_kstest_full_low_fig <- (
+    nested_low_plot / expanded_phenotype_colors_time_ggs[["Low"]]
+) + plot_layout(heights = c(1, 1))
+
+
+jump_phenotype_enrichment_supplementary_gg <- (
+    wrap_elements(compare_phenotype_enrichment_ggs[["shuffled"]]) /
+    jump_kstest_full_low_fig /
+    jump_kstest_full_high_fig
+    ) + plot_layout(nrow = 3, heights = c(0.5, 1, 1)) + plot_annotation(tag_levels = list(c("A", "B", "", "C", "")))
+
+ggsave(jump_phenotype_enrichment_supplementary_file, dpi = 500, height = 16, width = 11)

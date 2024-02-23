@@ -148,6 +148,18 @@ cp_feature_group_colors <- c(
     "Texture" = "#ffff33"
 )
 
+# Set colors for JUMP treatment type
+treatment_type_colors <- c(
+    "compound" = "#1E3888",
+    "crispr" = "#FFAD69",
+    "orf" = "#9C3848"
+)
+treatment_type_labels  = c(
+    "compound" = "compound",
+    "crispr" = "crispr",
+    "orf" = "orf"
+)
+
 phenotypic_ggplot_theme <- (
     theme_bw()
     + theme(
