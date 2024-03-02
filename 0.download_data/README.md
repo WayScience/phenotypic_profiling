@@ -1,14 +1,14 @@
 # Download Data
 
-In this module, a labeled dataset is downloaded from `mitocheck_data`.
+In this module, we download labeled datasets from `mitocheck_data`.
 
 ### Download/Preprocess Data
 
-Complete instructions for data download and preprocessing can be found at: https://github.com/WayScience/mitocheck_data
+Complete instructions for data download and preprocessing are located at: https://github.com/WayScience/mitocheck_data
 
 ### Usage
 
-In this repository, all labeled data is downloaded from a version controlled [mitocheck_data](https://github.com/WayScience/mitocheck_data).
+In this repository, we download all labeled data from a version controlled [mitocheck_data](https://github.com/WayScience/mitocheck_data).
 We specify the path to each set of `mitocheck_data` with `labeled_data_paths` in [download_data.ipynb](download_data.ipynb).
 
 ### Data Preview
