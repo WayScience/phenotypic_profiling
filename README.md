@@ -1,6 +1,8 @@
 # Phenotypic Profiling Model
 
-## Dataset and analysis approach
+We use publicly-available data from the MitoCheck consortium, which includes 2,916 single-cells labeled with one of 15 different phenotypes, to train a multiclass logistic regression model to predict phenotype.
+
+Figure 1 describes the dataset and our approach for training and evaluating our model.
 
 ![main_figure_1](./7.figures/figures/main_figure_1_class_count_and_workflow.png)
 
@@ -50,6 +52,11 @@ For more information see [0.download_data/](0.download_data/).
 We use the following 2 datasets from the `mitocheck_data` repository:
 - `ic`: single-cell nuclei features extracted after performing illumination correction on images
 - `no_ic`: single-cell nuclei features extracted without performing illumination correction on images
+
+### Supplementary Table 1 - Full list of JUMP-CP phenotype enrichment
+
+We report the top 100 most enriched treatments per phenotype in Supplementary Table 1 of our paper.
+See [`jump_compare_cell_types_and_time_across_phenotypes.tsv.gz`](https://github.com/WayScience/phenotypic_profiling_model/blob/6cd37b2e9255892bed703c56d466806ea63d7066/3.evaluate_model/jump_phenotype_profiles/jump_compare_cell_types_and_time_across_phenotypes.tsv.gz) for the full list.
 
 ## Machine Learning Models
 
