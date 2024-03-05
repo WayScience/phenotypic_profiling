@@ -77,7 +77,7 @@ We use [seaborn](https://seaborn.pydata.org/) for data visualization.
 All parts of the machine learning pipeline are completed with the following feature types:
 - `CP`: Use only CellProfiler features from `MitoCheck` labeled cells
 - `CP_zernike_only`: Use only CellProfiler Zernike shape features from `MitoCheck` labeled cells
-- `CP_areashape_only`: Use only CellProfiler areashape features from `MitoCheck` labeled cells
+- `CP_areashape_only`: Use only CellProfiler AreaShape features from `MitoCheck` labeled cells
 - `DP`: Use only DeepProfiler features from `MitoCheck` labeled cells
 - `CP_and_DP`: Use CellProfiler and DeepProfiler features from `MitoCheck` labeled cells
 
