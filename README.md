@@ -40,7 +40,7 @@ The repository structure is as follows:
 | [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML models on all data subsets |
 | [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML model coefficients |
 | [5.validate_model](5.validate_model/) | Validate model | Validate ML models on other datasets |
-| [6.single_cell_images](6.single_cell_images/) | Single Cell Images | View single cell images and model interpretation |
+| [6.single_cell_images](6.single_cell_images/) | Single cell images | View single cell images and model interpretation |
 | [7.figures](7.figures/) | Figures | Create paper-worthy figures |
 
 ## Data
