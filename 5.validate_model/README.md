@@ -11,11 +11,11 @@ The Cell Health dataset has cell painting images across 119 CRISPR guide perturb
 More information regarding the generation of this dataset can be found at https://github.com/broadinstitute/cell-health.
 
 In [Cell-Health-Data/4.classify-features](https://github.com/WayScience/cell-health-data/tree/master/4.classify-features), we use the trained models to determine phenotypic class probabilities for each of the Cell Health cells.
-These probabilities are averaged across CRISPR guide/cell line to create 357 *classifiction profiles* (119 CRISPR guides x 3 cell lines).
+We average these probabilities across CRISPR guide/cell line to create 357 *classifiction profiles* (119 CRISPR guides x 3 cell lines).
 
-As part of [Predicting cell health phenotypes using image-based morphology profiling](https://www.molbiolcell.org/doi/10.1091/mbc.E20-12-0784), Way et al derived cell health indicators.
+Way et al. derived cell health indicators as part of [Predicting cell health phenotypes using image-based morphology profiling](https://www.molbiolcell.org/doi/10.1091/mbc.E20-12-0784).
 These indicators consist of 70 specific cell health phenotypes including proliferation, apoptosis, reactive oxygen species, DNA damage, and cell cycle stage.
-These indicators are averaged across across CRISPR guide/cell line to create 357 [*Cell Health label profiles*](https://github.com/broadinstitute/cell-health/blob/master/1.generate-profiles/data/consensus/cell_health_median.tsv.gz).
+Way et al averaged these indicators across CRISPR guide/cell line to create 357 [*Cell Health label profiles*](https://github.com/broadinstitute/cell-health/blob/master/1.generate-profiles/data/consensus/cell_health_median.tsv.gz).
 
 We use [pandas.DataFrame.corr](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html) to find the [Pearson correlation coefficient](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) between the *classifiction profiles* and the *Cell Health label profiles*.
 The Pearson correlation coefficient measures the linear relationship between two datasets, with correlations of -1/+1 implying exact linear inverse/direct relationships respectively.
