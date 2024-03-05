@@ -29,7 +29,7 @@ We train models for each combination of the following model types, feature, bala
 - model_types: `final`, `shuffled_baseline`
     - Which version of features the model is trained on. For `shuffled_baseline`, each column of the feature data is shuffled independently to create a shuffled baseline for comparison.
 - feature_types: `CP`, `DP`, `CP_and_DP`, `CP_zernike_only`, `CP_areashape_only`
-    - Which features to use for trainining.
+    - Which features to use for training.
 - balance_types: `balanced`, `unbalanced`
     - Whether or not to balance `class_weight` of each model when training.
 - dataset_types: `ic`, `no_ic`
