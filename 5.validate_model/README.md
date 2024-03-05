@@ -13,7 +13,7 @@ More information regarding the generation of this dataset can be found at https:
 In [Cell-Health-Data/4.classify-features](https://github.com/WayScience/cell-health-data/tree/master/4.classify-features), we use the trained models to determine phenotypic class probabilities for each of the Cell Health cells.
 We average these probabilities across CRISPR guide/cell line to create 357 *classifiction profiles* (119 CRISPR guides x 3 cell lines).
 
-As part of [Predicting cell health phenotypes using image-based morphology profiling](https://www.molbiolcell.org/doi/10.1091/mbc.E20-12-0784), Way et al derived cell health indicators.
+Way et al. derived cell health indicators as part of [Predicting cell health phenotypes using image-based morphology profiling](https://www.molbiolcell.org/doi/10.1091/mbc.E20-12-0784).
 These indicators consist of 70 specific cell health phenotypes including proliferation, apoptosis, reactive oxygen species, DNA damage, and cell cycle stage.
 Way et al averaged these indicators across CRISPR guide/cell line to create 357 [*Cell Health label profiles*](https://github.com/broadinstitute/cell-health/blob/master/1.generate-profiles/data/consensus/cell_health_median.tsv.gz).
 
