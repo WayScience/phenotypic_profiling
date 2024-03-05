@@ -4,7 +4,7 @@ In this module, we use the model on single-cell images to clearly demonstrate it
 
 ## Single-Cell Sample Image Dataset
 
-The [single-cell sample image data](mitocheck_single_cell_sample_images) have kindly been provided by Dr. Thomas Walter of the MitoCheck consortium.
+Dr. Thomas Walter of the MitoCheck consortium kindly provided the [single-cell sample image data](mitocheck_single_cell_sample_images).
 This dataset contains sample single-cell images in the following format:
 
 ```
@@ -16,7 +16,7 @@ mitocheck_single_cell_sample_images
 
 ```
 
-Because the features for these cells have already been extracted in [`mitocheck_data`](https://github.com/WayScience/mitocheck_data), we do not re-extract features from these images in this module.
+Because we already extracted the features for these cells in [`mitocheck_data`](https://github.com/WayScience/mitocheck_data), we do not re-extract features from these images in this module.
 Instead, features are associated with a single-cell image based on the cell's location metadata (plate, well, frame, x, y).
 
 ## Top 5 Performing Classes

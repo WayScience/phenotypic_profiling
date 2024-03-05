@@ -5,8 +5,7 @@ In this module, we split the training data into training and testing datasets.
 Data is split into subsets in [split_data.ipynb](split_data.ipynb).
 The testing dataset is determined by randomly sampling 15% (stratified by phenotypic class) of the single-cell dataset.
 The training dataset is the subset remaining after the testing samples are removed.
-Sample indexes associated with training and testing subsets are stored in [indexes/](indexes/).
-Sample indexes are later used to load subsets from labeled data in [0.download_data/data/](../0.download_data/data/).
+We store sample indexes associated with training and testing subsets in [indexes/](indexes/), and we later use these sample indexes to load subsets from labeled data in [0.download_data/data/](../0.download_data/data/).
 
 ## Step 1: Split Data
 
