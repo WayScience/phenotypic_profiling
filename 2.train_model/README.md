@@ -26,7 +26,7 @@ We search over the following parameters: `[0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.
 We search over the following parameters: `[1.e-03, 1.e-02, 1.e-01, 1.e+00, 1.e+01, 1.e+02, 1.e+03]`
 
 We train models for each combination of the following model types, feature, balance, and dataset types:
-- model_types: `final``, `shuffled_baseline`
+- model_types: `final`, `shuffled_baseline`
     - Which version of features the model is trained on. For `shuffled_baseline`, each column of the feature data is shuffled independently to create a shuffled baseline for comparison.
 - feature_types: `CP`, `DP`, `CP_and_DP`, `CP_zernike_only`, `CP_areashape_only`
     - Which features to use for trainining.
