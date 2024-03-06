@@ -1,12 +1,23 @@
-# Phenotypic Profiling Model
+# Phenotypic Profiling
 
-We use publicly-available data from the MitoCheck consortium, which includes 2,916 single-cells labeled with one of 15 different phenotypes, to train a multiclass logistic regression model to predict phenotype.
+Scientists can now routinely extract high-content, high-dimensional cell morphology representations from microscopy images.
+However, these cell morphology features currently represent a "hidden code" that must be further interpreted in order to understand and assign biological meaning.
+
+Here, we hypothesize that nuclear morphology can provide a window into single cell phenotype that can be broadly applied across cell types, treatments, and experimental designs (staining, microscopy acquisition parameters, etc.).
+We test this hypothesis by training machine learning models to predict specific phenotypes from easily-accessible and reproducible single-cell morphology representations.
+
+Specifically, we use publicly-available data from the MitoCheck consortium, which includes 2,916 single-cells labeled with one of 15 different phenotypes, to train a multiclass logistic regression model to predict phenotype.
+We extracted CellProfiler and DeepProfiler features from all MitoCheck nuclei. 
+See https://github.com/WayScience/mitocheck_data for details on how we accessed and processed these data.
+
+We focused on assessing the generalizability of this approach to predict phenotype in new datasets not seen during model training.
+We tested generalizability performance in two scenarios: (1) Leave one image out analysis and (2) Predicting single-cell phenotype in the JUMP-CP Pilot data.
 
 Figure 1 describes the dataset and our approach for training and evaluating our model.
 
 ![main_figure_1](./7.figures/figures/main_figure_1_class_count_and_workflow.png)
 
-> Figure 1. Dataset and analysis approach. (A) Single-cell counts per labeled phenotype stratified by phenotype category. The labeled MitoCheck dataset included a total of 2,916 single nuclei. The original dataset contained labels for 16 classes, but we have removed “folded” because of low counts. Counts are not evenly distributed between the classes. (B) Our analysis pipeline incorporated image analysis, image-based profiling, and machine learning.
+> Figure 1. Dataset and analysis approach. (A) Single-cell counts per labeled phenotype stratified by phenotype category. The labeled MitoCheck dataset included a total of 2,916 single nuclei. The original dataset contained labels for 16 classes, but we have removed “folded” because of low counts. (B) Our analysis pipeline incorporated image analysis, image-based profiling, and machine learning. We also assess model generalizability through a leave-one-image-out analysis and applying our models to the Joint Undertaking in Morphological Profiling Cell Painting (JUMP-CP) pilot dataset.
 
 ## Environment Setup
 
