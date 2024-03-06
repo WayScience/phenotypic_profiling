@@ -60,7 +60,7 @@ output_basename = pathlib.Path(output_dir, "pairwise_correlations")
 
 
 # load x (features) and y (labels) dataframes
-labeled_data_path = pathlib.Path("../0.download_data/data/labeled_data.csv.gz")
+labeled_data_path = pathlib.Path("../0.download_data/data/labeled_data__ic.csv.gz")
 labeled_data = get_features_data(labeled_data_path)
 
 print(labeled_data.shape)
