@@ -50,13 +50,15 @@ all_feature_umap_gg <- (
     + geom_point(
         aes(color = Metadata_data_name),
         size = 0.1,
-        alpha = 0.5
+        alpha = 0.3,
+        shape = 16
     )
     + geom_point(
         data = all_feature_umap_df %>% dplyr::filter(Metadata_data_name == "mitocheck"),
         aes(color = Metadata_data_name),
-        size = 0.5,
-        alpha = 0.5
+        size = 0.4,
+        alpha = 0.3,
+        shape = 16
     )
     + theme_bw()
     + phenotypic_ggplot_theme
@@ -71,7 +73,7 @@ all_feature_umap_gg <- (
         values = dataset_colors,
         labels = dataset_labels
     )
-    + ggtitle("All features")
+    + ggtitle("All nuclei features")
     + coord_fixed()
 )
 
@@ -81,14 +83,16 @@ area_shape_umap_gg <- (
     ggplot(area_shape_umap_df, aes(x = UMAP0, y = UMAP1))
     + geom_point(
         aes(color = Metadata_data_name),
-        size = 0.07,
-        alpha = 0.5
+        size = 0.1,
+        alpha = 0.3,
+        shape = 16
     )
     + geom_point(
         data = area_shape_umap_df %>% dplyr::filter(Metadata_data_name == "mitocheck"),
         aes(color = Metadata_data_name),
-        size = 0.5,
-        alpha = 0.5
+        size = 0.4,
+        alpha = 0.3,
+        shape = 16
     )
     + theme_bw()
     + phenotypic_ggplot_theme
@@ -192,8 +196,9 @@ for (model_type in c("final", "shuffled")) {
             )
         )
         + geom_point(
-            size = 0.8,
-            alpha = 0.4
+            size = 2.1,
+            alpha = 0.4,
+            shape = 16
         )
         + geom_abline(slope = 1, intercept = 0, color = "black", linetype = "dashed")
         + theme_bw()
@@ -225,79 +230,6 @@ for (model_type in c("final", "shuffled")) {
 
 compare_phenotype_enrichment_ggs[["final"]]
 
-# Load and process phenotype UMAP
-jump_phenotype_umap_df <- readr::read_tsv(
-    jump_phenotype_umap_file,
-    show_col_types = FALSE
-) %>%
-    # 2) High vs. low incubation time
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "orf" & Time == 48,
-        "Low",
-        "tbd"
-    )) %>%
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "orf" & Time == 96,
-        "High",
-        time_plot_label
-    )) %>%
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "compound" & Time == 24,
-        "Low",
-        time_plot_label
-    )) %>%
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "compound" & Time == 48,
-        "High",
-        time_plot_label
-    )) %>%
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "crispr" & Time == 96,
-        "Low",
-        time_plot_label
-    )) %>%
-    dplyr::mutate(time_plot_label = if_else(
-        treatment_type == "crispr" & Time == 144,
-        "High",
-        time_plot_label
-    ))
-
-jump_phenotype_umap_df$time_plot_label <-
-    factor(jump_phenotype_umap_df$time_plot_label, levels = c("Low", "High"))
-
-print(dim(jump_phenotype_umap_df))
-head(jump_phenotype_umap_df)
-
-phenotype_umap_gg <- (
-    ggplot(jump_phenotype_umap_df %>% dplyr::filter(model_type == "final"), aes(x = UMAP0, y = UMAP1))
-    + geom_point(
-        aes(color = treatment_type),
-        size = 0.07,
-        alpha = 0.5
-    )
-    + theme_bw()
-    + phenotypic_ggplot_theme
-    + guides(
-        color = guide_legend(
-            override.aes = list(size = 2)
-        )
-    )
-    + labs(x = "UMAP 1", y = "UMAP 2")
-    + scale_color_manual(
-        "Treatment type",
-        values = treatment_type_colors,
-        labels = treatment_type_labels
-    )
-    + coord_fixed()
-    + facet_grid(
-        "Cell_type~time_plot_label",
-        labeller = labeller(time_plot_label = custom_time_labeller)
-    )
-    + ggtitle("Phenotypic profiling UMAP")
-) 
-
-phenotype_umap_gg
-
 top_plot <- (
     all_feature_umap_gg | 
     area_shape_umap_gg
@@ -305,18 +237,18 @@ top_plot <- (
 
 fig_5_gg <- (
     wrap_elements(top_plot) /
-    wrap_elements(compare_phenotype_enrichment_ggs[["final"]]) /
-    wrap_elements(phenotype_umap_gg)
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 1.1, 1))
+    wrap_elements(compare_phenotype_enrichment_ggs[["final"]]) 
+) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 1.4))
 
-ggsave(output_fig_5_file, dpi = 500, height = 12, width = 8)
+ggsave(output_fig_5_file, dpi = 500, height = 8, width = 8)
 
-#fig_5_gg
+fig_5_gg
 
 jump_other_phenotype_df <- jump_compare_df %>% 
     dplyr::filter(
         !phenotype %in% focus_phenotypes,
-        Metadata_model_type == "final"
+        Metadata_model_type == "final",
+        treatment_type == "compound"
     )
 
 head(jump_other_phenotype_df)
@@ -385,7 +317,8 @@ for (time_point in c("Low", "High")) {
         dplyr::filter(
             phenotype %in% focus_phenotypes,
             Metadata_model_type == "final",
-            time_plot_label == !!time_point
+            time_plot_label == !!time_point,
+            treatment_type == "compound"
         )
 
     df_background <- tidyr::crossing(
@@ -458,9 +391,11 @@ jump_kstest_full_low_fig <- (
 
 
 jump_phenotype_enrichment_supplementary_gg <- (
-    wrap_elements(compare_phenotype_enrichment_ggs[["shuffled"]]) /
+    wrap_elements(compare_phenotype_enrichment_ggs[["shuffled"]] + ggtitle("Shuffled data results")) /
     jump_kstest_full_low_fig /
     jump_kstest_full_high_fig
-    ) + plot_layout(nrow = 3, heights = c(0.5, 1, 1)) + plot_annotation(tag_levels = list(c("A", "B", "", "C", "")))
+    ) + plot_layout(nrow = 3, heights = c(1, 1, 1)) + plot_annotation(tag_levels = list(c("A", "B", "", "C", "")))
 
-ggsave(jump_phenotype_enrichment_supplementary_file, dpi = 500, height = 16, width = 11)
+ggsave(jump_phenotype_enrichment_supplementary_file, dpi = 500, height = 13, width = 13)
+
+jump_phenotype_enrichment_supplementary_gg
