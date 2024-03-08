@@ -107,7 +107,7 @@ area_shape_umap_gg <- (
         values = dataset_colors,
         labels = dataset_labels
     )
-    + ggtitle("AreaShape features only")
+    + ggtitle("Nuclei AreaShape only")
     + coord_fixed()
 ) 
 
@@ -236,11 +236,11 @@ top_plot <- (
 ) + plot_layout(guides = "collect")
 
 fig_5_gg <- (
-    wrap_elements(top_plot) /
-    wrap_elements(compare_phenotype_enrichment_ggs[["final"]]) 
+    top_plot /
+    compare_phenotype_enrichment_ggs[["final"]]
 ) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 1.4))
 
-ggsave(output_fig_5_file, dpi = 500, height = 8, width = 8)
+ggsave(output_fig_5_file, dpi = 500, height = 8.5, width = 8)
 
 fig_5_gg
 
@@ -300,13 +300,14 @@ for (time_point in c("Low", "High")) {
             )
         )
         + labs(
-            x = "A549 phenotype enrichment\n(KS test -log10 pvalue)",
-            y = "U20S phenotype enrichment\n(KS test -log10 pvalue)"
+            x = "A549 enrichment\n(KS test -log10 pvalue)",
+            y = "U20S enrichment\n(KS test -log10 pvalue)"
         )
         + theme(
             legend.position = "none",
             strip.text = element_text(size = 8),
         )
+        + ggtitle(paste("Time:", time_point))
     )
 
     # Save in gg list
@@ -358,13 +359,14 @@ for (time_point in c("Low", "High")) {
             labels = focus_phenotype_labels
         )
         + labs(
-            x = "A549 phenotype enrichment\n(KS test -log10 pvalue)",
-            y = "U20S phenotype enrichment\n(KS test -log10 pvalue)"
+            x = "A549 enrichment\n(KS test -log10 pvalue)",
+            y = "U20S enrichment\n(KS test -log10 pvalue)"
         )
         + theme(
             legend.position = "none",
             strip.text = element_text(size = 8.5),
         )
+        + ggtitle(paste("Time:", time_point))
     )
 
     # Save in gg list
@@ -372,6 +374,9 @@ for (time_point in c("Low", "High")) {
 }
 
 ## Save supplementary figure for shuffled p values
+top_plot <- (
+   compare_phenotype_enrichment_ggs[["shuffled"]] + ggtitle("Shuffled data results") | plot_spacer()
+) + plot_layout(widths = c(1, 1))
 
 nested_plot <- (
     focus_phenotype_colors_time_ggs[["High"]] | plot_spacer()
@@ -391,7 +396,7 @@ jump_kstest_full_low_fig <- (
 
 
 jump_phenotype_enrichment_supplementary_gg <- (
-    wrap_elements(compare_phenotype_enrichment_ggs[["shuffled"]] + ggtitle("Shuffled data results")) /
+    top_plot /
     jump_kstest_full_low_fig /
     jump_kstest_full_high_fig
     ) + plot_layout(nrow = 3, heights = c(1, 1, 1)) + plot_annotation(tag_levels = list(c("A", "B", "", "C", "")))
