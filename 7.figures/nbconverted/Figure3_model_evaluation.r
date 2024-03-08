@@ -70,9 +70,9 @@ confusion_matrix_gg <- (
     + theme_bw()
     + phenotypic_ggplot_theme
     + theme(
-        axis.text.x = element_text(angle = 90, hjust = 1, size = 10),
+        axis.text.x = element_text(angle = 90, hjust = 1, size = 11),
         axis.title = element_text(size = 13),
-        axis.text.y = element_text(size = 10),
+        axis.text.y = element_text(size = 11),
         strip.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 14),
@@ -252,9 +252,9 @@ confusion_matrix_subset_gg <- (
     + theme_bw()
     + phenotypic_ggplot_theme
     + theme(
-        axis.text.x = element_text(angle = 90, hjust = 1, size = 10),
+        axis.text.x = element_text(angle = 90, hjust = 1, size = 11),
         axis.title = element_text(size = 13),
-        axis.text.y = element_text(size = 10),
+        axis.text.y = element_text(size = 11),
         strip.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 14),
@@ -350,7 +350,7 @@ fig_3_gg <- (
     bottom_plot
 ) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 0.6))
 
-ggsave(output_main_figure_3, dpi = 500, height = 14, width = 14)
+ggsave(output_main_figure_3, dpi = 500, height = 14, width = 15)
 
 fig_3_gg
 
@@ -364,8 +364,6 @@ sup_fig_3_gg <- (
     bottom_plot
 ) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 0.5))
 
-ggsave(output_sup_figure_subset, dpi = 500, height = 14, width = 14)
+ggsave(output_sup_figure_subset, dpi = 500, height = 14, width = 15)
 
 sup_fig_3_gg
-
-

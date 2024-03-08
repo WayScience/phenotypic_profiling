@@ -115,10 +115,10 @@ feature_type_with_data_split_labels <- c(
 
 subset_feature_type_with_data_split_colors <- c(
     "CP_areashape_onlytest" = "#1f78b4",
-    "CP_zernike_onlytest" = "#7beb1a",
+    "CP_zernike_onlytest" = "#F00699",
 
     "CP_areashape_onlytrain" = "#aacee6",
-    "CP_zernike_onlytrain" = "#b2df8a"
+    "CP_zernike_onlytrain" = "#DA8EBE"
 )
 
 subset_feature_type_with_data_split_labels <- c(
