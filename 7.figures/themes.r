@@ -129,6 +129,15 @@ subset_feature_type_with_data_split_labels <- c(
     "CP_zernike_onlytrain" = "Zernike only (Train)"
 )
 
+dataset_colors <- c(
+    "jump" = "#48A9A6",
+    "mitocheck" = "#C1666B"
+)
+dataset_labels  = c(
+    "jump" = "JUMP-CP",
+    "mitocheck" = "Mitocheck"
+)
+
 # Set feature group colors for CellProfiler features
 cp_feature_group_colors <- c(
     "AreaShape" = "#1f78b4",
@@ -137,6 +146,18 @@ cp_feature_group_colors <- c(
     "Neighbors" = "#984ea3",
     "RadialDistribution" = "#ff7f00",
     "Texture" = "#ffff33"
+)
+
+# Set colors for JUMP treatment type
+treatment_type_colors <- c(
+    "compound" = "#1E3888",
+    "crispr" = "#FFAD69",
+    "orf" = "#9C3848"
+)
+treatment_type_labels  = c(
+    "compound" = "compound",
+    "crispr" = "crispr",
+    "orf" = "orf"
 )
 
 phenotypic_ggplot_theme <- (
