@@ -25,8 +25,6 @@ import pathlib
 from typing import List
 import pandas as pd
 
-import umap
-
 
 # In[2]:
 
