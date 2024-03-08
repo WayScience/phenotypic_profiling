@@ -1,10 +1,23 @@
-# Phenotypic Profiling Model
+# Phenotypic Profiling
 
-## Dataset and analysis approach
+Scientists can now routinely extract high-content, high-dimensional cell morphology representations from microscopy images.
+However, these cell morphology features currently represent a "hidden code" that must be further interpreted in order to understand and assign biological meaning.
+
+Here, we hypothesize that nuclear morphology can provide a window into single cell phenotype that can be broadly applied across cell types, treatments, and experimental designs (staining, microscopy acquisition parameters, etc.).
+We test this hypothesis by training machine learning models to predict specific phenotypes from easily-accessible and reproducible single-cell morphology representations.
+
+Specifically, we use publicly-available data from the MitoCheck consortium, which includes 2,916 single-cells labeled with one of 15 different phenotypes, to train a multiclass logistic regression model to predict phenotype.
+We extracted CellProfiler and DeepProfiler features from all MitoCheck nuclei. 
+See https://github.com/WayScience/mitocheck_data for details on how we accessed and processed these data.
+
+We focused on assessing the generalizability of this approach to predict phenotype in new datasets not seen during model training.
+We tested generalizability performance in two scenarios: (1) Leave one image out analysis and (2) Predicting single-cell phenotype in the JUMP-CP Pilot data.
+
+Figure 1 describes the dataset and our approach for training and evaluating our model.
 
 ![main_figure_1](./7.figures/figures/main_figure_1_class_count_and_workflow.png)
 
-> Figure 1. Dataset and analysis approach. (A) Single-cell counts per labeled phenotype stratified by phenotype category. The labeled MitoCheck dataset included a total of 2,916 single nuclei. The original dataset contained labels for 16 classes, but we have removed “folded” because of low counts. Counts are not evenly distributed between the classes. (B) Our analysis pipeline incorporated image analysis, image-based profiling, and machine learning.
+> Figure 1. Dataset and analysis approach. (A) Single-cell counts per labeled phenotype stratified by phenotype category. The labeled MitoCheck dataset included a total of 2,916 single nuclei. The original dataset contained labels for 16 classes, but we have removed “folded” because of low counts. (B) Our analysis pipeline incorporated image analysis, image-based profiling, and machine learning. We also assess model generalizability through a leave-one-image-out analysis and applying our models to the Joint Undertaking in Morphological Profiling Cell Painting (JUMP-CP) pilot dataset.
 
 ## Environment Setup
 
@@ -34,11 +47,11 @@ The repository structure is as follows:
 | :---- | :----- | :---------- |
 | [0.download_data](0.download_data/) | Download training data | Download labeled single-cell dataset from [mitocheck_data](https://github.com/WayScience/mitocheck_data) |
 | [1.split_data](1.split_data/) | Create data subsets | Create training and testing data subsets |
-| [2.train_model](2.train_model/) | Train model | Train ML models on training data subset and shuffled baseline training dataset |
+| [2.train_model](2.train_model/) | Train model | Train ML models on combinations of features, data subsets, balance types, model types |
 | [3.evaluate_model](3.evaluate_model/) | Evaluate model | Evaluate ML models on all data subsets |
-| [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML models |
-| [5.validate_model](5.validate_model/) | Validate model | Validate ML models |
-| [6.single_cell_images](6.single_cell_images/) | Single Cell Images | View single cell images and model interpretation |
+| [4.interpret_model](4.interpret_model/) | Interpret model | Interpret ML model coefficients |
+| [5.validate_model](5.validate_model/) | Validate model | Validate ML models on other datasets |
+| [6.single_cell_images](6.single_cell_images/) | Single cell images | View single cell images and model interpretation |
 | [7.figures](7.figures/) | Figures | Create paper-worthy figures |
 
 ## Data
@@ -46,6 +59,15 @@ The repository structure is as follows:
 Specific data download/preprocessing instructions are available at: https://github.com/WayScience/mitocheck_data.
 This repository downloads labeled single-cell data from a specific version of the [mitocheck_data](https://github.com/WayScience/mitocheck_data) repository.
 For more information see [0.download_data/](0.download_data/).
+
+We use the following 2 datasets from the `mitocheck_data` repository:
+- `ic`: single-cell nuclei features extracted after performing illumination correction on images
+- `no_ic`: single-cell nuclei features extracted without performing illumination correction on images
+
+### Supplementary Table 1 - Full list of JUMP-CP phenotype enrichment
+
+We report the top 100 most enriched treatments per phenotype in Supplementary Table 1 of our paper.
+See [`jump_compare_cell_types_and_time_across_phenotypes.tsv.gz`](https://github.com/WayScience/phenotypic_profiling_model/blob/6cd37b2e9255892bed703c56d466806ea63d7066/3.evaluate_model/jump_phenotype_profiles/jump_compare_cell_types_and_time_across_phenotypes.tsv.gz) for the full list.
 
 ## Machine Learning Models
 
@@ -65,6 +87,8 @@ We use [seaborn](https://seaborn.pydata.org/) for data visualization.
 
 All parts of the machine learning pipeline are completed with the following feature types:
 - `CP`: Use only CellProfiler features from `MitoCheck` labeled cells
+- `CP_zernike_only`: Use only CellProfiler Zernike shape features from `MitoCheck` labeled cells
+- `CP_areashape_only`: Use only CellProfiler AreaShape features from `MitoCheck` labeled cells
 - `DP`: Use only DeepProfiler features from `MitoCheck` labeled cells
 - `CP_and_DP`: Use CellProfiler and DeepProfiler features from `MitoCheck` labeled cells
 

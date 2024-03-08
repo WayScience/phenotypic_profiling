@@ -22,7 +22,7 @@ The correlations for each pair of coefficient vectors are displayed above their 
 
 ## Results
 
-Each model's interpretations can be found in [interpret_model_coefficients.ipynb](interpret_model_coefficients.ipynb).
+Each model's interpretations are located in [interpret_model_coefficients.ipynb](interpret_model_coefficients.ipynb).
 
 **Notes:** 
 1) Intermediate `.tsv` data are stored in tidy format, a standardized data structure (see [Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham for more details).

@@ -3,7 +3,7 @@ suppressPackageStartupMessages(library(patchwork))
 suppressPackageStartupMessages(library(ggplot2))
 
 # Load figure themes and colors
-source("figure_themes.R")
+source("figure_themes.r")
 
 # Define function for loading data 
 load_process_data <- function(results_file_to_load, normalized_or_raw) {
@@ -129,18 +129,32 @@ areashape_boxplot <- (
 
 areashape_boxplot
 
-ks_zernike_highlight_df <- ks_test_df %>%
+head(ks_test_df)
+
+ks_areashape_highlight_df <- ks_test_df %>%
     dplyr::mutate(
+        areashape_or_not = ifelse(feature_group == "AreaShape", "AreaShape", "Other"),
         zernike_or_not = ifelse(measurement == "Zernike", "Zernike", "Other")
     ) 
 
-ks_zernike_highlight_df$zernike_or_not <- factor(
-    ks_zernike_highlight_df$zernike_or_not,
+ks_areashape_highlight_df$areashape_or_not <- factor(
+    ks_areashape_highlight_df$areashape_or_not,
+    levels = c("AreaShape", "Other")
+)
+
+ks_areashape_highlight_df$zernike_or_not <- factor(
+    ks_areashape_highlight_df$zernike_or_not,
     levels = c("Zernike", "Other")
 )
 
+print(length(unique(
+    ks_areashape_highlight_df %>%
+        dplyr::filter(areashape_or_not == "AreaShape") %>%
+        dplyr::pull(feature)
+    )))
+
 length(unique(
-    ks_zernike_highlight_df %>%
+    ks_areashape_highlight_df %>%
         dplyr::filter(zernike_or_not == "Zernike") %>%
         dplyr::pull(feature)
     ))
@@ -152,10 +166,10 @@ custom_labeller <- function(value) {
 
 variance_gg <- (
     ggplot(
-        ks_zernike_highlight_df,
+        ks_areashape_highlight_df,
         aes(x = mitocheck_variance, y = jump_variance)
     )
-    + geom_point(aes(color = feature_group), alpha = 0.01)
+    + geom_point(aes(color = areashape_or_not), alpha = 0.01)
     + theme_bw()
     + figure_theme
     + theme(
@@ -186,18 +200,18 @@ variance_gg <- (
 variance_gg
 
 custom_labeller <- function(value) {
-  paste("AreaShape features with data type:", stringr::str_to_title(value))
+  paste("Zernike features with data type:", stringr::str_to_title(value))
 }
 
-variance_areashape_gg <- (
+variance_zernike_gg <- (
     ggplot(
-        ks_zernike_highlight_df %>%
+        ks_areashape_highlight_df %>%
         dplyr::filter(
-            feature_group == "AreaShape"
+            zernike_or_not == "Zernike"
         ),
         aes(x = mitocheck_variance, y = jump_variance)
     )
-    + geom_point(alpha = 0.01, aes(color = zernike_or_not))
+    + geom_point(alpha = 0.01, color = "black")
     + theme_bw()
     + figure_theme
     + theme(
@@ -223,16 +237,16 @@ variance_areashape_gg <- (
     )
 )
 
-variance_areashape_gg
+variance_zernike_gg
 
 sup_fig_gg <- (
     (
         full_summary_boxplot / areashape_boxplot
     ) | (
-        variance_gg / variance_areashape_gg
+        variance_gg / variance_zernike_gg
     )
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 0.6))
+) + plot_annotation(tag_levels = list(c("A", "B", "C", ""))) + plot_layout(heights = c(1, 0.6))
 
-ggsave(output_file, dpi = 500, height = 10, width = 13)
+ggsave(output_file, dpi = 500, height = 11, width = 13)
 
 sup_fig_gg
