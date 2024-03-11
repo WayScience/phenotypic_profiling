@@ -183,7 +183,11 @@ per_image_category_gg <- (
     + facet_grid(
         "Mitocheck_Plot_Label~Model_Feature_Type"
     )
-    + geom_text(data=percent_summary_df, aes(label = add_plot_text, x = 12, y = 0.8))
+    + geom_text(
+        data=percent_summary_df,
+        aes(label = add_plot_text, x = 12, y = 0.7),
+        size = 5
+    )
     + labs(
         x = "Average rank of correct label\n(per held out image)",
         y = "Average probability of correct label\n(per held out image)"
@@ -198,7 +202,7 @@ per_image_category_gg <- (
     )
     + geom_vline(xintercept=2, linetype = "dashed", color = "red")
     + theme(
-        strip.text = element_text(size = 8.3),
+        strip.text = element_text(size = 11),
     )
     + guides(
         color = guide_legend(
@@ -337,7 +341,7 @@ correct_pred_proportion_gg <- (
         color = "black",
         aes(label = count),
         nudge_x = 0.07,
-        size = 3
+        size = 4
     )
     + facet_grid(
         "Model_Feature_Type~correct_pred",
@@ -345,7 +349,10 @@ correct_pred_proportion_gg <- (
     )
     + theme_bw()
     + phenotypic_ggplot_theme
-    + theme(axis.text = element_text(size = 7.5))
+    + theme(
+        axis.text = element_text(size = 9.5),
+        strip.text = element_text(size = 11)
+    )
     + scale_fill_manual(
         paste0("Does cell\npass strict\nthreshold?\n(p = ", high_threshold, ")"),
         values = focus_corr_colors,
@@ -447,7 +454,8 @@ correct_class_phenotype_pred_gg <- (
             ),
         color = "black",
         aes(label = total_count),
-        nudge_y = 0.12
+        nudge_y = 0.12,
+        size = 4
     )
     + coord_flip()
     + scale_fill_manual(
@@ -458,19 +466,22 @@ correct_class_phenotype_pred_gg <- (
     )
     + theme_bw()
     + phenotypic_ggplot_theme
-    + theme(axis.text.x = element_text(size = 6.5))
-    + labs(x = "Mitocheck phenotype categories", y = "Cell proportions")
+    + theme(
+        axis.text.x = element_text(size = 7.5),
+        strip.text = element_text(size = 11)
+    )
+    + labs(x = "Phenotype categories", y = "Cell proportions")
 )
 
 correct_class_phenotype_pred_gg
 
 right_bottom_nested <- (
     correct_pred_proportion_gg / correct_class_phenotype_pred_gg
-) + plot_layout(heights = c(1, 0.7)) 
+) + plot_layout(heights = c(1, 0.2)) 
 
 compiled_fig <- (
     per_image_category_gg | right_bottom_nested
-) + plot_layout(widths = c(1, 0.72)) + plot_annotation(tag_levels = "A")
+) + plot_layout(widths = c(1, 0.77)) + plot_annotation(tag_levels = "A")
 
 ggsave(output_fig_loio, dpi = 500, height = 10, width = 15)
 
