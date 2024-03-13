@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10814940.svg)](https://doi.org/10.5281/zenodo.10814940)
+
 # Phenotypic Profiling
 
 Scientists can now routinely extract high-content, high-dimensional cell morphology representations from microscopy images.
