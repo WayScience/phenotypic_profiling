@@ -52,7 +52,9 @@ def create_tidy_corr_matrix(data_array, labels):
 # Set constants
 feature_spaces = ["CP", "DP", "CP_and_DP"]
 
-output_dir = "data"
+output_dir = pathlib.Path("data")
+output_dir.mkdir(exist_ok=True)
+
 output_basename = pathlib.Path(output_dir, "pairwise_correlations")
 
 
@@ -72,7 +74,7 @@ labeled_data.head(3)
 
 for feature_space in feature_spaces:
     # Get specific feature sets
-    cp_feature_df, cp_label_df = get_X_y_data(labeled_data, dataset=feature_space)
+    cp_feature_df, cp_label_df = get_X_y_data(labeled_data, feature_type=feature_space)
 
     # Calculate pairwise correlations between nuclei
     cp_tidy_corr_df = create_tidy_corr_matrix(cp_feature_df, cp_label_df)
