@@ -24,7 +24,7 @@ focus_corr_labels  = c(
 
 list_of_perplexities <- c(2, 10, 15, 30, 40, 60, 80, 100, 150, 300)
 
-# Load UMAP coordinates and process
+# Load tsne coordinates and process
 tsne_dir <- file.path("../3.evaluate_model/evaluations/")
 tsne_file <- file.path(tsne_dir, "tsne_embeddings.csv.gz")
 
