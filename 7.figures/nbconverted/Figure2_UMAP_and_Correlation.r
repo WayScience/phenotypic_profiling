@@ -6,6 +6,7 @@ suppressPackageStartupMessages(library(patchwork))
 source("themes.r")
 
 figure_dir <- "figures"
+
 output_main_figure_2 <- file.path(figure_dir, "main_figure_2_umap_and_correlation.png")
 output_sup_fig_corr <- file.path(figure_dir, "supplementary", "supplementary_pairwise_correlations.png")
 
@@ -48,14 +49,38 @@ umap_df$Feature_Type <-
 
 head(umap_df)
 
+# Create a background dataset to show in greyed color across all facets
+umap_focus_df <- umap_df %>% 
+    dplyr::filter(Mitocheck_Phenotypic_Class %in% focus_phenotypes)
+
+# Custom function for name repair
+name_repair_function <- function(names) {
+  names[1] <- paste0(names[1], "_original")
+  return(names)
+}
+
+df_background <- tidyr::crossing(
+    umap_df,
+    Mitocheck_Phenotypic_Class = unique(umap_focus_df$Mitocheck_Phenotypic_Class),
+    .name_repair = name_repair_function
+)
+
 umap_fig_gg <- (
-    ggplot(umap_df, aes(x = UMAP1, y = UMAP2))
+    ggplot(
+        umap_df %>% dplyr::filter(Mitocheck_Plot_Label %in% focus_phenotypes),
+        aes(x = UMAP1, y = UMAP2)
+    )
     + geom_point(
-        aes(color = Mitocheck_Plot_Label),
+        data = df_background,
+        color = "lightgray",
         size = 0.05,
         alpha = 0.4
     )
-    + facet_grid("~Feature_Type")
+    + geom_point(
+        aes(color = Mitocheck_Phenotypic_Class),
+        size = 0.05
+    )
+    + facet_grid("Feature_Type~Mitocheck_Phenotypic_Class")
     + theme_bw()
     + scale_color_manual(
         "Phenotype",
@@ -169,9 +194,9 @@ focus_phenotype_gg
 fig_2_gg <- (
     umap_fig_gg /
     focus_phenotype_gg
-) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(0.6, 1))
+) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(1, 1))
 
-ggsave(output_main_figure_2, dpi = 500, height = 7, width = 8)
+ggsave(output_main_figure_2, dpi = 500, height = 7.5, width = 8)
 
 fig_2_gg
 
@@ -276,6 +301,6 @@ sup_fig_gg <- (
     other_phenotype_gg
 ) + plot_annotation(tag_levels = "A") + plot_layout(heights = c(0.3, 1))
 
-ggsave(output_sup_fig_corr, dpi = 500, height = 7, width = 14.5)
+ggsave(output_sup_fig_corr, dpi = 500, height = 7, width = 14)
 
 sup_fig_gg
