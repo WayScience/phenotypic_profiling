@@ -29,7 +29,7 @@ np.random.seed(1234)
 # In[3]:
 
 
-output_file = pathlib.Path("evaluations", "tsne_embeddings.csv.gz")
+output_file = pathlib.Path("evaluations", "tsne_embeddings.tsv.gz")
 
 
 # In[4]:
@@ -77,12 +77,15 @@ feature_groups = [
 # 
 # > The perplexity is related to the number of nearest neighbors that is used in other manifold learning algorithms. Larger datasets usually require a larger perplexity. Consider selecting a value between 5 and 50. Different values can result in significantly different results. The perplexity must be less than the number of samples.
 # 
-# We do not know what the appropriate value of perplexity is for our dataset, so we will test several
+# We do not know what the appropriate value of perplexity is for our dataset, so we will test several.
 
 # In[6]:
 
 
 tsne_embedding_df = []
+
+# Select a wide range of values. The initial paper suggests between 5-50.
+# We want to see how this wide range impacts the groupings.
 list_of_perplexities = [2, 10, 15, 30, 40, 60, 80, 100, 150, 300]
 
 for perplexity in list_of_perplexities:
