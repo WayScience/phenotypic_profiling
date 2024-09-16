@@ -39,9 +39,6 @@ eval_path = pathlib.Path("evaluations")
 output_silhouette_results = pathlib.Path(
     eval_path, "silhouette_score_results.tsv"
 )
-output_silhouette_samples_results = pathlib.Path(
-    eval_path, "silhouette_score_results_per_sample.tsv"
-)
 
 
 # In[4]:
