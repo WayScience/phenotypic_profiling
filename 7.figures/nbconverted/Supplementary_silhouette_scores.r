@@ -39,6 +39,11 @@ silhouette_summary_df$phenotype <-
 print(dim(silhouette_summary_df))
 silhouette_summary_df
 
+# Calculate total Silhouette scores per feature space
+silhouette_summary_df %>%
+    dplyr::group_by(feature_space) %>%
+    dplyr::summarize(sum(silhouette_score))
+
 # Summarize the top feature spaces
 top_feature_spaces <- silhouette_summary_df %>%
     dplyr::group_by(phenotype) %>%
